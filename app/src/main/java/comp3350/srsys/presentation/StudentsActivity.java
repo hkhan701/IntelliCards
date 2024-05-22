@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import comp3350.srsys.R;
@@ -38,7 +39,8 @@ public class StudentsActivity extends Activity {
 
         try
         {
-            studentList = accessStudents.getStudents();
+            studentList = new ArrayList<>();
+            studentList.addAll(accessStudents.getStudents());
             studentArrayAdapter = new ArrayAdapter<Student>(this, android.R.layout.simple_list_item_activated_2, android.R.id.text1, studentList)
             {
                 @Override
@@ -199,12 +201,8 @@ public class StudentsActivity extends Activity {
         try
         {
             accessStudents.deleteStudent(student);
-            int pos = studentList.indexOf(student);
-            if (pos >= 0) {
-                ListView listView = (ListView) findViewById(R.id.listStudents);
-                listView.setSelection(pos);
-            }
-            studentList = accessStudents.getStudents();
+            studentList.clear();
+            studentList.addAll(accessStudents.getStudents());
             studentArrayAdapter.notifyDataSetChanged();
         }
         catch (final Exception e)

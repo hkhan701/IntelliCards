@@ -34,6 +34,10 @@ public class Course
 		return String.format("Course: %s %s", courseID, courseName);
 	}
 
+	public int hashCode()
+	{
+		return Objects.hash(courseID, courseName);
+	}
 	public boolean equals(Object other)
 	{
 		boolean equals = false;

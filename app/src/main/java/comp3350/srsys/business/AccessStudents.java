@@ -23,6 +23,10 @@ public class AccessStudents
 		currentStudent = 0;
 	}
 
+	public AccessStudents(final StudentPersistence studentPersistence) {
+	    this();
+	    this.studentPersistence = studentPersistence;
+    }
     public List<Student> getStudents()
     {
         students = studentPersistence.getStudentSequential();

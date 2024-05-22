@@ -26,6 +26,10 @@ public class AccessSC
 		currentCS = 0;
 	}
 
+	public AccessSC(final SCPersistence scPersistence) {
+	    this();
+	    this.dataAccess = scPersistence;
+    }
 	public SC getSC(String studentID)
 	{
 		if (elements == null)

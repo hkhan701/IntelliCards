@@ -22,6 +22,10 @@ public class AccessCourses
 		currentCourse = 0;
 	}
 
+	public AccessCourses(final CoursePersistence coursePersistence) {
+	    this();
+	    this.coursePersistence = coursePersistence;
+    }
     public List<Course> getCourses()
     {
         courses = coursePersistence.getCourseSequential();

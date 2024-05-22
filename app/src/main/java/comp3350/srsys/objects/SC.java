@@ -1,5 +1,6 @@
 package comp3350.srsys.objects;
 
+import java.util.Objects;
 public class SC
 {
 	private final Student student;
@@ -41,5 +42,17 @@ public class SC
 	public String toString()
 	{
 		return String.format("SC: %s %s %s", student.getStudentID(), course.getCourseID(), grade);
+	}
+
+	public int hashCode()
+	{
+    	return Objects.hash(student, course, grade);
+	}
+
+	public boolean equals(final SC o)
+	{
+		return Objects.equals(this.student, o.student) &&
+				Objects.equals(this.course, o.course) &&
+				Objects.equals(this.grade, o.grade);
 	}
 }

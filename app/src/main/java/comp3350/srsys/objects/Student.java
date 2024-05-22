@@ -42,6 +42,10 @@ public class Student
 		return String.format("Student: %s %s %s", studentID, studentName, studentAddress);
 	}
 
+	public int hashCode()
+	{
+		return Objects.hash(studentID, studentName, studentAddress);
+	}
 	public boolean equals(Object other)
 	{
 		boolean equals = false;

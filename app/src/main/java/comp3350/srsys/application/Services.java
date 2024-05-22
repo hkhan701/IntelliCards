@@ -3,9 +3,9 @@ package comp3350.srsys.application;
 import comp3350.srsys.persistence.CoursePersistence;
 import comp3350.srsys.persistence.SCPersistence;
 import comp3350.srsys.persistence.StudentPersistence;
-import comp3350.srsys.persistence.stubs.CoursePersistenceStub;
-import comp3350.srsys.persistence.stubs.SCPersistenceStub;
-import comp3350.srsys.persistence.stubs.StudentPersistenceStub;
+import comp3350.srsys.persistence.hsqldb.CoursePersistenceHSQLDB;
+import comp3350.srsys.persistence.hsqldb.SCPersistenceHSQLDB;
+import comp3350.srsys.persistence.hsqldb.StudentPersistenceHSQLDB;
 
 public class Services
 {
@@ -17,7 +17,7 @@ public class Services
     {
 		if (studentPersistence == null)
 		{
-		    studentPersistence = new StudentPersistenceStub();
+            studentPersistence = new StudentPersistenceHSQLDB(Main.getDBPathName());
         }
 
         return studentPersistence;
@@ -27,7 +27,7 @@ public class Services
     {
         if (coursePersistence == null)
         {
-            coursePersistence = new CoursePersistenceStub();
+            coursePersistence = new CoursePersistenceHSQLDB(Main.getDBPathName());
         }
 
         return coursePersistence;
@@ -35,7 +35,7 @@ public class Services
 
 	public static synchronized SCPersistence getScPersistence() {
         if (scPersistence == null) {
-            scPersistence = new SCPersistenceStub();
+            scPersistence = new SCPersistenceHSQLDB(Main.getDBPathName());
         }
 
         return scPersistence;

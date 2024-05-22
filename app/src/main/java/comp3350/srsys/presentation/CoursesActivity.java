@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import comp3350.srsys.R;
@@ -38,7 +39,8 @@ public class CoursesActivity extends Activity {
 
         try
         {
-            courseList = accessCourses.getCourses();
+            courseList = new ArrayList<>();
+            courseList.addAll(accessCourses.getCourses());
             courseArrayAdapter = new ArrayAdapter<Course>(this, android.R.layout.simple_list_item_activated_2, android.R.id.text1, courseList)
             {
                 @Override
@@ -188,17 +190,12 @@ public class CoursesActivity extends Activity {
 
     public void buttonCourseDeleteOnClick(View v) {
         Course course = createCourseFromEditText();
-        String result;
 
         try {
             accessCourses.deleteCourse(course);
 
-            int pos = courseList.indexOf(course);
-            if (pos >= 0) {
-                ListView listView = (ListView) findViewById(R.id.listCourses);
-                listView.setSelection(pos);
-            }
-            courseList = accessCourses.getCourses();
+            courseList.clear();
+            courseList.addAll(accessCourses.getCourses());
             courseArrayAdapter.notifyDataSetChanged();
         } catch (final Exception e) {
         	Messages.warning(this, e.getMessage());
