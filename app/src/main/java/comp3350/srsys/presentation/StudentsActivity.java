@@ -83,7 +83,6 @@ public class StudentsActivity extends Activity {
             
             final EditText editStudentID = (EditText)findViewById(R.id.editStudentID);
             final Button buttonStudentCourses = (Button)findViewById(R.id.buttonStudentCourses);
-            editStudentID.setEnabled(false);
             editStudentID.addTextChangedListener(new TextWatcher() {
 				@Override
 				public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
