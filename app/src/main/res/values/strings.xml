@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SRSYS</string>
+    <string name="app_name">IntelliCards</string>
 
     <string name="action_settings">Settings</string>
     <string name="student_records_system">Student Records System</string>
