@@ -1,4 +1,0 @@
-# Handle line endings automatically for text files
-* text=auto
-
-git config --system core.longpaths true
