@@ -34,6 +34,7 @@ public class MainActivity extends Activity {
         FlashCardSet flashCardSet = new FlashCardSet("New Set");
 
 
+        // get all the page views in variables
         Button submitTextButton = findViewById(R.id.submitFlashcard);
         TextView questionTextBox = findViewById(R.id.question);
         TextView answerTextBox = findViewById(R.id.answer);
@@ -84,9 +85,9 @@ public class MainActivity extends Activity {
 
             }
         });
-
-
     }
+
+
     public void printList(List<FlashCard> flashcards)
     {
         RecyclerView recyclerView;
