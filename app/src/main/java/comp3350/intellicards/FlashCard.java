@@ -1,4 +1,6 @@
 package comp3350.intellicards;
+import androidx.annotation.NonNull;
+
 import java.util.UUID;
 
 public class FlashCard {
@@ -8,9 +10,11 @@ public class FlashCard {
 
     private String answer;
     private String question;
+    private boolean deleted;
 
     public FlashCard() {
         this.uuid = UUID.randomUUID();
+        this.deleted = false;
     }
 
     public FlashCard(UUID uuid) {
@@ -39,6 +43,23 @@ public class FlashCard {
         this.question = question;
     }
 
+    public boolean isDeleted()
+    {
+        return deleted;
+    }
+
+
+    public void markDeleted() {
+        deleted = true;
+    }
+
+    public void markRecovered()
+    {
+        deleted = false;
+    }
+
+
+    @NonNull
     @Override
     public String toString() {
         return "uuid='" + uuid + "'\n" +
