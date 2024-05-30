@@ -1,4 +1,4 @@
-package com.example.intellicards;
+package comp3350.intellicards;
 import java.util.UUID;
 
 public class FlashCard {
@@ -41,10 +41,8 @@ public class FlashCard {
 
     @Override
     public String toString() {
-        return "FlashCard{" +
-                "uuid='" + uuid + '\'' +
-                ", answer='" + answer + '\'' +
-                ", question='" + question + '\'' +
-                '}';
+        return "uuid='" + uuid + "'\n" +
+                ", answer='" + answer + "'\n"  +
+                ", question='" + question + "'\n";
     }
 }

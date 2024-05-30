@@ -1,4 +1,4 @@
-package com.example.intellicards;
+package comp3350.intellicards;
 
 import java.util.ArrayList;
 import java.util.List;
