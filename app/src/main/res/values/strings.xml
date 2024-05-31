@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">IntelliCards</string>
+    <string name="deleted">DELETED</string>
 </resources>

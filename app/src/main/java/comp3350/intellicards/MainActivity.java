@@ -35,9 +35,10 @@ public class MainActivity extends Activity {
 
 
         // get all the page views in variables
-        Button submitTextButton = findViewById(R.id.submitFlashcard);
         TextView questionTextBox = findViewById(R.id.question);
         TextView answerTextBox = findViewById(R.id.answer);
+        Button submitTextButton = findViewById(R.id.submitFlashcard);
+        Button refreshButton = findViewById(R.id.refreshButton);
 
         questionTextBox.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,14 +82,21 @@ public class MainActivity extends Activity {
                 questionInput.setText("");
                 answerInput.setText("");
                 System.out.println("Current FlashCardSet: " + flashCardSet);
-                printList(flashCardSet.getFlashcards());
+                printList(flashCardSet);
 
+            }
+        });
+
+        refreshButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                printList(flashCardSet);
             }
         });
     }
 
 
-    public void printList(List<FlashCard> flashcards)
+    public void printList(FlashCardSet flashCardSet)
     {
         RecyclerView recyclerView;
         DataDisplayer dataDisplayer;
@@ -98,19 +106,18 @@ public class MainActivity extends Activity {
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        String[] flashcardsList = arrayListToStringList(flashcards);
-        dataDisplayer = new DataDisplayer(flashcardsList);
+        dataDisplayer = new DataDisplayer(flashCardSet);
         recyclerView.setAdapter(dataDisplayer);
     }
 
-    private String[] arrayListToStringList(List<FlashCard> flashCards)
-    {
-        int size = flashCards.size();
-        String[] list = new String[size];
-        for(int i = 0; i < size; i++)
-        {
-            list[i] = flashCards.get(i).toString();
-        }
-        return list;
-    }
+//    private String[] arrayListToStringList(List<FlashCard> flashCards)
+//    {
+//        int size = flashCards.size();
+//        String[] list = new String[size];
+//        for(int i = 0; i < size; i++)
+//        {
+//            list[i] = flashCards.get(i).toString();
+//        }
+//        return list;
+//    }
 }

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/list_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:padding="8dp">
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/flashCardTextRecycle"
@@ -14,17 +14,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/button"
-        android:layout_marginEnd="8dp" />
+        app:layout_constraintEnd_toStartOf="@+id/button" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/deleteButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Button"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/flashCardTextRecycle"
-        android:layout_marginStart="8dp" />
+        app:layout_constraintStart_toEndOf="@+id/flashCardTextRecycle" />
 </LinearLayout>
