@@ -22,10 +22,19 @@ public class ProfileActivity extends Activity {
         setContentView(R.layout.activity_account);
 
         Button backButton = findViewById(R.id.backButton);
+        Button recoveryButton = findViewById(R.id.recoveryButton);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ProfileActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        recoveryButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ProfileActivity.this, RecoveryActivity.class);
                 startActivity(intent);
             }
         });
