@@ -14,11 +14,11 @@ import comp3350.intellicards.Objects.FlashCard;
 import comp3350.intellicards.Objects.FlashCardSet;
 import comp3350.intellicards.R;
 
-public class DataDisplayer extends RecyclerView.Adapter<DataDisplayer.ViewHolder> {
+public class CardRecoverAdapter extends RecyclerView.Adapter<CardRecoverAdapter.ViewHolder> {
 
     private FlashCardSet flashCardSet;
 
-    private AdapterView.OnItemClickListener deleteButtonClick;
+    private AdapterView.OnItemClickListener recoverButtonClick;
 
 
     /**
@@ -27,27 +27,27 @@ public class DataDisplayer extends RecyclerView.Adapter<DataDisplayer.ViewHolder
      */
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView flashCardTextRecycle;
-        private final Button deleteButton;
+        private final Button recoverButton;
 
-        public ViewHolder(View view, AdapterView.OnItemClickListener deleteButtonClick, FlashCardSet flashCardSet) {
+        public ViewHolder(View view, AdapterView.OnItemClickListener recoverButtonClick, FlashCardSet flashCardSet) {
             super(view);
             // Define click listener for the ViewHolder's View
             flashCardTextRecycle = (TextView) view.findViewById(R.id.flashCardTextRecycle);
-            deleteButton = (Button) view.findViewById(R.id.deleteButton);
+            recoverButton = (Button) view.findViewById(R.id.recoveryButton);
 
             //Clicking this will mark the cooresponding flashcard as deleted
             // and it will not pop up as a flashcard until restored
-            deleteButton.setOnClickListener(new View.OnClickListener() {
+            recoverButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                        //set the flashcard as deleted
-                        FlashCard card = flashCardSet.getFlashCardById((String)deleteButton.getTag());
-                        card.markDeleted();
+                    //set the flashcard as deleted
+                    FlashCard card = flashCardSet.getFlashCardById((String)recoverButton.getTag());
+                    card.markRecovered();
 
-                        //delete the views associated with that flashcard
-                        ViewGroup parentView = ((ViewGroup) flashCardTextRecycle.getParent());
-                        parentView.removeView(flashCardTextRecycle);
-                        parentView.removeView(deleteButton);
+                    //delete the views associated with that flashcard
+                    ViewGroup parentView = ((ViewGroup) flashCardTextRecycle.getParent());
+                    parentView.removeView(flashCardTextRecycle);
+                    parentView.removeView(recoverButton);
                 }
             });
 
@@ -57,8 +57,8 @@ public class DataDisplayer extends RecyclerView.Adapter<DataDisplayer.ViewHolder
             return flashCardTextRecycle;
         }
 
-        public Button deleteButton() {
-            return deleteButton;
+        public Button recoverButton() {
+            return recoverButton;
         }
 
         public View getView()
@@ -74,7 +74,7 @@ public class DataDisplayer extends RecyclerView.Adapter<DataDisplayer.ViewHolder
      * @param flashCards contain the flashcards the data to populate views to be used
      * by RecyclerView
      */
-    public DataDisplayer(FlashCardSet flashCards) {
+    public CardRecoverAdapter(FlashCardSet flashCards) {
         flashCardSet = flashCards;
     }
 
@@ -84,9 +84,9 @@ public class DataDisplayer extends RecyclerView.Adapter<DataDisplayer.ViewHolder
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         // Create a new view, which defines the UI of the list item
         View view = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.text_row_item, viewGroup, false);
+                .inflate(R.layout.recover_view, viewGroup, false);
 
-        return new ViewHolder(view,deleteButtonClick,flashCardSet);
+        return new ViewHolder(view,recoverButtonClick,flashCardSet);
     }
 
     // Replace the contents of a view (invoked by the layout manager)
@@ -95,7 +95,7 @@ public class DataDisplayer extends RecyclerView.Adapter<DataDisplayer.ViewHolder
 
         FlashCard card = flashCardSet.getIndex(position);
         viewHolder.getTextView().setText(card.toString());
-        viewHolder.deleteButton().setTag(card.getUuid());
+        viewHolder.recoverButton().setTag(card.getUuid());
 
     }
 
@@ -105,4 +105,3 @@ public class DataDisplayer extends RecyclerView.Adapter<DataDisplayer.ViewHolder
         return flashCardSet.size();
     }
 }
-

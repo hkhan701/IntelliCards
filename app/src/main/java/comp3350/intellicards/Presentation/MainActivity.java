@@ -81,7 +81,9 @@ public class MainActivity extends Activity {
                 questionInput.setText("");
                 answerInput.setText("");
                 System.out.println("Current FlashCardSet: " + flashCardSet);
-                printList(flashCardSet.getFlashcards());
+                printViewList(flashCardSet.getFlashcards());
+                printRecoverList(flashCardSet.getDeletedFlashCards());
+
 
             }
         });
@@ -98,18 +100,32 @@ public class MainActivity extends Activity {
     }
 
 
-    public void printList(FlashCardSet flashCardSet)
+    public void printViewList(FlashCardSet flashCardSet)
     {
         RecyclerView recyclerView;
-        DataDisplayer dataDisplayer;
+        CardViewAdapter cardViewAdapter;
         RecyclerView.LayoutManager layoutManager;
 
         recyclerView = findViewById(R.id.recycleView);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        dataDisplayer = new DataDisplayer(flashCardSet);
-        recyclerView.setAdapter(dataDisplayer);
+        cardViewAdapter = new CardViewAdapter(flashCardSet);
+        recyclerView.setAdapter(cardViewAdapter);
+    }
+
+    public void printRecoverList(FlashCardSet flashCardSet)
+    {
+        RecyclerView recyclerRecoverView;
+        CardRecoverAdapter recoverAdapter;
+        RecyclerView.LayoutManager layoutManager;
+
+        recyclerRecoverView = findViewById(R.id.recycleRecoverView);
+        layoutManager = new LinearLayoutManager(this);
+        recyclerRecoverView.setLayoutManager(layoutManager);
+
+        recoverAdapter = new CardRecoverAdapter(flashCardSet);
+        recyclerRecoverView.setAdapter(recoverAdapter);
     }
 
 //    private String[] arrayListToStringList(List<FlashCard> flashCards)
