@@ -1,17 +1,17 @@
-package comp3350.intellicards;
+package comp3350.intellicards.Presentation;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import comp3350.intellicards.Objects.FlashCard;
+import comp3350.intellicards.Objects.FlashCardSet;
 import comp3350.intellicards.R;
 
 public class DataDisplayer extends RecyclerView.Adapter<DataDisplayer.ViewHolder> {

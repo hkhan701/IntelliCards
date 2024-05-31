@@ -1,4 +1,4 @@
-package comp3350.intellicards;
+package comp3350.intellicards.Presentation;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -13,9 +13,9 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import comp3350.intellicards.Objects.FlashCard;
+import comp3350.intellicards.Objects.FlashCardSet;
 import comp3350.intellicards.R;
-
-import java.util.List;
 
 public class MainActivity extends Activity {
 

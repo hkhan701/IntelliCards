@@ -1,4 +1,4 @@
-package comp3350.intellicards;
+package comp3350.intellicards.Objects;
 import androidx.annotation.NonNull;
 
 import java.util.UUID;

@@ -1,10 +1,12 @@
-package comp3350.intellicards;
+package comp3350.intellicards.Objects;
 
 import androidx.annotation.NonNull;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+
+import comp3350.intellicards.Objects.FlashCard;
 
 public class FlashCardSet {
     private final UUID uuid;
