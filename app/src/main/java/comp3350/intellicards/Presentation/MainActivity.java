@@ -1,6 +1,7 @@
 package comp3350.intellicards.Presentation;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -22,7 +23,6 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_main);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -33,11 +33,11 @@ public class MainActivity extends Activity {
         // Create a new FlashCardSet object
         FlashCardSet flashCardSet = new FlashCardSet("New Set");
 
-
         // get all the page views in variables
         TextView questionTextBox = findViewById(R.id.question);
         TextView answerTextBox = findViewById(R.id.answer);
         Button submitTextButton = findViewById(R.id.submitFlashcard);
+        Button profilePageButton = findViewById(R.id.profileButton);
 
         questionTextBox.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,6 +85,15 @@ public class MainActivity extends Activity {
 
             }
         });
+
+        profilePageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
+                startActivity(intent);
+            }
+        });
+
 
     }
 
