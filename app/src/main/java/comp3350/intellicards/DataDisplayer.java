@@ -40,8 +40,15 @@ public class DataDisplayer extends RecyclerView.Adapter<DataDisplayer.ViewHolder
             deleteButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                       FlashCard card = flashCardSet.getFlashCardById((String)deleteButton.getTag());
-                       card.markDeleted();
+                        //set the flashcard as deleted
+                        FlashCard card = flashCardSet.getFlashCardById((String)deleteButton.getTag());
+                        card.markDeleted();
+
+                        //delete the views associated with that flashcard
+                        ViewGroup parentView = ((ViewGroup) flashCardTextRecycle.getParent());
+                        parentView.removeView(flashCardTextRecycle);
+                        parentView.removeView(deleteButton);
+
 
                 }
             });
@@ -88,8 +95,9 @@ public class DataDisplayer extends RecyclerView.Adapter<DataDisplayer.ViewHolder
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
 
-        // Get element from your dataset at this position and replace the
-        // contents of the view with that element
+
+        // gonna have to delete the view that is made before the bind
+        // even though it doesnt show on the UI, its still invisibly there
         FlashCard card = flashCardSet.getFlashcards().get(position);
         if (card.isDeleted())
         {
