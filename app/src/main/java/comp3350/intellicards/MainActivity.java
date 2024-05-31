@@ -38,7 +38,6 @@ public class MainActivity extends Activity {
         TextView questionTextBox = findViewById(R.id.question);
         TextView answerTextBox = findViewById(R.id.answer);
         Button submitTextButton = findViewById(R.id.submitFlashcard);
-        Button refreshButton = findViewById(R.id.refreshButton);
 
         questionTextBox.setOnClickListener(new View.OnClickListener() {
             @Override
