@@ -48,8 +48,6 @@ public class DataDisplayer extends RecyclerView.Adapter<DataDisplayer.ViewHolder
                         ViewGroup parentView = ((ViewGroup) flashCardTextRecycle.getParent());
                         parentView.removeView(flashCardTextRecycle);
                         parentView.removeView(deleteButton);
-
-
                 }
             });
 
@@ -95,32 +93,16 @@ public class DataDisplayer extends RecyclerView.Adapter<DataDisplayer.ViewHolder
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
 
-
-        // gonna have to delete the view that is made before the bind
-        // even though it doesnt show on the UI, its still invisibly there
-        FlashCard card = flashCardSet.getFlashcards().get(position);
-        if (card.isDeleted())
-        {
-            ViewGroup parentView = ((ViewGroup) viewHolder.getTextView().getParent());
-            parentView.removeView(viewHolder.getTextView());
-            parentView.removeView(viewHolder.deleteButton());
-            ViewGroup parentContainer = (ViewGroup) parentView.getParent();
-            if (parentContainer != null) {
-                parentContainer.removeView(parentView);
-            }
-
-        } else
-        {
-            viewHolder.getTextView().setText(card.toString());
-            viewHolder.deleteButton().setTag(card.getUuid());
-        }
+        FlashCard card = flashCardSet.getIndex(position);
+        viewHolder.getTextView().setText(card.toString());
+        viewHolder.deleteButton().setTag(card.getUuid());
 
     }
 
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return flashCardSet.getFlashcards().size();
+        return flashCardSet.size();
     }
 }
 

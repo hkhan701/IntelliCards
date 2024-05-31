@@ -16,12 +16,13 @@ public class FlashCardSet {
 
     public FlashCardSet() {
         this.uuid = UUID.randomUUID();
+        this.flashcards = new ArrayList<>();
     }
 
     public FlashCardSet(String name) {
         this();
         this.flashCardSetName = name;
-        this.flashcards = new ArrayList<>();
+
     }
 
     public String getUuid() {
@@ -32,9 +33,33 @@ public class FlashCardSet {
         flashcards.add(flashCard);
     }
 
-    public List<FlashCard> getFlashcards() {
-        return flashcards;
+    //return the undeleted flashcards
+    public FlashCardSet getFlashcards() {
+        FlashCardSet undeletedCards = new FlashCardSet();
+        for(FlashCard card:flashcards)
+        {
+            if(!card.isDeleted())
+            {
+                undeletedCards.addFlashCard(card);
+            }
+        }
+        return undeletedCards;
     }
+
+    //return deleted flashcards
+    public FlashCardSet getDeletedFlashCards()
+    {
+        FlashCardSet deletedCards = new FlashCardSet();
+        for(FlashCard card:flashcards)
+        {
+            if(card.isDeleted())
+            {
+                deletedCards.addFlashCard(card);
+            }
+        }
+        return deletedCards;
+    }
+
 
     public String getFlashCardSetName() {
         return flashCardSetName;
@@ -47,9 +72,9 @@ public class FlashCardSet {
 //was considering implementing a hashtable for this search, but too much overhead
     public FlashCard getFlashCardById(String uuid)
     {
-        for(int i = 0; i < getFlashcards().size() ; i++)
+        for(int i = 0; i < size() ; i++)
         {
-            FlashCard card = getFlashcards().get(i);
+            FlashCard card = getIndex(i);
             if (card.getUuid().equals(uuid))
             {
                 return card;
@@ -57,6 +82,18 @@ public class FlashCardSet {
         }
         return null;
     }
+
+    public FlashCard getIndex(int index)
+    {
+        return flashcards.get(index);
+    }
+
+    public int size()
+    {
+        return flashcards.size();
+    }
+
+
 
     @NonNull
     @Override

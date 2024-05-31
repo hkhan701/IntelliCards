@@ -81,7 +81,7 @@ public class MainActivity extends Activity {
                 questionInput.setText("");
                 answerInput.setText("");
                 System.out.println("Current FlashCardSet: " + flashCardSet);
-                printList(flashCardSet);
+                printList(flashCardSet.getFlashcards());
 
             }
         });
