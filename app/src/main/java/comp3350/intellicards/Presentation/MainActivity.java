@@ -22,13 +22,9 @@ public class MainActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //set layout
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
 
         // Create a new FlashCardSet object
         FlashCardSet flashCardSet = new FlashCardSet("New Set");
@@ -59,32 +55,17 @@ public class MainActivity extends Activity {
                 // Create a new FlashCard object
                 FlashCard flashCard = new FlashCard();
 
-                // Find the EditText views in the layout
-                EditText questionInput = findViewById(R.id.question);
-                EditText answerInput = findViewById(R.id.answer);
-
                 // Set the FlashCard question and answer from the EditText inputs
-                flashCard.setQuestion(questionInput.getText().toString());
-                flashCard.setAnswer(answerInput.getText().toString());
-
-                // Find the TextView elements in the layout
-                TextView questionTextView = findViewById(R.id.question_text_view);
-                TextView answerTextView = findViewById(R.id.answer_text_view);
+                flashCard.setQuestion(questionTextBox.getText().toString());
+                flashCard.setAnswer(answerTextBox.getText().toString());
+                // Clear the EditText inputs
+                questionTextBox.setText("");
+                answerTextBox.setText("");
 
                 flashCardSet.addFlashCard(flashCard); // Add the FlashCard to the FlashCardSet
 
-                // Update the TextViews with the FlashCard data
-                questionTextView.setText(flashCard.getQuestion());
-                answerTextView.setText(flashCard.getAnswer());
-
-                // Clear the EditText inputs
-                questionInput.setText("");
-                answerInput.setText("");
-                System.out.println("Current FlashCardSet: " + flashCardSet);
                 printViewList(flashCardSet.getFlashcards());
                 printRecoverList(flashCardSet.getDeletedFlashCards());
-
-
             }
         });
 
@@ -128,14 +109,4 @@ public class MainActivity extends Activity {
         recyclerRecoverView.setAdapter(recoverAdapter);
     }
 
-//    private String[] arrayListToStringList(List<FlashCard> flashCards)
-//    {
-//        int size = flashCards.size();
-//        String[] list = new String[size];
-//        for(int i = 0; i < size; i++)
-//        {
-//            list[i] = flashCards.get(i).toString();
-//        }
-//        return list;
-//    }
 }

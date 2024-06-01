@@ -17,26 +17,24 @@ import comp3350.intellicards.R;
 public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHolder> {
 
     private FlashCardSet flashCardSet;
-
     private AdapterView.OnItemClickListener deleteButtonClick;
-
 
     /**
      * Provide a reference to the type of views that you are using
-     * (custom ViewHolder)
      */
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView flashCardTextRecycle;
         private final Button deleteButton;
 
-        public ViewHolder(View view, AdapterView.OnItemClickListener deleteButtonClick, FlashCardSet flashCardSet) {
+        public ViewHolder(View view, FlashCardSet flashCardSet) {
             super(view);
+
             // Define click listener for the ViewHolder's View
             flashCardTextRecycle = (TextView) view.findViewById(R.id.flashCardTextRecycle);
             deleteButton = (Button) view.findViewById(R.id.deleteButton);
 
-            //Clicking this will mark the cooresponding flashcard as deleted
-            // and it will not pop up as a flashcard until restored
+            //Clicking this will mark the corresponding card as deleted
+            // and it will not pop up as a flashcard in the recycle view until restored
             deleteButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -52,7 +50,7 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
                 }
             });
 
-        }
+        }//end of ViewHolder class
 
         public TextView getTextView() {
             return flashCardTextRecycle;
@@ -87,7 +85,7 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
         View view = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.flashcard_view, viewGroup, false);
 
-        return new ViewHolder(view,deleteButtonClick,flashCardSet);
+        return new ViewHolder(view,flashCardSet);
     }
 
     // Replace the contents of a view (invoked by the layout manager)

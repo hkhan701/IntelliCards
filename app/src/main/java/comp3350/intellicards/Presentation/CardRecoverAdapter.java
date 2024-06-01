@@ -29,14 +29,14 @@ public class CardRecoverAdapter extends RecyclerView.Adapter<CardRecoverAdapter.
         private final TextView flashCardTextRecycle;
         private final Button recoverButton;
 
-        public ViewHolder(View view, AdapterView.OnItemClickListener recoverButtonClick, FlashCardSet flashCardSet) {
+        public ViewHolder(View view, FlashCardSet flashCardSet) {
             super(view);
             // Define click listener for the ViewHolder's View
             flashCardTextRecycle = (TextView) view.findViewById(R.id.flashCardTextRecycle);
             recoverButton = (Button) view.findViewById(R.id.recoveryButton);
 
-            //Clicking this will mark the cooresponding flashcard as deleted
-            // and it will not pop up as a flashcard until restored
+            //Clicking this will mark the corresponding flashcard as recovered
+            // and it will not pop up as a flashcard in the recycle view until restored
             recoverButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -51,7 +51,7 @@ public class CardRecoverAdapter extends RecyclerView.Adapter<CardRecoverAdapter.
                 }
             });
 
-        }
+        }// end of ViewHolder class
 
         public TextView getTextView() {
             return flashCardTextRecycle;
@@ -59,11 +59,6 @@ public class CardRecoverAdapter extends RecyclerView.Adapter<CardRecoverAdapter.
 
         public Button recoverButton() {
             return recoverButton;
-        }
-
-        public View getView()
-        {
-            return super.itemView.getRootView();
         }
 
     }
@@ -86,13 +81,12 @@ public class CardRecoverAdapter extends RecyclerView.Adapter<CardRecoverAdapter.
         View view = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.recover_view, viewGroup, false);
 
-        return new ViewHolder(view,recoverButtonClick,flashCardSet);
+        return new ViewHolder(view,flashCardSet);
     }
 
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
-
         FlashCard card = flashCardSet.getIndex(position);
         viewHolder.getTextView().setText(card.toString());
         viewHolder.recoverButton().setTag(card.getUuid());
