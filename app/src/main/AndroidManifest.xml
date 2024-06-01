@@ -13,11 +13,25 @@
         android:theme="@style/Theme.IntelliCards"
         tools:targetApi="31">
         <activity
-            android:name="comp3350.intellicards.MainActivity"
+            android:name="comp3350.intellicards.Presentation.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name="comp3350.intellicards.Presentation.ProfileActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.PROFILE-PAGE" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name="comp3350.intellicards.Presentation.RecoverFlashcardsActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.RECOVERY_PAGE" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

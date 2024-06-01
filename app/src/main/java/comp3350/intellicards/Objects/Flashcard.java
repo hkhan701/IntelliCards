@@ -1,9 +1,9 @@
-package comp3350.intellicards;
+package comp3350.intellicards.Objects;
 import androidx.annotation.NonNull;
 
 import java.util.UUID;
 
-public class FlashCard {
+public class Flashcard {
 
     private final UUID uuid;
 
@@ -12,16 +12,25 @@ public class FlashCard {
     private String question;
     private boolean deleted;
 
-    public FlashCard() {
-        this.uuid = UUID.randomUUID();
+    // Constructor with answer and question
+    public Flashcard(@NonNull String answer, @NonNull String question) {
+        this(UUID.randomUUID(), answer, question);
+    }
+
+    public Flashcard()
+    {
+        this(UUID.randomUUID(),"no answer set", "no question set");
+    }
+
+
+    // Private constructor used internally to ensure UUID is always set
+    private Flashcard(UUID uuid, @NonNull String answer, @NonNull String question) {
+        this.uuid = uuid;
+        this.answer = answer;
+        this.question = question;
         this.deleted = false;
     }
 
-    public FlashCard(UUID uuid) {
-        this();
-        this.answer = "";
-        this.question = "";
-    }
 
     public String getUuid() {
         return uuid.toString();
