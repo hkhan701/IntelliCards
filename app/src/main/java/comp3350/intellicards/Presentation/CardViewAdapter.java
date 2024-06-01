@@ -16,21 +16,21 @@ import comp3350.intellicards.R;
 
 public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHolder> {
 
-    private FlashcardSet flashCardSet;
+    private FlashcardSet flashcardSet;
     private AdapterView.OnItemClickListener deleteButtonClick;
 
     /**
      * Provide a reference to the type of views that you are using
      */
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        private final TextView flashCardTextRecycle;
+        private final TextView flashcardTextRecycle;
         private final Button deleteButton;
 
-        public ViewHolder(View view, FlashcardSet flashCardSet) {
+        public ViewHolder(View view, FlashcardSet flashcardSet) {
             super(view);
 
             // Define click listener for the ViewHolder's View
-            flashCardTextRecycle = (TextView) view.findViewById(R.id.flashCardTextRecycle);
+            flashcardTextRecycle = (TextView) view.findViewById(R.id.flashcardTextRecycle);
             deleteButton = (Button) view.findViewById(R.id.deleteButton);
 
             //Clicking this will mark the corresponding card as deleted
@@ -39,12 +39,12 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
                 @Override
                 public void onClick(View v) {
                         //set the flashcard as deleted
-                        Flashcard card = flashCardSet.getFlashCardById((String)deleteButton.getTag());
+                        Flashcard card = flashcardSet.getFlashCardById((String)deleteButton.getTag());
                         card.markDeleted();
 
                         //delete the views associated with that flashcard
-                        ViewGroup parentView = ((ViewGroup) flashCardTextRecycle.getParent());
-                        parentView.removeView(flashCardTextRecycle);
+                        ViewGroup parentView = ((ViewGroup) flashcardTextRecycle.getParent());
+                        parentView.removeView(flashcardTextRecycle);
                         parentView.removeView(deleteButton);
 
                 }
@@ -53,7 +53,7 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
         }//end of ViewHolder class
 
         public TextView getTextView() {
-            return flashCardTextRecycle;
+            return flashcardTextRecycle;
         }
 
         public Button deleteButton() {
@@ -70,11 +70,11 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
     /**
      * Initialize the dataset of the Adapter
      *
-     * @param flashCards contain the flashcards the data to populate views to be used
+     * @param flashcards contain the flashcards the data to populate views to be used
      * by RecyclerView
      */
-    public CardViewAdapter(FlashcardSet flashCards) {
-        flashCardSet = flashCards;
+    public CardViewAdapter(FlashcardSet flashcards) {
+        flashcardSet = flashcards;
     }
 
     // Create new views (invoked by the layout manager)
@@ -85,14 +85,14 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
         View view = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.flashcard_view, viewGroup, false);
 
-        return new ViewHolder(view,flashCardSet);
+        return new ViewHolder(view,flashcardSet);
     }
 
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
 
-        Flashcard card = flashCardSet.getIndex(position);
+        Flashcard card = flashcardSet.getIndex(position);
         viewHolder.getTextView().setText(card.toString());
         viewHolder.deleteButton().setTag(card.getUuid());
 
@@ -101,7 +101,7 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return flashCardSet.size();
+        return flashcardSet.size();
     }
 }
 

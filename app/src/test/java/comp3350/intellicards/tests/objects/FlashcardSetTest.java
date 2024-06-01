@@ -29,10 +29,10 @@ public class FlashcardSetTest {
 
     @Test
     public void testAddFlashCard() {
-        Flashcard flashCard = new Flashcard();
-        cardSet.addFlashCard(flashCard);
+        Flashcard flashcard = new Flashcard();
+        cardSet.addFlashCard(flashcard);
         assertEquals(1, cardSet.size());
-        assertEquals(flashCard, cardSet.getIndex(0));
+        assertEquals(flashcard, cardSet.getIndex(0));
     }
 
     @Test

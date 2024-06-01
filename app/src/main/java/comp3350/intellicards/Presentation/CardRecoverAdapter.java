@@ -16,7 +16,7 @@ import comp3350.intellicards.R;
 
 public class CardRecoverAdapter extends RecyclerView.Adapter<CardRecoverAdapter.ViewHolder> {
 
-    private FlashcardSet flashCardSet;
+    private FlashcardSet flashcardSet;
 
     private AdapterView.OnItemClickListener recoverButtonClick;
 
@@ -26,13 +26,13 @@ public class CardRecoverAdapter extends RecyclerView.Adapter<CardRecoverAdapter.
      * (custom ViewHolder)
      */
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        private final TextView flashCardTextRecycle;
+        private final TextView flashcardTextRecycle;
         private final Button recoverButton;
 
-        public ViewHolder(View view, FlashcardSet flashCardSet) {
+        public ViewHolder(View view, FlashcardSet flashcardSet) {
             super(view);
             // Define click listener for the ViewHolder's View
-            flashCardTextRecycle = (TextView) view.findViewById(R.id.flashCardTextRecycle);
+            flashcardTextRecycle = (TextView) view.findViewById(R.id.flashcardTextRecycle);
             recoverButton = (Button) view.findViewById(R.id.recoveryButton);
 
             //Clicking this will mark the corresponding flashcard as recovered
@@ -41,12 +41,12 @@ public class CardRecoverAdapter extends RecyclerView.Adapter<CardRecoverAdapter.
                 @Override
                 public void onClick(View v) {
                     //set the flashcard as deleted
-                    Flashcard card = flashCardSet.getFlashCardById((String)recoverButton.getTag());
+                    Flashcard card = flashcardSet.getFlashCardById((String)recoverButton.getTag());
                     card.markRecovered();
 
                     //delete the views associated with that flashcard
-                    ViewGroup parentView = ((ViewGroup) flashCardTextRecycle.getParent());
-                    parentView.removeView(flashCardTextRecycle);
+                    ViewGroup parentView = ((ViewGroup) flashcardTextRecycle.getParent());
+                    parentView.removeView(flashcardTextRecycle);
                     parentView.removeView(recoverButton);
                 }
             });
@@ -54,7 +54,7 @@ public class CardRecoverAdapter extends RecyclerView.Adapter<CardRecoverAdapter.
         }// end of ViewHolder class
 
         public TextView getTextView() {
-            return flashCardTextRecycle;
+            return flashcardTextRecycle;
         }
 
         public Button recoverButton() {
@@ -66,11 +66,11 @@ public class CardRecoverAdapter extends RecyclerView.Adapter<CardRecoverAdapter.
     /**
      * Initialize the dataset of the Adapter
      *
-     * @param flashCards contain the flashcards the data to populate views to be used
+     * @param flashcards contain the flashcards the data to populate views to be used
      * by RecyclerView
      */
-    public CardRecoverAdapter(FlashcardSet flashCards) {
-        flashCardSet = flashCards;
+    public CardRecoverAdapter(FlashcardSet flashcards) {
+        flashcardSet = flashcards;
     }
 
     // Create new views (invoked by the layout manager)
@@ -81,13 +81,13 @@ public class CardRecoverAdapter extends RecyclerView.Adapter<CardRecoverAdapter.
         View view = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.recover_view, viewGroup, false);
 
-        return new ViewHolder(view,flashCardSet);
+        return new ViewHolder(view,flashcardSet);
     }
 
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
-        Flashcard card = flashCardSet.getIndex(position);
+        Flashcard card = flashcardSet.getIndex(position);
         viewHolder.getTextView().setText(card.toString());
         viewHolder.recoverButton().setTag(card.getUuid());
 
@@ -96,6 +96,6 @@ public class CardRecoverAdapter extends RecyclerView.Adapter<CardRecoverAdapter.
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return flashCardSet.size();
+        return flashcardSet.size();
     }
 }

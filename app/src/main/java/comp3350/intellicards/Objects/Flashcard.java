@@ -12,24 +12,25 @@ public class Flashcard {
     private String question;
     private boolean deleted;
 
-    public Flashcard() {
-        this.uuid = UUID.randomUUID();
+    // Constructor with answer and question
+    public Flashcard(@NonNull String answer, @NonNull String question) {
+        this(UUID.randomUUID(), answer, question);
+    }
+
+    public Flashcard()
+    {
+        this(UUID.randomUUID(),"no answer set", "no question set");
+    }
+
+
+    // Private constructor used internally to ensure UUID is always set
+    private Flashcard(UUID uuid, @NonNull String answer, @NonNull String question) {
+        this.uuid = uuid;
+        this.answer = answer;
+        this.question = question;
         this.deleted = false;
     }
 
-    public Flashcard(String answer, String question)
-    {
-        this();
-        this.answer = answer;
-        this.question = question;
-
-    }
-
-    public Flashcard(UUID uuid) {
-        this();
-        this.answer = "";
-        this.question = "";
-    }
 
     public String getUuid() {
         return uuid.toString();

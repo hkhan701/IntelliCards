@@ -31,10 +31,10 @@ public class MainActivity extends Activity {
             FlashcardSetPersistenceStub.initializeStubData();
         }
 
-        FlashcardSet flashCardSet = FlashcardSetPersistenceStub.getFlashcardSet();
+        FlashcardSet flashcardSet = FlashcardSetPersistenceStub.getFlashcardSet();
 
         // Create view in UI for them
-        printViewList(flashCardSet.getFlashcards());
+        printViewList(flashcardSet.getFlashcards());
 
         // get all the page views in variables
         TextView questionTextBox = findViewById(R.id.question);
@@ -60,18 +60,16 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View v) {
                 // Create a new FlashCard object
-                Flashcard flashCard = new Flashcard();
-
                 // Set the FlashCard question and answer from the EditText inputs
-                flashCard.setQuestion(questionTextBox.getText().toString());
-                flashCard.setAnswer(answerTextBox.getText().toString());
+                Flashcard flashcard = new Flashcard(answerTextBox.getText().toString(),questionTextBox.getText().toString());
+
                 // Clear the EditText inputs
                 questionTextBox.setText("");
                 answerTextBox.setText("");
 
-                flashCardSet.addFlashCard(flashCard); // Add the FlashCard to the FlashCardSet
+                flashcardSet.addFlashCard(flashcard); // Add the FlashCard to the FlashCardSet
 
-                printViewList(flashCardSet.getFlashcards());
+                printViewList(flashcardSet.getFlashcards());
             }
         });
 
@@ -87,7 +85,7 @@ public class MainActivity extends Activity {
     }
 
 
-    public void printViewList(FlashcardSet flashCardSet)
+    public void printViewList(FlashcardSet flashcardSet)
     {
         RecyclerView recyclerView;
         CardViewAdapter cardViewAdapter;
@@ -97,7 +95,7 @@ public class MainActivity extends Activity {
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        cardViewAdapter = new CardViewAdapter(flashCardSet);
+        cardViewAdapter = new CardViewAdapter(flashcardSet);
         recyclerView.setAdapter(cardViewAdapter);
     }
 

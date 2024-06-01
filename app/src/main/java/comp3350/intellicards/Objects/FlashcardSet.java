@@ -9,7 +9,7 @@ import java.util.UUID;
 public class FlashcardSet {
     private final UUID uuid;
 
-    private String flashCardSetName;
+    private String flashcardSetName;
     private List<Flashcard> flashcards;
 
     public FlashcardSet() {
@@ -19,7 +19,7 @@ public class FlashcardSet {
 
     public FlashcardSet(String name) {
         this();
-        this.flashCardSetName = name;
+        this.flashcardSetName = name;
 
     }
 
@@ -27,8 +27,8 @@ public class FlashcardSet {
         return uuid.toString();
     }
 
-    public void addFlashCard(Flashcard flashCard) {
-        flashcards.add(flashCard);
+    public void addFlashCard(Flashcard flashcard) {
+        flashcards.add(flashcard);
     }
 
     //return the undeleted flashcards
@@ -41,6 +41,7 @@ public class FlashcardSet {
                 undeletedCards.addFlashCard(card);
             }
         }
+
         return undeletedCards;
     }
 
@@ -60,21 +61,17 @@ public class FlashcardSet {
 
 
     public String getFlashCardSetName() {
-        return flashCardSetName;
+        return flashcardSetName;
     }
 
     public void setFlashCardSetName(String name) {
-        this.flashCardSetName = name;
+        this.flashcardSetName = name;
     }
 
-//was considering implementing a hashtable for this search, but too much overhead
     public Flashcard getFlashCardById(String uuid)
     {
-        for(int i = 0; i < size() ; i++)
-        {
-            Flashcard card = getIndex(i);
-            if (card.getUuid().equals(uuid))
-            {
+        for (Flashcard card : flashcards) {
+            if (card.getUuid().equals(uuid)) {
                 return card;
             }
         }
@@ -98,7 +95,7 @@ public class FlashcardSet {
     public String toString() {
         return "FlashCardSet{" +
                 "uuid=" + uuid +
-                ", flashCardSetName='" + flashCardSetName + '\'' +
+                ", flashcardSetName='" + flashcardSetName + '\'' +
                 ", flashcards=" + flashcards +
                 '}';
     }

@@ -21,9 +21,9 @@ public class RecoverFlashcardsActivity extends Activity {
 
 
         //get the stub data
-        FlashcardSet flashCardSet = FlashcardSetPersistenceStub.getFlashcardSet();
+        FlashcardSet flashcardSet = FlashcardSetPersistenceStub.getFlashcardSet();
         //print the deleted cards on the UI
-        printRecoverList(flashCardSet.getDeletedFlashCards());
+        printRecoverList(flashcardSet.getDeletedFlashCards());
 
 
         Button backButton = findViewById(R.id.backButton);
@@ -36,7 +36,7 @@ public class RecoverFlashcardsActivity extends Activity {
         });
     }
 
-    public void printRecoverList(FlashcardSet flashCardSet)
+    public void printRecoverList(FlashcardSet flashcardSet)
     {
         RecyclerView recyclerRecoverView;
         CardRecoverAdapter recoverAdapter;
@@ -46,7 +46,7 @@ public class RecoverFlashcardsActivity extends Activity {
         layoutManager = new LinearLayoutManager(this);
         recyclerRecoverView.setLayoutManager(layoutManager);
 
-        recoverAdapter = new CardRecoverAdapter(flashCardSet);
+        recoverAdapter = new CardRecoverAdapter(flashcardSet);
         recyclerRecoverView.setAdapter(recoverAdapter);
     }
 }

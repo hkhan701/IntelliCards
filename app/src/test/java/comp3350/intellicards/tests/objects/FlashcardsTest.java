@@ -17,66 +17,66 @@ import comp3350.intellicards.Objects.FlashcardSet;
 public class FlashcardsTest {
 
     private FlashcardSet cardSet;
-    private Flashcard flashCard;
+    private Flashcard flashcard;
 
     @Before
     public void setUp(){
         cardSet = new FlashcardSet();
-        flashCard = new Flashcard();
+        flashcard = new Flashcard();
     }
     @Test
     public void testGetUuid() {
-        assertNotNull(flashCard.getUuid());
+        assertNotNull(flashcard.getUuid());
     }
 
     @Test
     public void testGetAnswer() {
-        assertNull(flashCard.getAnswer());
+        assertNotNull(flashcard.getAnswer());
     }
 
     @Test
     public void testGetQuestion() {
-        assertNull(flashCard.getQuestion());
+        assertNotNull(flashcard.getQuestion());
     }
 
     @Test
     public void testSetAnswer() {
-        flashCard.setAnswer("Test answer");
-        assertEquals("Test answer", flashCard.getAnswer());
+        flashcard.setAnswer("Test answer");
+        assertEquals("Test answer", flashcard.getAnswer());
     }
 
     @Test
     public void testSetQuestion() {
-        flashCard.setQuestion("Test question");
-        assertEquals("Test question", flashCard.getQuestion());
+        flashcard.setQuestion("Test question");
+        assertEquals("Test question", flashcard.getQuestion());
     }
 
     @Test
     public void testIsDeleted() {
-        assertFalse(flashCard.isDeleted());
+        assertFalse(flashcard.isDeleted());
     }
 
     @Test
     public void testMarkDeleted() {
-        flashCard.markDeleted();
-        assertTrue(flashCard.isDeleted());
+        flashcard.markDeleted();
+        assertTrue(flashcard.isDeleted());
     }
 
     @Test
     public void testMarkRecovered() {
-        flashCard.markDeleted();
-        flashCard.markRecovered();
-        assertFalse(flashCard.isDeleted());
+        flashcard.markDeleted();
+        flashcard.markRecovered();
+        assertFalse(flashcard.isDeleted());
     }
 
     @Test
     public void testToString() {
-        String expectedString = "uuid='" + flashCard.getUuid() + "'\n" +
+        String expectedString = "uuid='" + flashcard.getUuid() + "'\n" +
                 ", answer='Test answer'\n" +
                 ", question='Test question'\n";
-        flashCard.setAnswer("Test answer");
-        flashCard.setQuestion("Test question");
-        assertEquals(expectedString, flashCard.toString());
+        flashcard.setAnswer("Test answer");
+        flashcard.setQuestion("Test question");
+        assertEquals(expectedString, flashcard.toString());
     }
 
     @Test
@@ -86,10 +86,10 @@ public class FlashcardsTest {
 
     @Test
     public void testAddFlashCard() {
-        Flashcard flashCard = new Flashcard();
-        cardSet.addFlashCard(flashCard);
+        Flashcard flashcard = new Flashcard();
+        cardSet.addFlashCard(flashcard);
         assertEquals(1, cardSet.size());
-        assertEquals(flashCard, cardSet.getIndex(0));
+        assertEquals(flashcard, cardSet.getIndex(0));
     }
 
     @Test
