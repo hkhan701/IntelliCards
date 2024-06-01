@@ -10,13 +10,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import comp3350.intellicards.Objects.FlashCard;
-import comp3350.intellicards.Objects.FlashCardSet;
+import comp3350.intellicards.Objects.Flashcard;
+import comp3350.intellicards.Objects.FlashcardSet;
 import comp3350.intellicards.R;
 
 public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHolder> {
 
-    private FlashCardSet flashCardSet;
+    private FlashcardSet flashCardSet;
     private AdapterView.OnItemClickListener deleteButtonClick;
 
     /**
@@ -26,7 +26,7 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
         private final TextView flashCardTextRecycle;
         private final Button deleteButton;
 
-        public ViewHolder(View view, FlashCardSet flashCardSet) {
+        public ViewHolder(View view, FlashcardSet flashCardSet) {
             super(view);
 
             // Define click listener for the ViewHolder's View
@@ -39,7 +39,7 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
                 @Override
                 public void onClick(View v) {
                         //set the flashcard as deleted
-                        FlashCard card = flashCardSet.getFlashCardById((String)deleteButton.getTag());
+                        Flashcard card = flashCardSet.getFlashCardById((String)deleteButton.getTag());
                         card.markDeleted();
 
                         //delete the views associated with that flashcard
@@ -73,7 +73,7 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
      * @param flashCards contain the flashcards the data to populate views to be used
      * by RecyclerView
      */
-    public CardViewAdapter(FlashCardSet flashCards) {
+    public CardViewAdapter(FlashcardSet flashCards) {
         flashCardSet = flashCards;
     }
 
@@ -92,7 +92,7 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
 
-        FlashCard card = flashCardSet.getIndex(position);
+        Flashcard card = flashCardSet.getIndex(position);
         viewHolder.getTextView().setText(card.toString());
         viewHolder.deleteButton().setTag(card.getUuid());
 

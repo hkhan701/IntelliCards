@@ -55,18 +55,9 @@
         android:layout_marginTop="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/submitFlashcard"
-        app:layout_constraintEnd_toStartOf="@+id/recycleRecoverView"
         app:layout_constraintWidth_percent="0.5" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycleRecoverView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        app:layout_constraintStart_toEndOf="@+id/recycleView"
-        app:layout_constraintTop_toBottomOf="@+id/submitFlashcard"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintWidth_percent="0.5" />
+
 
     <Button
         android:id="@+id/profileButton"

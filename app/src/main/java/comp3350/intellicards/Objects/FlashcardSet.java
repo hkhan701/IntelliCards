@@ -6,20 +6,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import comp3350.intellicards.Objects.FlashCard;
-
-public class FlashCardSet {
+public class FlashcardSet {
     private final UUID uuid;
 
     private String flashCardSetName;
-    private List<FlashCard> flashcards;
+    private List<Flashcard> flashcards;
 
-    public FlashCardSet() {
+    public FlashcardSet() {
         this.uuid = UUID.randomUUID();
         this.flashcards = new ArrayList<>();
     }
 
-    public FlashCardSet(String name) {
+    public FlashcardSet(String name) {
         this();
         this.flashCardSetName = name;
 
@@ -29,14 +27,14 @@ public class FlashCardSet {
         return uuid.toString();
     }
 
-    public void addFlashCard(FlashCard flashCard) {
+    public void addFlashCard(Flashcard flashCard) {
         flashcards.add(flashCard);
     }
 
     //return the undeleted flashcards
-    public FlashCardSet getFlashcards() {
-        FlashCardSet undeletedCards = new FlashCardSet();
-        for(FlashCard card:flashcards)
+    public FlashcardSet getFlashcards() {
+        FlashcardSet undeletedCards = new FlashcardSet();
+        for(Flashcard card:flashcards)
         {
             if(!card.isDeleted())
             {
@@ -47,10 +45,10 @@ public class FlashCardSet {
     }
 
     //return deleted flashcards
-    public FlashCardSet getDeletedFlashCards()
+    public FlashcardSet getDeletedFlashCards()
     {
-        FlashCardSet deletedCards = new FlashCardSet();
-        for(FlashCard card:flashcards)
+        FlashcardSet deletedCards = new FlashcardSet();
+        for(Flashcard card:flashcards)
         {
             if(card.isDeleted())
             {
@@ -70,11 +68,11 @@ public class FlashCardSet {
     }
 
 //was considering implementing a hashtable for this search, but too much overhead
-    public FlashCard getFlashCardById(String uuid)
+    public Flashcard getFlashCardById(String uuid)
     {
         for(int i = 0; i < size() ; i++)
         {
-            FlashCard card = getIndex(i);
+            Flashcard card = getIndex(i);
             if (card.getUuid().equals(uuid))
             {
                 return card;
@@ -83,7 +81,7 @@ public class FlashCardSet {
         return null;
     }
 
-    public FlashCard getIndex(int index)
+    public Flashcard getIndex(int index)
     {
         return flashcards.get(index);
     }

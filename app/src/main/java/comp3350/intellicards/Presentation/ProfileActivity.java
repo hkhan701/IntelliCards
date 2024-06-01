@@ -8,10 +8,6 @@ import android.view.View;
 import android.widget.Button;
 
 
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
-
 import comp3350.intellicards.R;
 
 public class ProfileActivity extends Activity {
@@ -34,7 +30,7 @@ public class ProfileActivity extends Activity {
         recoveryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ProfileActivity.this, RecoveryActivity.class);
+                Intent intent = new Intent(ProfileActivity.this, RecoverFlashcardsActivity.class);
                 startActivity(intent);
             }
         });

@@ -28,7 +28,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="comp3350.intellicards.Presentation.RecoveryActivity"
+        <activity android:name="comp3350.intellicards.Presentation.RecoverFlashcardsActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.RECOVERY_PAGE" />

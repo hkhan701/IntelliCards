@@ -3,7 +3,7 @@ import androidx.annotation.NonNull;
 
 import java.util.UUID;
 
-public class FlashCard {
+public class Flashcard {
 
     private final UUID uuid;
 
@@ -12,12 +12,20 @@ public class FlashCard {
     private String question;
     private boolean deleted;
 
-    public FlashCard() {
+    public Flashcard() {
         this.uuid = UUID.randomUUID();
         this.deleted = false;
     }
 
-    public FlashCard(UUID uuid) {
+    public Flashcard(String answer, String question)
+    {
+        this();
+        this.answer = answer;
+        this.question = question;
+
+    }
+
+    public Flashcard(UUID uuid) {
         this();
         this.answer = "";
         this.question = "";

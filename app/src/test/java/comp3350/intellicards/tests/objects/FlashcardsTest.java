@@ -6,8 +6,8 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-import comp3350.intellicards.Objects.FlashCard;
-import comp3350.intellicards.Objects.FlashCardSet;
+import comp3350.intellicards.Objects.Flashcard;
+import comp3350.intellicards.Objects.FlashcardSet;
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -16,13 +16,13 @@ import comp3350.intellicards.Objects.FlashCardSet;
  */
 public class FlashcardsTest {
 
-    private FlashCardSet cardSet;
-    private FlashCard flashCard;
+    private FlashcardSet cardSet;
+    private Flashcard flashCard;
 
     @Before
     public void setUp(){
-        cardSet = new FlashCardSet();
-        flashCard = new FlashCard();
+        cardSet = new FlashcardSet();
+        flashCard = new Flashcard();
     }
     @Test
     public void testGetUuid() {
@@ -86,7 +86,7 @@ public class FlashcardsTest {
 
     @Test
     public void testAddFlashCard() {
-        FlashCard flashCard = new FlashCard();
+        Flashcard flashCard = new Flashcard();
         cardSet.addFlashCard(flashCard);
         assertEquals(1, cardSet.size());
         assertEquals(flashCard, cardSet.getIndex(0));
@@ -94,34 +94,34 @@ public class FlashcardsTest {
 
     @Test
     public void testGetFlashcards() {
-        FlashCard flashCard1 = new FlashCard();
-        FlashCard flashCard2 = new FlashCard();
-        cardSet.addFlashCard(flashCard1);
-        cardSet.addFlashCard(flashCard2);
+        Flashcard flashcard1 = new Flashcard();
+        Flashcard flashcard2 = new Flashcard();
+        cardSet.addFlashCard(flashcard1);
+        cardSet.addFlashCard(flashcard2);
         assertEquals(2, cardSet.getFlashcards().size());
     }
 
     @Test
     public void testGetDeletedFlashCards() {
-        FlashCard flashCard1 = new FlashCard();
-        FlashCard flashCard2 = new FlashCard();
-        flashCard2.markDeleted();
-        cardSet.addFlashCard(flashCard1);
-        cardSet.addFlashCard(flashCard2);
+        Flashcard flashcard1 = new Flashcard();
+        Flashcard flashcard2 = new Flashcard();
+        flashcard2.markDeleted();
+        cardSet.addFlashCard(flashcard1);
+        cardSet.addFlashCard(flashcard2);
         assertEquals(1, cardSet.getDeletedFlashCards().size());
-        assertEquals(flashCard2, cardSet.getDeletedFlashCards().getIndex(0));
+        assertEquals(flashcard2, cardSet.getDeletedFlashCards().getIndex(0));
         assertEquals(1, cardSet.getFlashcards().size());
     }
 
 
     @Test
     public void testGetFlashCardById() {
-        FlashCard flashCard1 = new FlashCard();
-        FlashCard flashCard2 = new FlashCard();
-        cardSet.addFlashCard(flashCard1);
-        cardSet.addFlashCard(flashCard2);
-        String uuid = flashCard2.getUuid();
-        assertEquals(flashCard2, cardSet.getFlashCardById(uuid));
+        Flashcard flashcard1 = new Flashcard();
+        Flashcard flashcard2 = new Flashcard();
+        cardSet.addFlashCard(flashcard1);
+        cardSet.addFlashCard(flashcard2);
+        String uuid = flashcard2.getUuid();
+        assertEquals(flashcard2, cardSet.getFlashCardById(uuid));
     }
 
 
