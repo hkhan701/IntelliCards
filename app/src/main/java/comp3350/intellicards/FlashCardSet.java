@@ -11,7 +11,6 @@ public class FlashCardSet {
 
     private String flashCardSetName;
     private List<FlashCard> flashcards;
-    private int cardCount;
 
     public FlashCardSet() {
         this.uuid = UUID.randomUUID();
@@ -21,17 +20,13 @@ public class FlashCardSet {
         this();
         this.flashCardSetName = name;
         this.flashcards = new ArrayList<>();
-        this.cardCount = 0;
     }
 
     public String getUuid() {
         return uuid.toString();
     }
 
-    public void addFlashCard(FlashCard flashCard) {
-        flashcards.add(flashCard);
-        cardCount++;
-    }
+    public void addFlashCard(FlashCard flashCard) { flashcards.add(flashCard); }
 
     public List<FlashCard> getFlashcards() {
         return flashcards;
@@ -45,7 +40,7 @@ public class FlashCardSet {
         this.flashCardSetName = name;
     }
 
-    public int getFlashCardSetCount() { return cardCount; }
+    public int getFlashCardSetCount() { return flashcards.size(); }
 
     //was considering implementing a hashtable for this search, but too much overhead
     public FlashCard getFlashCardById(String uuid)
