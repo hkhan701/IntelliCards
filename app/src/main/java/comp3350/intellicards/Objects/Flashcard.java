@@ -6,8 +6,6 @@ import java.util.UUID;
 public class Flashcard {
 
     private final UUID uuid;
-
-
     private String answer;
     private String question;
     private boolean deleted;
@@ -17,11 +15,9 @@ public class Flashcard {
         this(UUID.randomUUID(), answer, question);
     }
 
-    public Flashcard()
-    {
+    public Flashcard() {
         this(UUID.randomUUID(),"no answer set", "no question set");
     }
-
 
     // Private constructor used internally to ensure UUID is always set
     private Flashcard(UUID uuid, @NonNull String answer, @NonNull String question) {
@@ -31,9 +27,12 @@ public class Flashcard {
         this.deleted = false;
     }
 
-
-    public String getUuid() {
+    public String getUUIDString() {
         return uuid.toString();
+    }
+
+    public UUID getUUID() {
+        return uuid;
     }
 
     public String getAnswer() {

@@ -23,8 +23,12 @@ public class FlashcardSet {
 
     }
 
-    public String getUuid() {
+    public String getUUIDString() {
         return uuid.toString();
+    }
+
+    public UUID getUUID() {
+        return uuid;
     }
 
     public void addFlashCard(Flashcard flashcard) {
@@ -68,10 +72,10 @@ public class FlashcardSet {
         this.flashcardSetName = name;
     }
 
-    public Flashcard getFlashCardById(String uuid)
+    public Flashcard getFlashCardById(UUID uuid)
     {
         for (Flashcard card : flashcards) {
-            if (card.getUuid().equals(uuid)) {
+            if (card.getUUID().equals(uuid)) {
                 return card;
             }
         }
