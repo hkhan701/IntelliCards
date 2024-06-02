@@ -14,7 +14,7 @@ import comp3350.intellicards.Objects.FlashcardSet;
  *
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
-public class FlashcardsTest {
+public class FlashcardTest {
 
     private FlashcardSet cardSet;
     private Flashcard flashcard;
