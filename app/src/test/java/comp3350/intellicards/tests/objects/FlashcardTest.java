@@ -6,6 +6,8 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+import java.util.UUID;
+
 import comp3350.intellicards.Objects.Flashcard;
 import comp3350.intellicards.Objects.FlashcardSet;
 
@@ -26,7 +28,7 @@ public class FlashcardTest {
     }
     @Test
     public void testGetUuid() {
-        assertNotNull(flashcard.getUuid());
+        assertNotNull(flashcard.getUUID());
     }
 
     @Test
@@ -71,7 +73,7 @@ public class FlashcardTest {
 
     @Test
     public void testToString() {
-        String expectedString = "uuid='" + flashcard.getUuid() + "'\n" +
+        String expectedString = "uuid='" + flashcard.getUUID() + "'\n" +
                 ", answer='Test answer'\n" +
                 ", question='Test question'\n";
         flashcard.setAnswer("Test answer");
@@ -81,7 +83,7 @@ public class FlashcardTest {
 
     @Test
     public void testGetFlashCardSetUuid() {
-        assertNotNull(cardSet.getUuid());
+        assertNotNull(cardSet.getUUID());
     }
 
     @Test
@@ -98,7 +100,7 @@ public class FlashcardTest {
         Flashcard flashcard2 = new Flashcard();
         cardSet.addFlashCard(flashcard1);
         cardSet.addFlashCard(flashcard2);
-        assertEquals(2, cardSet.getFlashcards().size());
+        assertEquals(2, cardSet.getActiveFlashcards().size());
     }
 
     @Test
@@ -110,7 +112,7 @@ public class FlashcardTest {
         cardSet.addFlashCard(flashcard2);
         assertEquals(1, cardSet.getDeletedFlashCards().size());
         assertEquals(flashcard2, cardSet.getDeletedFlashCards().getIndex(0));
-        assertEquals(1, cardSet.getFlashcards().size());
+        assertEquals(1, cardSet.getActiveFlashcards().size());
     }
 
 
@@ -120,7 +122,7 @@ public class FlashcardTest {
         Flashcard flashcard2 = new Flashcard();
         cardSet.addFlashCard(flashcard1);
         cardSet.addFlashCard(flashcard2);
-        String uuid = flashcard2.getUuid();
+        UUID uuid = flashcard2.getUUID();
         assertEquals(flashcard2, cardSet.getFlashCardById(uuid));
     }
 
