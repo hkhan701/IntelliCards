@@ -1,4 +1,5 @@
 package comp3350.intellicards.Objects;
+
 import androidx.annotation.NonNull;
 
 import java.util.UUID;
@@ -16,7 +17,7 @@ public class Flashcard {
     }
 
     public Flashcard() {
-        this(UUID.randomUUID(),"no answer set", "no question set");
+        this(UUID.randomUUID(), "No answer set", "No question set");
     }
 
     // Private constructor used internally to ensure UUID is always set
@@ -51,8 +52,7 @@ public class Flashcard {
         this.question = question;
     }
 
-    public boolean isDeleted()
-    {
+    public boolean isDeleted() {
         return deleted;
     }
 
@@ -61,17 +61,15 @@ public class Flashcard {
         deleted = true;
     }
 
-    public void markRecovered()
-    {
+    public void markRecovered() {
         deleted = false;
     }
-
 
     @NonNull
     @Override
     public String toString() {
         return "uuid='" + uuid + "'\n" +
-                ", answer='" + answer + "'\n"  +
-                ", question='" + question + "'\n";
+                ", question='" + question + "'\n" +
+                ", answer='" + answer + "'\n";
     }
 }
