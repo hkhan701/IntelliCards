@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import comp3350.intellicards.Objects.Flashcard;
+import comp3350.intellicards.Persistence.FlashcardPersistence;
+import comp3350.intellicards.Persistence.InitializePersistence;
 import comp3350.intellicards.R;
 
 public class CardRecoverAdapter extends RecyclerView.Adapter<CardRecoverAdapter.ViewHolder> {
@@ -38,10 +40,10 @@ public class CardRecoverAdapter extends RecyclerView.Adapter<CardRecoverAdapter.
             recoverButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //set the flashcard as deleted
 
+                    //set the flashcard as deleted
                     Flashcard flashcardToRecover = flashcards.get(getBindingAdapterPosition());
-                    flashcardToRecover.markRecovered();
+                    InitializePersistence.getFlashcardPersistence().restoreFlashcard(flashcardToRecover);
 
                     //delete the views associated with that flashcard
                     ViewGroup parentView = ((ViewGroup) flashcardTextRecycle.getParent());

@@ -31,27 +31,18 @@ public class RecoverFlashcardsActivity extends Activity {
         printRecoverList(deletedFlashcards);
 
         Button backButton = findViewById(R.id.backButton);
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(RecoverFlashcardsActivity.this, ProfileActivity.class);
-                startActivity(intent);
-            }
+
+        backButton.setOnClickListener(v -> {
+            Intent intent = new Intent(RecoverFlashcardsActivity.this, ProfileActivity.class);
+            startActivity(intent);
         });
 
     }
 
     private void printRecoverList(List<Flashcard> flashcards) {
-        RecyclerView recyclerRecoverView;
-        CardRecoverAdapter recoverAdapter;
-        RecyclerView.LayoutManager layoutManager;
-
-        recyclerRecoverView = findViewById(R.id.recycleView);
-        layoutManager = new LinearLayoutManager(this);
-        recyclerRecoverView.setLayoutManager(layoutManager);
-
-        recoverAdapter = new CardRecoverAdapter(flashcards);
-        recyclerRecoverView.setAdapter(recoverAdapter);
+        RecyclerView recyclerRecoverView = findViewById(R.id.recycleView);
+        recyclerRecoverView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerRecoverView.setAdapter(new CardRecoverAdapter(flashcards));
     }
 
 }
