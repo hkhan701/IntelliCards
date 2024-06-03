@@ -10,6 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.UUID;
+
 import comp3350.intellicards.Objects.Flashcard;
 import comp3350.intellicards.Objects.FlashcardSet;
 import comp3350.intellicards.R;
@@ -33,13 +35,13 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
             flashcardTextRecycle = (TextView) view.findViewById(R.id.flashcardTextRecycle);
             deleteButton = (Button) view.findViewById(R.id.deleteButton);
 
-            //Clicking this will mark the corresponding card as deleted
+            // Clicking this will mark the corresponding card as deleted
             // and it will not pop up as a flashcard in the recycle view until restored
             deleteButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                         //set the flashcard as deleted
-                        Flashcard card = flashcardSet.getFlashCardById((String)deleteButton.getTag());
+                        Flashcard card = flashcardSet.getFlashCardById((UUID)deleteButton.getTag());
                         card.markDeleted();
 
                         //delete the views associated with that flashcard
@@ -94,7 +96,7 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
 
         Flashcard card = flashcardSet.getIndex(position);
         viewHolder.getTextView().setText(card.toString());
-        viewHolder.deleteButton().setTag(card.getUuid());
+        viewHolder.deleteButton().setTag(card.getUUID());
 
     }
 

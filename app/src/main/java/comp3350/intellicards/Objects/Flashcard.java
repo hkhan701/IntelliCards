@@ -1,4 +1,5 @@
 package comp3350.intellicards.Objects;
+
 import androidx.annotation.NonNull;
 
 import java.util.UUID;
@@ -6,8 +7,6 @@ import java.util.UUID;
 public class Flashcard {
 
     private final UUID uuid;
-
-
     private String answer;
     private String question;
     private boolean deleted;
@@ -17,11 +16,9 @@ public class Flashcard {
         this(UUID.randomUUID(), answer, question);
     }
 
-    public Flashcard()
-    {
-        this(UUID.randomUUID(),"no answer set", "no question set");
+    public Flashcard() {
+        this(UUID.randomUUID(), "No answer set", "No question set");
     }
-
 
     // Private constructor used internally to ensure UUID is always set
     private Flashcard(UUID uuid, @NonNull String answer, @NonNull String question) {
@@ -31,9 +28,12 @@ public class Flashcard {
         this.deleted = false;
     }
 
-
-    public String getUuid() {
+    public String getUUIDString() {
         return uuid.toString();
+    }
+
+    public UUID getUUID() {
+        return uuid;
     }
 
     public String getAnswer() {
@@ -44,16 +44,15 @@ public class Flashcard {
         return question;
     }
 
-    public void setAnswer(String answer) {
+    public void setAnswer(@NonNull String answer) {
         this.answer = answer;
     }
 
-    public void setQuestion(String question) {
+    public void setQuestion(@NonNull String question) {
         this.question = question;
     }
 
-    public boolean isDeleted()
-    {
+    public boolean isDeleted() {
         return deleted;
     }
 
@@ -62,17 +61,15 @@ public class Flashcard {
         deleted = true;
     }
 
-    public void markRecovered()
-    {
+    public void markRecovered() {
         deleted = false;
     }
-
 
     @NonNull
     @Override
     public String toString() {
         return "uuid='" + uuid + "'\n" +
-                ", answer='" + answer + "'\n"  +
-                ", question='" + question + "'\n";
+                ", question='" + question + "'\n" +
+                ", answer='" + answer + "'\n";
     }
 }
