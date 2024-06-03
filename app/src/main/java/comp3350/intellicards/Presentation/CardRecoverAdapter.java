@@ -10,16 +10,18 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.List;
+import java.util.UUID;
+
 import comp3350.intellicards.Objects.Flashcard;
 import comp3350.intellicards.Objects.FlashcardSet;
 import comp3350.intellicards.R;
 
 public class CardRecoverAdapter extends RecyclerView.Adapter<CardRecoverAdapter.ViewHolder> {
 
-    private FlashcardSet flashcardSet;
+    private static List<Flashcard> flashcards;
 
     private AdapterView.OnItemClickListener recoverButtonClick;
-
 
     /**
      * Provide a reference to the type of views that you are using
@@ -29,20 +31,19 @@ public class CardRecoverAdapter extends RecyclerView.Adapter<CardRecoverAdapter.
         private final TextView flashcardTextRecycle;
         private final Button recoverButton;
 
-        public ViewHolder(View view, FlashcardSet flashcardSet) {
+        public ViewHolder(View view) {
             super(view);
             // Define click listener for the ViewHolder's View
-            flashcardTextRecycle = (TextView) view.findViewById(R.id.flashcardTextRecycle);
-            recoverButton = (Button) view.findViewById(R.id.recoveryButton);
+            flashcardTextRecycle = view.findViewById(R.id.flashcardTextRecycle);
+            recoverButton = view.findViewById(R.id.recoveryButton);
 
-            //Clicking this will mark the corresponding flashcard as recovered
-            // and it will not pop up as a flashcard in the recycle view until restored
             recoverButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     //set the flashcard as deleted
-                    Flashcard card = flashcardSet.getFlashCardById((String)recoverButton.getTag());
-                    card.markRecovered();
+
+                    Flashcard flashcardToRecover = flashcards.get(getBindingAdapterPosition());
+                    flashcardToRecover.markRecovered();
 
                     //delete the views associated with that flashcard
                     ViewGroup parentView = ((ViewGroup) flashcardTextRecycle.getParent());
@@ -57,20 +58,19 @@ public class CardRecoverAdapter extends RecyclerView.Adapter<CardRecoverAdapter.
             return flashcardTextRecycle;
         }
 
-        public Button recoverButton() {
+        public Button getRecoverButton() {
             return recoverButton;
         }
-
     }
 
     /**
      * Initialize the dataset of the Adapter
      *
      * @param flashcards contain the flashcards the data to populate views to be used
-     * by RecyclerView
+     *                   by RecyclerView
      */
-    public CardRecoverAdapter(FlashcardSet flashcards) {
-        flashcardSet = flashcards;
+    public CardRecoverAdapter(List<Flashcard> flashcards) {
+        CardRecoverAdapter.flashcards = flashcards;
     }
 
     // Create new views (invoked by the layout manager)
@@ -81,21 +81,20 @@ public class CardRecoverAdapter extends RecyclerView.Adapter<CardRecoverAdapter.
         View view = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.recover_view, viewGroup, false);
 
-        return new ViewHolder(view,flashcardSet);
+        return new ViewHolder(view);
     }
 
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
-        Flashcard card = flashcardSet.getIndex(position);
+        Flashcard card = flashcards.get(position);
         viewHolder.getTextView().setText(card.toString());
-        viewHolder.recoverButton().setTag(card.getUuid());
-
+        viewHolder.getRecoverButton().setTag(card.getUUID());
     }
 
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return flashcardSet.size();
+        return flashcards.size();
     }
 }

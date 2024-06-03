@@ -9,8 +9,11 @@ import android.widget.Button;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import comp3350.intellicards.Objects.FlashcardSet;
-import comp3350.intellicards.Persistence.FlashcardSetPersistenceStub;
+import java.util.List;
+
+import comp3350.intellicards.Objects.Flashcard;
+import comp3350.intellicards.Persistence.FlashcardPersistence;
+import comp3350.intellicards.Persistence.InitializePersistence;
 import comp3350.intellicards.R;
 
 public class RecoverFlashcardsActivity extends Activity {
@@ -19,12 +22,14 @@ public class RecoverFlashcardsActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recovery);
 
+        // Initialize flashcard persistence
+        FlashcardPersistence flashcardPersistence = InitializePersistence.getFlashcardPersistence();
 
-        //get the stub data
-        FlashcardSet flashcardSet = FlashcardSetPersistenceStub.getFlashcardSet();
-        //print the deleted cards on the UI
-        printRecoverList(flashcardSet.getDeletedFlashCards());
+        // Retrieve deleted flashcards
+        List<Flashcard> deletedFlashcards = flashcardPersistence.getAllDeletedFlashcards();
 
+        // Print the recovered list on the UI
+        printRecoverList(deletedFlashcards);
 
         Button backButton = findViewById(R.id.backButton);
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -34,10 +39,10 @@ public class RecoverFlashcardsActivity extends Activity {
                 startActivity(intent);
             }
         });
+
     }
 
-    public void printRecoverList(FlashcardSet flashcardSet)
-    {
+    private void printRecoverList(List<Flashcard> flashcards) {
         RecyclerView recyclerRecoverView;
         CardRecoverAdapter recoverAdapter;
         RecyclerView.LayoutManager layoutManager;
@@ -46,7 +51,8 @@ public class RecoverFlashcardsActivity extends Activity {
         layoutManager = new LinearLayoutManager(this);
         recyclerRecoverView.setLayoutManager(layoutManager);
 
-        recoverAdapter = new CardRecoverAdapter(flashcardSet);
+        recoverAdapter = new CardRecoverAdapter(flashcards);
         recyclerRecoverView.setAdapter(recoverAdapter);
     }
+
 }
