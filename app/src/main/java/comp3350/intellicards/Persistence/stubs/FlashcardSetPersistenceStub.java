@@ -1,7 +1,6 @@
 package comp3350.intellicards.Persistence.stubs;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,7 +35,7 @@ public class FlashcardSetPersistenceStub implements FlashcardSetPersistence {
 
     @Override
     public List<FlashcardSet> getAllFlashcardSets() {
-        return Collections.unmodifiableList(new ArrayList<>(flashcardSets.values()));
+        return new ArrayList<>(flashcardSets.values());
     }
 
     public boolean addFlashCardToFlashcardSet(FlashcardSet flashcardSet, Flashcard flashcard) {
