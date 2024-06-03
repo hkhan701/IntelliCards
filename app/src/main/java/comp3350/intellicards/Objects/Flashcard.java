@@ -77,9 +77,14 @@ public class Flashcard {
     @NonNull
     @Override
     public String toString() {
-        return "uuid='" + uuid + "'\n" +
+        String flashcardInfo = "uuid='" + uuid + "'\n" +
                 ", question='" + question + "'\n" +
-                ", answer='" + answer + "'\n" +
-                ", hint = '" + hint + "'\n";
+                ", answer='" + answer + "'\n";
+
+        if(hint != null && !hint.trim().isEmpty()) {
+            flashcardInfo += ", hint = '" + hint + "'\n";
+        }
+
+        return flashcardInfo;
     }
 }
