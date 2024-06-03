@@ -72,12 +72,47 @@ public class FlashcardTest {
     }
 
     @Test
-    public void testToString() {
+    public void testToStringWithHint() {
+        String expectedString = "uuid='" + flashcard.getUUID() + "'\n" +
+                ", answer='Test answer'\n" +
+                ", question='Test question'\n" +
+                ", hint = 'Test hint'\n";
+        flashcard.setAnswer("Test answer");
+        flashcard.setQuestion("Test question");
+        flashcard.setHint("Test hint");
+        assertEquals(expectedString, flashcard.toString());
+    }
+
+    @Test
+    public void testToStringNullHint() {
         String expectedString = "uuid='" + flashcard.getUUID() + "'\n" +
                 ", answer='Test answer'\n" +
                 ", question='Test question'\n";
         flashcard.setAnswer("Test answer");
         flashcard.setQuestion("Test question");
+        flashcard.setHint(null);
+        assertEquals(expectedString, flashcard.toString());
+    }
+
+    @Test
+    public void testToStringShortEmptyHint() {
+        String expectedString = "uuid='" + flashcard.getUUID() + "'\n" +
+                ", answer='Test answer'\n" +
+                ", question='Test question'\n";
+        flashcard.setAnswer("Test answer");
+        flashcard.setQuestion("Test question");
+        flashcard.setHint("");
+        assertEquals(expectedString, flashcard.toString());
+    }
+
+    @Test
+    public void testToStringLongEmptyHint() {
+        String expectedString = "uuid='" + flashcard.getUUID() + "'\n" +
+                ", answer='Test answer'\n" +
+                ", question='Test question'\n";
+        flashcard.setAnswer("Test answer");
+        flashcard.setQuestion("Test question");
+        flashcard.setHint("            ");
         assertEquals(expectedString, flashcard.toString());
     }
 
