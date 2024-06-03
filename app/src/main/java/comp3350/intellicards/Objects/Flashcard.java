@@ -44,11 +44,11 @@ public class Flashcard {
         return question;
     }
 
-    public void setAnswer(String answer) {
+    public void setAnswer(@NonNull String answer) {
         this.answer = answer;
     }
 
-    public void setQuestion(String question) {
+    public void setQuestion(@NonNull String question) {
         this.question = question;
     }
 
