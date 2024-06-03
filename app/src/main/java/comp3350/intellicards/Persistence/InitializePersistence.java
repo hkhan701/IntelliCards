@@ -18,15 +18,15 @@ public class InitializePersistence {
         flashcardPersistence = new FlashcardPersistenceStub();
 
         // Create flashcards
-        Flashcard flashcard1 = new Flashcard("Answer 1 (Set 1)", "Question 1");
-        Flashcard flashcard2 = new Flashcard("Answer 2 (Set 1)", "Question 2");
-        Flashcard flashcard3 = new Flashcard("Answer 3 (Set 2)", "Question 3");
-        Flashcard flashcard4 = new Flashcard("Answer 4 (Set 2)", "Question 4");
-        Flashcard flashcard5 = new Flashcard("Answer 5 (Set 2)", "Question 5");
-        Flashcard flashcard6 = new Flashcard("Answer 6 (Set 2)", "Question 6");
-        Flashcard flashcard7 = new Flashcard("Answer 7 (Set 1)", "Question 7");
-        Flashcard flashcard8 = new Flashcard("Answer 8 (Set 1)", "Question 8");
-        Flashcard flashcard9 = new Flashcard("Answer 9 (Set 2)", "Question 9");
+        Flashcard flashcard1 = new Flashcard("Answer 1 (Set 1)", "Question 1", "Hint 1");
+        Flashcard flashcard2 = new Flashcard("Answer 2 (Set 1)", "Question 2", "Hint 2");
+        Flashcard flashcard3 = new Flashcard("Answer 3 (Set 2)", "Question 3", "Hint 3");
+        Flashcard flashcard4 = new Flashcard("Answer 4 (Set 2)", "Question 4", "");
+        Flashcard flashcard5 = new Flashcard("Answer 5 (Set 2)", "Question 5", null);
+        Flashcard flashcard6 = new Flashcard("Answer 6 (Set 2)", "Question 6", "Hint 6");
+        Flashcard flashcard7 = new Flashcard("Answer 7 (Set 1)", "Question 7", "");
+        Flashcard flashcard8 = new Flashcard("Answer 8 (Set 1)", "Question 8", null);
+        Flashcard flashcard9 = new Flashcard("Answer 9 (Set 2)", "Question 9", "Hint 9");
 
 
         // Add flashcards to persistence
