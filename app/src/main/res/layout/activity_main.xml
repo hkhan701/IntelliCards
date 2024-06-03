@@ -79,5 +79,16 @@
         app:layout_constraintStart_toEndOf="@+id/submitFlashcard"
         app:layout_constraintTop_toBottomOf="@+id/answer" />
 
+    <Button
+        android:id="@+id/createNewSetButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/profileButton"
+        android:layout_marginStart="33dp"
+        android:layout_marginBottom="27dp"
+        android:text="Create New Set"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
