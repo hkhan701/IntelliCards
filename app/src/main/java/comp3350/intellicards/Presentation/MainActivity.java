@@ -86,16 +86,20 @@ public class MainActivity extends Activity {
     private void setupSubmitButton() {
         TextView questionTextBox = findViewById(R.id.question);
         TextView answerTextBox = findViewById(R.id.answer);
+        TextView hintTextBox = findViewById(R.id.hint);
         Button submitTextButton = findViewById(R.id.submitFlashcard);
 
         questionTextBox.setOnClickListener(v -> questionTextBox.setText(""));
         answerTextBox.setOnClickListener(v -> answerTextBox.setText(""));
+        hintTextBox.setOnClickListener(v -> hintTextBox.setText(""));
 
         submitTextButton.setOnClickListener(v -> {
-            Flashcard flashcard = new Flashcard(answerTextBox.getText().toString(), questionTextBox.getText().toString());
+            Flashcard flashcard = new Flashcard(answerTextBox.getText().toString(),
+                    questionTextBox.getText().toString(), hintTextBox.getText().toString());
 
             questionTextBox.setText("");
             answerTextBox.setText("");
+            hintTextBox.setText("");
 
             flashcardPersistence.insertFlashcard(flashcard);
             flashcardSetPersistence.addFlashCardToFlashcardSet(selectedFlashcardSet, flashcard);

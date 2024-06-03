@@ -4,4 +4,5 @@
     <string name="profile">Profile</string>
     <string name="recovery">Recovery/Trash bin</string>
     <string name="back">Back</string>
+    <string name="hintText">Enter hint here</string>
 </resources>
