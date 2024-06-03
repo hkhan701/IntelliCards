@@ -17,8 +17,7 @@ import comp3350.intellicards.Persistence.InitializePersistence;
 import comp3350.intellicards.R;
 
 public class RecoverFlashcardsActivity extends Activity {
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recovery);
 
