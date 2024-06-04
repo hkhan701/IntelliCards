@@ -9,22 +9,24 @@ public class Flashcard {
     private final UUID uuid;
     private String answer;
     private String question;
+    private String hint;
     private boolean deleted;
 
-    // Constructor with answer and question
-    public Flashcard(@NonNull String answer, @NonNull String question) {
-        this(UUID.randomUUID(), answer, question);
+    // Constructor with answer, question, and hint
+    public Flashcard(@NonNull String answer, @NonNull String question, String hint) {
+        this(UUID.randomUUID(), answer, question, hint);
     }
 
     public Flashcard() {
-        this(UUID.randomUUID(), "No answer set", "No question set");
+        this(UUID.randomUUID(), "No answer set", "No question set", "No hint set");
     }
 
     // Private constructor used internally to ensure UUID is always set
-    private Flashcard(UUID uuid, @NonNull String answer, @NonNull String question) {
+    private Flashcard(UUID uuid, @NonNull String answer, @NonNull String question, String hint) {
         this.uuid = uuid;
         this.answer = answer;
         this.question = question;
+        this.hint = hint;
         this.deleted = false;
     }
 
@@ -44,6 +46,10 @@ public class Flashcard {
         return question;
     }
 
+    public String getHint() {
+        return hint;
+    }
+
     public void setAnswer(@NonNull String answer) {
         this.answer = answer;
     }
@@ -52,10 +58,13 @@ public class Flashcard {
         this.question = question;
     }
 
+    public void setHint(String hint) {
+        this.hint = hint;
+    }
+
     public boolean isDeleted() {
         return deleted;
     }
-
 
     public void markDeleted() {
         deleted = true;
@@ -68,8 +77,14 @@ public class Flashcard {
     @NonNull
     @Override
     public String toString() {
-        return "uuid='" + uuid + "'\n" +
+        String flashcardInfo = "uuid='" + uuid + "'\n" +
                 ", question='" + question + "'\n" +
                 ", answer='" + answer + "'\n";
+
+        if (hint != null && !hint.trim().isEmpty()) {
+            flashcardInfo += ", hint = '" + hint + "'\n";
+        }
+
+        return flashcardInfo;
     }
 }

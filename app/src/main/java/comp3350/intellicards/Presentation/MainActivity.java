@@ -10,7 +10,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -86,16 +85,20 @@ public class MainActivity extends Activity {
     private void setupSubmitButton() {
         TextView questionTextBox = findViewById(R.id.question);
         TextView answerTextBox = findViewById(R.id.answer);
+        TextView hintTextBox = findViewById(R.id.hint);
         Button submitTextButton = findViewById(R.id.submitFlashcard);
 
         questionTextBox.setOnClickListener(v -> questionTextBox.setText(""));
         answerTextBox.setOnClickListener(v -> answerTextBox.setText(""));
+        hintTextBox.setOnClickListener(v -> hintTextBox.setText(""));
 
         submitTextButton.setOnClickListener(v -> {
-            Flashcard flashcard = new Flashcard(answerTextBox.getText().toString(), questionTextBox.getText().toString());
+            Flashcard flashcard = new Flashcard(answerTextBox.getText().toString(),
+                    questionTextBox.getText().toString(), hintTextBox.getText().toString());
 
             questionTextBox.setText("");
             answerTextBox.setText("");
+            hintTextBox.setText("");
 
             flashcardPersistence.insertFlashcard(flashcard);
             flashcardSetPersistence.addFlashCardToFlashcardSet(selectedFlashcardSet, flashcard);
@@ -131,19 +134,19 @@ public class MainActivity extends Activity {
                 .setPositiveButton("Create", (dialog, whichButton) -> {
                     String newSetName = newSetNameInput.getText().toString().trim();
                     if (!newSetName.isEmpty()) {
-                            FlashcardSet newFlashcardSet = new FlashcardSet(newSetName);
-                            flashcardSetPersistence.insertFlashcardSet(newFlashcardSet);
+                        FlashcardSet newFlashcardSet = new FlashcardSet(newSetName);
+                        flashcardSetPersistence.insertFlashcardSet(newFlashcardSet);
 
-                            // Refresh the flashcard sets list and adapter
-                            flashcardSets.add(newFlashcardSet);
-                            adapter.add(newSetName);
-                            adapter.notifyDataSetChanged();
+                        // Refresh the flashcard sets list and adapter
+                        flashcardSets.add(newFlashcardSet);
+                        adapter.add(newSetName);
+                        adapter.notifyDataSetChanged();
 
-                            // Set the new flashcard set as the selected set
-                            selectedFlashcardSet = newFlashcardSet;
+                        // Set the new flashcard set as the selected set
+                        selectedFlashcardSet = newFlashcardSet;
 
-                            // Refresh the view to display the new flashcard set
-                            printViewList(selectedFlashcardSet);
+                        // Refresh the view to display the new flashcard set
+                        printViewList(selectedFlashcardSet);
                     }
                 })
                 .setNegativeButton("Cancel", null)
