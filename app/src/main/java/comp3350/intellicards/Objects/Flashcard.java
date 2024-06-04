@@ -81,7 +81,7 @@ public class Flashcard {
                 ", question='" + question + "'\n" +
                 ", answer='" + answer + "'\n";
 
-        if(hint != null && !hint.trim().isEmpty()) {
+        if (hint != null && !hint.trim().isEmpty()) {
             flashcardInfo += ", hint = '" + hint + "'\n";
         }
 

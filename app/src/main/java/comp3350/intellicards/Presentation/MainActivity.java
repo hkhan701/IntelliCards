@@ -134,19 +134,19 @@ public class MainActivity extends Activity {
                 .setPositiveButton("Create", (dialog, whichButton) -> {
                     String newSetName = newSetNameInput.getText().toString().trim();
                     if (!newSetName.isEmpty()) {
-                            FlashcardSet newFlashcardSet = new FlashcardSet(newSetName);
-                            flashcardSetPersistence.insertFlashcardSet(newFlashcardSet);
+                        FlashcardSet newFlashcardSet = new FlashcardSet(newSetName);
+                        flashcardSetPersistence.insertFlashcardSet(newFlashcardSet);
 
-                            // Refresh the flashcard sets list and adapter
-                            flashcardSets.add(newFlashcardSet);
-                            adapter.add(newSetName);
-                            adapter.notifyDataSetChanged();
+                        // Refresh the flashcard sets list and adapter
+                        flashcardSets.add(newFlashcardSet);
+                        adapter.add(newSetName);
+                        adapter.notifyDataSetChanged();
 
-                            // Set the new flashcard set as the selected set
-                            selectedFlashcardSet = newFlashcardSet;
+                        // Set the new flashcard set as the selected set
+                        selectedFlashcardSet = newFlashcardSet;
 
-                            // Refresh the view to display the new flashcard set
-                            printViewList(selectedFlashcardSet);
+                        // Refresh the view to display the new flashcard set
+                        printViewList(selectedFlashcardSet);
                     }
                 })
                 .setNegativeButton("Cancel", null)

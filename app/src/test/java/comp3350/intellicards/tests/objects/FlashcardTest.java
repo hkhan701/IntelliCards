@@ -22,10 +22,11 @@ public class FlashcardTest {
     private Flashcard flashcard;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         cardSet = new FlashcardSet();
         flashcard = new Flashcard();
     }
+
     @Test
     public void testGetUuid() {
         assertNotNull(flashcard.getUUID());
@@ -162,10 +163,8 @@ public class FlashcardTest {
     }
 
 
-
-
     @After
-    public void tearDown(){
+    public void tearDown() {
 
     }
 
