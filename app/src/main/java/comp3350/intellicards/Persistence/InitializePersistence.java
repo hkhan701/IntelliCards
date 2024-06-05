@@ -43,6 +43,9 @@ public class InitializePersistence {
         // Create flashcard sets
         FlashcardSet set1 = new FlashcardSet("Set 1");
         FlashcardSet set2 = new FlashcardSet("Set 2");
+        FlashcardSet set3 = new FlashcardSet("Set 3");
+        FlashcardSet set4 = new FlashcardSet("Set 4");
+        FlashcardSet set5 = new FlashcardSet("Set 5");
 
         // Add flashcards to flashcard sets
         set1.addFlashCard(flashcard1);
@@ -61,10 +64,12 @@ public class InitializePersistence {
         flashcardPersistence.markFlashcardAsDeleted(flashcard8);
         flashcardPersistence.markFlashcardAsDeleted(flashcard9);
 
-
         // Add flashcard sets to persistence
         flashcardSetPersistence.insertFlashcardSet(set1);
         flashcardSetPersistence.insertFlashcardSet(set2);
+        flashcardSetPersistence.insertFlashcardSet(set3);
+        flashcardSetPersistence.insertFlashcardSet(set4);
+        flashcardSetPersistence.insertFlashcardSet(set5);
 
         initialized = true;
     }
