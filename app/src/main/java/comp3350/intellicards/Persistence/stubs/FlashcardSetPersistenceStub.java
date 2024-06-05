@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 import comp3350.intellicards.Objects.Flashcard;
 import comp3350.intellicards.Objects.FlashcardSet;
@@ -12,7 +11,7 @@ import comp3350.intellicards.Persistence.FlashcardSetPersistence;
 
 public class FlashcardSetPersistenceStub implements FlashcardSetPersistence {
 
-    private Map<UUID, FlashcardSet> flashcardSets;
+    private Map<String, FlashcardSet> flashcardSets;
 
     public FlashcardSetPersistenceStub() {
         flashcardSets = new HashMap<>();
