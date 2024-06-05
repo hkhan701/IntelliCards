@@ -22,10 +22,24 @@ public class FlashcardSetPersistenceStub implements FlashcardSetPersistence {
         return flashcardSets.get(currentFlashcardSet.getUUID());
     }
 
+    @Override
+    public FlashcardSet getFlashcardSet(String uuid) {
+        return flashcardSets.get(uuid);
+    }
+
     // return a flashcard set with flashcards marked as deleted removed
     public FlashcardSet getActiveFlashcardSet(FlashcardSet currentFlashcardSet) {
 
         FlashcardSet set = flashcardSets.get(currentFlashcardSet.getUUID());
+        if (set != null) {
+            return set.getActiveFlashcards();
+        }
+        return null;
+    }
+
+    @Override
+    public FlashcardSet getActiveFlashcardSet(String uuid) {
+        FlashcardSet set = flashcardSets.get(uuid);
         if (set != null) {
             return set.getActiveFlashcards();
         }
