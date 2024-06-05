@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import comp3350.intellicards.Objects.Flashcard;
 import comp3350.intellicards.Objects.FlashcardSet;
@@ -46,6 +47,7 @@ public class MainActivity extends Activity {
         setupSubmitButton();
         setupProfileButton();
         setupCreateNewSetButton();
+//        setupEditButton();
 
         displayInitialFlashcards();
     }
@@ -105,6 +107,22 @@ public class MainActivity extends Activity {
 
             FlashcardSet updatedFlashcardSet = flashcardSetPersistence.getActiveFlashcardSet(selectedFlashcardSet);
             printViewList(updatedFlashcardSet);
+        });
+    }
+    private void setupEditButton() {
+        TextView questionTextBox = findViewById(R.id.question);
+        TextView answerTextBox = findViewById(R.id.answer);
+        TextView hintTextBox = findViewById(R.id.hint);
+        //Button submitTextButton = findViewById(R.id.submitFlashcard);
+        Button editFlashButton = findViewById(R.id.editButton);
+        //TextView flashcardToEdit = findViewById(R.id.flashcardTextRecycle);
+
+        editFlashButton.setOnClickListener(v -> {
+            //Flashcard editFlashcard = selectedFlashcardSet.getFlashCardById((UUID)editFlashButton.getTag());
+
+            questionTextBox.setText("");
+            answerTextBox.setText("");
+            hintTextBox.setText("");
         });
     }
 

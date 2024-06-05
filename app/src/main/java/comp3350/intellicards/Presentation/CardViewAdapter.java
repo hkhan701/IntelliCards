@@ -27,6 +27,7 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView flashcardTextRecycle;
         private final Button deleteButton;
+        private final Button editButton;
 
         public ViewHolder(View view, FlashcardSet flashcardSet) {
             super(view);
@@ -34,6 +35,7 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
             // Define click listener for the ViewHolder's View
             flashcardTextRecycle = (TextView) view.findViewById(R.id.flashcardTextRecycle);
             deleteButton = (Button) view.findViewById(R.id.deleteButton);
+            editButton = (Button) view.findViewById(R.id.editButton);
 
             // Clicking this will mark the corresponding card as deleted
             // and it will not pop up as a flashcard in the recycle view until restored
@@ -48,8 +50,21 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
                         ViewGroup parentView = ((ViewGroup) flashcardTextRecycle.getParent());
                         parentView.removeView(flashcardTextRecycle);
                         parentView.removeView(deleteButton);
+                        parentView.removeView(editButton);
 
                 }
+            });
+
+            editButton.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    ViewGroup parentView = ((ViewGroup) flashcardTextRecycle.getParent());
+                    parentView.removeView(flashcardTextRecycle);
+                    parentView.removeView(deleteButton);
+                    parentView.removeView(editButton);
+                }
+
             });
 
         }//end of ViewHolder class
@@ -61,6 +76,8 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
         public Button deleteButton() {
             return deleteButton;
         }
+
+        public Button editButton() {  return editButton;}
 
         public View getView()
         {
