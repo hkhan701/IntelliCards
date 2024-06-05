@@ -14,5 +14,4 @@ import comp3350.intellicards.tests.objects.FlashcardTest;
 })
 
 public class AllTests {
-
 }

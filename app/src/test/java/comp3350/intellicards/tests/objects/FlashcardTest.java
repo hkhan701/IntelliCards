@@ -32,6 +32,7 @@ public class FlashcardTest {
         assertNotNull(flashcard.getUUID());
     }
 
+    //
     @Test
     public void testGetAnswer() {
         assertNotNull(flashcard.getAnswer());
@@ -75,8 +76,8 @@ public class FlashcardTest {
     @Test
     public void testToStringWithHint() {
         String expectedString = "uuid='" + flashcard.getUUID() + "'\n" +
-                ", answer='Test answer'\n" +
                 ", question='Test question'\n" +
+                ", answer='Test answer'\n" +
                 ", hint = 'Test hint'\n";
         flashcard.setAnswer("Test answer");
         flashcard.setQuestion("Test question");
@@ -87,8 +88,8 @@ public class FlashcardTest {
     @Test
     public void testToStringNullHint() {
         String expectedString = "uuid='" + flashcard.getUUID() + "'\n" +
-                ", answer='Test answer'\n" +
-                ", question='Test question'\n";
+                ", question='Test question'\n" +
+                ", answer='Test answer'\n";
         flashcard.setAnswer("Test answer");
         flashcard.setQuestion("Test question");
         flashcard.setHint(null);
@@ -98,8 +99,8 @@ public class FlashcardTest {
     @Test
     public void testToStringShortEmptyHint() {
         String expectedString = "uuid='" + flashcard.getUUID() + "'\n" +
-                ", answer='Test answer'\n" +
-                ", question='Test question'\n";
+                ", question='Test question'\n" +
+                ", answer='Test answer'\n";
         flashcard.setAnswer("Test answer");
         flashcard.setQuestion("Test question");
         flashcard.setHint("");
@@ -109,8 +110,8 @@ public class FlashcardTest {
     @Test
     public void testToStringLongEmptyHint() {
         String expectedString = "uuid='" + flashcard.getUUID() + "'\n" +
-                ", answer='Test answer'\n" +
-                ", question='Test question'\n";
+                ", question='Test question'\n" +
+                ", answer='Test answer'\n";
         flashcard.setAnswer("Test answer");
         flashcard.setQuestion("Test question");
         flashcard.setHint("            ");

@@ -24,6 +24,14 @@ public class FlashcardSetTest {
     public void setUp(){
         cardSet = new FlashcardSet();
     }
+
+    @Test
+    public void testSetConstructorWithName() {
+        String setName = "COMP3350";
+        FlashcardSet namedCardSet = new FlashcardSet(setName);
+        assertEquals(setName, namedCardSet.getFlashCardSetName());
+    }
+
     @Test
     public void testGetFlashCardSetUuid() {
         assertNotNull(cardSet.getUUID());
@@ -38,12 +46,46 @@ public class FlashcardSetTest {
     }
 
     @Test
-    public void testGetFlashcards() {
+    public void testAddFlashCardGivenNull() {
+        // A null should not be added to the set
+        cardSet.addFlashCard(null);
+        assertEquals(0, cardSet.size());
+    }
+
+    @Test
+    public void testAddFlashcardWithData() {
+        Flashcard flashcard = new Flashcard();
+        flashcard.setQuestion("Magic 8 Ball, What is the meaning of life?");
+        flashcard.setAnswer("Probably");
+
+        cardSet.addFlashCard(flashcard);
+        Flashcard flashcardGet = cardSet.getIndex(0);
+
+        assertEquals(flashcard.getQuestion(), flashcardGet.getQuestion());
+        assertEquals(flashcard.getAnswer(), flashcardGet.getAnswer());
+    }
+
+    @Test
+    public void testGetActiveFlashcards() {
         Flashcard flashcard1 = new Flashcard();
         Flashcard flashcard2 = new Flashcard();
         cardSet.addFlashCard(flashcard1);
         cardSet.addFlashCard(flashcard2);
         assertEquals(2, cardSet.getActiveFlashcards().size());
+    }
+
+    @Test
+    public void testGetActiveFlashcardsDoesNotReturnDeleted() {
+        Flashcard flashcard1 = new Flashcard();
+        Flashcard flashcard2 = new Flashcard();
+        cardSet.addFlashCard(flashcard1);
+        cardSet.addFlashCard(flashcard2);
+        flashcard2.markDeleted();
+
+        assertEquals(1, cardSet.getActiveFlashcards().size());
+
+        Flashcard activeCard = cardSet.getActiveFlashcards().getIndex(0);
+        assertEquals(activeCard, flashcard1);
     }
 
     @Test
@@ -55,7 +97,6 @@ public class FlashcardSetTest {
         cardSet.addFlashCard(flashcard2);
         assertEquals(1, cardSet.getDeletedFlashCards().size());
         assertEquals(flashcard2, cardSet.getDeletedFlashCards().getIndex(0));
-        assertEquals(1, cardSet.getActiveFlashcards().size());
     }
 
 
@@ -69,7 +110,39 @@ public class FlashcardSetTest {
         assertEquals(flashcard2, cardSet.getFlashCardById(uuid));
     }
 
+    @Test
+    public void testGetFlashCardByIdCardIsNotInSet() {
+        Flashcard flashcard1 = new Flashcard();
+        Flashcard flashcard2 = new Flashcard();
+        cardSet.addFlashCard(flashcard1);
+        cardSet.addFlashCard(flashcard2);
+        UUID uuid = UUID.randomUUID();
+        assertNull(cardSet.getFlashCardById(uuid));
+    }
+    @Test
+    public void testGetFlashcardByIdWhereNoCardsInSet() {
+        UUID uuid = UUID.randomUUID();
+        assertEquals(null, cardSet.getFlashCardById(uuid));
+    }
 
+    @Test
+    public void testToString() {
+        Flashcard flashcard1 = new Flashcard();
+        Flashcard flashcard2 = new Flashcard();
+        cardSet.addFlashCard(flashcard1);
+        cardSet.addFlashCard(flashcard2);
+
+        String expectedString = "FlashCardSet{uuid=" + cardSet.getUUID() + ", flashcardSetName='null', flashcards=[uuid='" + flashcard1.getUUID() + "'\n" +
+                ", question='No question set'" + "\n" +
+                ", answer='No answer set'" + "\n" +
+                ", hint = 'No hint set'" + "\n" +
+                ", uuid='" + flashcard2.getUUID() + "'\n" +
+                ", question='No question set'" + "\n" +
+                ", answer='No answer set'" + "\n" +
+                ", hint = 'No hint set'" + "\n" +
+                "]}";
+        assertEquals(expectedString, cardSet.toString());
+    }
 
 
     @After

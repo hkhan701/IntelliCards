@@ -30,8 +30,18 @@ public class FlashcardSet {
         return uuid;
     }
 
+    public String getFlashCardSetName() {
+        return flashcardSetName;
+    }
+
+    public void setFlashCardSetName(@NonNull String name) {
+        this.flashcardSetName = name;
+    }
+
     public void addFlashCard(@NonNull Flashcard flashcard) {
-        flashcards.add(flashcard);
+        if (flashcard != null) {
+            flashcards.add(flashcard);
+        }
     }
 
     // Return a flashcard set that contains only the active flashcards
@@ -55,14 +65,6 @@ public class FlashcardSet {
             }
         }
         return deletedCards;
-    }
-
-    public String getFlashCardSetName() {
-        return flashcardSetName;
-    }
-
-    public void setFlashCardSetName(@NonNull String name) {
-        this.flashcardSetName = name;
     }
 
     public Flashcard getFlashCardById(UUID uuid) {
