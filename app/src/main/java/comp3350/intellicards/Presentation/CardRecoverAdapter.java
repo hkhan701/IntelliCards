@@ -13,15 +13,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import comp3350.intellicards.Objects.Flashcard;
-import comp3350.intellicards.Persistence.FlashcardPersistence;
 import comp3350.intellicards.Persistence.InitializePersistence;
 import comp3350.intellicards.R;
 
 public class CardRecoverAdapter extends RecyclerView.Adapter<CardRecoverAdapter.ViewHolder> {
 
     private static List<Flashcard> flashcards;
-
-    private AdapterView.OnItemClickListener recoverButtonClick;
 
     /**
      * Provide a reference to the type of views that you are using
@@ -37,19 +34,16 @@ public class CardRecoverAdapter extends RecyclerView.Adapter<CardRecoverAdapter.
             flashcardTextRecycle = view.findViewById(R.id.flashcardTextRecycle);
             recoverButton = view.findViewById(R.id.recoveryButton);
 
-            recoverButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+            recoverButton.setOnClickListener(v -> {
 
-                    //set the flashcard as deleted
-                    Flashcard flashcardToRecover = flashcards.get(getBindingAdapterPosition());
-                    InitializePersistence.getFlashcardPersistence().restoreFlashcard(flashcardToRecover);
+                //set the flashcard as deleted
+                Flashcard flashcardToRecover = flashcards.get(getBindingAdapterPosition());
+                InitializePersistence.getFlashcardPersistence().restoreFlashcard(flashcardToRecover);
 
-                    //delete the views associated with that flashcard
-                    ViewGroup parentView = ((ViewGroup) flashcardTextRecycle.getParent());
-                    parentView.removeView(flashcardTextRecycle);
-                    parentView.removeView(recoverButton);
-                }
+                //delete the views associated with that flashcard
+                ViewGroup parentView = ((ViewGroup) flashcardTextRecycle.getParent());
+                parentView.removeView(flashcardTextRecycle);
+                parentView.removeView(recoverButton);
             });
 
         }// end of ViewHolder class

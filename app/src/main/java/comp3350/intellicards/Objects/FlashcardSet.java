@@ -7,12 +7,12 @@ import java.util.List;
 import java.util.UUID;
 
 public class FlashcardSet {
-    private final UUID uuid;
+    private String uuid;
     private String flashcardSetName;
     private List<Flashcard> flashcards;
 
     public FlashcardSet() {
-        this.uuid = UUID.randomUUID();
+        this.uuid = UUID.randomUUID().toString();
         this.flashcards = new ArrayList<>();
     }
 
@@ -22,26 +22,12 @@ public class FlashcardSet {
 
     }
 
-    public String getUUIDString() {
-        return uuid.toString();
-    }
-
-    public UUID getUUID() {
+    public String getUUID() {
         return uuid;
     }
 
-    public String getFlashCardSetName() {
-        return flashcardSetName;
-    }
-
-    public void setFlashCardSetName(@NonNull String name) {
-        this.flashcardSetName = name;
-    }
-
     public void addFlashCard(@NonNull Flashcard flashcard) {
-        if (flashcard != null) {
-            flashcards.add(flashcard);
-        }
+        flashcards.add(flashcard);
     }
 
     // Return a flashcard set that contains only the active flashcards
@@ -67,7 +53,15 @@ public class FlashcardSet {
         return deletedCards;
     }
 
-    public Flashcard getFlashCardById(UUID uuid) {
+    public String getFlashcardSetName() {
+        return flashcardSetName;
+    }
+
+    public void setFlashCardSetName(@NonNull String name) {
+        this.flashcardSetName = name;
+    }
+
+    public Flashcard getFlashCardById(String uuid) {
         for (Flashcard card : flashcards) {
             if (card.getUUID().equals(uuid)) {
                 return card;
@@ -82,6 +76,18 @@ public class FlashcardSet {
 
     public int size() {
         return flashcards.size();
+    }
+
+    // Return the number of active flashcards in this set
+    public int getActiveCount() {
+        FlashcardSet active = getActiveFlashcards();
+        return active.size();
+    }
+
+    // Return the number of deleted flashcards in this set
+    public int getDeletedCount() {
+        FlashcardSet deleted = getDeletedFlashCards();
+        return deleted.size();
     }
 
     @NonNull

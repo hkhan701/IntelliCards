@@ -8,11 +8,10 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 public class FlashcardPersistenceStub implements FlashcardPersistence {
 
-    private Map<UUID, Flashcard> flashcards;
+    private Map<String, Flashcard> flashcards;
 
     public FlashcardPersistenceStub() {
         flashcards = new HashMap<>();
@@ -37,9 +36,11 @@ public class FlashcardPersistenceStub implements FlashcardPersistence {
     }
 
     @Override
-    public Flashcard getFlashcard(Flashcard currentFlashcard) {
-        return flashcards.get(currentFlashcard.getUUID());
+    public Flashcard getFlashcard(String id) {
+        return flashcards.get(id);
     }
+
+
 
     @Override
     public Flashcard insertFlashcard(Flashcard currentFlashcard) {
@@ -48,9 +49,9 @@ public class FlashcardPersistenceStub implements FlashcardPersistence {
     }
 
     @Override
-    public Flashcard updateFlashcard(Flashcard currentFlashcard) {
-        flashcards.put(currentFlashcard.getUUID(), currentFlashcard);
-        return currentFlashcard;
+    public Flashcard updateFlashcard(Flashcard newFlashcard) {
+        flashcards.put(newFlashcard.getUUID(), newFlashcard);
+        return newFlashcard;
     }
 
     @Override

@@ -6,8 +6,6 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-import java.util.UUID;
-
 import comp3350.intellicards.Objects.Flashcard;
 import comp3350.intellicards.Objects.FlashcardSet;
 
@@ -159,7 +157,7 @@ public class FlashcardTest {
         Flashcard flashcard2 = new Flashcard();
         cardSet.addFlashCard(flashcard1);
         cardSet.addFlashCard(flashcard2);
-        UUID uuid = flashcard2.getUUID();
+        String uuid = flashcard2.getUUID();
         assertEquals(flashcard2, cardSet.getFlashCardById(uuid));
     }
 
