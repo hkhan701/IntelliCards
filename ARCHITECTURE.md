@@ -14,18 +14,18 @@
 - CreateFlashcardSetActivity
 - RecoverFlashcardActivity
 
-### Logic/Business
+### Business/Logic
 
 - FlashcardManager
 - FlashcardSetManager
 
-### Persistence/Data
+### Data/Persistence
 
 - FlashcardPersistence
 - FlashcardSetPersistence
 - ImagePersistence
 
-### Objects
+### Domain Specific Objects
 
 - Flashcard
 - FlashcardSet
