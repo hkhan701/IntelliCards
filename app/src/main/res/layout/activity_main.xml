@@ -4,7 +4,8 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="comp3350.intellicards.Presentation.MainActivity">
+    tools:context="comp3350.intellicards.Presentation.MainActivity"
+    android:background="#dbeff8">
 
     <!-- Header with Title and Profile Button -->
     <TextView
@@ -14,21 +15,104 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="@string/appName"
-        android:textSize="24sp"
+        android:textSize="40sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/profileButton"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginTop="16dp"
         android:text="@string/profile"
+        android:textSize="17sp"
+        android:background="@color/cardview_light_background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!-- Create New Flashcard -->
+    <EditText
+        android:id="@+id/question"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="24dp"
+        android:autofillHints="question"
+        android:ems="10"
+        android:hint="@string/questionPlaceHolder"
+        android:inputType="text"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scrollView3"/>
+
+    <EditText
+        android:id="@+id/answer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="24dp"
+        android:autofillHints="answer"
+        android:ems="10"
+        android:hint="@string/answerPlaceHolder"
+        android:inputType="text"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/question"/>
+
+    <EditText
+        android:id="@+id/hint"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="24dp"
+        android:autofillHints="hint"
+        android:ems="10"
+        android:hint="@string/hintText"
+        android:inputType="text"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/answer"/>
+
+    <Spinner
+        android:id="@+id/flashcardSetSpinner"
+        android:layout_width="374dp"
+        android:layout_height="67dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/hint" />
+
+    <Button
+        android:id="@+id/submitFlashcard"
+        android:layout_width="200dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/submitBtnText"
+        android:background="@color/cardview_light_background"
+        android:textSize="17sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/flashcardSetSpinner"/>
+
+    <!-- Create Set Button -->
+
     <!-- GridLayout for Flashcard Sets -->
+    <Button
+        android:id="@+id/createNewSetButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:layout_marginBottom="16dp"
+        android:text="@string/createSetBtnText"
+        android:background="@color/cardview_light_background"
+        android:textSize="17sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <ScrollView
         android:id="@+id/scrollView3"
         android:layout_width="match_parent"
@@ -41,77 +125,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:columnCount="2"
-            android:padding="8dp" />
+            android:padding="40dp" />
     </ScrollView>
-
-    <!-- Create New Flashcard -->
-    <EditText
-        android:id="@+id/question"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:autofillHints="question"
-        android:ems="10"
-        android:hint="@string/questionPlaceHolder"
-        android:inputType="text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scrollView3"/>
-
-    <EditText
-        android:id="@+id/answer"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:autofillHints="answer"
-        android:ems="10"
-        android:hint="@string/answerPlaceHolder"
-        android:inputType="text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/question"/>
-
-    <EditText
-        android:id="@+id/hint"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:autofillHints="hint"
-        android:ems="10"
-        android:hint="@string/hintText"
-        android:inputType="text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/answer"/>
-
-    <Spinner
-        android:id="@+id/flashcardSetSpinner"
-        android:layout_width="0dp"
-        android:layout_height="44dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/hint" />
-
-    <Button
-        android:id="@+id/submitFlashcard"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/submitBtnText"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/flashcardSetSpinner"/>
-
-    <!-- Create Set Button -->
-    <Button
-        android:id="@+id/createNewSetButton"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:text="@string/createSetBtnText"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
