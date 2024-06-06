@@ -21,10 +21,10 @@ public class RecoverFlashcardsActivity extends Activity {
         setContentView(R.layout.activity_recovery);
 
         // Initialize flashcard persistence
-        FlashcardPersistence flashcardPersistence = StubManager.getFlashcardPersistence();
+        FlashcardManager flashcardManager = new FlashcardManager(StubManager.getFlashcardPersistence());
 
         // Retrieve deleted flashcards
-        List<Flashcard> deletedFlashcards = flashcardPersistence.getAllDeletedFlashcards();
+        List<Flashcard> deletedFlashcards = flashcardManager.getAllDeletedFlashcards();
 
         // Print the recovered list on the UI
         printRecoverList(deletedFlashcards);
