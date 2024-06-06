@@ -58,6 +58,9 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
                     parentView.removeView(flashcardTextRecycle);
                     parentView.removeView(deleteButton);
                     parentView.removeView(editButton);
+
+
+
                 }
 
             });
