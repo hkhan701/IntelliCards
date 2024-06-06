@@ -78,6 +78,18 @@ public class FlashcardSet {
         return flashcards.size();
     }
 
+    // Return the number of active flashcards in this set
+    public int getActiveCount() {
+        FlashcardSet active = getActiveFlashcards();
+        return active.size();
+    }
+
+    // Return the number of deleted flashcards in this set
+    public int getDeletedCount() {
+        FlashcardSet deleted = getDeletedFlashCards();
+        return deleted.size();
+    }
+
     @NonNull
     @Override
     public String toString() {

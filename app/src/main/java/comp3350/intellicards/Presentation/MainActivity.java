@@ -16,6 +16,7 @@ import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import comp3350.intellicards.Objects.Flashcard;
 import comp3350.intellicards.Objects.FlashcardSet;
@@ -44,7 +45,21 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Initialize the persistence layer
+        initializePersistence();
+
+        flashcardPersistence = InitializePersistence.getFlashcardPersistence();
+        flashcardSetPersistence = InitializePersistence.getFlashcardSetPersistence();
+
+        setupFlashcardSetSpinner();
+        setupSubmitButton();
+        setupProfileButton();
+        setupCreateNewSetButton();
+//        setupEditButton();
+
+        displayInitialFlashcards();
+    }
+
+    private void initializePersistence() {
         if (!InitializePersistence.isInitialized()) {
             InitializePersistence.initializeStubData();
         }
@@ -171,5 +186,77 @@ public class MainActivity extends Activity {
             flashcardPersistence.insertFlashcard(flashcard);
             flashcardSetPersistence.addFlashCardToFlashcardSet(selectedFlashcardSet, flashcard);
         });
+    }
+    private void setupEditButton() {
+        TextView questionTextBox = findViewById(R.id.question);
+        TextView answerTextBox = findViewById(R.id.answer);
+        TextView hintTextBox = findViewById(R.id.hint);
+        //Button submitTextButton = findViewById(R.id.submitFlashcard);
+        Button editFlashButton = findViewById(R.id.editButton);
+        //TextView flashcardToEdit = findViewById(R.id.flashcardTextRecycle);
+
+        editFlashButton.setOnClickListener(v -> {
+            //Flashcard editFlashcard = selectedFlashcardSet.getFlashCardById((UUID)editFlashButton.getTag());
+
+            questionTextBox.setText("");
+            answerTextBox.setText("");
+            hintTextBox.setText("");
+        });
+    }
+
+    private void setupProfileButton() {
+        Button profilePageButton = findViewById(R.id.profileButton);
+        profilePageButton.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
+            startActivity(intent);
+        });
+    }
+
+    private void setupCreateNewSetButton() {
+        Button createNewSetButton = findViewById(R.id.createNewSetButton);
+        createNewSetButton.setOnClickListener(v -> {
+            // Open a dialog to enter the name for the new FlashcardSet
+            showCreateNewSetDialog();
+        });
+    }
+
+    private void showCreateNewSetDialog() {
+        // Show an input dialog to get the new set name
+        EditText newSetNameInput = new EditText(this);
+        new android.app.AlertDialog.Builder(this)
+                .setTitle("Create New Flashcard Set")
+                .setMessage("Enter the name for the new Flashcard Set:")
+                .setView(newSetNameInput)
+                .setPositiveButton("Create", (dialog, whichButton) -> {
+                    String newSetName = newSetNameInput.getText().toString().trim();
+                    if (!newSetName.isEmpty()) {
+                        FlashcardSet newFlashcardSet = new FlashcardSet(newSetName);
+                        flashcardSetPersistence.insertFlashcardSet(newFlashcardSet);
+
+                        // Refresh the flashcard sets list and adapter
+                        flashcardSets.add(newFlashcardSet);
+                        adapter.add(newSetName);
+                        adapter.notifyDataSetChanged();
+
+                        // Set the new flashcard set as the selected set
+                        selectedFlashcardSet = newFlashcardSet;
+
+                        // Refresh the view to display the new flashcard set
+                        printViewList(selectedFlashcardSet);
+                    }
+                })
+                .setNegativeButton("Cancel", null)
+                .show();
+    }
+
+    private void displayInitialFlashcards() {
+        FlashcardSet initialFlashcardSet = flashcardSetPersistence.getAllFlashcardSets().get(0).getActiveFlashcards();
+        printViewList(initialFlashcardSet);
+    }
+
+    public void printViewList(FlashcardSet flashcardSet) {
+        RecyclerView recyclerView = findViewById(R.id.recycleView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(new CardViewAdapter(flashcardSet));
     }
 }
