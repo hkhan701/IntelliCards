@@ -12,6 +12,20 @@ public class FlashcardSetManager {
 
     public FlashcardSetManager() {
         flashcardSetPersistence = new FlashcardSetPersistenceStub();
+
+        // Create flashcard sets
+        FlashcardSet set1 = new FlashcardSet("Geography");
+        FlashcardSet set2 = new FlashcardSet("History");
+        FlashcardSet set3 = new FlashcardSet("Science");
+        FlashcardSet set4 = new FlashcardSet("Math");
+        FlashcardSet set5 = new FlashcardSet("English");
+
+        // Add flashcard sets to persistence
+        flashcardSetPersistence.insertFlashcardSet(set1);
+        flashcardSetPersistence.insertFlashcardSet(set2);
+        flashcardSetPersistence.insertFlashcardSet(set3);
+        flashcardSetPersistence.insertFlashcardSet(set4);
+        flashcardSetPersistence.insertFlashcardSet(set5);
     }
 
     public FlashcardSetManager(FlashcardSetPersistence flashcardSetPersistence) {
@@ -35,6 +49,6 @@ public class FlashcardSetManager {
     }
 
     public boolean addFlashCardToFlashcardSet(FlashcardSet flashcardSet, Flashcard flashcard) {
-        return this.addFlashCardToFlashcardSet(flashcardSet, flashcard);
+        return this.flashcardSetPersistence.addFlashCardToFlashcardSet(flashcardSet, flashcard);
     }
 }
