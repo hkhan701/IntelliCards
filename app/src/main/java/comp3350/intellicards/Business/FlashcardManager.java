@@ -17,15 +17,15 @@ public class FlashcardManager {
         this.flashcardPersistence = flashcardPersistence;
     }
 
-    List<Flashcard> getAllActiveFlashcards() {
+    public List<Flashcard> getAllActiveFlashcards() {
         return this.flashcardPersistence.getAllActiveFlashcards();
     }
 
-    List<Flashcard> getAllDeletedFlashcards() {
+    public List<Flashcard> getAllDeletedFlashcards() {
         return this.getAllDeletedFlashcards();
     }
 
-    Flashcard getFlashcard(String id) {
+    public Flashcard getFlashcard(String id) {
         return this.getFlashcard(id);
     }
 
@@ -37,11 +37,11 @@ public class FlashcardManager {
         return flashcardPersistence.updateFlashcard(currFlashcard);
     }
 
-    boolean markFlashcardAsDeleted(String id) {
+    public boolean markFlashcardAsDeleted(String id) {
         return flashcardPersistence.markFlashcardAsDeleted(id);
     }
 
-    boolean restoreFlashcard(String id) {
+    public boolean restoreFlashcard(String id) {
         return flashcardPersistence.restoreFlashcard(id);
     }
 }

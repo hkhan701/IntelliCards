@@ -18,23 +18,23 @@ public class FlashcardSetManager {
         this.flashcardSetPersistence = flashcardSetPersistence;
     }
 
-    FlashcardSet getFlashcardSet(String id) {
+    public FlashcardSet getFlashcardSet(String id) {
         return this.flashcardSetPersistence.getFlashcardSet(id);
     }
 
-    FlashcardSet getActiveFlashcardSet(String id) {
+    public FlashcardSet getActiveFlashcardSet(String id) {
         return this.flashcardSetPersistence.getActiveFlashcardSet(id);
     }
 
-    List<FlashcardSet> getAllFlashcardSets() {
+    public List<FlashcardSet> getAllFlashcardSets() {
         return this.flashcardSetPersistence.getAllFlashcardSets();
     }
 
-    boolean insertFlashcardSet(FlashcardSet newFlashcardSet) {
+    public boolean insertFlashcardSet(FlashcardSet newFlashcardSet) {
         return this.flashcardSetPersistence.insertFlashcardSet(newFlashcardSet);
     }
 
-    boolean addFlashCardToFlashcardSet(FlashcardSet flashcardSet, Flashcard flashcard) {
+    public boolean addFlashCardToFlashcardSet(FlashcardSet flashcardSet, Flashcard flashcard) {
         return this.addFlashCardToFlashcardSet(flashcardSet, flashcard);
     }
 }
