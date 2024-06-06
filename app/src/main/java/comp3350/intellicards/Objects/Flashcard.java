@@ -13,7 +13,7 @@ public class Flashcard {
     private boolean deleted;
 
     // Private constructor used internally to ensure UUID is always set
-    private Flashcard(@NonNull String answer, @NonNull String question, String hint) {
+    public Flashcard(@NonNull String answer, @NonNull String question, String hint) {
         this.uuid = UUID.randomUUID().toString();
         this.answer = answer;
         this.question = question;
