@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import comp3350.intellicards.Objects.Flashcard;
-import comp3350.intellicards.Persistence.FlashcardPersistence;
+import comp3350.intellicards.Business.FlashcardManager;
 import comp3350.intellicards.Business.StubManager;
 import comp3350.intellicards.R;
 

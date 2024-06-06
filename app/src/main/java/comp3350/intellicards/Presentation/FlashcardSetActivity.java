@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import comp3350.intellicards.Objects.FlashcardSet;
-import comp3350.intellicards.Persistence.FlashcardSetPersistence;
+import comp3350.intellicards.Business.FlashcardSetManager;
 import comp3350.intellicards.Business.StubManager;
 import comp3350.intellicards.R;
 
