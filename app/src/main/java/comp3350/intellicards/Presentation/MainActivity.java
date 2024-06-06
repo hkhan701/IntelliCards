@@ -19,14 +19,20 @@ import java.util.List;
 
 import comp3350.intellicards.Objects.Flashcard;
 import comp3350.intellicards.Objects.FlashcardSet;
-import comp3350.intellicards.Persistence.FlashcardPersistence;
-import comp3350.intellicards.Persistence.FlashcardSetPersistence;
-import comp3350.intellicards.Persistence.InitializePersistence;
+
+import comp3350.intellicards.Business.FlashcardManager;
+import comp3350.intellicards.Business.FlashcardSetManager;
+
+import comp3350.intellicards.Business.StubManager;
+
 import comp3350.intellicards.R;
 
 public class MainActivity extends Activity {
 
-    private FlashcardSetPersistence flashcardSetPersistence;
+    private StubManager stubManager;
+
+    //private FlashcardSetPersistence flashcardSetPersistence;
+    private FlashcardSetManager flashcardSetManager;
     private GridLayout gridLayout;
     private Button createNewSetButton;
     private Button profileButton;
@@ -36,8 +42,8 @@ public class MainActivity extends Activity {
     private FlashcardSet selectedFlashcardSet;
     private List<FlashcardSet> flashcardSets;
     private ArrayAdapter<String> adapter;
-    private FlashcardPersistence flashcardPersistence;
-
+    //private FlashcardPersistence flashcardPersistence;
+    private FlashcardManager flashcardManager;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -45,9 +51,6 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         initializePersistence();
-
-        flashcardPersistence = InitializePersistence.getFlashcardPersistence();
-        flashcardSetPersistence = InitializePersistence.getFlashcardSetPersistence();
 
         setupFlashcardSetSpinner();
         setupSubmitButton();
@@ -58,12 +61,12 @@ public class MainActivity extends Activity {
     }
 
     private void initializePersistence() {
-        if (!InitializePersistence.isInitialized()) {
-            InitializePersistence.initializeStubData();
+        if (!StubManager.isInitialized()) {
+            StubManager.initializeStubData();
         }
 
-        flashcardSetPersistence = InitializePersistence.getFlashcardSetPersistence();
-        flashcardPersistence = InitializePersistence.getFlashcardPersistence();
+        flashcardManager = new FlashcardManager(StubManager.getFlashcardPersistence());
+        flashcardSetManager = new FlashcardSetManager(StubManager.getFlashcardSetPersistence());
 
         setupFlashcardSetSpinner();
         setupSubmitButton();
@@ -95,7 +98,7 @@ public class MainActivity extends Activity {
     private void loadFlashcardSets() {
         gridLayout.removeAllViews();
 
-        List<FlashcardSet> flashcardSets = flashcardSetPersistence.getAllFlashcardSets();
+        List<FlashcardSet> flashcardSets = flashcardSetManager.getAllFlashcardSets();
         for (FlashcardSet set : flashcardSets) {
             Button button = new Button(this);
             button.setText(set.getFlashcardSetName());
@@ -127,7 +130,7 @@ public class MainActivity extends Activity {
                     String newSetName = newSetNameInput.getText().toString().trim();
                     if (!newSetName.isEmpty()) {
                         FlashcardSet newFlashcardSet = new FlashcardSet(newSetName);
-                        flashcardSetPersistence.insertFlashcardSet(newFlashcardSet);
+                        flashcardSetManager.insertFlashcardSet(newFlashcardSet);
                         loadFlashcardSets(); // Refresh the list of Flashcard Sets
                     } else {
                         dialog.dismiss(); // Dismiss the dialog if the user didn't enter a name
@@ -139,7 +142,7 @@ public class MainActivity extends Activity {
 
     private void setupFlashcardSetSpinner() {
         Spinner flashcardSetSpinner = findViewById(R.id.flashcardSetSpinner);
-        flashcardSets = flashcardSetPersistence.getAllFlashcardSets();
+        flashcardSets = flashcardSetManager.getAllFlashcardSets();
         List<String> flashcardSetNames = new ArrayList<>();
 
         for (FlashcardSet set : flashcardSets) {
@@ -181,8 +184,8 @@ public class MainActivity extends Activity {
             answerTextBox.setText("");
             hintTextBox.setText("");
 
-            flashcardPersistence.insertFlashcard(flashcard);
-            flashcardSetPersistence.addFlashCardToFlashcardSet(selectedFlashcardSet, flashcard);
+            flashcardManager.insertFlashcard(flashcard);
+            flashcardSetManager.addFlashCardToFlashcardSet(selectedFlashcardSet, flashcard);
         });
     }
     private void setupEditButton() {
