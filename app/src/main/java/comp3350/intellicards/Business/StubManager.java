@@ -1,17 +1,18 @@
-package comp3350.intellicards.Persistence;
+package comp3350.intellicards.Business;
 
 import comp3350.intellicards.Objects.Flashcard;
 import comp3350.intellicards.Objects.FlashcardSet;
+import comp3350.intellicards.Persistence.FlashcardPersistence;
+import comp3350.intellicards.Persistence.FlashcardSetPersistence;
 import comp3350.intellicards.Persistence.stubs.FlashcardPersistenceStub;
 import comp3350.intellicards.Persistence.stubs.FlashcardSetPersistenceStub;
 
-public class InitializePersistence {
+public class StubManager {
     private static boolean initialized = false;
     private static FlashcardPersistence flashcardPersistence;
     private static FlashcardSetPersistence flashcardSetPersistence;
 
-    public InitializePersistence() {
-    }
+    public StubManager() {}
 
     public static void initializeStubData() {
         flashcardSetPersistence = new FlashcardSetPersistenceStub();
