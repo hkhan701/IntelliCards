@@ -38,7 +38,7 @@ public class CardRecoverAdapter extends RecyclerView.Adapter<CardRecoverAdapter.
 
                 //set the flashcard as deleted
                 Flashcard flashcardToRecover = flashcards.get(getBindingAdapterPosition());
-                InitializePersistence.getFlashcardPersistence().restoreFlashcard(flashcardToRecover);
+                InitializePersistence.getFlashcardPersistence().restoreFlashcard(flashcardToRecover.getUUID());
 
                 //delete the views associated with that flashcard
                 ViewGroup parentView = ((ViewGroup) flashcardTextRecycle.getParent());

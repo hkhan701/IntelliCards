@@ -58,9 +58,9 @@ public class InitializePersistence {
         set3.addFlashCard(flashcard9);
 
         // Mark flashcards as deleted
-        flashcardPersistence.markFlashcardAsDeleted(flashcard3);
-        flashcardPersistence.markFlashcardAsDeleted(flashcard5);
-        flashcardPersistence.markFlashcardAsDeleted(flashcard9);
+        flashcardPersistence.markFlashcardAsDeleted(flashcard3.getUUID());
+        flashcardPersistence.markFlashcardAsDeleted(flashcard5.getUUID());
+        flashcardPersistence.markFlashcardAsDeleted(flashcard9.getUUID());
 
         // Add flashcard sets to persistence
         flashcardSetPersistence.insertFlashcardSet(set1);
