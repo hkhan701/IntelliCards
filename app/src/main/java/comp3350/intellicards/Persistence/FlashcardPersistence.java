@@ -10,7 +10,7 @@ public interface FlashcardPersistence {
 
     List<Flashcard> getAllDeletedFlashcards();
 
-    Flashcard getFlashcard(Flashcard currentFlashcard);
+    Flashcard getFlashcard(String id);
 
     Flashcard insertFlashcard(Flashcard currentFlashcard);
 
