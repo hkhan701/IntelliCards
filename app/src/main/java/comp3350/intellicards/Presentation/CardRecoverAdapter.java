@@ -3,7 +3,6 @@ package comp3350.intellicards.Presentation;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -13,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import comp3350.intellicards.Objects.Flashcard;
-import comp3350.intellicards.Persistence.InitializePersistence;
+import comp3350.intellicards.Business.StubManager;
 import comp3350.intellicards.R;
 
 public class CardRecoverAdapter extends RecyclerView.Adapter<CardRecoverAdapter.ViewHolder> {
@@ -38,7 +37,7 @@ public class CardRecoverAdapter extends RecyclerView.Adapter<CardRecoverAdapter.
 
                 //set the flashcard as deleted
                 Flashcard flashcardToRecover = flashcards.get(getBindingAdapterPosition());
-                InitializePersistence.getFlashcardPersistence().restoreFlashcard(flashcardToRecover.getUUID());
+                StubManager.getFlashcardPersistence().restoreFlashcard(flashcardToRecover.getUUID());
 
                 //delete the views associated with that flashcard
                 ViewGroup parentView = ((ViewGroup) flashcardTextRecycle.getParent());

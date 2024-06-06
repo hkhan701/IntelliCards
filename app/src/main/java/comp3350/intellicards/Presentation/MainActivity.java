@@ -16,13 +16,15 @@ import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import comp3350.intellicards.Objects.Flashcard;
 import comp3350.intellicards.Objects.FlashcardSet;
-import comp3350.intellicards.Persistence.FlashcardPersistence;
-import comp3350.intellicards.Persistence.FlashcardSetPersistence;
-import comp3350.intellicards.Persistence.InitializePersistence;
+
+import comp3350.intellicards.Business.FlashcardManager;
+import comp3350.intellicards.Business.FlashcardSetManager;
+
+import comp3350.intellicards.Business.StubManager;
+
 import comp3350.intellicards.R;
 
 public class MainActivity extends Activity {
