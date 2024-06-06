@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">IntelliCards</string>
+    <string name="appName">IntelliCards</string>
     <string name="deleted">DELETED</string>
     <string name="profile">Profile</string>
     <string name="recovery">Recovery/Trash bin</string>
@@ -9,4 +9,5 @@
     <string name="answerPlaceHolder">Enter answer here</string>
     <string name="submitBtnText">Submit</string>
     <string name="createSetBtnText">Create New Set</string>
+
 </resources>

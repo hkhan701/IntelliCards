@@ -7,12 +7,12 @@ import java.util.List;
 import java.util.UUID;
 
 public class FlashcardSet {
-    private final UUID uuid;
+    private String uuid;
     private String flashcardSetName;
     private List<Flashcard> flashcards;
 
     public FlashcardSet() {
-        this.uuid = UUID.randomUUID();
+        this.uuid = UUID.randomUUID().toString();
         this.flashcards = new ArrayList<>();
     }
 
@@ -22,11 +22,7 @@ public class FlashcardSet {
 
     }
 
-    public String getUUIDString() {
-        return uuid.toString();
-    }
-
-    public UUID getUUID() {
+    public String getUUID() {
         return uuid;
     }
 
@@ -65,7 +61,7 @@ public class FlashcardSet {
         this.flashcardSetName = name;
     }
 
-    public Flashcard getFlashCardById(UUID uuid) {
+    public Flashcard getFlashCardById(String uuid) {
         for (Flashcard card : flashcards) {
             if (card.getUUID().equals(uuid)) {
                 return card;

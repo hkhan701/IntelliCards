@@ -6,7 +6,7 @@ import java.util.UUID;
 
 public class Flashcard {
 
-    private final UUID uuid;
+    private final String uuid;
     private String answer;
     private String question;
     private String hint;
@@ -14,15 +14,15 @@ public class Flashcard {
 
     // Constructor with answer, question, and hint
     public Flashcard(@NonNull String answer, @NonNull String question, String hint) {
-        this(UUID.randomUUID(), answer, question, hint);
+        this(UUID.randomUUID().toString(), answer, question, hint);
     }
 
     public Flashcard() {
-        this(UUID.randomUUID(), "No answer set", "No question set", "No hint set");
+        this(UUID.randomUUID().toString(), "No answer set", "No question set", "No hint set");
     }
 
     // Private constructor used internally to ensure UUID is always set
-    private Flashcard(UUID uuid, @NonNull String answer, @NonNull String question, String hint) {
+    private Flashcard(String uuid, @NonNull String answer, @NonNull String question, String hint) {
         this.uuid = uuid;
         this.answer = answer;
         this.question = question;
@@ -30,13 +30,10 @@ public class Flashcard {
         this.deleted = false;
     }
 
-    public String getUUIDString() {
-        return uuid.toString();
-    }
-
-    public UUID getUUID() {
+    public String getUUID() {
         return uuid;
     }
+
 
     public String getAnswer() {
         return answer;

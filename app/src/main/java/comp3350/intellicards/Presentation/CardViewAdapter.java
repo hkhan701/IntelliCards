@@ -10,7 +10,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.UUID;
 
 import comp3350.intellicards.Objects.Flashcard;
 import comp3350.intellicards.Objects.FlashcardSet;
@@ -19,7 +18,6 @@ import comp3350.intellicards.R;
 public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHolder> {
 
     private FlashcardSet flashcardSet;
-    private AdapterView.OnItemClickListener deleteButtonClick;
 
     /**
      * Provide a reference to the type of views that you are using
@@ -39,12 +37,10 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
 
             // Clicking this will mark the corresponding card as deleted
             // and it will not pop up as a flashcard in the recycle view until restored
-            deleteButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                        //set the flashcard as deleted
-                        Flashcard card = flashcardSet.getFlashCardById((UUID)deleteButton.getTag());
-                        card.markDeleted();
+            deleteButton.setOnClickListener(v -> {
+                //set the flashcard as deleted
+                Flashcard card = flashcardSet.getFlashCardById((String) deleteButton.getTag());
+                card.markDeleted();
 
                         //delete the views associated with that flashcard
                         ViewGroup parentView = ((ViewGroup) flashcardTextRecycle.getParent());
@@ -52,7 +48,6 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
                         parentView.removeView(deleteButton);
                         parentView.removeView(editButton);
 
-                }
             });
 
             editButton.setOnClickListener(new View.OnClickListener() {
@@ -83,14 +78,13 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
         {
             return super.itemView.getRootView();
         }
-
     }
 
     /**
      * Initialize the dataset of the Adapter
      *
      * @param flashcards contain the flashcards the data to populate views to be used
-     * by RecyclerView
+     *                   by RecyclerView
      */
     public CardViewAdapter(FlashcardSet flashcards) {
         flashcardSet = flashcards;
@@ -104,7 +98,7 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
         View view = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.flashcard_view, viewGroup, false);
 
-        return new ViewHolder(view,flashcardSet);
+        return new ViewHolder(view, flashcardSet);
     }
 
     // Replace the contents of a view (invoked by the layout manager)
