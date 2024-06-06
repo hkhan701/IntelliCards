@@ -42,7 +42,7 @@ public class FlashcardSet {
         return undeletedCards;
     }
 
-    // Return all the flashcards that have been deleted in this set
+    // Return all the flashcards in a flashcard set that have been deleted in this set
     public FlashcardSet getDeletedFlashCards() {
         FlashcardSet deletedCards = new FlashcardSet();
         for (Flashcard card : flashcards) {
@@ -80,14 +80,12 @@ public class FlashcardSet {
 
     // Return the number of active flashcards in this set
     public int getActiveCount() {
-        FlashcardSet active = getActiveFlashcards();
-        return active.size();
+        return getActiveFlashcards().size();
     }
 
     // Return the number of deleted flashcards in this set
     public int getDeletedCount() {
-        FlashcardSet deleted = getDeletedFlashCards();
-        return deleted.size();
+        return getDeletedFlashCards().size();
     }
 
     @NonNull
