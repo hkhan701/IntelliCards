@@ -43,26 +43,26 @@ public class FlashcardManager {
     }
 
     public List<Flashcard> getAllDeletedFlashcards() {
-        return this.getAllDeletedFlashcards();
+        return this.flashcardPersistence.getAllDeletedFlashcards();
     }
 
     public Flashcard getFlashcard(String id) {
-        return this.getFlashcard(id);
+        return this.flashcardPersistence.getFlashcard(id);
     }
 
     public Flashcard insertFlashcard(Flashcard currFlashcard) {
-        return flashcardPersistence.insertFlashcard(currFlashcard);
+        return this.flashcardPersistence.insertFlashcard(currFlashcard);
     }
 
     public Flashcard updateFlashcard(Flashcard currFlashcard) {
-        return flashcardPersistence.updateFlashcard(currFlashcard);
+        return this.flashcardPersistence.updateFlashcard(currFlashcard);
     }
 
     public boolean markFlashcardAsDeleted(String id) {
-        return flashcardPersistence.markFlashcardAsDeleted(id);
+        return this.flashcardPersistence.markFlashcardAsDeleted(id);
     }
 
     public boolean restoreFlashcard(String id) {
-        return flashcardPersistence.restoreFlashcard(id);
+        return this.flashcardPersistence.restoreFlashcard(id);
     }
 }
