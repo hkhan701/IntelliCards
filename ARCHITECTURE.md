@@ -1,6 +1,32 @@
+## IntelliCards Architecture
 
-TODO:
-from iteration 1 documentation:
- > Identify the packages and major source code files in your repository. Sketch out the overall architecture of your system broadly. If you want, you can use a tool like asciiflow or Mermaid for text purity in your ARCHITECTURE.md file, or you may create an architecture diagram as an image (.png, .jpg, .svg). Note that GitLab can render Mermaid diagrams!
+### UI/Presentation
 
+- MainActivity
+- ProfileActivity
+- CreateFlashcardActivity
+- EditFlashcardActivity
+- ViewFlashcardSetActivity
+- CreateFlashcardSetActivity
+- RecoverFlashcardActivity
+
+### Logic/Business
+
+- FlashcardManager
+- FlashcardSetManager
+
+### Persistence/Data
+
+- FlashcardPersistence
+- FlashcardSetPersistence
+- ImagePersistence
+
+### Objects
+
+- Flashcard
+- FlashcardSet
+
+### Sketch
+
+https://media.discordapp.net/attachments/1245156917194788969/1246330674344886344/image.png?ex=666296e4&is=66614564&hm=1f81088569fcf13bec05bf39cc6001642c2579cf39afb615951577a9e4944490&=&format=webp&quality=lossless&width=1080&height=424
  
