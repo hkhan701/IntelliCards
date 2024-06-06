@@ -3,7 +3,6 @@ package comp3350.intellicards.Presentation;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -12,8 +11,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import comp3350.intellicards.Objects.Flashcard;
-import comp3350.intellicards.Persistence.FlashcardPersistence;
-import comp3350.intellicards.Persistence.InitializePersistence;
+import comp3350.intellicards.Business.FlashcardManager;
+import comp3350.intellicards.Business.StubManager;
 import comp3350.intellicards.R;
 
 public class RecoverFlashcardsActivity extends Activity {
@@ -22,10 +21,10 @@ public class RecoverFlashcardsActivity extends Activity {
         setContentView(R.layout.activity_recovery);
 
         // Initialize flashcard persistence
-        FlashcardPersistence flashcardPersistence = InitializePersistence.getFlashcardPersistence();
+        FlashcardManager flashcardManager = new FlashcardManager(StubManager.getFlashcardPersistence());
 
         // Retrieve deleted flashcards
-        List<Flashcard> deletedFlashcards = flashcardPersistence.getAllDeletedFlashcards();
+        List<Flashcard> deletedFlashcards = flashcardManager.getAllDeletedFlashcards();
 
         // Print the recovered list on the UI
         printRecoverList(deletedFlashcards);

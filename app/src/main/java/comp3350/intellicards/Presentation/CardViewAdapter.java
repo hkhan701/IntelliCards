@@ -1,5 +1,7 @@
 package comp3350.intellicards.Presentation;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 
@@ -48,22 +51,25 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
                         parentView.removeView(deleteButton);
                         parentView.removeView(editButton);
 
+
+
             });
 
-            editButton.setOnClickListener(new View.OnClickListener() {
+            editButton.setOnClickListener(v -> {
+                ViewGroup parentView = ((ViewGroup) flashcardTextRecycle.getParent());
 
-                @Override
-                public void onClick(View v) {
-                    ViewGroup parentView = ((ViewGroup) flashcardTextRecycle.getParent());
-                    parentView.removeView(flashcardTextRecycle);
-                    parentView.removeView(deleteButton);
-                    parentView.removeView(editButton);
+                Intent intent = new Intent (v.getContext(), EditFlashcardActivity.class);
+                intent.putExtra("flashcardSetID", flashcardSet.getUUID());
+                intent.putExtra("flashcardID", (String)deleteButton.getTag());
+                ((Activity) v.getContext()).startActivityForResult(intent, 1);
 
+                System.out.println("ioefwhfcoshfnwiohcfnivc");
+                flashcardTextRecycle.setText(flashcardSet.getFlashCardById((String) deleteButton.getTag()).toString());
 
-
-                }
 
             });
+
+
 
         }//end of ViewHolder class
 

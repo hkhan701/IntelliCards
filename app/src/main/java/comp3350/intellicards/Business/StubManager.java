@@ -1,17 +1,18 @@
-package comp3350.intellicards.Persistence;
+package comp3350.intellicards.Business;
 
 import comp3350.intellicards.Objects.Flashcard;
 import comp3350.intellicards.Objects.FlashcardSet;
+import comp3350.intellicards.Persistence.FlashcardPersistence;
+import comp3350.intellicards.Persistence.FlashcardSetPersistence;
 import comp3350.intellicards.Persistence.stubs.FlashcardPersistenceStub;
 import comp3350.intellicards.Persistence.stubs.FlashcardSetPersistenceStub;
 
-public class InitializePersistence {
+public class StubManager {
     private static boolean initialized = false;
     private static FlashcardPersistence flashcardPersistence;
     private static FlashcardSetPersistence flashcardSetPersistence;
 
-    public InitializePersistence() {
-    }
+    public StubManager() {}
 
     public static void initializeStubData() {
         flashcardSetPersistence = new FlashcardSetPersistenceStub();
@@ -58,9 +59,9 @@ public class InitializePersistence {
         set3.addFlashCard(flashcard9);
 
         // Mark flashcards as deleted
-        flashcardPersistence.markFlashcardAsDeleted(flashcard3);
-        flashcardPersistence.markFlashcardAsDeleted(flashcard5);
-        flashcardPersistence.markFlashcardAsDeleted(flashcard9);
+        flashcardPersistence.markFlashcardAsDeleted(flashcard3.getUUID());
+        flashcardPersistence.markFlashcardAsDeleted(flashcard5.getUUID());
+        flashcardPersistence.markFlashcardAsDeleted(flashcard9.getUUID());
 
         // Add flashcard sets to persistence
         flashcardSetPersistence.insertFlashcardSet(set1);

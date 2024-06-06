@@ -53,7 +53,7 @@ public class FlashcardSet {
         return deletedCards;
     }
 
-    public String getFlashCardSetName() {
+    public String getFlashcardSetName() {
         return flashcardSetName;
     }
 
