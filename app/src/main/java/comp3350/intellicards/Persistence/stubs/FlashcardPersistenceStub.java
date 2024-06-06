@@ -36,9 +36,11 @@ public class FlashcardPersistenceStub implements FlashcardPersistence {
     }
 
     @Override
-    public Flashcard getFlashcard(Flashcard currentFlashcard) {
-        return flashcards.get(currentFlashcard.getUUID());
+    public Flashcard getFlashcard(String id) {
+        return flashcards.get(id);
     }
+
+
 
     @Override
     public Flashcard insertFlashcard(Flashcard currentFlashcard) {

@@ -16,7 +16,6 @@ import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import comp3350.intellicards.Objects.Flashcard;
 import comp3350.intellicards.Objects.FlashcardSet;
@@ -99,7 +98,7 @@ public class MainActivity extends Activity {
         List<FlashcardSet> flashcardSets = flashcardSetPersistence.getAllFlashcardSets();
         for (FlashcardSet set : flashcardSets) {
             Button button = new Button(this);
-            button.setText(set.getFlashCardSetName());
+            button.setText(set.getFlashcardSetName());
             button.setLayoutParams(new GridLayout.LayoutParams(
                     GridLayout.spec(GridLayout.UNDEFINED, 1f),
                     GridLayout.spec(GridLayout.UNDEFINED, 1f)
@@ -144,7 +143,7 @@ public class MainActivity extends Activity {
         List<String> flashcardSetNames = new ArrayList<>();
 
         for (FlashcardSet set : flashcardSets) {
-            flashcardSetNames.add(set.getFlashCardSetName());
+            flashcardSetNames.add(set.getFlashcardSetName());
         }
 
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, flashcardSetNames);
@@ -208,6 +207,7 @@ public class MainActivity extends Activity {
         profilePageButton.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
             startActivity(intent);
+
         });
     }
 
