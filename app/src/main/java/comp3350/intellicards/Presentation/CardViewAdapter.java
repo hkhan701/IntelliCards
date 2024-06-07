@@ -63,7 +63,7 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
                 intent.putExtra("flashcardID", (String)deleteButton.getTag());
                 ((Activity) v.getContext()).startActivityForResult(intent, 1);
 
-                flashcardTextRecycle.setText(flashcardSet.getFlashCardById((String) deleteButton.getTag()).toString());
+                flashcardTextRecycle.setText(flashcardSet.getFlashCardById((String) deleteButton.getTag()).getDataFormatted());
             });
 
         }// end of ViewHolder class

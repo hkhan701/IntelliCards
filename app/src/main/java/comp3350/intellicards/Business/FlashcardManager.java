@@ -12,8 +12,8 @@ public class FlashcardManager {
     public FlashcardManager() {
         flashcardPersistence = new FlashcardPersistenceStub();
 
-        Flashcard flashcard1 = new Flashcard("The capital of France is Paris.", "What is the capital of France?", "Hint: Eiffel Tower");
-        Flashcard flashcard2 = new Flashcard("The tallest mountain in the world is Mount Everest.", "What is the tallest mountain in the world?", "Hint: Asia");
+        Flashcard flashcard1 = new Flashcard("The capital of France is Paris.", "What is the capital of France?", "Eiffel Tower");
+        Flashcard flashcard2 = new Flashcard("The tallest mountain in the world is Mount Everest.", "What is the tallest mountain in the world?", "Asia");
         Flashcard flashcard3 = new Flashcard("The currency of Japan is Yen.", "What is the currency of Japan?", "");
         Flashcard flashcard4 = new Flashcard("The Great Wall of China is in China.", "Where is the Great Wall of China located?", "");
         Flashcard flashcard5 = new Flashcard("The Pacific Ocean is the largest ocean on Earth.", "What is the largest ocean on Earth?", "");
