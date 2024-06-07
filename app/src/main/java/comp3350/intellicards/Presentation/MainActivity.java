@@ -74,7 +74,8 @@ public class MainActivity extends Activity {
         List<FlashcardSet> flashcardSets = flashcardSetManager.getAllFlashcardSets();
         for (FlashcardSet set : flashcardSets) {
             Button FlashcardSetButton = new Button(this);
-            FlashcardSetButton.setText(set.getFlashcardSetName());
+            String title = set.getFlashcardSetName() + " (" + set.getActiveCount() + ")";
+            FlashcardSetButton.setText(title);
             FlashcardSetButton.setLayoutParams(new GridLayout.LayoutParams(
                     GridLayout.spec(GridLayout.UNDEFINED, 1f),
                     GridLayout.spec(GridLayout.UNDEFINED, 1f)
@@ -159,6 +160,7 @@ public class MainActivity extends Activity {
             questionTextBox.setText("");
             answerTextBox.setText("");
             hintTextBox.setText("");
+            loadFlashcardSets(); // Refresh the list of Flashcard Sets to update count
 
             Toast.makeText(this, "Flashcard added successfully", Toast.LENGTH_LONG).show();
         });
