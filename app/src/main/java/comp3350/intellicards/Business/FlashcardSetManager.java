@@ -1,4 +1,5 @@
 package comp3350.intellicards.Business;
+
 import androidx.annotation.NonNull;
 
 import java.util.List;
@@ -7,7 +8,6 @@ import comp3350.intellicards.Objects.Flashcard;
 import comp3350.intellicards.Objects.FlashcardSet;
 import comp3350.intellicards.Persistence.FlashcardSetPersistence;
 import comp3350.intellicards.Persistence.stubs.FlashcardSetPersistenceStub;
-import comp3350.intellicards.R;
 
 public class FlashcardSetManager {
     private FlashcardSetPersistence flashcardSetPersistence;
