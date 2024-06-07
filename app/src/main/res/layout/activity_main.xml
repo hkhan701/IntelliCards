@@ -105,6 +105,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/flashcardSetSpinner" />
 
+    <!-- Create New Flashcard Set -->
+
     <Button
         android:id="@+id/createNewSetButton"
         android:layout_width="0dp"
@@ -117,6 +119,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <!-- Scroll and Click on New Sets to Flashcards Inside Those Sets -->
 
     <ScrollView
         android:id="@+id/scrollView3"
@@ -131,7 +135,7 @@
         <GridLayout
             android:id="@+id/gridLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:columnCount="2"
             android:padding="5dp" />
     </ScrollView>
