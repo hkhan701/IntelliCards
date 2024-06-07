@@ -20,7 +20,14 @@ public class FlashcardPersistenceStub implements FlashcardPersistence {
     // Can be used to get all active flashcards for searching capability
     @Override
     public List<Flashcard> getAllActiveFlashcards() {
-        return Collections.unmodifiableList(new ArrayList<>(flashcards.values()));
+        List<Flashcard> activeFlashcards = new ArrayList<>();
+        for (Flashcard flashcard : flashcards.values()) {
+            if (!flashcard.isDeleted()) {
+                activeFlashcards.add(flashcard);
+            }
+        }
+
+        return Collections.unmodifiableList(activeFlashcards);
     }
 
     // Can be used to get all deleted flashcards for the recover view
