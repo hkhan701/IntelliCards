@@ -11,7 +11,7 @@ import comp3350.intellicards.Persistence.FlashcardSetPersistence;
 
 public class FlashcardSetPersistenceStub implements FlashcardSetPersistence {
 
-    private Map<String, FlashcardSet> flashcardSets;
+    private Map<String, FlashcardSet> flashcardSets = null;
 
     public FlashcardSetPersistenceStub() {
         flashcardSets = new HashMap<>();

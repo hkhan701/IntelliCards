@@ -19,7 +19,6 @@ import comp3350.intellicards.R;
 public class FlashcardSetActivity extends Activity {
 
     private RecyclerView flashcardsRecyclerView;
-    private TextView flashcardSetTitle;
     private FlashcardSetManager flashcardSetManager = new FlashcardSetManager(StubManager.getFlashcardSetPersistence());
 
 
@@ -28,7 +27,7 @@ public class FlashcardSetActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_flashcard_set);
 
-        flashcardSetTitle = findViewById(R.id.flashcardSetTitle);
+        TextView flashcardSetTitle = findViewById(R.id.flashcardSetTitle);
         flashcardsRecyclerView = findViewById(R.id.flashcardsRecyclerView);
         flashcardsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 

@@ -10,7 +10,7 @@ import comp3350.intellicards.Persistence.FlashcardSetPersistence;
 import comp3350.intellicards.Persistence.stubs.FlashcardSetPersistenceStub;
 
 public class FlashcardSetManager {
-    private FlashcardSetPersistence flashcardSetPersistence;
+    private FlashcardSetPersistence flashcardSetPersistence = null;
 
     public FlashcardSetManager() {
         flashcardSetPersistence = new FlashcardSetPersistenceStub();

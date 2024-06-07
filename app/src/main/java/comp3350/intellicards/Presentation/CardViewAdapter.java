@@ -18,7 +18,7 @@ import comp3350.intellicards.R;
 
 public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHolder> {
 
-    private FlashcardSet flashcardSet;
+    private FlashcardSet flashcardSet = null;
 
     /**
      * Provide a reference to the type of views that you are using
