@@ -19,12 +19,6 @@ public class FlashcardSetPersistenceStub implements FlashcardSetPersistence {
 
     @Override
     public FlashcardSet getFlashcardSet(String uuid) {
-        return flashcardSets.get(uuid);
-    }
-
-    // return a flashcard set with all active cards
-    @Override
-    public FlashcardSet getActiveFlashcardSet(String uuid) {
         FlashcardSet set = flashcardSets.get(uuid);
         if (set != null) {
             return set.getActiveFlashcards();
@@ -53,7 +47,7 @@ public class FlashcardSetPersistenceStub implements FlashcardSetPersistence {
         /* hashmap.put returns null if an item with a new key is inserted
             since each set will have a unique id, successful insertions will return null
          */
-        if( flashcardSets.put(newFlashcardSet.getUUID(), newFlashcardSet) == null)
+        if (flashcardSets.put(newFlashcardSet.getUUID(), newFlashcardSet) == null)
             inserted = true;
 
         return inserted;
