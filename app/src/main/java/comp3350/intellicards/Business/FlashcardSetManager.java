@@ -38,6 +38,10 @@ public class FlashcardSetManager {
         return this.flashcardSetPersistence.getFlashcardSet(id);
     }
 
+    public FlashcardSet getActiveFlashcardSet(String id) {
+        return this.flashcardSetPersistence.getActiveFlashcardSet(id);
+    }
+
     public List<FlashcardSet> getAllFlashcardSets() {
         return this.flashcardSetPersistence.getAllFlashcardSets();
     }

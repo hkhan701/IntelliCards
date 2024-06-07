@@ -8,6 +8,8 @@ import comp3350.intellicards.Objects.FlashcardSet;
 public interface FlashcardSetPersistence {
     FlashcardSet getFlashcardSet(String flashcardSetId);
 
+    FlashcardSet getActiveFlashcardSet(String uuid);
+
     List<FlashcardSet> getAllFlashcardSets();
 
     boolean insertFlashcardSet(FlashcardSet newFlashcardSet);
