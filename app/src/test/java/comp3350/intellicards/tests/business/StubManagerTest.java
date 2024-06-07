@@ -1,5 +1,7 @@
 package comp3350.intellicards.tests.business;
 
+import static org.junit.Assert.*;
+
 import org.junit.After;
 import org.junit.Test;
 import org.junit.Before;
@@ -16,18 +18,14 @@ public class StubManagerTest {
     /**
      * Test initializeStubData()
      */
+    @Test
+    public void initializingStubDataFillsWithMockedData() {
+        StubManager.initializeStubData();
 
-    /**
-     * Test isInitialized()
-     */
-
-    /**
-     * Test getFlashcardPersistence()
-     */
-
-    /**
-     * Test getFlashcardSetPersistence()
-     */
+        assertTrue(StubManager.isInitialized());
+        assertNotEquals(0, StubManager.getFlashcardPersistence().getAllActiveFlashcards().size());
+        assertNotEquals(0, StubManager.getFlashcardSetPersistence().getAllFlashcardSets().size());
+    }
 
     @After
     public void tearDown() {}
