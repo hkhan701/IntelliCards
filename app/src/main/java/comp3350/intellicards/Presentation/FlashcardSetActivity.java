@@ -37,7 +37,7 @@ public class FlashcardSetActivity extends Activity {
         String flashcardSetId = getIntent().getStringExtra("flashcardSetId");
 
         if (flashcardSetId != null) {
-            FlashcardSet flashcardSet = flashcardSetManager.getActiveFlashcardSet(flashcardSetId);
+            FlashcardSet flashcardSet = flashcardSetManager.getFlashcardSet(flashcardSetId);
 
             if (flashcardSet != null) {
                 flashcardSetTitle.setText(flashcardSet.getFlashcardSetName());
@@ -65,7 +65,7 @@ public class FlashcardSetActivity extends Activity {
             // Update the TextView in your ViewHolder based on the updated flashcard
             // Get the flashcard set UUID from the intent
             String flashcardSetId = getIntent().getStringExtra("flashcardSetId");
-            FlashcardSet flashcardSet = flashcardSetManager.getActiveFlashcardSet(flashcardSetId);
+            FlashcardSet flashcardSet = flashcardSetManager.getFlashcardSet(flashcardSetId);
             Flashcard updatedFlashcard = flashcardSet.getFlashCardById(updatedFlashcardID);
             if (updatedFlashcard != null) {
                 flashcardsRecyclerView.setAdapter(new CardViewAdapter(flashcardSet));
