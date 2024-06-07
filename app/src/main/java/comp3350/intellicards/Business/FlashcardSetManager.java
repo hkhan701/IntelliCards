@@ -1,4 +1,6 @@
 package comp3350.intellicards.Business;
+import androidx.annotation.NonNull;
+
 import java.util.List;
 
 import comp3350.intellicards.Objects.Flashcard;
@@ -36,10 +38,6 @@ public class FlashcardSetManager {
         return this.flashcardSetPersistence.getFlashcardSet(id);
     }
 
-    public FlashcardSet getActiveFlashcardSet(String id) {
-        return this.flashcardSetPersistence.getActiveFlashcardSet(id);
-    }
-
     public List<FlashcardSet> getAllFlashcardSets() {
         return this.flashcardSetPersistence.getAllFlashcardSets();
     }
@@ -48,7 +46,7 @@ public class FlashcardSetManager {
         return this.flashcardSetPersistence.insertFlashcardSet(newFlashcardSet);
     }
 
-    public boolean addFlashCardToFlashcardSet(FlashcardSet flashcardSet, Flashcard flashcard) {
+    public boolean addFlashCardToFlashcardSet(@NonNull FlashcardSet flashcardSet, @NonNull Flashcard flashcard) {
         return this.flashcardSetPersistence.addFlashCardToFlashcardSet(flashcardSet, flashcard);
     }
 }
