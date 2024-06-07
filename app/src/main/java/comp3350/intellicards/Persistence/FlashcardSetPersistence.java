@@ -12,7 +12,7 @@ public interface FlashcardSetPersistence {
 
     List<FlashcardSet> getAllFlashcardSets();
 
-    boolean insertFlashcardSet(FlashcardSet newFlashcardSet);
+    void insertFlashcardSet(FlashcardSet newFlashcardSet);
 
     boolean addFlashCardToFlashcardSet(FlashcardSet flashcardSet, Flashcard flashcard);
 

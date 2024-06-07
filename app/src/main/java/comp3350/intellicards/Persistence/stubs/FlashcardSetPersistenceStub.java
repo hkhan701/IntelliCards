@@ -47,15 +47,7 @@ public class FlashcardSetPersistenceStub implements FlashcardSetPersistence {
     }
 
     @Override
-    public boolean insertFlashcardSet(FlashcardSet newFlashcardSet) {
-        boolean inserted = false;
-
-        /* hashmap.put returns null if an item with a new key is inserted
-            since each set will have a unique id, successful insertions will return null
-         */
-        if (flashcardSets.put(newFlashcardSet.getUUID(), newFlashcardSet) == null)
-            inserted = true;
-
-        return inserted;
+    public void insertFlashcardSet(FlashcardSet newFlashcardSet) {
+        flashcardSets.put(newFlashcardSet.getUUID(), newFlashcardSet);
     }
 }

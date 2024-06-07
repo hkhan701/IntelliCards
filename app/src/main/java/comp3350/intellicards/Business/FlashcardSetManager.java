@@ -46,8 +46,8 @@ public class FlashcardSetManager {
         return this.flashcardSetPersistence.getAllFlashcardSets();
     }
 
-    public boolean insertFlashcardSet(FlashcardSet newFlashcardSet) {
-        return this.flashcardSetPersistence.insertFlashcardSet(newFlashcardSet);
+    public void insertFlashcardSet(FlashcardSet newFlashcardSet) {
+        this.flashcardSetPersistence.insertFlashcardSet(newFlashcardSet);
     }
 
     public boolean addFlashCardToFlashcardSet(@NonNull FlashcardSet flashcardSet, @NonNull Flashcard flashcard) {
