@@ -67,7 +67,7 @@ public class EditFlashcardActivity extends Activity {
             currFlashcard.setQuestion(questionTextBox.getText().toString());
             currFlashcard.setAnswer(answerTextBox.getText().toString());
             currFlashcard.setHint(hintTextBox.getText().toString());
-            Toast.makeText(this, "Successfully updated flashcard", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Successfully updated flashcard", Toast.LENGTH_LONG).show();
 
             Intent resultIntent = new Intent();
             resultIntent.putExtra("flashcardID", currFlashcard.getUUID()); // Pass the updated flashcard ID
