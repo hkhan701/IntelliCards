@@ -11,11 +11,6 @@ import java.util.UUID;
 import comp3350.intellicards.Objects.Flashcard;
 import comp3350.intellicards.Objects.FlashcardSet;
 
-/**
- * Example local unit test, which will execute on the development machine (host).
- *
- * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
- */
 public class FlashcardSetTest {
 
     private FlashcardSet cardSet;
@@ -25,7 +20,7 @@ public class FlashcardSetTest {
         cardSet = new FlashcardSet();
     }
 
-    /**
+    /*
      * Constructor Tests
      */
     @Test
@@ -37,7 +32,7 @@ public class FlashcardSetTest {
                 setName, namedCardSet.getFlashcardSetName());
     }
 
-    /**
+    /*
      * Test getUUID()
      */
     @Test
@@ -46,7 +41,7 @@ public class FlashcardSetTest {
                 cardSet.getUUID());
     }
 
-    /**
+    /*
      * Test addFlashCard()
      */
     @Test
@@ -74,7 +69,7 @@ public class FlashcardSetTest {
                 flashcard.getAnswer(), flashcardGet.getAnswer());
     }
 
-    /**
+    /*
      * Test getActiveFlashcards()
      */
     @Test
@@ -105,7 +100,7 @@ public class FlashcardSetTest {
                 activeCard, flashcard1);
     }
 
-    /**
+    /*
      * Test getDeletedFlashCards()
      */
     @Test
@@ -122,8 +117,7 @@ public class FlashcardSetTest {
                 flashcard2, cardSet.getDeletedFlashCards().getIndex(0));
     }
 
-
-    /**
+    /*
      * Test getFlashcardById()
      */
     @Test
@@ -138,7 +132,6 @@ public class FlashcardSetTest {
                 flashcard2, cardSet.getFlashCardById(uuid));
     }
 
-
     @Test
     public void testGetFlashCardByIdCardIsNotInSet() {
         Flashcard flashcard1 = new Flashcard("Less Generic Answer", "Less Generic Question", null);
@@ -150,6 +143,7 @@ public class FlashcardSetTest {
         assertNull("The get flashcard by ID method will return null if the card is not in the set",
                 cardSet.getFlashCardById(uuid));
     }
+
     @Test
     public void testGetFlashcardByIdWhereNoCardsInSet() {
         String uuid = UUID.randomUUID().toString();
@@ -158,7 +152,7 @@ public class FlashcardSetTest {
                 cardSet.getFlashCardById(uuid));
     }
 
-    /**
+    /*
      * Test toString()
      */
     @Test
@@ -180,7 +174,6 @@ public class FlashcardSetTest {
         assertEquals("Using the toString() method on a flashcard set will give info on the set and the cards within",
                 expectedString, cardSet.toString());
     }
-
 
     @After
     public void tearDown(){

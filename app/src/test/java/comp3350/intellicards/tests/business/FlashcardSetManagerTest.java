@@ -20,21 +20,20 @@ public class FlashcardSetManagerTest {
     @Before
     public void setUp() { flashcardSetManager = new FlashcardSetManager(new FlashcardSetPersistenceStub()); }
 
-    /**
+    /*
      * Test Constructors()
      */
-
     @Test
     public void nullConstructorInitializesWithData() {
         FlashcardSetManager flashcardSetManagerNullConstructor = new FlashcardSetManager();
 
-        assertNotEquals(0, flashcardSetManagerNullConstructor.getAllFlashcardSets().size());
+        assertNotEquals("There should be data contained in the flashcardSetManager if the null constructor is called",
+                0, flashcardSetManagerNullConstructor.getAllFlashcardSets().size());
     }
 
-    /**
+    /*
      * Test getFlashcardSet()
      */
-
     @Test
     public void getFlashcardSetThatExistsInPersistence() {
         FlashcardSet flashcardSet = new FlashcardSet("COMP 3350");
@@ -42,20 +41,21 @@ public class FlashcardSetManagerTest {
         
         flashcardSetManager.insertFlashcardSet(flashcardSet);
 
-        assertEquals(flashcardSet.toString(), flashcardSetManager.getFlashcardSet(flashcardUUID).toString());
+        assertEquals("You should be able to retrieve a flashcard set from the manager if you have its UUID",
+                flashcardSet.toString(), flashcardSetManager.getFlashcardSet(flashcardUUID).toString());
     }
 
     @Test
     public void getFlashcardSetThatDoesNotExistInPersistence() {
         String flashcardUUID = UUID.randomUUID().toString();
 
-        assertNull(flashcardSetManager.getFlashcardSet(flashcardUUID));
+        assertNull("If a flashcard set is not in the flashcardSetManager, getFlashcardSet() should return null",
+                flashcardSetManager.getFlashcardSet(flashcardUUID));
     }
     
-    /**
+    /*
      * Test addFlashcardToFlashcardSet()
      */
-
     @Test
     public void addFlashcardToExistingFlashcardSet() {
         FlashcardSet flashcardSet = new FlashcardSet("COMP 3350");
@@ -65,7 +65,8 @@ public class FlashcardSetManagerTest {
         flashcardSetManager.insertFlashcardSet(flashcardSet);
         assertTrue(flashcardSetManager.addFlashCardToFlashcardSet(flashcardSet, flashcard));
 
-        assertEquals(1, flashcardSetManager.getFlashcardSet(flashcardSetUUID).getActiveFlashcards().size());
+        assertEquals("You can add a flashcard to a flashcard set from the flashcardSetManager",
+                1, flashcardSetManager.getFlashcardSet(flashcardSetUUID).getActiveFlashcards().size());
     }
 
     @Test
@@ -73,7 +74,8 @@ public class FlashcardSetManagerTest {
         FlashcardSet flashcardSet = new FlashcardSet("COMP 3350");
         Flashcard flashcard = new Flashcard("Analysis/Requirements", "What is the first stage of the software development lifecycle?", null);
 
-        assertFalse(flashcardSetManager.addFlashCardToFlashcardSet(flashcardSet, flashcard));
+        assertFalse("You cannot add a flashcard to flashcard set via the flashcardSetManager if the flashcard set is not managed",
+                flashcardSetManager.addFlashCardToFlashcardSet(flashcardSet, flashcard));
     }
 
     @After

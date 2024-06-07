@@ -7,70 +7,94 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 import comp3350.intellicards.Objects.Flashcard;
-import comp3350.intellicards.Objects.FlashcardSet;
 
-/**
- * Example local unit test, which will execute on the development machine (host).
- *
- * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
- */
 public class FlashcardTest {
 
-    private FlashcardSet cardSet;
     private Flashcard flashcard;
 
     @Before
-    public void setUp() {
-        cardSet = new FlashcardSet();
-        flashcard = new Flashcard("Generic Answer", "Generic Question", "Generic Hint");
-    }
+    public void setUp() { flashcard = new Flashcard("Generic Answer", "Generic Question", "Generic Hint"); }
 
+    /*
+     * Test getUuid()
+     */
     @Test
     public void testGetUuid() {
-        assertNotNull(flashcard.getUUID());
+        assertNotNull("The flashcard's UUID is assigned automatically upon creation",
+                flashcard.getUUID());
     }
 
-    //
+    /*
+     * Test getAnswer()
+     */
     @Test
     public void testGetAnswer() {
-        assertNotNull(flashcard.getAnswer());
+        assertNotNull("We can retrieve a card's answer",
+                flashcard.getAnswer());
     }
 
+    /*
+     * Test getQuestion()
+     */
     @Test
     public void testGetQuestion() {
-        assertNotNull(flashcard.getQuestion());
+        assertNotNull("We can retrieve a card's question",
+                flashcard.getQuestion());
     }
 
+    /*
+     * Test setAnswer()
+     */
     @Test
-    public void testSetAnswer() {
+    public void testSetAnswerOverwritesPreviousAnswer() {
         flashcard.setAnswer("Test answer");
-        assertEquals("Test answer", flashcard.getAnswer());
+        assertEquals("Changing the answer of a card overwrites the previous answer",
+                "Test answer", flashcard.getAnswer());
     }
 
+    /*
+     * Test setQuestion()
+     */
     @Test
-    public void testSetQuestion() {
+    public void testSetQuestionOverwritesPreviousQuestion() {
         flashcard.setQuestion("Test question");
-        assertEquals("Test question", flashcard.getQuestion());
+        assertEquals("Changing the question of a card overwrites the previous question",
+                "Test question", flashcard.getQuestion());
     }
 
+    /*
+     * Test isDeleted()
+     */
     @Test
     public void testIsDeleted() {
-        assertFalse(flashcard.isDeleted());
+        assertFalse("A card is not marked as deleted unless it was marked as such",
+                flashcard.isDeleted());
     }
 
+    /*
+     * Test markDeleted()
+     */
     @Test
     public void testMarkDeleted() {
         flashcard.markDeleted();
-        assertTrue(flashcard.isDeleted());
+        assertTrue("A flashcard that was marked as deleted will reflect that",
+                flashcard.isDeleted());
     }
 
+    /*
+     * Test markRecovered()
+     */
     @Test
     public void testMarkRecovered() {
         flashcard.markDeleted();
         flashcard.markRecovered();
-        assertFalse(flashcard.isDeleted());
+        assertFalse("A card can be recovered after being marked as deleted",
+                flashcard.isDeleted());
     }
 
+    /*
+     * Test toString()
+     */
     @Test
     public void testToStringWithHint() {
         String expectedString = "uuid='" + flashcard.getUUID() + "'\n" +
@@ -80,7 +104,8 @@ public class FlashcardTest {
         flashcard.setAnswer("Test answer");
         flashcard.setQuestion("Test question");
         flashcard.setHint("Test hint");
-        assertEquals(expectedString, flashcard.toString());
+        assertEquals("Calling toString() on a card with a hint will write all data stored in the card",
+                expectedString, flashcard.toString());
     }
 
     @Test
@@ -91,7 +116,8 @@ public class FlashcardTest {
         flashcard.setAnswer("Test answer");
         flashcard.setQuestion("Test question");
         flashcard.setHint(null);
-        assertEquals(expectedString, flashcard.toString());
+        assertEquals("Calling toString() on a card without a hint will not show the hint field",
+                expectedString, flashcard.toString());
     }
 
     @Test
@@ -102,7 +128,8 @@ public class FlashcardTest {
         flashcard.setAnswer("Test answer");
         flashcard.setQuestion("Test question");
         flashcard.setHint("");
-        assertEquals(expectedString, flashcard.toString());
+        assertEquals("Setting a hint with an empty string will cause it not to appear when toString() is called",
+                expectedString, flashcard.toString());
     }
 
     @Test
@@ -113,59 +140,11 @@ public class FlashcardTest {
         flashcard.setAnswer("Test answer");
         flashcard.setQuestion("Test question");
         flashcard.setHint("            ");
-        assertEquals(expectedString, flashcard.toString());
+        assertEquals("Setting a hint with a string only containing spaces will cause it not to appear when toString() is called",
+                expectedString, flashcard.toString());
     }
-
-    @Test
-    public void testGetFlashCardSetUuid() {
-        assertNotNull(cardSet.getUUID());
-    }
-
-    @Test
-    public void testAddFlashCard() {
-        Flashcard flashcard = new Flashcard("Less Generic Answer", "Less Generic Question", null);
-        cardSet.addFlashCard(flashcard);
-        assertEquals(1, cardSet.size());
-        assertEquals(flashcard, cardSet.getIndex(0));
-    }
-
-    @Test
-    public void testGetFlashcards() {
-        Flashcard flashcard1 = new Flashcard("Less Generic Answer", "Less Generic Question", null);
-        Flashcard flashcard2 = new Flashcard("Even Less Generic Answer", "Even Less Generic Question", "Need Hint");
-        cardSet.addFlashCard(flashcard1);
-        cardSet.addFlashCard(flashcard2);
-        assertEquals(2, cardSet.getActiveFlashcards().size());
-    }
-
-    @Test
-    public void testGetDeletedFlashCards() {
-        Flashcard flashcard1 = new Flashcard("Less Generic Answer", "Less Generic Question", null);
-        Flashcard flashcard2 = new Flashcard("Even Less Generic Answer", "Even Less Generic Question", "Need Hint");
-        flashcard2.markDeleted();
-        cardSet.addFlashCard(flashcard1);
-        cardSet.addFlashCard(flashcard2);
-        assertEquals(1, cardSet.getDeletedFlashCards().size());
-        assertEquals(flashcard2, cardSet.getDeletedFlashCards().getIndex(0));
-        assertEquals(1, cardSet.getActiveFlashcards().size());
-    }
-
-
-    @Test
-    public void testGetFlashCardById() {
-        Flashcard flashcard1 = new Flashcard("Less Generic Answer", "Less Generic Question", null);
-        Flashcard flashcard2 = new Flashcard("Even Less Generic Answer", "Even Less Generic Question", "Need Hint");
-        cardSet.addFlashCard(flashcard1);
-        cardSet.addFlashCard(flashcard2);
-        String uuid = flashcard2.getUUID();
-        assertEquals(flashcard2, cardSet.getFlashCardById(uuid));
-    }
-
 
     @After
-    public void tearDown() {
-
-    }
-
+    public void tearDown() {}
 
 }

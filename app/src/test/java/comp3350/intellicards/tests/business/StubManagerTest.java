@@ -10,21 +10,22 @@ import comp3350.intellicards.Business.StubManager;
 
 public class StubManagerTest {
 
-    private StubManager stubManager;
-
     @Before
-    public void setUp() { stubManager = new StubManager(); }
+    public void setUp() {}
 
-    /**
-     * Test initializeStubData()
+    /*
+     * Test Stub Manager Initialization
      */
     @Test
     public void initializingStubDataFillsWithMockedData() {
         StubManager.initializeStubData();
 
-        assertTrue(StubManager.isInitialized());
-        assertNotEquals(0, StubManager.getFlashcardPersistence().getAllActiveFlashcards().size());
-        assertNotEquals(0, StubManager.getFlashcardSetPersistence().getAllFlashcardSets().size());
+        assertTrue("After Initializing the stub manager, isInitialized should be true",
+                StubManager.isInitialized());
+        assertNotEquals("After Initializing the stub manager, there should be mocked data in the flashcardManager",
+                0, StubManager.getFlashcardPersistence().getAllActiveFlashcards().size());
+        assertNotEquals("After Initializing the stub manager, there should be mocked data in the flashcardSetManager",
+                0, StubManager.getFlashcardSetPersistence().getAllFlashcardSets().size());
     }
 
     @After

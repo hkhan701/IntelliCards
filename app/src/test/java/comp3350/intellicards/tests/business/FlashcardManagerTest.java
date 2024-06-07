@@ -18,17 +18,18 @@ public class FlashcardManagerTest {
     @Before
     public void setUp() { flashcardManager = new FlashcardManager(new FlashcardPersistenceStub()); }
 
-    /**
+    /*
      * Test Constructors()
      */
     @Test
     public void nullConstructorInitializesWithData() {
         FlashcardManager flashcardManagerNullConstructor = new FlashcardManager();
 
-        assertNotEquals(0, flashcardManagerNullConstructor.getAllActiveFlashcards().size());
+        assertNotEquals("There should be data contained in the flashcardManager if the null constructor is called",
+                0, flashcardManagerNullConstructor.getAllActiveFlashcards().size());
     }
 
-    /**
+    /*
      * Test getAllActiveFlashcards()
      */
     @Test
@@ -42,11 +43,13 @@ public class FlashcardManagerTest {
 
         flashcardManager.markFlashcardAsDeleted(flashcard2UUID);
 
-        assertTrue(flashcardManager.getAllActiveFlashcards().contains(flashcard1));
-        assertFalse(flashcardManager.getAllActiveFlashcards().contains(flashcard2));
+        assertTrue("An active flashcard should be returned when calling getAllActiveFlashcards()",
+                flashcardManager.getAllActiveFlashcards().contains(flashcard1));
+        assertFalse("A deleted flashcard should not be returned when calling getAllActiveFlashcards()",
+                flashcardManager.getAllActiveFlashcards().contains(flashcard2));
     }
 
-    /**
+    /*
      * Test getAllDeletedFlashcards()
      */
     @Test
@@ -60,31 +63,34 @@ public class FlashcardManagerTest {
 
         flashcardManager.markFlashcardAsDeleted(flashcard2UUID);
 
-        assertFalse(flashcardManager.getAllDeletedFlashcards().contains(flashcard1));
-        assertTrue(flashcardManager.getAllDeletedFlashcards().contains(flashcard2));
+        assertFalse("An active flashcard should not be returned when calling getAllDeletedFlashcards()",
+                flashcardManager.getAllDeletedFlashcards().contains(flashcard1));
+        assertTrue("A deleted flashcard should be returned when calling getAllDeletedFlashcards()",
+                flashcardManager.getAllDeletedFlashcards().contains(flashcard2));
     }
 
-    /**
+    /*
      * Test getFlashcard()
      */
-
     @Test
     public void getFlashcardThatExistsInManager() {
         Flashcard flashcard = new Flashcard("Analysis/Requirements", "What is the first stage of the software development lifecycle?", null);
         String flashcardId = flashcard.getUUID();
         flashcardManager.insertFlashcard(flashcard);
 
-        assertEquals(flashcard.toString(), flashcardManager.getFlashcard(flashcardId).toString());
+        assertEquals("You should be able to retrieve a flashcard from the manager if you have its UUID",
+                flashcard.toString(), flashcardManager.getFlashcard(flashcardId).toString());
     }
 
     @Test
     public void getFlashcardNotInManager() {
         String randomUUID = UUID.randomUUID().toString();
 
-        assertNull(flashcardManager.getFlashcard(randomUUID));
+        assertNull("If a flashcard is not in the flashcardManager, getFlashcard() should return null",
+                flashcardManager.getFlashcard(randomUUID));
     }
 
-    /**
+    /*
      * Test updateFlashcard()
      */
     @Test
@@ -95,13 +101,13 @@ public class FlashcardManagerTest {
         flashcard.setHint("This is the stage where you talk to clients and assess their needs");
         flashcardManager.updateFlashcard(flashcard);
 
-        assertEquals(flashcard.toString(), flashcardManager.getFlashcard(flashcard.getUUID()).toString());
+        assertEquals("You can update a flashcard with new parameters in the manager",
+                flashcard.toString(), flashcardManager.getFlashcard(flashcard.getUUID()).toString());
     }
 
-    /**
+    /*
      * Test restoreFlashcard()
      */
-
     @Test
     public void restoredFlashcardOnlyShowsUpInActiveList() {
         Flashcard flashcard = new Flashcard("Analysis/Requirements", "What is the first stage of the software development lifecycle?", null);
@@ -112,8 +118,10 @@ public class FlashcardManagerTest {
         flashcardManager.markFlashcardAsDeleted(flashcardUUID);
         flashcardManager.restoreFlashcard(flashcardUUID);
 
-        assertTrue(flashcardManager.getAllActiveFlashcards().contains(flashcard));
-        assertFalse(flashcardManager.getAllDeletedFlashcards().contains(flashcard));
+        assertTrue("A flashcard that has been restored should show up in the active list",
+                flashcardManager.getAllActiveFlashcards().contains(flashcard));
+        assertFalse("A flashcard that has been restored should not show up in the deleted list",
+                flashcardManager.getAllDeletedFlashcards().contains(flashcard));
     }
 
     @After
