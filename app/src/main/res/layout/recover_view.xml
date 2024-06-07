@@ -4,26 +4,40 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:layout_weight="1"
+    app:cardElevation="12dp"
+    app:cardCornerRadius="16dp"
+    android:layout_margin="16dp">
 
-    <TextView
-        android:id="@+id/flashcardTextRecycle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="RecoverBox"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/button" />
 
-    <Button
-        android:id="@+id/recoveryButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Recover"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/flashcardTextRecycle" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
 
+        <TextView
+            android:id="@+id/flashcardTextRecycle"
+            android:layout_width="600dp"
+            android:layout_height="wrap_content"
+            android:text="@string/recoverbox"
+            android:textSize="22sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/recoveryButton"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:text="@string/recover"
+            android:textSize="17sp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="parent" />
+
+    </LinearLayout>
 </LinearLayout>

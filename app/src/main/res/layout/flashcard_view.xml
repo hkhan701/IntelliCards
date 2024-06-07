@@ -8,7 +8,8 @@
     android:layout_weight="1"
     app:cardElevation="12dp"
     app:cardCornerRadius="16dp"
-    android:layout_margin="16dp">
+    android:layout_margin="16dp"
+    android:background="#dbeff8">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,8 +19,9 @@
         <TextView
             android:id="@+id/flashcardTextRecycle"
             android:layout_width="600dp"
-            android:layout_height="186dp"
+            android:layout_height="145dp"
             android:text="@string/flashcardtextbox"
+            android:textSize="22sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/button"
             app:layout_constraintStart_toStartOf="parent"
@@ -33,8 +35,10 @@
             <Button
                 android:id="@+id/editButton"
                 android:layout_width="110dp"
-                android:layout_height="80dp"
+                android:layout_height="70dp"
                 android:text="@string/name_edit"
+                android:layout_marginStart="20dp"
+                android:textSize="17sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/flashcardTextRecycle"
@@ -43,8 +47,10 @@
             <Button
                 android:id="@+id/deleteButton"
                 android:layout_width="110dp"
-                android:layout_height="80dp"
+                android:layout_height="70dp"
                 android:text="@string/name_delete"
+                android:layout_marginStart="20dp"
+                android:textSize="17dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/flashcardTextRecycle"
