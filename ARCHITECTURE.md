@@ -2,7 +2,7 @@
 
 ### Sketch
 
-![Intellicards architecture image](blob:https://web.telegram.org/cd321987-9b5b-4f14-ab06-9246b3d628c7)
+![Intellicards architecture image](https://media.discordapp.net/attachments/1245156917194788969/1248630534700007546/IMG_1524.jpg?ex=66645d4d&is=66630bcd&hm=54d22e0ea9985fba234c79729bb89e0e4bf59a5cbcdbd2b64d510fd6fe4026df&=&format=webp&width=1080&height=423) 
 
 ### UI/Presentation
 
