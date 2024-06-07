@@ -78,7 +78,7 @@ public class Flashcard {
     public String getDataFormatted() {
         String data = String.format("Q: %s\n", question);
         if ((hint != null) && !hint.trim().isEmpty())
-            data += String.format("%s\n", hint);
+            data += String.format("Hint: %s\n", hint);
         data += String.format("\nA: %s", answer);
         return data;
     }
