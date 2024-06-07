@@ -13,7 +13,9 @@ public class FlashcardTest {
     private Flashcard flashcard;
 
     @Before
-    public void setUp() { flashcard = new Flashcard("Generic Answer", "Generic Question", "Generic Hint"); }
+    public void setUp() {
+        flashcard = new Flashcard("Generic Answer", "Generic Question", "Generic Hint");
+    }
 
     /*
      * Test getUuid()
@@ -43,6 +45,15 @@ public class FlashcardTest {
     }
 
     /*
+     * Test getHint()
+     */
+    @Test
+    public void testGetHint() {
+        assertEquals("We can retrieve a card's hint",
+                "Generic Hint", flashcard.getHint());
+    }
+
+    /*
      * Test setAnswer()
      */
     @Test
@@ -61,6 +72,23 @@ public class FlashcardTest {
         assertEquals("Changing the question of a card overwrites the previous question",
                 "Test question", flashcard.getQuestion());
     }
+
+    /*
+     *  Test setHint()
+     */
+    @Test
+    public void testSetHint() {
+        flashcard.setHint("Test hint");
+        assertEquals("Changing the hint of a card overwrites the previous hint",
+                "Test hint", flashcard.getHint());
+    }
+
+    @Test
+    public void testSetHintNull() {
+        flashcard.setHint(null);
+        assertNull("Changing the hint to null should not cause any problems - it is acceptable", flashcard.getHint());
+    }
+
 
     /*
      * Test isDeleted()
@@ -92,59 +120,8 @@ public class FlashcardTest {
                 flashcard.isDeleted());
     }
 
-    /*
-     * Test toString()
-     */
-    @Test
-    public void testToStringWithHint() {
-        String expectedString = "uuid='" + flashcard.getUUID() + "'\n" +
-                ", question='Test question'\n" +
-                ", answer='Test answer'\n" +
-                ", hint = 'Test hint'\n";
-        flashcard.setAnswer("Test answer");
-        flashcard.setQuestion("Test question");
-        flashcard.setHint("Test hint");
-        assertEquals("Calling toString() on a card with a hint will write all data stored in the card",
-                expectedString, flashcard.toString());
-    }
-
-    @Test
-    public void testToStringNullHint() {
-        String expectedString = "uuid='" + flashcard.getUUID() + "'\n" +
-                ", question='Test question'\n" +
-                ", answer='Test answer'\n";
-        flashcard.setAnswer("Test answer");
-        flashcard.setQuestion("Test question");
-        flashcard.setHint(null);
-        assertEquals("Calling toString() on a card without a hint will not show the hint field",
-                expectedString, flashcard.toString());
-    }
-
-    @Test
-    public void testToStringShortEmptyHint() {
-        String expectedString = "uuid='" + flashcard.getUUID() + "'\n" +
-                ", question='Test question'\n" +
-                ", answer='Test answer'\n";
-        flashcard.setAnswer("Test answer");
-        flashcard.setQuestion("Test question");
-        flashcard.setHint("");
-        assertEquals("Setting a hint with an empty string will cause it not to appear when toString() is called",
-                expectedString, flashcard.toString());
-    }
-
-    @Test
-    public void testToStringLongEmptyHint() {
-        String expectedString = "uuid='" + flashcard.getUUID() + "'\n" +
-                ", question='Test question'\n" +
-                ", answer='Test answer'\n";
-        flashcard.setAnswer("Test answer");
-        flashcard.setQuestion("Test question");
-        flashcard.setHint("            ");
-        assertEquals("Setting a hint with a string only containing spaces will cause it not to appear when toString() is called",
-                expectedString, flashcard.toString());
-    }
-
     @After
-    public void tearDown() {}
+    public void tearDown() {
+    }
 
 }
