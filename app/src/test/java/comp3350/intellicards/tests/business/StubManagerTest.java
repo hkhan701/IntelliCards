@@ -11,7 +11,8 @@ import comp3350.intellicards.Business.StubManager;
 public class StubManagerTest {
 
     @Before
-    public void setUp() {}
+    public void setUp() {
+    }
 
     /*
      * Test Stub Manager Initialization
@@ -29,5 +30,6 @@ public class StubManagerTest {
     }
 
     @After
-    public void tearDown() {}
+    public void tearDown() {
+    }
 }

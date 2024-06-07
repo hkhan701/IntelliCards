@@ -16,7 +16,7 @@ public class FlashcardSetTest {
     private FlashcardSet cardSet;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         cardSet = new FlashcardSet();
     }
 
@@ -173,7 +173,7 @@ public class FlashcardSetTest {
     }
 
     @After
-    public void tearDown(){
+    public void tearDown() {
 
     }
 

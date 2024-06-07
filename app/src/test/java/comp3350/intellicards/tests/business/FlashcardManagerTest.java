@@ -15,8 +15,11 @@ import comp3350.intellicards.Persistence.stubs.FlashcardPersistenceStub;
 public class FlashcardManagerTest {
 
     private FlashcardManager flashcardManager;
+
     @Before
-    public void setUp() { flashcardManager = new FlashcardManager(new FlashcardPersistenceStub()); }
+    public void setUp() {
+        flashcardManager = new FlashcardManager(new FlashcardPersistenceStub());
+    }
 
     /*
      * Test Constructors()
@@ -125,5 +128,6 @@ public class FlashcardManagerTest {
     }
 
     @After
-    public void tearDown() {}
+    public void tearDown() {
+    }
 }

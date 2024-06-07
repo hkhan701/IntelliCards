@@ -20,7 +20,9 @@ public class FlashcardSetManagerTest {
     private FlashcardSetManager flashcardSetManager;
 
     @Before
-    public void setUp() { flashcardSetManager = new FlashcardSetManager(new FlashcardSetPersistenceStub()); }
+    public void setUp() {
+        flashcardSetManager = new FlashcardSetManager(new FlashcardSetPersistenceStub());
+    }
 
     /*
      * Test Constructors()
@@ -54,7 +56,7 @@ public class FlashcardSetManagerTest {
         assertNull("If a flashcard set is not in the flashcardSetManager, getFlashcardSet() should return null",
                 flashcardSetManager.getFlashcardSet(flashcardUUID));
     }
-    
+
     /*
      * Test addFlashcardToFlashcardSet()
      */
@@ -101,11 +103,12 @@ public class FlashcardSetManagerTest {
 
         assertEquals("The inserted flashcard set should exist", flashcardSet1, flashcardSetManager.getFlashcardSet(flashcardSet1.getUUID()));
 
-        assertNotEquals("The index of the inserted flashcard sets should not be -1 (i.e., doesn't exist)",-1, flashcardSets.indexOf(flashcardSet1));
-        assertNotEquals("The index of the inserted flashcard sets should not be -1 (i.e., doesn't exist)",-1, flashcardSets.indexOf(flashcardSet2));
-        assertNotEquals("The index of the inserted flashcard sets should not be -1 (i.e., doesn't exist)",-1, flashcardSets.indexOf(flashcardSet3));
+        assertNotEquals("The index of the inserted flashcard sets should not be -1 (i.e., doesn't exist)", -1, flashcardSets.indexOf(flashcardSet1));
+        assertNotEquals("The index of the inserted flashcard sets should not be -1 (i.e., doesn't exist)", -1, flashcardSets.indexOf(flashcardSet2));
+        assertNotEquals("The index of the inserted flashcard sets should not be -1 (i.e., doesn't exist)", -1, flashcardSets.indexOf(flashcardSet3));
     }
 
     @After
-    public void tearDown() {}
+    public void tearDown() {
+    }
 }
