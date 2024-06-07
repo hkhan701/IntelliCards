@@ -26,7 +26,7 @@ public class FlashcardSetManagerTest {
      * Test Constructors()
      */
     @Test
-    public void nullConstructorInitializesWithData() {
+    public void testNullConstructorInitializesWithData() {
         FlashcardSetManager flashcardSetManagerNullConstructor = new FlashcardSetManager();
 
         assertNotEquals("There should be data contained in the flashcardSetManager if the null constructor is called",
@@ -37,7 +37,7 @@ public class FlashcardSetManagerTest {
      * Test getFlashcardSet()
      */
     @Test
-    public void getFlashcardSetThatExistsInPersistence() {
+    public void testGetFlashcardSetThatExistsInPersistence() {
         FlashcardSet flashcardSet = new FlashcardSet("COMP 3350");
         String flashcardUUID = flashcardSet.getUUID();
 
@@ -48,7 +48,7 @@ public class FlashcardSetManagerTest {
     }
 
     @Test
-    public void getFlashcardSetThatDoesNotExistInPersistence() {
+    public void testGetFlashcardSetThatDoesNotExistInPersistence() {
         String flashcardUUID = UUID.randomUUID().toString();
 
         assertNull("If a flashcard set is not in the flashcardSetManager, getFlashcardSet() should return null",
@@ -59,7 +59,7 @@ public class FlashcardSetManagerTest {
      * Test addFlashcardToFlashcardSet()
      */
     @Test
-    public void addFlashcardToExistingFlashcardSet() {
+    public void testAddFlashcardToExistingFlashcardSet() {
         FlashcardSet flashcardSet = new FlashcardSet("COMP 3350");
         Flashcard flashcard = new Flashcard("Analysis/Requirements", "What is the first stage of the software development lifecycle?", null);
         String flashcardSetUUID = flashcardSet.getUUID();
@@ -72,7 +72,7 @@ public class FlashcardSetManagerTest {
     }
 
     @Test
-    public void addFlashcardToNonExistingFlashcardSet() {
+    public void testAddFlashcardToNonExistingFlashcardSet() {
         FlashcardSet flashcardSet = new FlashcardSet("COMP 3350");
         Flashcard flashcard = new Flashcard("Analysis/Requirements", "What is the first stage of the software development lifecycle?", null);
 

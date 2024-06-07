@@ -17,7 +17,7 @@ public class StubManagerTest {
      * Test Stub Manager Initialization
      */
     @Test
-    public void initializingStubDataFillsWithMockedData() {
+    public void testInitializingStubDataFillsWithMockedData() {
         StubManager.initializeStubData();
 
         assertTrue("After Initializing the stub manager, isInitialized should be true",

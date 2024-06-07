@@ -22,7 +22,7 @@ public class FlashcardManagerTest {
      * Test Constructors()
      */
     @Test
-    public void nullConstructorInitializesWithData() {
+    public void testNullConstructorInitializesWithData() {
         FlashcardManager flashcardManagerNullConstructor = new FlashcardManager();
 
         assertNotEquals("There should be data contained in the flashcardManager if the null constructor is called",
@@ -33,7 +33,7 @@ public class FlashcardManagerTest {
      * Test getAllActiveFlashcards()
      */
     @Test
-    public void getAllActiveFlashcardsOnlyReturnsActiveOnes() {
+    public void testGetAllActiveFlashcardsOnlyReturnsActiveOnes() {
         Flashcard flashcard1 = new Flashcard("Analysis/Requirements", "What is the first stage of the software development lifecycle?", null);
         Flashcard flashcard2 = new Flashcard("Design", "What is the second stage of the software development lifecycle?", null);
         String flashcard2UUID = flashcard2.getUUID();
@@ -53,7 +53,7 @@ public class FlashcardManagerTest {
      * Test getAllDeletedFlashcards()
      */
     @Test
-    public void getAllDeletedFlashcardsOnlyReturnsDeletedOnes() {
+    public void testGetAllDeletedFlashcardsOnlyReturnsDeletedOnes() {
         Flashcard flashcard1 = new Flashcard("Analysis/Requirements", "What is the first stage of the software development lifecycle?", null);
         Flashcard flashcard2 = new Flashcard("Design", "What is the second stage of the software development lifecycle?", null);
         String flashcard2UUID = flashcard2.getUUID();
@@ -73,7 +73,7 @@ public class FlashcardManagerTest {
      * Test getFlashcard()
      */
     @Test
-    public void getFlashcardThatExistsInManager() {
+    public void testGetFlashcardThatExistsInManager() {
         Flashcard flashcard = new Flashcard("Analysis/Requirements", "What is the first stage of the software development lifecycle?", null);
         String flashcardId = flashcard.getUUID();
         flashcardManager.insertFlashcard(flashcard);
@@ -83,7 +83,7 @@ public class FlashcardManagerTest {
     }
 
     @Test
-    public void getFlashcardNotInManager() {
+    public void testGetFlashcardNotInManager() {
         String randomUUID = UUID.randomUUID().toString();
 
         assertNull("If a flashcard is not in the flashcardManager, getFlashcard() should return null",
@@ -94,7 +94,7 @@ public class FlashcardManagerTest {
      * Test updateFlashcard()
      */
     @Test
-    public void updateFlashcardWillReviseChangedFields() {
+    public void testUpdateFlashcardWillReviseChangedFields() {
         Flashcard flashcard = new Flashcard("Analysis/Requirements", "What is the first stage of the software development lifecycle?", null);
         flashcardManager.insertFlashcard(flashcard);
 
@@ -109,7 +109,7 @@ public class FlashcardManagerTest {
      * Test restoreFlashcard()
      */
     @Test
-    public void restoredFlashcardOnlyShowsUpInActiveList() {
+    public void testRestoredFlashcardOnlyShowsUpInActiveList() {
         Flashcard flashcard = new Flashcard("Analysis/Requirements", "What is the first stage of the software development lifecycle?", null);
         String flashcardUUID = flashcard.getUUID();
 
