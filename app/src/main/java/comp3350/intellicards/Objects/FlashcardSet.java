@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.UUID;
 
 public class FlashcardSet {
-    private String uuid;
+    private final String uuid;
     private String flashcardSetName;
     private List<Flashcard> flashcards;
 
@@ -95,6 +95,6 @@ public class FlashcardSet {
                 , uuid
                 , flashcardSetName
                 , flashcards
-                );
+        );
     }
 }

@@ -18,5 +18,6 @@
     <string name="name_delete">DELETE</string>
     <string name="recoverbox">RecoverBox</string>
     <string name="recover">Recover</string>
+    <string name="cancel">Cancel</string>
 
 </resources>

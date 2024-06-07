@@ -10,7 +10,6 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import comp3350.intellicards.Business.FlashcardManager;
 import comp3350.intellicards.Objects.Flashcard;
 import comp3350.intellicards.Objects.FlashcardSet;
 import comp3350.intellicards.Business.FlashcardSetManager;
@@ -20,7 +19,6 @@ import comp3350.intellicards.R;
 public class FlashcardSetActivity extends Activity {
 
     private RecyclerView flashcardsRecyclerView;
-    private TextView flashcardSetTitle;
     private FlashcardSetManager flashcardSetManager = new FlashcardSetManager(StubManager.getFlashcardSetPersistence());
 
 
@@ -29,7 +27,7 @@ public class FlashcardSetActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_flashcard_set);
 
-        flashcardSetTitle = findViewById(R.id.flashcardSetTitle);
+        TextView flashcardSetTitle = findViewById(R.id.flashcardSetTitle);
         flashcardsRecyclerView = findViewById(R.id.flashcardsRecyclerView);
         flashcardsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -37,7 +35,7 @@ public class FlashcardSetActivity extends Activity {
         String flashcardSetId = getIntent().getStringExtra("flashcardSetId");
 
         if (flashcardSetId != null) {
-            FlashcardSet flashcardSet = flashcardSetManager.getFlashcardSet(flashcardSetId);
+            FlashcardSet flashcardSet = flashcardSetManager.getActiveFlashcardSet(flashcardSetId);
 
             if (flashcardSet != null) {
                 flashcardSetTitle.setText(flashcardSet.getFlashcardSetName());
@@ -65,7 +63,7 @@ public class FlashcardSetActivity extends Activity {
             // Update the TextView in your ViewHolder based on the updated flashcard
             // Get the flashcard set UUID from the intent
             String flashcardSetId = getIntent().getStringExtra("flashcardSetId");
-            FlashcardSet flashcardSet = flashcardSetManager.getFlashcardSet(flashcardSetId);
+            FlashcardSet flashcardSet = flashcardSetManager.getActiveFlashcardSet(flashcardSetId);
             Flashcard updatedFlashcard = flashcardSet.getFlashCardById(updatedFlashcardID);
             if (updatedFlashcard != null) {
                 flashcardsRecyclerView.setAdapter(new CardViewAdapter(flashcardSet));
