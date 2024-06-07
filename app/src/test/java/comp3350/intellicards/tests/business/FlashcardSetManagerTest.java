@@ -58,6 +58,28 @@ public class FlashcardSetManagerTest {
     }
 
     /*
+     * Test getActiveFlashcardSet
+     */
+    @Test
+    public void testGetActiveFlashcardSet() {
+        FlashcardSet flashcardSet = new FlashcardSet("COMP 3350");
+        Flashcard flashcard1 = new Flashcard("Answer1", "Question1", "Hint1");
+        Flashcard flashcard2 = new Flashcard("Answer2", "Question2", "Hint2");
+
+        flashcardSetManager.insertFlashcardSet(flashcardSet);
+        flashcardSetManager.addFlashCardToFlashcardSet(flashcardSet, flashcard1);
+        flashcardSetManager.addFlashCardToFlashcardSet(flashcardSet, flashcard2);
+
+        flashcard2.markDeleted();
+
+        FlashcardSet activeSet = flashcardSetManager.getActiveFlashcardSet(flashcardSet.getUUID());
+
+        assertEquals("The set should only contain one item since one of the two is marked as deleted",
+                1, activeSet.size());
+    }
+
+
+    /*
      * Test addFlashcardToFlashcardSet()
      */
     @Test
