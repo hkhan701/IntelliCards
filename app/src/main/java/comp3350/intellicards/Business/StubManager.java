@@ -19,15 +19,15 @@ public class StubManager {
         flashcardPersistence = new FlashcardPersistenceStub();
 
         // Create flashcards
-        Flashcard flashcard1 = new Flashcard("The capital of France is Paris.", "What is the capital of France?", "Hint: Eiffel Tower");
-        Flashcard flashcard2 = new Flashcard("The tallest mountain in the world is Mount Everest.", "What is the tallest mountain in the world?", "Hint: Asia");
-        Flashcard flashcard3 = new Flashcard("The currency of Japan is Yen.", "What is the currency of Japan?", "");
-        Flashcard flashcard4 = new Flashcard("The Great Wall of China is in China.", "Where is the Great Wall of China located?", "");
-        Flashcard flashcard5 = new Flashcard("The Pacific Ocean is the largest ocean on Earth.", "What is the largest ocean on Earth?", "");
-        Flashcard flashcard6 = new Flashcard("The first President of the United States was George Washington.", "Who was the first President of the United States?", "");
-        Flashcard flashcard7 = new Flashcard("The formula for water is H2O.", "What is the chemical formula for water?", "");
-        Flashcard flashcard8 = new Flashcard("The speed of light is approximately 299,792,458 meters per second.", "What is the speed of light?", "");
-        Flashcard flashcard9 = new Flashcard("The human body has 206 bones.", "How many bones does the human body have?", "");
+        Flashcard flashcard1 = new Flashcard("The capital of France is Paris.", "What is the capital of France?", "Eiffel Tower");
+        Flashcard flashcard2 = new Flashcard("The tallest mountain in the world is Mount Everest.", "What is the tallest mountain in the world?", "Asia");
+        Flashcard flashcard3 = new Flashcard("The currency of Japan is Yen.", "What is the currency of Japan?", null);
+        Flashcard flashcard4 = new Flashcard("The Great Wall of China is in China.", "Where is the Great Wall of China located?", null);
+        Flashcard flashcard5 = new Flashcard("The Pacific Ocean is the largest ocean on Earth.", "What is the largest ocean on Earth?", null);
+        Flashcard flashcard6 = new Flashcard("The first President of the United States was George Washington.", "Who was the first President of the United States?", null);
+        Flashcard flashcard7 = new Flashcard("The formula for water is H2O.", "What is the chemical formula for water?", null);
+        Flashcard flashcard8 = new Flashcard("The speed of light is approximately 299,792,458 meters per second.", "What is the speed of light?", null);
+        Flashcard flashcard9 = new Flashcard("The human body has 206 bones.", "How many bones does the human body have?", null);
 
         // Add flashcards to persistence
         flashcardPersistence.insertFlashcard(flashcard1);
