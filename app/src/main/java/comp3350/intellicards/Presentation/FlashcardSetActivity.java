@@ -3,6 +3,7 @@ package comp3350.intellicards.Presentation;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -45,7 +46,12 @@ public class FlashcardSetActivity extends Activity {
             }
         }
 
+        Button backButton = findViewById(R.id.backButton);
 
+        backButton.setOnClickListener(v -> {
+            Intent intent = new Intent(FlashcardSetActivity.this, MainActivity.class);
+            startActivity(intent);
+        });
     }
 
     @Override
