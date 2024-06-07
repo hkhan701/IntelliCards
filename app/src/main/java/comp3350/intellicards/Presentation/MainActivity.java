@@ -160,6 +160,7 @@ public class MainActivity extends Activity {
             questionTextBox.setText("");
             answerTextBox.setText("");
             hintTextBox.setText("");
+            loadFlashcardSets(); // Refresh the list of Flashcard Sets to update count
 
             Toast.makeText(this, "Flashcard added successfully", Toast.LENGTH_LONG).show();
         });
