@@ -74,7 +74,8 @@ public class MainActivity extends Activity {
         List<FlashcardSet> flashcardSets = flashcardSetManager.getAllFlashcardSets();
         for (FlashcardSet set : flashcardSets) {
             Button FlashcardSetButton = new Button(this);
-            FlashcardSetButton.setText(set.getFlashcardSetName());
+            String title = set.getFlashcardSetName() + " (" + set.getActiveCount() + ")";
+            FlashcardSetButton.setText(title);
             FlashcardSetButton.setLayoutParams(new GridLayout.LayoutParams(
                     GridLayout.spec(GridLayout.UNDEFINED, 1f),
                     GridLayout.spec(GridLayout.UNDEFINED, 1f)
