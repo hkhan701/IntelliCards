@@ -32,7 +32,7 @@ public class FlashcardSet {
 
     // Return a flashcard set that contains only the active flashcards
     public FlashcardSet getActiveFlashcards() {
-        FlashcardSet undeletedCards = new FlashcardSet();
+        FlashcardSet undeletedCards = new FlashcardSet(this.flashcardSetName);
         for (Flashcard card : flashcards) {
             if (!card.isDeleted()) {
                 undeletedCards.addFlashCard(card);
@@ -44,7 +44,7 @@ public class FlashcardSet {
 
     // Return all the flashcards in a flashcard set that have been deleted in this set
     public FlashcardSet getDeletedFlashCards() {
-        FlashcardSet deletedCards = new FlashcardSet();
+        FlashcardSet deletedCards = new FlashcardSet(this.flashcardSetName);
         for (Flashcard card : flashcards) {
             if (card.isDeleted()) {
                 deletedCards.addFlashCard(card);
