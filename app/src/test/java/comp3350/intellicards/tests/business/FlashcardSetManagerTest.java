@@ -1,5 +1,7 @@
 package comp3350.intellicards.tests.business;
 
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 import org.junit.After;
@@ -38,11 +40,11 @@ public class FlashcardSetManagerTest {
     public void getFlashcardSetThatExistsInPersistence() {
         FlashcardSet flashcardSet = new FlashcardSet("COMP 3350");
         String flashcardUUID = flashcardSet.getUUID();
-        
+
         flashcardSetManager.insertFlashcardSet(flashcardSet);
 
         assertEquals("You should be able to retrieve a flashcard set from the manager if you have its UUID",
-                flashcardSet.toString(), flashcardSetManager.getFlashcardSet(flashcardUUID).toString());
+                flashcardSet, flashcardSetManager.getFlashcardSet(flashcardUUID));
     }
 
     @Test
@@ -76,6 +78,32 @@ public class FlashcardSetManagerTest {
 
         assertFalse("You cannot add a flashcard to flashcard set via the flashcardSetManager if the flashcard set is not managed",
                 flashcardSetManager.addFlashCardToFlashcardSet(flashcardSet, flashcard));
+    }
+
+    /*
+     * Test getAllFlashcardSets
+     */
+    @Test
+    public void testGetAllFlashcardSets() {
+        FlashcardSet flashcardSet1 = new FlashcardSet("COMP 3350");
+        FlashcardSet flashcardSet2 = new FlashcardSet("COMP 4620");
+        FlashcardSet flashcardSet3 = new FlashcardSet("COMP 3010");
+
+        flashcardSetManager.insertFlashcardSet(flashcardSet1);
+        flashcardSetManager.insertFlashcardSet(flashcardSet2);
+        flashcardSetManager.insertFlashcardSet(flashcardSet3);
+
+        List<FlashcardSet> flashcardSets = flashcardSetManager.getAllFlashcardSets();
+
+
+        assertEquals("The number of flashcard sets should match the number of sets we created",
+                3, flashcardSets.size());
+
+        assertEquals("The inserted flashcard set should exist", flashcardSet1, flashcardSetManager.getFlashcardSet(flashcardSet1.getUUID()));
+
+        assertNotEquals("The index of the inserted flashcard sets should not be -1 (i.e., doesn't exist)",-1, flashcardSets.indexOf(flashcardSet1));
+        assertNotEquals("The index of the inserted flashcard sets should not be -1 (i.e., doesn't exist)",-1, flashcardSets.indexOf(flashcardSet2));
+        assertNotEquals("The index of the inserted flashcard sets should not be -1 (i.e., doesn't exist)",-1, flashcardSets.indexOf(flashcardSet3));
     }
 
     @After
