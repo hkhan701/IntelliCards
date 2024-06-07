@@ -12,8 +12,6 @@ public class StubManager {
     private static FlashcardPersistence flashcardPersistence;
     private static FlashcardSetPersistence flashcardSetPersistence;
 
-    public StubManager() {}
-
     public static void initializeStubData() {
         flashcardSetPersistence = new FlashcardSetPersistenceStub();
         flashcardPersistence = new FlashcardPersistenceStub();
