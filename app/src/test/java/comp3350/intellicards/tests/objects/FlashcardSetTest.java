@@ -51,7 +51,7 @@ public class FlashcardSetTest {
      */
     @Test
     public void testAddFlashCard() {
-        Flashcard flashcard = new Flashcard();
+        Flashcard flashcard = new Flashcard("Generic Answer", "Generic Question", "Generic Hint");
         cardSet.addFlashCard(flashcard);
 
         assertEquals("There should be one flashcard in the set",
@@ -60,18 +60,9 @@ public class FlashcardSetTest {
                 flashcard, cardSet.getIndex(0));
     }
 
-//    @Test
-//    public void testAddFlashCardGivenNull() {
-//        // A null should not be added to the set
-//        cardSet.addFlashCard(null);
-//
-//        assertEquals("A null should not be added to the set",
-//                0, cardSet.size());
-//    }
-
     @Test
     public void testAddFlashcardWithData() {
-        Flashcard flashcard = new Flashcard();
+        Flashcard flashcard = new Flashcard("Generic Answer", "Generic Question", "Generic Hint");
         flashcard.setQuestion("Magic 8 Ball, What is the meaning of life?");
         flashcard.setAnswer("Probably");
         cardSet.addFlashCard(flashcard);
@@ -88,8 +79,8 @@ public class FlashcardSetTest {
      */
     @Test
     public void testGetActiveFlashcards() {
-        Flashcard flashcard1 = new Flashcard();
-        Flashcard flashcard2 = new Flashcard();
+        Flashcard flashcard1 = new Flashcard("Less Generic Answer", "Less Generic Question", null);
+        Flashcard flashcard2 = new Flashcard("Even Less Generic Answer", "Even Less Generic Question", "Need Hint");
         cardSet.addFlashCard(flashcard1);
         cardSet.addFlashCard(flashcard2);
 
@@ -99,8 +90,8 @@ public class FlashcardSetTest {
 
     @Test
     public void testGetActiveFlashcardsDoesNotReturnDeleted() {
-        Flashcard flashcard1 = new Flashcard();
-        Flashcard flashcard2 = new Flashcard();
+        Flashcard flashcard1 = new Flashcard("Less Generic Answer", "Less Generic Question", null);
+        Flashcard flashcard2 = new Flashcard("Even Less Generic Answer", "Even Less Generic Question", "Need Hint");
         cardSet.addFlashCard(flashcard1);
         cardSet.addFlashCard(flashcard2);
 
@@ -119,8 +110,8 @@ public class FlashcardSetTest {
      */
     @Test
     public void testGetDeletedFlashCards() {
-        Flashcard flashcard1 = new Flashcard();
-        Flashcard flashcard2 = new Flashcard();
+        Flashcard flashcard1 = new Flashcard("Less Generic Answer", "Less Generic Question", null);
+        Flashcard flashcard2 = new Flashcard("Even Less Generic Answer", "Even Less Generic Question", "Need Hint");
         flashcard2.markDeleted();
         cardSet.addFlashCard(flashcard1);
         cardSet.addFlashCard(flashcard2);
@@ -137,8 +128,8 @@ public class FlashcardSetTest {
      */
     @Test
     public void testGetFlashCardById() {
-        Flashcard flashcard1 = new Flashcard();
-        Flashcard flashcard2 = new Flashcard();
+        Flashcard flashcard1 = new Flashcard("Less Generic Answer", "Less Generic Question", null);
+        Flashcard flashcard2 = new Flashcard("Even Less Generic Answer", "Even Less Generic Question", "Need Hint");
         cardSet.addFlashCard(flashcard1);
         cardSet.addFlashCard(flashcard2);
         String uuid = flashcard2.getUUID();
@@ -150,8 +141,8 @@ public class FlashcardSetTest {
 
     @Test
     public void testGetFlashCardByIdCardIsNotInSet() {
-        Flashcard flashcard1 = new Flashcard();
-        Flashcard flashcard2 = new Flashcard();
+        Flashcard flashcard1 = new Flashcard("Less Generic Answer", "Less Generic Question", null);
+        Flashcard flashcard2 = new Flashcard("Even Less Generic Answer", "Even Less Generic Question", "Need Hint");
         cardSet.addFlashCard(flashcard1);
         cardSet.addFlashCard(flashcard2);
         String uuid = UUID.randomUUID().toString();
@@ -172,19 +163,18 @@ public class FlashcardSetTest {
      */
     @Test
     public void testToString() {
-        Flashcard flashcard1 = new Flashcard();
-        Flashcard flashcard2 = new Flashcard();
+        Flashcard flashcard1 = new Flashcard("Less Generic Answer", "Less Generic Question", null);
+        Flashcard flashcard2 = new Flashcard("Even Less Generic Answer", "Even Less Generic Question", "Need Hint");
         cardSet.addFlashCard(flashcard1);
         cardSet.addFlashCard(flashcard2);
 
         String expectedString = "FlashCardSet{uuid=" + cardSet.getUUID() + ", flashcardSetName='null', flashcards=[uuid='" + flashcard1.getUUID() + "'\n" +
-                ", question='No question set'" + "\n" +
-                ", answer='No answer set'" + "\n" +
-                ", hint = 'No hint set'" + "\n" +
+                ", question='Less Generic Question'" + "\n" +
+                ", answer='Less Generic Answer'" + "\n" +
                 ", uuid='" + flashcard2.getUUID() + "'\n" +
-                ", question='No question set'" + "\n" +
-                ", answer='No answer set'" + "\n" +
-                ", hint = 'No hint set'" + "\n" +
+                ", question='Even Less Generic Question'" + "\n" +
+                ", answer='Even Less Generic Answer'" + "\n" +
+                ", hint = 'Need Hint'" + "\n" +
                 "]}";
 
         assertEquals("Using the toString() method on a flashcard set will give info on the set and the cards within",
