@@ -63,7 +63,7 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
                 intent.putExtra("flashcardID", (String)deleteButton.getTag());
                 ((Activity) v.getContext()).startActivityForResult(intent, 1);
 
-                flashcardTextRecycle.setText(flashcardSet.getFlashCardById((String) deleteButton.getTag()).toString());
+                flashcardTextRecycle.setText(flashcardSet.getFlashCardById((String) deleteButton.getTag()).getDataFormatted());
             });
 
         }// end of ViewHolder class
@@ -102,11 +102,10 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
-
         Flashcard card = flashcardSet.getIndex(position);
-        viewHolder.getTextView().setText(card.toString());
-        viewHolder.deleteButton().setTag(card.getUUID());
 
+        viewHolder.getTextView().setText(card.getDataFormatted());
+        viewHolder.deleteButton().setTag(card.getUUID());
     }
 
     // Return the size of your dataset (invoked by the layout manager)

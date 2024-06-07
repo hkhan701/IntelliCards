@@ -91,10 +91,10 @@ public class FlashcardSet {
     @NonNull
     @Override
     public String toString() {
-        return "FlashCardSet{" +
-                "uuid=" + uuid +
-                ", flashcardSetName='" + flashcardSetName + '\'' +
-                ", flashcards=" + flashcards +
-                '}';
+        return String.format("FlashCardSet{uuid=%s, flashcardSetName='%s', flashcards=%s}"
+                , uuid
+                , flashcardSetName
+                , flashcards
+                );
     }
 }
