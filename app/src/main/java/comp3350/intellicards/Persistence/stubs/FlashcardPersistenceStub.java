@@ -11,7 +11,7 @@ import java.util.Map;
 
 public class FlashcardPersistenceStub implements FlashcardPersistence {
 
-    private Map<String, Flashcard> flashcards = null;
+    private Map<String, Flashcard> flashcards;
 
     public FlashcardPersistenceStub() {
         flashcards = new HashMap<>();

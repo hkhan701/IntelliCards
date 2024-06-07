@@ -9,7 +9,7 @@ import java.util.UUID;
 public class FlashcardSet {
     private final String uuid;
     private String flashcardSetName;
-    private List<Flashcard> flashcards = null;
+    private List<Flashcard> flashcards;
 
     public FlashcardSet() {
         this.uuid = UUID.randomUUID().toString();
