@@ -5,12 +5,10 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 
@@ -34,44 +32,41 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
             super(view);
 
             // Define click listener for the ViewHolder's View
-            flashcardTextRecycle = (TextView) view.findViewById(R.id.flashcardTextRecycle);
-            deleteButton = (Button) view.findViewById(R.id.deleteButton);
-            editButton = (Button) view.findViewById(R.id.editButton);
+            flashcardTextRecycle = view.findViewById(R.id.flashcardTextRecycle);
+            deleteButton = view.findViewById(R.id.deleteButton);
+            editButton = view.findViewById(R.id.editButton);
 
             // Clicking this will mark the corresponding card as deleted
             // and it will not pop up as a flashcard in the recycle view until restored
             deleteButton.setOnClickListener(v -> {
-                //set the flashcard as deleted
-                Flashcard card = flashcardSet.getFlashCardById((String) deleteButton.getTag());
-                card.markDeleted();
+                // set the flashcard as deleted
+                Flashcard flashcardToDelete = flashcardSet.getFlashCardById((String) deleteButton.getTag());
+                flashcardToDelete.markDeleted();
 
-                        //delete the views associated with that flashcard
-                        ViewGroup parentView = ((ViewGroup) flashcardTextRecycle.getParent());
-                        parentView.removeView(flashcardTextRecycle);
-                        parentView.removeView(deleteButton);
-                        parentView.removeView(editButton);
+                //delete the views associated with that flashcard
+                ViewGroup parentView = ((ViewGroup) flashcardTextRecycle.getParent());
+                parentView.removeView(flashcardTextRecycle);
 
-
+                // Remove the edit and delete buttons from the parent layout
+                ViewGroup parentViewNew = (ViewGroup) editButton.getParent();
+                if (parentViewNew != null) {
+                    parentViewNew.removeView(editButton);
+                    parentViewNew.removeView(deleteButton);
+                }
 
             });
 
             editButton.setOnClickListener(v -> {
-                ViewGroup parentView = ((ViewGroup) flashcardTextRecycle.getParent());
 
                 Intent intent = new Intent (v.getContext(), EditFlashcardActivity.class);
                 intent.putExtra("flashcardSetID", flashcardSet.getUUID());
                 intent.putExtra("flashcardID", (String)deleteButton.getTag());
                 ((Activity) v.getContext()).startActivityForResult(intent, 1);
 
-                System.out.println("ioefwhfcoshfnwiohcfnivc");
                 flashcardTextRecycle.setText(flashcardSet.getFlashCardById((String) deleteButton.getTag()).toString());
-
-
             });
 
-
-
-        }//end of ViewHolder class
+        }// end of ViewHolder class
 
         public TextView getTextView() {
             return flashcardTextRecycle;
@@ -81,12 +76,6 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
             return deleteButton;
         }
 
-        public Button editButton() {  return editButton;}
-
-        public View getView()
-        {
-            return super.itemView.getRootView();
-        }
     }
 
     /**
