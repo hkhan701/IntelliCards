@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
+    android:background="#dbeff8"
     tools:context="comp3350.intellicards.Presentation.MainActivity">
 
 
@@ -57,7 +58,7 @@
     <Spinner
         android:id="@+id/flashcardSetSpinner"
         android:layout_width="0dp"
-        android:layout_height="44dp"
+        android:layout_height="48dp"
         android:layout_marginTop="16dp"
         android:padding="12dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -72,6 +73,7 @@
         android:layout_marginTop="12dp"
         android:layout_marginEnd="8dp"
         android:text="@string/submitBtnText"
+        android:backgroundTint="@android:color/holo_green_light"
         android:textColor="@android:color/white"
         app:layout_constraintEnd_toStartOf="@id/cancelButton"
         app:layout_constraintStart_toStartOf="parent"
