@@ -65,14 +65,21 @@ public class Flashcard {
     @NonNull
     @Override
     public String toString() {
-        String flashcardInfo = "uuid='" + uuid + "'\n" +
-                ", question='" + question + "'\n" +
-                ", answer='" + answer + "'\n";
-
+        String info = String.format("uuid=%s,\nquestion='%s',\nanswer='%s'"
+                , uuid
+                , question
+                , answer);
         if (hint != null && !hint.trim().isEmpty()) {
-            flashcardInfo += ", hint = '" + hint + "'\n";
+            info += String.format(",\nhint = '%s'", hint);
         }
+        return info;
+    }
 
-        return flashcardInfo;
+    public String getDataFormatted() {
+        String data = String.format("Q: %s\n", question);
+        if ((hint != null) && !hint.trim().isEmpty())
+            data += String.format("%s\n", hint);
+        data += String.format("\nA: %s", answer);
+        return data;
     }
 }

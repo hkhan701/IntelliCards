@@ -80,7 +80,8 @@ public class CardRecoverAdapter extends RecyclerView.Adapter<CardRecoverAdapter.
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
         Flashcard card = flashcards.get(position);
-        viewHolder.getTextView().setText(card.toString());
+
+        viewHolder.getTextView().setText(card.getDataFormatted());
         viewHolder.getRecoverButton().setTag(card.getUUID());
     }
 
