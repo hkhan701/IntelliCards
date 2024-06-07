@@ -71,6 +71,7 @@ public class FlashcardSetTest {
 
     /*
      * Test getActiveFlashcards()
+     * and getActiveCount()
      */
     @Test
     public void testGetActiveFlashcards() {
@@ -79,8 +80,14 @@ public class FlashcardSetTest {
         cardSet.addFlashCard(flashcard1);
         cardSet.addFlashCard(flashcard2);
 
+        assertEquals("The first card in the set should be the card that was added in first",
+                flashcard1, cardSet.getActiveFlashcards().getIndex(0));
+
+        assertEquals("The second card in the set should be the card that was added in second",
+                flashcard2, cardSet.getActiveFlashcards().getIndex(1));
+
         assertEquals("The list of active flashcards should return the amount of flashcards added",
-                2, cardSet.getActiveFlashcards().size());
+                2, cardSet.getActiveCount());
     }
 
     @Test
@@ -93,15 +100,16 @@ public class FlashcardSetTest {
         flashcard2.markDeleted();
         Flashcard activeCard = cardSet.getActiveFlashcards().getIndex(0);
 
-        assertEquals("A deleted flashcard should be removed from the active flashcard list",
-                1, cardSet.getActiveFlashcards().size());
+        assertEquals("If the card wasn't marked deleted, it should stay active in the set",
+                flashcard1, activeCard);
 
-        assertEquals("The active set should only contain the active card",
-                activeCard, flashcard1);
+        assertEquals("A deleted flashcard should be removed from the active flashcard list",
+                1, cardSet.getActiveCount());
     }
 
     /*
      * Test getDeletedFlashCards()
+     * and getDeletedCount()
      */
     @Test
     public void testGetDeletedFlashCards() {
@@ -112,7 +120,8 @@ public class FlashcardSetTest {
         cardSet.addFlashCard(flashcard2);
 
         assertEquals("There should be one deleted card",
-                1, cardSet.getDeletedFlashCards().size());
+                1, cardSet.getDeletedCount());
+
         assertEquals("A card marked as deleted will be in the list of deleted cards",
                 flashcard2, cardSet.getDeletedFlashCards().getIndex(0));
     }
@@ -153,26 +162,14 @@ public class FlashcardSetTest {
     }
 
     /*
-     * Test toString()
+     * Test setFlashcardSetName()
      */
     @Test
-    public void testToString() {
-        Flashcard flashcard1 = new Flashcard("Less Generic Answer", "Less Generic Question", null);
-        Flashcard flashcard2 = new Flashcard("Even Less Generic Answer", "Even Less Generic Question", "Need Hint");
-        cardSet.addFlashCard(flashcard1);
-        cardSet.addFlashCard(flashcard2);
+    public void testSetFlashcardSetName() {
+        cardSet.setFlashCardSetName("Software Engineering 1");
 
-        String expectedString = "FlashCardSet{uuid=" + cardSet.getUUID() + ", flashcardSetName='null', flashcards=[uuid='" + flashcard1.getUUID() + "'\n" +
-                ", question='Less Generic Question'" + "\n" +
-                ", answer='Less Generic Answer'" + "\n" +
-                ", uuid='" + flashcard2.getUUID() + "'\n" +
-                ", question='Even Less Generic Question'" + "\n" +
-                ", answer='Even Less Generic Answer'" + "\n" +
-                ", hint = 'Need Hint'" + "\n" +
-                "]}";
-
-        assertEquals("Using the toString() method on a flashcard set will give info on the set and the cards within",
-                expectedString, cardSet.toString());
+        assertEquals("The flashcard set name should be changed to Software Engineering 1",
+                "Software Engineering 1", cardSet.getFlashcardSetName());
     }
 
     @After
