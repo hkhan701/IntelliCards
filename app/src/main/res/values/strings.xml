@@ -9,5 +9,12 @@
     <string name="answerPlaceHolder">Enter answer here</string>
     <string name="submitBtnText">Submit</string>
     <string name="createSetBtnText">Create New Set</string>
+    <string name="editName">Edit</string>
+    <string name="deleteName">Delete</string>
+    <string name="flashcardtextbox">FlashCardTextBox</string>
+    <string name="edit_name">Edit</string>
+    <string name="delete_name">Delete</string>
+    <string name="name_edit">EDIT</string>
+    <string name="name_delete">DELETE</string>
 
 </resources>

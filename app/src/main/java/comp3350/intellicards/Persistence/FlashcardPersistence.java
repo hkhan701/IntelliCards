@@ -16,7 +16,7 @@ public interface FlashcardPersistence {
 
     Flashcard updateFlashcard(Flashcard currentFlashcard);
 
-    boolean markFlashcardAsDeleted(Flashcard currentFlashcard);
+    boolean markFlashcardAsDeleted(String id);
 
-    boolean restoreFlashcard(Flashcard currentFlashcard);
+    boolean restoreFlashcard(String id);
 }

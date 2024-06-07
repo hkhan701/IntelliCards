@@ -12,18 +12,9 @@ public class Flashcard {
     private String hint;
     private boolean deleted;
 
-    // Constructor with answer, question, and hint
-    public Flashcard(@NonNull String answer, @NonNull String question, String hint) {
-        this(UUID.randomUUID().toString(), answer, question, hint);
-    }
-
-    public Flashcard() {
-        this(UUID.randomUUID().toString(), "No answer set", "No question set", "No hint set");
-    }
-
     // Private constructor used internally to ensure UUID is always set
-    private Flashcard(String uuid, @NonNull String answer, @NonNull String question, String hint) {
-        this.uuid = uuid;
+    public Flashcard(@NonNull String answer, @NonNull String question, String hint) {
+        this.uuid = UUID.randomUUID().toString();
         this.answer = answer;
         this.question = question;
         this.hint = hint;
