@@ -2,30 +2,34 @@
 
 ### Sketch
 
-![Intellicards architecture image](https://media.discordapp.net/attachments/1245156917194788969/1246330674344886344/image.png?ex=666296e4&is=66614564&hm=1f81088569fcf13bec05bf39cc6001642c2579cf39afb615951577a9e4944490&=&format=webp&quality=lossless&width=1080&height=424)
+![Intellicards architecture image](blob:https://web.telegram.org/cd321987-9b5b-4f14-ab06-9246b3d628c7)
 
 ### UI/Presentation
 
+- CardRecoverActivity
+- CardViewAdapter
+- EditFlashcardActivity
+- FlashcardSetActivity
 - MainActivity
 - ProfileActivity
-- CreateFlashcardActivity
-- EditFlashcardActivity
-- ViewFlashcardSetActivity
-- CreateFlashcardSetActivity
 - RecoverFlashcardActivity
 
 ### Business/Logic
 
 - FlashcardManager
 - FlashcardSetManager
+- StubManager 
 
 ### Data/Persistence
 
 - FlashcardPersistence
+- FlashcardPersistenceStub
 - FlashcardSetPersistence
-- ImagePersistence
+- FlashcardSetPersistenceStub
 
 ### Domain Specific Objects
 
 - Flashcard
 - FlashcardSet
+
+*Note: Stubs are temporary for Iteration 1.*
