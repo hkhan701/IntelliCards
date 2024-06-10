@@ -59,8 +59,7 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
             editButton.setOnClickListener(v -> {
 
                 Intent intent = new Intent(v.getContext(), EditFlashcardActivity.class);
-                intent.putExtra("flashcardSetID", flashcardSet.getUUID());
-                intent.putExtra("flashcardID", (String) deleteButton.getTag());
+                intent.putExtra("flashcardUUID", (String) deleteButton.getTag());
                 ((Activity) v.getContext()).startActivityForResult(intent, 1);
 
                 flashcardTextRecycle.setText(flashcardSet.getFlashcardById((String) deleteButton.getTag()).getDataFormatted());

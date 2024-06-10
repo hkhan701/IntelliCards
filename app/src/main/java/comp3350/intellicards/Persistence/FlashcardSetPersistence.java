@@ -6,7 +6,7 @@ import comp3350.intellicards.Objects.Flashcard;
 import comp3350.intellicards.Objects.FlashcardSet;
 
 public interface FlashcardSetPersistence {
-    FlashcardSet getFlashcardSet(String flashcardSetId);
+    FlashcardSet getFlashcardSet(String flashcardSetUUID);
 
     FlashcardSet getActiveFlashcardSet(String uuid);
 

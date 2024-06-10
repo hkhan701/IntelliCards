@@ -85,7 +85,7 @@ public class MainActivity extends Activity {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(MainActivity.this, FlashcardSetActivity.class);
-                    intent.putExtra("flashcardSetId", set.getUUID());
+                    intent.putExtra("flashcardSetUUID", set.getUUID());
                     startActivity(intent);
                 }
             });
