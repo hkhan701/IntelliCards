@@ -40,7 +40,7 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
             // and it will not pop up as a flashcard in the recycle view until restored
             deleteButton.setOnClickListener(v -> {
                 // set the flashcard as deleted
-                Flashcard flashcardToDelete = flashcardSet.getFlashCardById((String) deleteButton.getTag());
+                Flashcard flashcardToDelete = flashcardSet.getFlashcardById((String) deleteButton.getTag());
                 flashcardToDelete.markDeleted();
 
                 //delete the views associated with that flashcard
@@ -59,11 +59,10 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
             editButton.setOnClickListener(v -> {
 
                 Intent intent = new Intent(v.getContext(), EditFlashcardActivity.class);
-                intent.putExtra("flashcardSetID", flashcardSet.getUUID());
-                intent.putExtra("flashcardID", (String) deleteButton.getTag());
+                intent.putExtra("flashcardUUID", (String) deleteButton.getTag());
                 ((Activity) v.getContext()).startActivityForResult(intent, 1);
 
-                flashcardTextRecycle.setText(flashcardSet.getFlashCardById((String) deleteButton.getTag()).getDataFormatted());
+                flashcardTextRecycle.setText(flashcardSet.getFlashcardById((String) deleteButton.getTag()).getDataFormatted());
             });
 
         }// end of ViewHolder class

@@ -67,8 +67,8 @@ public class FlashcardSetManagerTest {
         Flashcard flashcard2 = new Flashcard("Answer2", "Question2", "Hint2");
 
         flashcardSetManager.insertFlashcardSet(flashcardSet);
-        flashcardSetManager.addFlashCardToFlashcardSet(flashcardSet, flashcard1);
-        flashcardSetManager.addFlashCardToFlashcardSet(flashcardSet, flashcard2);
+        flashcardSetManager.addFlashcardToFlashcardSet(flashcardSet, flashcard1);
+        flashcardSetManager.addFlashcardToFlashcardSet(flashcardSet, flashcard2);
 
         flashcard2.markDeleted();
 
@@ -89,7 +89,7 @@ public class FlashcardSetManagerTest {
         String flashcardSetUUID = flashcardSet.getUUID();
 
         flashcardSetManager.insertFlashcardSet(flashcardSet);
-        assertTrue(flashcardSetManager.addFlashCardToFlashcardSet(flashcardSet, flashcard));
+        assertTrue(flashcardSetManager.addFlashcardToFlashcardSet(flashcardSet, flashcard));
 
         assertEquals("You can add a flashcard to a flashcard set from the flashcardSetManager",
                 1, flashcardSetManager.getFlashcardSet(flashcardSetUUID).getActiveFlashcards().size());
@@ -101,7 +101,7 @@ public class FlashcardSetManagerTest {
         Flashcard flashcard = new Flashcard("Analysis/Requirements", "What is the first stage of the software development lifecycle?", null);
 
         assertFalse("You cannot add a flashcard to flashcard set via the flashcardSetManager if the flashcard set is not managed",
-                flashcardSetManager.addFlashCardToFlashcardSet(flashcardSet, flashcard));
+                flashcardSetManager.addFlashcardToFlashcardSet(flashcardSet, flashcard));
     }
 
     /*

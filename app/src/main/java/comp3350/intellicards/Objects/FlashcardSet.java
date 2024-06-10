@@ -26,7 +26,7 @@ public class FlashcardSet {
         return uuid;
     }
 
-    public void addFlashCard(@NonNull Flashcard flashcard) {
+    public void addFlashcard(@NonNull Flashcard flashcard) {
         flashcards.add(flashcard);
     }
 
@@ -35,33 +35,18 @@ public class FlashcardSet {
         FlashcardSet undeletedCards = new FlashcardSet(this.flashcardSetName);
         for (Flashcard card : flashcards) {
             if (!card.isDeleted()) {
-                undeletedCards.addFlashCard(card);
+                undeletedCards.addFlashcard(card);
             }
         }
 
         return undeletedCards;
     }
 
-    // Return all the flashcards in a flashcard set that have been deleted in this set
-    public FlashcardSet getDeletedFlashCards() {
-        FlashcardSet deletedCards = new FlashcardSet(this.flashcardSetName);
-        for (Flashcard card : flashcards) {
-            if (card.isDeleted()) {
-                deletedCards.addFlashCard(card);
-            }
-        }
-        return deletedCards;
-    }
-
     public String getFlashcardSetName() {
         return flashcardSetName;
     }
 
-    public void setFlashCardSetName(@NonNull String name) {
-        this.flashcardSetName = name;
-    }
-
-    public Flashcard getFlashCardById(String uuid) {
+    public Flashcard getFlashcardById(String uuid) {
         for (Flashcard card : flashcards) {
             if (card.getUUID().equals(uuid)) {
                 return card;
@@ -83,15 +68,11 @@ public class FlashcardSet {
         return getActiveFlashcards().size();
     }
 
-    // Return the number of deleted flashcards in this set
-    public int getDeletedCount() {
-        return getDeletedFlashCards().size();
-    }
 
     @NonNull
     @Override
     public String toString() {
-        return String.format("FlashCardSet{uuid=%s, flashcardSetName='%s', flashcards=%s}"
+        return String.format("FlashcardSet{uuid=%s, flashcardSetName='%s', flashcards=%s}"
                 , uuid
                 , flashcardSetName
                 , flashcards

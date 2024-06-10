@@ -1,23 +1,21 @@
 <resources>
-    <string name="appName">IntelliCards</string>
-    <string name="deleted">DELETED</string>
-    <string name="profile">Profile</string>
-    <string name="recovery">Recovery/Trash bin</string>
-    <string name="back">Back</string>
-    <string name="hintText">Enter hint here</string>
-    <string name="questionPlaceHolder">Enter question here</string>
-    <string name="answerPlaceHolder">Enter answer here</string>
-    <string name="submitBtnText">Submit</string>
-    <string name="createSetBtnText">Create New Set</string>
-    <string name="editName">Edit</string>
-    <string name="deleteName">Delete</string>
-    <string name="flashcardtextbox">FlashCardTextBox</string>
-    <string name="edit_name">Edit</string>
-    <string name="delete_name">Delete</string>
-    <string name="name_edit">EDIT</string>
-    <string name="name_delete">DELETE</string>
-    <string name="recoverbox">RecoverBox</string>
-    <string name="recover">Recover</string>
-    <string name="cancel">Cancel</string>
+    <!-- Application Name -->
+    <string name="app_name">IntelliCards</string>
+
+    <!-- Action Buttons -->
+    <string name="submit_btn_text">Submit</string>
+    <string name="create_set_btn_text">Create New Set</string>
+    <string name="edit_btn_text">EDIT</string>
+    <string name="delete_btn_text">DELETE</string>
+    <string name="profile_btn_text">Profile</string>
+    <string name="recover_btn_text">Recover</string>
+    <string name="recovery_page_btn_text">Recovery/Trash bin</string>
+    <string name="cancel_btn_text">Cancel</string>
+    <string name="back_btn_text">Back</string>
+
+    <!-- Labels and Placeholders -->
+    <string name="hint_placeholder">Enter hint here</string>
+    <string name="question_placeholder">Enter question here</string>
+    <string name="answer_placeholder">Enter answer here</string>
 
 </resources>

@@ -85,7 +85,7 @@ public class MainActivity extends Activity {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(MainActivity.this, FlashcardSetActivity.class);
-                    intent.putExtra("flashcardSetId", set.getUUID());
+                    intent.putExtra("flashcardSetUUID", set.getUUID());
                     startActivity(intent);
                 }
             });
@@ -155,7 +155,7 @@ public class MainActivity extends Activity {
             Flashcard flashcard = new Flashcard(answerTextBox.getText().toString(), questionTextBox.getText().toString(), hintTextBox.getText().toString());
 
             flashcardManager.insertFlashcard(flashcard);
-            flashcardSetManager.addFlashCardToFlashcardSet(selectedFlashcardSet, flashcard);
+            flashcardSetManager.addFlashcardToFlashcardSet(selectedFlashcardSet, flashcard);
 
             questionTextBox.setText("");
             answerTextBox.setText("");

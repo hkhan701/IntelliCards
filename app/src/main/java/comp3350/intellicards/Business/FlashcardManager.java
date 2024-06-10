@@ -46,8 +46,8 @@ public class FlashcardManager {
         return this.flashcardPersistence.getAllDeletedFlashcards();
     }
 
-    public Flashcard getFlashcard(String id) {
-        return this.flashcardPersistence.getFlashcard(id);
+    public Flashcard getFlashcard(String uuid) {
+        return this.flashcardPersistence.getFlashcard(uuid);
     }
 
     public Flashcard insertFlashcard(Flashcard currFlashcard) {
@@ -58,11 +58,11 @@ public class FlashcardManager {
         return this.flashcardPersistence.updateFlashcard(currFlashcard);
     }
 
-    public boolean markFlashcardAsDeleted(String id) {
-        return this.flashcardPersistence.markFlashcardAsDeleted(id);
+    public boolean markFlashcardAsDeleted(String uuid) {
+        return this.flashcardPersistence.markFlashcardAsDeleted(uuid);
     }
 
-    public boolean restoreFlashcard(String id) {
-        return this.flashcardPersistence.restoreFlashcard(id);
+    public boolean restoreFlashcard(String uuid) {
+        return this.flashcardPersistence.restoreFlashcard(uuid);
     }
 }

@@ -46,15 +46,15 @@ public class StubManager {
         FlashcardSet set5 = new FlashcardSet("English");
 
         // Add flashcards to flashcard sets
-        set1.addFlashCard(flashcard1);
-        set1.addFlashCard(flashcard2);
-        set1.addFlashCard(flashcard3);
-        set2.addFlashCard(flashcard4);
-        set2.addFlashCard(flashcard5);
-        set2.addFlashCard(flashcard6);
-        set3.addFlashCard(flashcard7);
-        set3.addFlashCard(flashcard8);
-        set3.addFlashCard(flashcard9);
+        set1.addFlashcard(flashcard1);
+        set1.addFlashcard(flashcard2);
+        set1.addFlashcard(flashcard3);
+        set2.addFlashcard(flashcard4);
+        set2.addFlashcard(flashcard5);
+        set2.addFlashcard(flashcard6);
+        set3.addFlashcard(flashcard7);
+        set3.addFlashcard(flashcard8);
+        set3.addFlashcard(flashcard9);
 
         // Mark flashcards as deleted
         flashcardPersistence.markFlashcardAsDeleted(flashcard3.getUUID());
