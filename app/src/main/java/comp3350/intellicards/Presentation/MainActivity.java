@@ -155,7 +155,7 @@ public class MainActivity extends Activity {
             Flashcard flashcard = new Flashcard(answerTextBox.getText().toString(), questionTextBox.getText().toString(), hintTextBox.getText().toString());
 
             flashcardManager.insertFlashcard(flashcard);
-            flashcardSetManager.addFlashCardToFlashcardSet(selectedFlashcardSet, flashcard);
+            flashcardSetManager.addFlashcardToFlashcardSet(selectedFlashcardSet, flashcard);
 
             questionTextBox.setText("");
             answerTextBox.setText("");

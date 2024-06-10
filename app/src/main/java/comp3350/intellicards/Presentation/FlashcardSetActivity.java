@@ -64,7 +64,7 @@ public class FlashcardSetActivity extends Activity {
             // Get the flashcard set UUID from the intent
             String flashcardSetId = getIntent().getStringExtra("flashcardSetId");
             FlashcardSet flashcardSet = flashcardSetManager.getActiveFlashcardSet(flashcardSetId);
-            Flashcard updatedFlashcard = flashcardSet.getFlashCardById(updatedFlashcardID);
+            Flashcard updatedFlashcard = flashcardSet.getFlashcardById(updatedFlashcardID);
             if (updatedFlashcard != null) {
                 flashcardsRecyclerView.setAdapter(new CardViewAdapter(flashcardSet));
             }

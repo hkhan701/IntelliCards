@@ -50,7 +50,7 @@ public class FlashcardSetManager {
         this.flashcardSetPersistence.insertFlashcardSet(newFlashcardSet);
     }
 
-    public boolean addFlashCardToFlashcardSet(@NonNull FlashcardSet flashcardSet, @NonNull Flashcard flashcard) {
-        return this.flashcardSetPersistence.addFlashCardToFlashcardSet(flashcardSet, flashcard);
+    public boolean addFlashcardToFlashcardSet(@NonNull FlashcardSet flashcardSet, @NonNull Flashcard flashcard) {
+        return this.flashcardSetPersistence.addFlashcardToFlashcardSet(flashcardSet, flashcard);
     }
 }

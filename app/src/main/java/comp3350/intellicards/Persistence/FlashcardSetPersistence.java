@@ -14,6 +14,6 @@ public interface FlashcardSetPersistence {
 
     void insertFlashcardSet(FlashcardSet newFlashcardSet);
 
-    boolean addFlashCardToFlashcardSet(FlashcardSet flashcardSet, Flashcard flashcard);
+    boolean addFlashcardToFlashcardSet(FlashcardSet flashcardSet, Flashcard flashcard);
 
 }
