@@ -19,7 +19,8 @@
         <TextView
             android:id="@+id/flashcardTextRecycle"
             android:layout_width="600dp"
-            android:layout_height="145dp"
+            android:minHeight="200dp"
+            android:layout_height="wrap_content"
             android:background="#FFFFFF"
             android:text="@string/flashcardtextbox"
             android:textSize="22sp"
