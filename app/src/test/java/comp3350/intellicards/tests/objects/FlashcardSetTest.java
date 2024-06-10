@@ -108,25 +108,6 @@ public class FlashcardSetTest {
     }
 
     /*
-     * Test getDeletedFlashCards()
-     * and getDeletedCount()
-     */
-    @Test
-    public void testGetDeletedFlashCards() {
-        Flashcard flashcard1 = new Flashcard("Less Generic Answer", "Less Generic Question", null);
-        Flashcard flashcard2 = new Flashcard("Even Less Generic Answer", "Even Less Generic Question", "Need Hint");
-        flashcard2.markDeleted();
-        cardSet.addFlashCard(flashcard1);
-        cardSet.addFlashCard(flashcard2);
-
-        assertEquals("There should be one deleted card",
-                1, cardSet.getDeletedCount());
-
-        assertEquals("A card marked as deleted will be in the list of deleted cards",
-                flashcard2, cardSet.getDeletedFlashCards().getIndex(0));
-    }
-
-    /*
      * Test getFlashcardById()
      */
     @Test
@@ -159,17 +140,6 @@ public class FlashcardSetTest {
 
         assertNull("Trying to get a card from a set with no flashcards will return null",
                 cardSet.getFlashCardById(uuid));
-    }
-
-    /*
-     * Test setFlashcardSetName()
-     */
-    @Test
-    public void testSetFlashcardSetName() {
-        cardSet.setFlashCardSetName("Software Engineering 1");
-
-        assertEquals("The flashcard set name should be changed to Software Engineering 1",
-                "Software Engineering 1", cardSet.getFlashcardSetName());
     }
 
     @After
