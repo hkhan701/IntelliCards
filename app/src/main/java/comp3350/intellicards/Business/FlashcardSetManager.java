@@ -34,12 +34,12 @@ public class FlashcardSetManager {
         this.flashcardSetPersistence = flashcardSetPersistence;
     }
 
-    public FlashcardSet getFlashcardSet(String id) {
-        return this.flashcardSetPersistence.getFlashcardSet(id);
+    public FlashcardSet getFlashcardSet(String uuid) {
+        return this.flashcardSetPersistence.getFlashcardSet(uuid);
     }
 
-    public FlashcardSet getActiveFlashcardSet(String id) {
-        return this.flashcardSetPersistence.getActiveFlashcardSet(id);
+    public FlashcardSet getActiveFlashcardSet(String uuid) {
+        return this.flashcardSetPersistence.getActiveFlashcardSet(uuid);
     }
 
     public List<FlashcardSet> getAllFlashcardSets() {

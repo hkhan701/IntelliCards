@@ -43,8 +43,8 @@ public class FlashcardPersistenceStub implements FlashcardPersistence {
     }
 
     @Override
-    public Flashcard getFlashcard(String id) {
-        return flashcards.get(id);
+    public Flashcard getFlashcard(String uuid) {
+        return flashcards.get(uuid);
     }
 
 
@@ -61,8 +61,8 @@ public class FlashcardPersistenceStub implements FlashcardPersistence {
     }
 
     @Override
-    public boolean markFlashcardAsDeleted(String id) {
-        Flashcard flashcard = flashcards.get(id);
+    public boolean markFlashcardAsDeleted(String uuid) {
+        Flashcard flashcard = flashcards.get(uuid);
         if (flashcard != null) {
             flashcard.markDeleted();
             return true;
@@ -71,8 +71,8 @@ public class FlashcardPersistenceStub implements FlashcardPersistence {
     }
 
     @Override
-    public boolean restoreFlashcard(String id) {
-        Flashcard flashcard = flashcards.get(id);
+    public boolean restoreFlashcard(String uuid) {
+        Flashcard flashcard = flashcards.get(uuid);
         if (flashcard != null) {
             flashcard.markRecovered();
             return true;

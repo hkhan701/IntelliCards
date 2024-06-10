@@ -10,13 +10,13 @@ public interface FlashcardPersistence {
 
     List<Flashcard> getAllDeletedFlashcards();
 
-    Flashcard getFlashcard(String id);
+    Flashcard getFlashcard(String uuid);
 
     Flashcard insertFlashcard(Flashcard currentFlashcard);
 
     Flashcard updateFlashcard(Flashcard currentFlashcard);
 
-    boolean markFlashcardAsDeleted(String id);
+    boolean markFlashcardAsDeleted(String uuid);
 
-    boolean restoreFlashcard(String id);
+    boolean restoreFlashcard(String uuid);
 }
