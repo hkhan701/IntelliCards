@@ -4,11 +4,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
-import android.widget.TextView;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-
 
 import comp3350.intellicards.Business.FlashcardManager;
 import comp3350.intellicards.Business.StubManager;
@@ -16,56 +15,87 @@ import comp3350.intellicards.Objects.Flashcard;
 import comp3350.intellicards.R;
 
 public class EditFlashcardActivity extends Activity {
-    private FlashcardManager flashcardManager = new FlashcardManager(StubManager.getFlashcardPersistence());
+
+    private FlashcardManager flashcardManager;
+    private EditText questionEditText;
+    private EditText answerEditText;
+    private EditText hintEditText;
+    private Button editButton;
+    private Button cancelButton;
+    private Flashcard currentFlashcard;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_flashcard);
-        // Get the flashcard UUID from the intent then get the corresponding flashcard
+
+        initializeManager();
+        initializeViews();
+        fetchFlashcard();
+        setUpListeners();
+    }
+
+    private void initializeManager() {
+        flashcardManager = new FlashcardManager(StubManager.getFlashcardPersistence());
+    }
+
+    private void initializeViews() {
+        questionEditText = findViewById(R.id.question);
+        answerEditText = findViewById(R.id.answer);
+        hintEditText = findViewById(R.id.hint);
+        editButton = findViewById(R.id.editFlashcard);
+        cancelButton = findViewById(R.id.cancelButton);
+    }
+
+    private void fetchFlashcard() {
         String flashcardUUID = getIntent().getStringExtra("flashcardUUID");
-        Flashcard currFlashcard = flashcardManager.getFlashcard(flashcardUUID);
-
-        //set up the buttons
-        setUpEditButton(currFlashcard);
-        setUpCancelButton();
-
-
+        currentFlashcard = flashcardManager.getFlashcard(flashcardUUID);
+        if (currentFlashcard != null) {
+            populateFlashcardDetails();
+        } else {
+            Toast.makeText(this, "Flashcard not found", Toast.LENGTH_LONG).show();
+            finish();
+        }
     }
 
-    protected void setUpEditButton(Flashcard currFlashcard) {
-        TextView questionTextBox = findViewById(R.id.question);
-        TextView answerTextBox = findViewById(R.id.answer);
-        TextView hintTextBox = findViewById(R.id.hint);
-        Button editFlashButton = findViewById(R.id.editFlashcard);
-
-        questionTextBox.setText(currFlashcard.getQuestion());
-        answerTextBox.setText(currFlashcard.getAnswer());
-        hintTextBox.setText(currFlashcard.getHint());
-
-
-        editFlashButton.setOnClickListener(v -> {
-
-            currFlashcard.setQuestion(questionTextBox.getText().toString());
-            currFlashcard.setAnswer(answerTextBox.getText().toString());
-            currFlashcard.setHint(hintTextBox.getText().toString());
-            Toast.makeText(this, "Successfully updated flashcard", Toast.LENGTH_LONG).show();
-
-            // send result back to FlashCardSetActivity so that the recycler view can be updated
-            Intent resultIntent = new Intent(); 
-            resultIntent.putExtra("flashcardUUID", currFlashcard.getUUID()); // Pass the updated flashcard ID
-            setResult(RESULT_OK, resultIntent);
-            finish();
-        });
-
+    private void populateFlashcardDetails() {
+        questionEditText.setText(currentFlashcard.getQuestion());
+        answerEditText.setText(currentFlashcard.getAnswer());
+        hintEditText.setText(currentFlashcard.getHint());
     }
 
-    protected void setUpCancelButton() {
-        Button cancelButton = findViewById(R.id.cancelButton);
-        cancelButton.setOnClickListener(v -> {
-            finish();
+    private void setUpListeners() {
+        setUpEditButtonListener();
+        setUpCancelButtonListener();
+    }
+
+    private void setUpEditButtonListener() {
+        editButton.setOnClickListener(v -> {
+            updateFlashcardDetails();
+            flashcardManager.updateFlashcard(currentFlashcard);
+            showSuccessMessage();
+            sendResultAndFinish();
         });
     }
 
+    private void updateFlashcardDetails() {
+        currentFlashcard.setQuestion(questionEditText.getText().toString());
+        currentFlashcard.setAnswer(answerEditText.getText().toString());
+        currentFlashcard.setHint(hintEditText.getText().toString());
+    }
 
+    private void showSuccessMessage() {
+        Toast.makeText(this, "Successfully updated flashcard", Toast.LENGTH_LONG).show();
+    }
+
+    private void sendResultAndFinish() {
+        Intent resultIntent = new Intent();
+        resultIntent.putExtra("flashcardUUID", currentFlashcard.getUUID());
+        setResult(RESULT_OK, resultIntent);
+        finish();
+    }
+
+    private void setUpCancelButtonListener() {
+        cancelButton.setOnClickListener(v -> finish());
+    }
 }
