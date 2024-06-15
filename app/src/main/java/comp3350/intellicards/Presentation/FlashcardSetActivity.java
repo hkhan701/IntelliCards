@@ -45,10 +45,17 @@ public class FlashcardSetActivity extends Activity {
         }
 
         Button backButton = findViewById(R.id.backButton);
+        Button addFlashcardButton = findViewById(R.id.addFlashcardButton);
 
         backButton.setOnClickListener(v -> {
             Intent intent = new Intent(FlashcardSetActivity.this, MainActivity.class);
             startActivity(intent);
+        });
+
+        addFlashcardButton.setOnClickListener(v -> {
+            Intent intent = new Intent(FlashcardSetActivity.this, CreateFlashcardActivity.class);
+            intent.putExtra("flashcardSetUUID", flashcardSetUUID);
+            startActivityForResult(intent, 1);
         });
     }
 
