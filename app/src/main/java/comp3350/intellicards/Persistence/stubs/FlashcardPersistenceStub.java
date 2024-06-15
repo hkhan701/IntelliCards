@@ -5,7 +5,7 @@ import comp3350.intellicards.Persistence.FlashcardPersistence;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,7 +14,7 @@ public class FlashcardPersistenceStub implements FlashcardPersistence {
     private Map<String, Flashcard> flashcards;
 
     public FlashcardPersistenceStub() {
-        flashcards = new HashMap<>();
+        flashcards = new LinkedHashMap<>();
     }
 
     // Can be used to get all active flashcards for searching capability
