@@ -9,9 +9,6 @@
     android:background="#dbeff8"
     tools:context="comp3350.intellicards.Presentation.MainActivity">
 
-
-    <!-- Create New Flashcard -->
-
     <EditText
         android:id="@+id/question"
         android:layout_width="0dp"
