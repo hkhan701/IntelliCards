@@ -12,10 +12,12 @@
     <string name="recovery_page_btn_text">Recovery/Trash bin</string>
     <string name="cancel_btn_text">Cancel</string>
     <string name="back_btn_text">Back</string>
+    <string name="create_new_flashcard_btn_text">New Flashcard</string>
 
     <!-- Labels and Placeholders -->
     <string name="hint_placeholder">Enter hint here</string>
     <string name="question_placeholder">Enter question here</string>
     <string name="answer_placeholder">Enter answer here</string>
+
 
 </resources>
