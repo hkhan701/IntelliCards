@@ -1,13 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
-    android:background="#dbeff8"
-    tools:context="comp3350.intellicards.Presentation.MainActivity">
+    tools:context=".Presentation.CreateFlashcardActivity">
 
     <EditText
         android:id="@+id/question"
@@ -52,19 +50,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/answer"/>
 
-    <Spinner
-        android:id="@+id/flashcardSetSpinner"
-        android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="16dp"
-        android:padding="12dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/hint" />
-
-    <!-- Create Set Button -->
+    <!-- Create Flashcard Button -->
     <Button
-        android:id="@+id/editFlashcard"
+        android:id="@+id/createFlashcardButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
@@ -74,7 +62,7 @@
         android:textColor="@android:color/white"
         app:layout_constraintEnd_toStartOf="@id/cancelButton"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/flashcardSetSpinner" />
+        app:layout_constraintTop_toBottomOf="@id/hint" />
 
     <!-- Cancel Button -->
     <Button
@@ -86,7 +74,7 @@
         android:backgroundTint="@android:color/holo_red_light"
         android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/editFlashcard"
-        app:layout_constraintTop_toBottomOf="@id/flashcardSetSpinner"/>
+        app:layout_constraintStart_toEndOf="@id/createFlashcardButton"
+        app:layout_constraintTop_toBottomOf="@id/hint"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
