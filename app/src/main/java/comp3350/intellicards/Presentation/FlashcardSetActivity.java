@@ -28,13 +28,20 @@ public class FlashcardSetActivity extends Activity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_flashcard_set);
+        // Get the flashcard set UUID from the intent
+        String flashcardSetUUID = getIntent().getStringExtra("flashcardSetUUID");
+        setUpFlashcardRecycler(flashcardSetUUID);
+        setUpBackButton();
+        setUpAddFlashcardButton(flashcardSetUUID);
 
+
+    }
+
+    private void setUpFlashcardRecycler(String flashcardSetUUID)
+    {
         TextView flashcardSetTitle = findViewById(R.id.flashcardSetTitle);
         flashcardsRecyclerView = findViewById(R.id.flashcardsRecyclerView);
         flashcardsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        // Get the flashcard set UUID from the intent
-        String flashcardSetUUID = getIntent().getStringExtra("flashcardSetUUID");
 
         if (flashcardSetUUID != null) {
             FlashcardSet flashcardSet = flashcardSetManager.getActiveFlashcardSet(flashcardSetUUID);
@@ -45,19 +52,24 @@ public class FlashcardSetActivity extends Activity {
                 flashcardsRecyclerView.setAdapter(new CardViewAdapter(flashcardSet));
             }
         }
+    }
 
-        Button backButton = findViewById(R.id.backButton);
+
+    private void setUpAddFlashcardButton(String flashcardSetUUID)
+    {
         Button addFlashcardButton = findViewById(R.id.addFlashcardButton);
-
-        backButton.setOnClickListener(v -> {
-            Intent intent = new Intent(FlashcardSetActivity.this, MainActivity.class);
-            startActivity(intent);
-        });
-
         addFlashcardButton.setOnClickListener(v -> {
             Intent intent = new Intent(FlashcardSetActivity.this, CreateFlashcardActivity.class);
             intent.putExtra("flashcardSetUUID", flashcardSetUUID);
             startActivityForResult(intent, 1);
+        });
+    }
+    private void setUpBackButton()
+    {
+        Button backButton = findViewById(R.id.backButton);
+        backButton.setOnClickListener(v -> {
+            Intent intent = new Intent(FlashcardSetActivity.this, MainActivity.class);
+            startActivity(intent);
         });
     }
 
@@ -75,7 +87,6 @@ public class FlashcardSetActivity extends Activity {
             FlashcardSet flashcardSet = flashcardSetManager.getActiveFlashcardSet(flashcardSetUUID);
             Flashcard updatedFlashcard = flashcardManager.getFlashcard(updatedFlashcardID);
             if (updatedFlashcard != null) {
-                System.out.println("Updated Flashcard: " + updatedFlashcard);
                 flashcardsRecyclerView.setAdapter(new CardViewAdapter(flashcardSet));
             }
         }
