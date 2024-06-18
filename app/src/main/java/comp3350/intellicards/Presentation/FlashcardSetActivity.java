@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import comp3350.intellicards.Business.FlashcardManager;
 import comp3350.intellicards.Objects.Flashcard;
 import comp3350.intellicards.Objects.FlashcardSet;
 import comp3350.intellicards.Business.FlashcardSetManager;
@@ -20,6 +21,7 @@ public class FlashcardSetActivity extends Activity {
 
     private RecyclerView flashcardsRecyclerView;
     private FlashcardSetManager flashcardSetManager = new FlashcardSetManager(StubManager.getFlashcardSetPersistence());
+    private FlashcardManager flashcardManager = new FlashcardManager(StubManager.getFlashcardPersistence());
 
 
     @Override
@@ -71,8 +73,9 @@ public class FlashcardSetActivity extends Activity {
             // Get the flashcard set UUID from the intent
             String flashcardSetUUID = getIntent().getStringExtra("flashcardSetUUID");
             FlashcardSet flashcardSet = flashcardSetManager.getActiveFlashcardSet(flashcardSetUUID);
-            Flashcard updatedFlashcard = flashcardSet.getFlashcardById(updatedFlashcardID);
+            Flashcard updatedFlashcard = flashcardManager.getFlashcard(updatedFlashcardID);
             if (updatedFlashcard != null) {
+                System.out.println("Updated Flashcard: " + updatedFlashcard);
                 flashcardsRecyclerView.setAdapter(new CardViewAdapter(flashcardSet));
             }
         }
