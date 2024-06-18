@@ -118,7 +118,6 @@ public class FlashcardTestActivity extends Activity {
                 if (currentCardIndex == totalCardCount - 1)
                 {
                     viewFlipper.setVisibility(View.INVISIBLE);
-                    setUpResultTextBox(calculateStats(viewFlipper));
                 } else
                 {
                     viewFlipper.showNext();
@@ -130,17 +129,6 @@ public class FlashcardTestActivity extends Activity {
         });
     }
 
-    private String calculateStats(ViewFlipper viewFlipper){
-        int total = viewFlipper.getChildCount();
-        return "This tests accuracy, Correct: " + correct + " / " + total
-                + "\nThat is " + Math.round(correct * 100 / (double)total) + "% correct: ";
-    }
-
-    private void setUpResultTextBox(String string)
-    {
-        TextView resultTextBox = findViewById(R.id.resultTextBox);
-        resultTextBox.setText(string);
-    }
 
 
 
