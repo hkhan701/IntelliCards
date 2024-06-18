@@ -22,6 +22,13 @@ public class FlashcardSet {
 
     }
 
+    // Constructor with custom UUID
+    public FlashcardSet(String uuid, String name) {
+        this.uuid = uuid;
+        this.flashcardSetName = name;
+        this.flashcards = new ArrayList<>();
+    }
+
     public String getUUID() {
         return uuid;
     }
@@ -32,13 +39,12 @@ public class FlashcardSet {
 
     // Return a flashcard set that contains only the active flashcards
     public FlashcardSet getActiveFlashcards() {
-        FlashcardSet undeletedCards = new FlashcardSet(this.flashcardSetName);
+        FlashcardSet undeletedCards = new FlashcardSet(this.uuid, this.flashcardSetName); // Use the same UUID
         for (Flashcard card : flashcards) {
             if (!card.isDeleted()) {
                 undeletedCards.addFlashcard(card);
             }
         }
-
         return undeletedCards;
     }
 
