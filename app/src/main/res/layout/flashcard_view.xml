@@ -57,6 +57,18 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/flashcardTextRecycle"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/flipButton"
+                android:layout_width="110dp"
+                android:layout_height="70dp"
+                android:text="@string/flip_btn_text"
+                android:layout_marginStart="20dp"
+                android:textSize="17sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/flashcardTextRecycle"
+                app:layout_constraintTop_toTopOf="parent" />
         </LinearLayout>
     </LinearLayout>
 
