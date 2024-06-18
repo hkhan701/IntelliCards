@@ -33,6 +33,7 @@ public class FlashcardSetActivity extends Activity {
         setUpFlashcardRecycler(flashcardSetUUID);
         setUpBackButton();
         setUpAddFlashcardButton(flashcardSetUUID);
+        setUpTestButton(flashcardSetUUID);
 
 
     }
@@ -72,6 +73,18 @@ public class FlashcardSetActivity extends Activity {
             startActivity(intent);
         });
     }
+
+    private void setUpTestButton(String flashcardSetUUID)
+    {
+        Button testButton = findViewById(R.id.testButton);
+        testButton.setOnClickListener(v -> {
+            Intent intent = new Intent(FlashcardSetActivity.this, FlashcardTestActivity.class);
+            intent.putExtra("flashcardSetUUID", flashcardSetUUID);
+            startActivity(intent);
+        });
+
+    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
