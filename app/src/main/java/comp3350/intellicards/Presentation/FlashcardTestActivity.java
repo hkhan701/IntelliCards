@@ -14,6 +14,7 @@ import android.widget.ViewFlipper;
 import androidx.annotation.Nullable;
 
 import comp3350.intellicards.Business.FlashcardManager;
+import comp3350.intellicards.Business.ReportCalculator;
 import comp3350.intellicards.Objects.Flashcard;
 import comp3350.intellicards.Objects.FlashcardSet;
 import comp3350.intellicards.Business.FlashcardSetManager;
@@ -57,11 +58,11 @@ public class FlashcardTestActivity extends Activity {
         FlashcardSet activeFlashcards = flashcardSet.getActiveFlashcards();
         for(int i = 0; i < activeFlashcards.size(); i++)
         {
-            viewFlipper.addView(createView(activeFlashcards.getIndex(i), inflater, viewFlipper));
+            viewFlipper.addView(createView(flashcardSet, activeFlashcards.getIndex(i), inflater, viewFlipper));
         }
     }
 
-    private View createView(Flashcard flashcard, LayoutInflater inflater, ViewFlipper viewFlipper)
+    private View createView(FlashcardSet flashcardSet, Flashcard flashcard, LayoutInflater inflater, ViewFlipper viewFlipper)
     {
         View view = inflater.inflate(R.layout.flashcard_test_view, viewFlipper, false);
         // Define click listener for the ViewHolder's View
@@ -72,7 +73,7 @@ public class FlashcardTestActivity extends Activity {
 
         flashcardTextRecycle.setText(flashcard.getDataFormatted());
         setUpCheckBoxes(correctBox, incorrectBox);
-        setUpNextCardButton(flashcard, nextCardButton, correctBox, incorrectBox, viewFlipper);
+        setUpNextCardButton(flashcardSet, flashcard, nextCardButton, correctBox, incorrectBox, viewFlipper);
 
         return view;
     }
@@ -94,7 +95,7 @@ public class FlashcardTestActivity extends Activity {
 
 
     }
-    private void setUpNextCardButton(Flashcard flashcard, Button nextCardButton, CheckBox correctBox, CheckBox incorrectBox, ViewFlipper viewFlipper)
+    private void setUpNextCardButton(FlashcardSet flashcardSet, Flashcard flashcard, Button nextCardButton, CheckBox correctBox, CheckBox incorrectBox, ViewFlipper viewFlipper)
     {
         nextCardButton.setOnClickListener(v -> {
 
@@ -118,7 +119,9 @@ public class FlashcardTestActivity extends Activity {
                 if (currentCardIndex == totalCardCount - 1)
                 {
                     viewFlipper.setVisibility(View.INVISIBLE);
-                    setUpResultTextBox(calculateStats(viewFlipper));
+                    ReportCalculator reportCalculator = new ReportCalculator(flashcardSet);
+                    String totalReport = calculateStats(viewFlipper) + reportCalculator.report();
+                    setUpResultTextBox(totalReport);
                 } else
                 {
                     viewFlipper.showNext();
@@ -133,7 +136,7 @@ public class FlashcardTestActivity extends Activity {
     private String calculateStats(ViewFlipper viewFlipper){
         int total = viewFlipper.getChildCount();
         return "This tests accuracy, Correct: " + correct + " / " + total
-                + "\nThat is " + Math.round(correct * 100 / (double)total) + "% correct: ";
+                + "\nThat is " + Math.round(correct * 100 / (double)total) + "% correct\n\n";
     }
 
     private void setUpResultTextBox(String string)
