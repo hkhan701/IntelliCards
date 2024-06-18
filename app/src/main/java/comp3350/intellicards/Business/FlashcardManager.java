@@ -65,4 +65,13 @@ public class FlashcardManager {
     public boolean restoreFlashcard(String uuid) {
         return this.flashcardPersistence.restoreFlashcard(uuid);
     }
+
+    public void markAttempted(Flashcard currFlashcard) {
+        this.flashcardPersistence.markAttempted(currFlashcard);
+    }
+
+    public void markAttemptedAndCorrect(Flashcard currFlashcard) {
+        this.flashcardPersistence.markAttemptedAndCorrect(currFlashcard);
+    }
+
 }

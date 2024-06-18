@@ -80,4 +80,15 @@ public class FlashcardPersistenceStub implements FlashcardPersistence {
         return false;
     }
 
+    @Override
+    public void markAttempted(Flashcard flashcard) {
+        flashcard.markAttempted();
+    }
+
+    @Override
+    public void markAttemptedAndCorrect(Flashcard flashcard) {
+        flashcard.markAttemptedAndCorrect();
+    }
+
+
 }
