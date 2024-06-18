@@ -3,6 +3,7 @@ package comp3350.intellicards.Objects;
 import androidx.annotation.NonNull;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -66,6 +67,15 @@ public class FlashcardSet {
     // Return the number of active flashcards in this set
     public int getActiveCount() {
         return getActiveFlashcards().size();
+    }
+
+    // Randomizes the arrayList containing the flashcards
+    public void randomizeSet() {
+        if(flashcards != null)
+        {
+            Collections.shuffle(flashcards);
+            System.out.println(flashcards);
+        }
     }
 
 

@@ -53,4 +53,8 @@ public class FlashcardSetManager {
     public boolean addFlashcardToFlashcardSet(@NonNull FlashcardSet flashcardSet, @NonNull Flashcard flashcard) {
         return this.flashcardSetPersistence.addFlashcardToFlashcardSet(flashcardSet, flashcard);
     }
+
+    public void randomizeFlashcardSet(FlashcardSet flashcardSet) {
+        this.flashcardSetPersistence.randomizeFlashcardSet(flashcardSet);
+    }
 }

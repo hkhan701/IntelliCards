@@ -50,4 +50,11 @@ public class FlashcardSetPersistenceStub implements FlashcardSetPersistence {
     public void insertFlashcardSet(FlashcardSet newFlashcardSet) {
         flashcardSets.put(newFlashcardSet.getUUID(), newFlashcardSet);
     }
+
+    @Override
+    public void randomizeFlashcardSet(FlashcardSet set) {
+        if (set != null) {
+            set.randomizeSet();
+        }
+    }
 }

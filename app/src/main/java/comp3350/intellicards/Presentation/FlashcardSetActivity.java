@@ -35,9 +35,10 @@ public class FlashcardSetActivity extends Activity {
         String flashcardSetUUID = getIntent().getStringExtra("flashcardSetUUID");
 
         if (flashcardSetUUID != null) {
-            FlashcardSet flashcardSet = flashcardSetManager.getActiveFlashcardSet(flashcardSetUUID);
 
+            FlashcardSet flashcardSet = flashcardSetManager.getActiveFlashcardSet(flashcardSetUUID);
             if (flashcardSet != null) {
+                flashcardSetManager.randomizeFlashcardSet(flashcardSet);
                 flashcardSetTitle.setText(flashcardSet.getFlashcardSetName());
                 // Set up the RecyclerView with flashcards
                 flashcardsRecyclerView.setAdapter(new CardViewAdapter(flashcardSet));
