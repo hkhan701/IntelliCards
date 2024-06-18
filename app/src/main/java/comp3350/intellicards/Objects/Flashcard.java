@@ -12,6 +12,9 @@ public class Flashcard {
     private String hint;
     private boolean deleted;
 
+    private int attempted;
+    private int correct;
+
     // Private constructor used internally to ensure UUID is always set
     public Flashcard(@NonNull String answer, @NonNull String question, String hint) {
         this.uuid = UUID.randomUUID().toString();
@@ -19,6 +22,8 @@ public class Flashcard {
         this.question = question;
         this.hint = hint;
         this.deleted = false;
+        this.attempted = 0;
+        this.correct = 0;
     }
 
     public String getUUID() {
@@ -61,6 +66,14 @@ public class Flashcard {
     public void markRecovered() {
         deleted = false;
     }
+
+    public void markAttempted() { attempted++;}
+
+    public void markAttemptedAndCorrect() { correct++; attempted++;}
+
+    public int getAttempted() { return attempted; }
+
+    public int getCorrect() { return correct; }
 
     @NonNull
     @Override

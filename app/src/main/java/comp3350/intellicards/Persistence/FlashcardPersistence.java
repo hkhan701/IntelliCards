@@ -19,4 +19,8 @@ public interface FlashcardPersistence {
     boolean markFlashcardAsDeleted(String uuid);
 
     boolean restoreFlashcard(String uuid);
+
+    void markAttempted(Flashcard currentFlashcard);
+
+    void markAttemptedAndCorrect(Flashcard currentFlashcard);
 }

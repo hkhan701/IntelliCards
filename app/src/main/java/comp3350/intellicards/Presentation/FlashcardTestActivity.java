@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import androidx.annotation.Nullable;
@@ -23,7 +24,7 @@ public class FlashcardTestActivity extends Activity {
 
     private FlashcardSetManager flashcardSetManager = new FlashcardSetManager(StubManager.getFlashcardSetPersistence());
     private FlashcardManager flashcardManager = new FlashcardManager(StubManager.getFlashcardPersistence());
-
+    private int correct = 0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -69,10 +70,78 @@ public class FlashcardTestActivity extends Activity {
         CheckBox incorrectBox = view.findViewById(R.id.incorrectCheckbox);
         Button nextCardButton = view.findViewById(R.id.nextCardButton);
 
-        flashcardTextRecycle.setText(flashcard.toString());
+        flashcardTextRecycle.setText(flashcard.getDataFormatted());
+        setUpCheckBoxes(correctBox, incorrectBox);
+        setUpNextCardButton(flashcard, nextCardButton, correctBox, incorrectBox, viewFlipper);
 
         return view;
     }
+
+    private void setUpCheckBoxes(CheckBox correctBox,CheckBox incorrectBox)
+    {
+        // so they can't be both checked at once
+        correctBox.setOnClickListener(v -> {
+            if (correctBox.isChecked()) {
+                incorrectBox.setChecked(false);
+            }
+        });
+
+        incorrectBox.setOnClickListener(v -> {
+            if (incorrectBox.isChecked()) {
+                correctBox.setChecked(false);
+            }
+        });
+
+
+    }
+    private void setUpNextCardButton(Flashcard flashcard, Button nextCardButton, CheckBox correctBox, CheckBox incorrectBox, ViewFlipper viewFlipper)
+    {
+        nextCardButton.setOnClickListener(v -> {
+
+            int currentCardIndex = viewFlipper.getDisplayedChild();
+            int totalCardCount = viewFlipper.getChildCount();
+
+            if (!correctBox.isChecked() && !incorrectBox.isChecked())
+            {
+                Toast.makeText(FlashcardTestActivity.this, "Please check the correct or incorrect checkbox", Toast.LENGTH_SHORT).show();
+            } else
+            {
+                if (correctBox.isChecked())
+                {
+                    flashcardManager.markAttemptedAndCorrect(flashcard);
+                    correct++;
+                } else
+                {
+                    flashcardManager.markAttempted(flashcard);
+                }
+
+                if (currentCardIndex == totalCardCount - 1)
+                {
+                    viewFlipper.setVisibility(View.INVISIBLE);
+                    setUpResultTextBox(calculateStats(viewFlipper));
+                } else
+                {
+                    viewFlipper.showNext();
+                }
+                // print out the stats of the current flashcard set test
+                // and overall stats
+
+            }
+        });
+    }
+
+    private String calculateStats(ViewFlipper viewFlipper){
+        int total = viewFlipper.getChildCount();
+        return "This tests accuracy, Correct: " + correct + " / " + total
+                + "\nThat is " + Math.round(correct * 100 / (double)total) + "% correct: ";
+    }
+
+    private void setUpResultTextBox(String string)
+    {
+        TextView resultTextBox = findViewById(R.id.resultTextBox);
+        resultTextBox.setText(string);
+    }
+
 
 
 }
