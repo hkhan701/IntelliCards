@@ -118,7 +118,7 @@ public class FlashcardTestActivity extends Activity {
 
         private void setUpText()
         {
-            flashcardTextView.setText(flashcard.getDataFormatted());
+            flashcardTextView.setText(FlashcardUtils.getFlashcardQuestionWithHintText(flashcard));
         }
 
         private void setUpListeners()
