@@ -22,6 +22,7 @@
     <string name="hint_placeholder">Enter hint here</string>
     <string name="question_placeholder">Enter question here</string>
     <string name="answer_placeholder">Enter answer here</string>
+    <string name="flip_btn_text">Flip</string>
 
 
 

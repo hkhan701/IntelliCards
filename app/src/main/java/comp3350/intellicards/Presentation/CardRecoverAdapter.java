@@ -13,81 +13,81 @@ import java.util.List;
 
 import comp3350.intellicards.Objects.Flashcard;
 import comp3350.intellicards.Business.StubManager;
+import comp3350.intellicards.Presentation.Utils.FlashcardUtils;
 import comp3350.intellicards.R;
 
-public class CardRecoverAdapter extends RecyclerView.Adapter<CardRecoverAdapter.ViewHolder> {
+public class CardRecoverAdapter extends RecyclerView.Adapter<CardRecoverAdapter.FlashcardViewHolder> {
 
-    private static List<Flashcard> flashcards;
+    private static List<Flashcard> flashcardList;
 
-    /**
-     * Provide a reference to the type of views that you are using
-     * (custom ViewHolder)
-     */
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        private final TextView flashcardTextRecycle;
-        private final Button recoverButton;
-
-        public ViewHolder(View view) {
-            super(view);
-            // Define click listener for the ViewHolder's View
-            flashcardTextRecycle = view.findViewById(R.id.flashcardTextRecycle);
-            recoverButton = view.findViewById(R.id.recoveryButton);
-
-            recoverButton.setOnClickListener(v -> {
-
-                //set the flashcard as deleted
-                Flashcard flashcardToRecover = flashcards.get(getBindingAdapterPosition());
-                StubManager.getFlashcardPersistence().restoreFlashcard(flashcardToRecover.getUUID());
-
-                //delete the views associated with that flashcard
-                ViewGroup parentView = ((ViewGroup) flashcardTextRecycle.getParent());
-                parentView.removeView(flashcardTextRecycle);
-                parentView.removeView(recoverButton);
-            });
-
-        }// end of ViewHolder class
-
-        public TextView getTextView() {
-            return flashcardTextRecycle;
-        }
-
-        public Button getRecoverButton() {
-            return recoverButton;
-        }
+    public CardRecoverAdapter(List<Flashcard> flashcardList) {
+        this.flashcardList = flashcardList;
     }
 
-    /**
-     * Initialize the dataset of the Adapter
-     *
-     * @param flashcards contain the flashcards the data to populate views to be used
-     *                   by RecyclerView
-     */
-    public CardRecoverAdapter(List<Flashcard> flashcards) {
-        CardRecoverAdapter.flashcards = flashcards;
-    }
-
-    // Create new views (invoked by the layout manager)
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
-        // Create a new view, which defines the UI of the list item
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.recover_view, viewGroup, false);
-
-        return new ViewHolder(view);
+    public FlashcardViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recover_view, parent, false);
+        return new FlashcardViewHolder(view);
     }
 
-    // Replace the contents of a view (invoked by the layout manager)
     @Override
-    public void onBindViewHolder(ViewHolder viewHolder, final int position) {
-        Flashcard card = flashcards.get(position);
-
-        viewHolder.getTextView().setText(card.getDataFormatted());
-        viewHolder.getRecoverButton().setTag(card.getUUID());
+    public void onBindViewHolder(FlashcardViewHolder holder, int position) {
+        Flashcard flashcard = flashcardList.get(position);
+        holder.bind(flashcard);
     }
 
-    // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return flashcards.size();
+        return flashcardList.size();
+    }
+
+    public static class FlashcardViewHolder extends RecyclerView.ViewHolder {
+
+        private final TextView flashcardTextView;
+        private final Button recoverButton;
+        private final Button flipButton;
+        private boolean isFrontVisible = true; // Default to showing the front of the card
+
+        public FlashcardViewHolder(View itemView) {
+            super(itemView);
+            flashcardTextView = itemView.findViewById(R.id.flashcardTextRecycle);
+            recoverButton = itemView.findViewById(R.id.recoveryButton);
+            flipButton = itemView.findViewById(R.id.flipButton);
+
+            setupListeners();
+        }
+
+        private void setupListeners() {
+            recoverButton.setOnClickListener(v -> recoverFlashcard());
+            flipButton.setOnClickListener(v -> flipFlashcard());
+        }
+
+        public void bind(Flashcard flashcard) {
+            flashcardTextView.setText(FlashcardUtils.getFlashcardQuestionWithHintText(flashcard));
+            recoverButton.setTag(flashcard.getUUID());
+            flipButton.setTag(flashcard.getUUID());
+        }
+
+        private void recoverFlashcard() {
+            int position = getBindingAdapterPosition();
+            Flashcard flashcardToRecover = flashcardList.get(position);
+            StubManager.getFlashcardPersistence().restoreFlashcard(flashcardToRecover.getUUID());
+
+            ViewGroup parentView = (ViewGroup) flashcardTextView.getParent();
+            parentView.removeView(flashcardTextView);
+            ViewGroup buttonParentView = (ViewGroup) recoverButton.getParent();
+            if (buttonParentView != null) {
+                buttonParentView.removeView(recoverButton);
+                buttonParentView.removeView(flipButton);
+            }
+        }
+
+        private void flipFlashcard() {
+            int position = getBindingAdapterPosition();
+            Flashcard flashcard = flashcardList.get(position);
+            FlashcardUtils.toggleFlip(flashcard, flashcardTextView, isFrontVisible);
+            isFrontVisible = !isFrontVisible;
+        }
     }
 }
