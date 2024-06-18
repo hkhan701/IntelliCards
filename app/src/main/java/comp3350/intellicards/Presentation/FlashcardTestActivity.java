@@ -70,6 +70,7 @@ public class FlashcardTestActivity extends Activity {
         return testCardView.getTestCardView();
     }
 
+    // private class to handle the card views in test mode
     private class TestCardView {
         //the view that we are creating
         private View view;
@@ -207,8 +208,5 @@ public class FlashcardTestActivity extends Activity {
             resultTextBox.setText(string);
         }
     }
-
-
-
 
 }
