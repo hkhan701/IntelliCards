@@ -16,4 +16,5 @@ public interface FlashcardSetPersistence {
 
     boolean addFlashcardToFlashcardSet(FlashcardSet flashcardSet, Flashcard flashcard);
 
+    void randomizeFlashcardSet(FlashcardSet flashcardSet);
 }

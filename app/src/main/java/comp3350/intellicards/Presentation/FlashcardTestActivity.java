@@ -38,6 +38,8 @@ public class FlashcardTestActivity extends Activity {
         String flashcardSetUUID = getIntent().getStringExtra("flashcardSetUUID");
         // Get the flashcard set
         FlashcardSet flashcardSet = flashcardSetManager.getActiveFlashcardSet(flashcardSetUUID);
+        // Shuffle the cards
+        flashcardSetManager.shuffleFlashcardSet(flashcardSet);
         // get viewFlipper
         viewFlipper = findViewById(R.id.viewFlipper);
         setUpBackButton(flashcardSetUUID);
