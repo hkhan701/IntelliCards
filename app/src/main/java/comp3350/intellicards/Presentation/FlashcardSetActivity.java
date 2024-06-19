@@ -45,8 +45,8 @@ public class FlashcardSetActivity extends Activity {
         flashcardsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         if (flashcardSetUUID != null) {
-            FlashcardSet flashcardSet = flashcardSetManager.getActiveFlashcardSet(flashcardSetUUID);
 
+            FlashcardSet flashcardSet = flashcardSetManager.getActiveFlashcardSet(flashcardSetUUID);
             if (flashcardSet != null) {
                 flashcardSetTitle.setText(flashcardSet.getFlashcardSetName());
                 // Set up the RecyclerView with flashcards
