@@ -29,6 +29,9 @@ public class FlashcardTestActivity extends Activity {
     private int correct = 0;
     private int attempted = 0;
     ViewFlipper viewFlipper;
+    Button backButton;
+    TextView resultTextBox;
+    Button finishButton;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -41,7 +44,11 @@ public class FlashcardTestActivity extends Activity {
         // Shuffle the cards
         flashcardSetManager.shuffleFlashcardSet(flashcardSet);
         // get viewFlipper
+
+        backButton = findViewById(R.id.backButton);
+        finishButton = findViewById(R.id.finishButton);
         viewFlipper = findViewById(R.id.viewFlipper);
+        resultTextBox = findViewById(R.id.resultTextBox);
         setUpBackButton(flashcardSetUUID);
         setUpFinishButton(flashcardSet);
         setUpViewFlipper(flashcardSet);
@@ -50,7 +57,7 @@ public class FlashcardTestActivity extends Activity {
 
     private void setUpBackButton(String flashcardSetUUID)
     {
-        Button backButton = findViewById(R.id.backButton);
+        backButton.setVisibility(View.INVISIBLE);
         backButton.setOnClickListener(v -> {
             Intent intent = new Intent(FlashcardTestActivity.this, FlashcardSetActivity.class);
             intent.putExtra("flashcardSetUUID", flashcardSetUUID);
@@ -60,11 +67,8 @@ public class FlashcardTestActivity extends Activity {
 
     private void setUpFinishButton(FlashcardSet flashcardSet)
     {
-        Button finishButton = findViewById(R.id.finishButton);
         finishButton.setOnClickListener(v -> {
-            ReportCalculator reportCalculator = new ReportCalculator(flashcardSet);
-            String totalReport = calculateStats() + reportCalculator.report();
-            setUpResultTextBox(totalReport);
+            finishTest(flashcardSet);
         });
     }
 
@@ -86,15 +90,25 @@ public class FlashcardTestActivity extends Activity {
         return testCardView.getTestCardView();
     }
 
-    private String calculateStats(){
+    private void finishTest(FlashcardSet flashcardSet)
+    {
+        backButton.setVisibility(View.VISIBLE);
+        finishButton.setVisibility(View.INVISIBLE);
         viewFlipper.setVisibility(View.INVISIBLE);
+        // print out the stats of the current flashcard set test
+        // and overall stats
+        ReportCalculator reportCalculator = new ReportCalculator(flashcardSet);
+        String totalReport = calculateStats() + reportCalculator.report();
+        setUpResultTextBox(totalReport);
+    }
+
+    private String calculateStats(){
         return "This tests accuracy, Correct: " + correct + " / " + attempted
                 + "\nThat is " + Math.round(correct * 100 / (double)attempted) + "% correct\n\n";
     }
 
     private void setUpResultTextBox(String string)
     {
-        TextView resultTextBox = findViewById(R.id.resultTextBox);
         resultTextBox.setText(string);
     }
 
@@ -205,11 +219,7 @@ public class FlashcardTestActivity extends Activity {
 
                     if (currentCardIndex == totalCardCount - 1)
                     {
-                        // print out the stats of the current flashcard set test
-                        // and overall stats
-                        ReportCalculator reportCalculator = new ReportCalculator(flashcardSet);
-                        String totalReport = calculateStats() + reportCalculator.report();
-                        setUpResultTextBox(totalReport);
+                        finishTest(flashcardSet);
                     } else
                     {
                         viewFlipper.showNext();
