@@ -27,6 +27,8 @@ public class FlashcardTestActivity extends Activity {
     private FlashcardSetManager flashcardSetManager = new FlashcardSetManager(StubManager.getFlashcardSetPersistence());
     private FlashcardManager flashcardManager = new FlashcardManager(StubManager.getFlashcardPersistence());
     private int correct = 0;
+    private int attempted = 0;
+    ViewFlipper viewFlipper;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -36,8 +38,10 @@ public class FlashcardTestActivity extends Activity {
         String flashcardSetUUID = getIntent().getStringExtra("flashcardSetUUID");
         // Get the flashcard set
         FlashcardSet flashcardSet = flashcardSetManager.getActiveFlashcardSet(flashcardSetUUID);
-
+        // get viewFlipper
+        viewFlipper = findViewById(R.id.viewFlipper);
         setUpBackButton(flashcardSetUUID);
+        setUpFinishButton(flashcardSet);
         setUpViewFlipper(flashcardSet);
 
     }
@@ -52,10 +56,20 @@ public class FlashcardTestActivity extends Activity {
         });
     }
 
+    private void setUpFinishButton(FlashcardSet flashcardSet)
+    {
+        Button finishButton = findViewById(R.id.finishButton);
+        finishButton.setOnClickListener(v -> {
+            ReportCalculator reportCalculator = new ReportCalculator(flashcardSet);
+            String totalReport = calculateStats() + reportCalculator.report();
+            setUpResultTextBox(totalReport);
+        });
+    }
+
+
     private void setUpViewFlipper(FlashcardSet flashcardSet)
     {
         LayoutInflater inflater = LayoutInflater.from(this);
-        ViewFlipper viewFlipper = findViewById(R.id.viewFlipper);
         FlashcardSet activeFlashcards = flashcardSet.getActiveFlashcards();
         for(int i = 0; i < activeFlashcards.size(); i++)
         {
@@ -68,6 +82,18 @@ public class FlashcardTestActivity extends Activity {
         View view = inflater.inflate(R.layout.flashcard_test_view, viewFlipper, false);
         TestCardView testCardView = new TestCardView(view, viewFlipper, flashcard, flashcardSet);
         return testCardView.getTestCardView();
+    }
+
+    private String calculateStats(){
+        viewFlipper.setVisibility(View.INVISIBLE);
+        return "This tests accuracy, Correct: " + correct + " / " + attempted
+                + "\nThat is " + Math.round(correct * 100 / (double)attempted) + "% correct\n\n";
+    }
+
+    private void setUpResultTextBox(String string)
+    {
+        TextView resultTextBox = findViewById(R.id.resultTextBox);
+        resultTextBox.setText(string);
     }
 
     // private class to handle the card views in test mode
@@ -168,18 +194,19 @@ public class FlashcardTestActivity extends Activity {
                     {
                         flashcardManager.markAttemptedAndCorrect(flashcard);
                         correct++;
+                        attempted++;
                     } else
                     {
                         flashcardManager.markAttempted(flashcard);
+                        attempted++;
                     }
 
                     if (currentCardIndex == totalCardCount - 1)
                     {
                         // print out the stats of the current flashcard set test
                         // and overall stats
-                        viewFlipper.setVisibility(View.INVISIBLE);
                         ReportCalculator reportCalculator = new ReportCalculator(flashcardSet);
-                        String totalReport = calculateStats(viewFlipper) + reportCalculator.report();
+                        String totalReport = calculateStats() + reportCalculator.report();
                         setUpResultTextBox(totalReport);
                     } else
                     {
@@ -196,17 +223,6 @@ public class FlashcardTestActivity extends Activity {
             }
         }
 
-        private String calculateStats(ViewFlipper viewFlipper){
-            int total = viewFlipper.getChildCount();
-            return "This tests accuracy, Correct: " + correct + " / " + total
-                    + "\nThat is " + Math.round(correct * 100 / (double)total) + "% correct\n\n";
-        }
-
-        private void setUpResultTextBox(String string)
-        {
-            TextView resultTextBox = findViewById(R.id.resultTextBox);
-            resultTextBox.setText(string);
-        }
     }
 
 }

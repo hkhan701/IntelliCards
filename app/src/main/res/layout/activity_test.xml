@@ -16,10 +16,10 @@
         android:textSize="17sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="@id/nextButton" />
+        app:layout_constraintBottom_toBottomOf="@id/finishButton" />
 
     <Button
-        android:id="@+id/nextButton"
+        android:id="@+id/finishButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
