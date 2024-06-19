@@ -80,7 +80,6 @@ public class FlashcardSet {
         if(flashcards != null)
         {
             Collections.shuffle(flashcards);
-            System.out.println(flashcards);
         }
     }
 
