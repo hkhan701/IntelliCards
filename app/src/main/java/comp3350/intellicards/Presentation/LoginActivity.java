@@ -1,6 +1,7 @@
 package comp3350.intellicards.Presentation;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,7 +14,9 @@ import comp3350.intellicards.R;
 
 public class LoginActivity extends Activity {
 
+    private Button logInButton;
     private Button signUpButton;
+    private Button tempButton;
     private EditText username;
     private EditText password;
 
@@ -27,15 +30,18 @@ public class LoginActivity extends Activity {
     }
 
     private void initializeViews() {
+        logInButton = findViewById(R.id.logInButton);
         signUpButton = findViewById(R.id.signUpButton);
+        tempButton = findViewById(R.id.tempButton);
         username = findViewById(R.id.username);
         password = findViewById(R.id.password);
     }
 
     private void setUpListeners() {
+        setUpLogInButtonListener();
         setUpSignUpButtonListener();
+        setUpTempButtonListener();
     }
-
 
     private void setUpSignUpButtonListener() {
         signUpButton.setOnClickListener(v -> {
@@ -54,6 +60,43 @@ public class LoginActivity extends Activity {
             }
         });
 
+    }
+
+    private void setUpLogInButtonListener() {
+        logInButton.setOnClickListener(v -> {
+            if(verifyLogIn() && verifyInput()) {
+                Toast.makeText(this, "Log in successful!", Toast.LENGTH_LONG).show();
+
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
+            else {
+                //login is not valid, ask the user to try again
+                Toast.makeText(this, "Invalid login information! Please try again.", Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    private void setUpTempButtonListener() {
+            tempButton.setOnClickListener(v -> {
+            //create a temporary user just for this session
+            new User();
+
+            //temporarily store the user in the database
+
+            Toast.makeText(this, "logging in", Toast.LENGTH_LONG).show();
+
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(intent);
+        });
+    }
+
+    private boolean verifyLogIn() {
+        boolean valid = true;
+
+        //the login is NOT valid if the username and password does not exist in the database
+
+        return valid;
     }
 
     private boolean verifySignUp() {
