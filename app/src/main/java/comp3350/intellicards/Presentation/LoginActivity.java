@@ -10,10 +10,11 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 
 import comp3350.intellicards.Objects.User;
+import comp3350.intellicards.Business.UserManager;
 import comp3350.intellicards.R;
 
 public class LoginActivity extends Activity {
-
+    private UserManager userManager;
     private Button logInButton;
     private Button signUpButton;
     private Button tempButton;
@@ -25,6 +26,7 @@ public class LoginActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        userManager = new UserManager();
         initializeViews();
         setUpListeners();
     }
@@ -48,7 +50,8 @@ public class LoginActivity extends Activity {
             if(verifySignUp() && verifyInput()) {
                 new User(username.getText().toString(), password.getText().toString());
 
-                //store the new user in the database
+                //add the new user in the database
+                userManager.addUser(new User(username.getText().toString(), password.getText().toString()));
 
                 //users will have to log in again after signing up
                 //sign up successful, ask the user to log in
@@ -92,9 +95,16 @@ public class LoginActivity extends Activity {
     }
 
     private boolean verifyLogIn() {
-        boolean valid = true;
+        boolean valid = false;
 
         //the login is NOT valid if the username and password does not exist in the database
+        for(User user : userManager.getAllUsers()) {
+            if(user.getUsername().equals(username.getText().toString())
+                    && user.getPassword().equals(password.getText().toString())) {
+                valid = true;
+                break;
+            }
+        }
 
         return valid;
     }
@@ -103,6 +113,13 @@ public class LoginActivity extends Activity {
         boolean valid = true;
 
         //the login info is NOT valid if the username and password already exists in the database
+        for(User user : userManager.getAllUsers()) {
+            if(user.getUsername().equals(username.getText().toString())
+                    && user.getPassword().equals(password.getText().toString())) {
+                valid = false;
+                break;
+            }
+        }
 
         return valid;
     }
