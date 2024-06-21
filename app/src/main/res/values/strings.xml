@@ -17,13 +17,15 @@
     <string name="finish_btn_text">Finish</string>
     <string name="correct_checkbox_text">Correct</string>
     <string name="incorrect_checkbox_text">Incorrect\n</string>
+    <string name="flip_btn_text">Flip</string>
+    <string name="sign_up_btn_text">Sign Up</string>
 
     <!-- Labels and Placeholders -->
     <string name="hint_placeholder">Enter hint here</string>
     <string name="question_placeholder">Enter question here</string>
     <string name="answer_placeholder">Enter answer here</string>
-    <string name="flip_btn_text">Flip</string>
-
+    <string name="username_text">Username:</string>
+    <string name="password_text">Password:</string>
 
 
 </resources>

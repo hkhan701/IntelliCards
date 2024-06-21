@@ -13,10 +13,19 @@
         android:theme="@style/Theme.IntelliCards"
         tools:targetApi="31">
         <activity
-            android:name="comp3350.intellicards.Presentation.MainActivity"
+            android:name="comp3350.intellicards.Presentation.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="comp3350.intellicards.Presentation.MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.HOME-PAGE" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
