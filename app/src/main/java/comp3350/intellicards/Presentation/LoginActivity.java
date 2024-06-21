@@ -17,7 +17,6 @@ public class LoginActivity extends Activity {
     private UserManager userManager;
     private Button logInButton;
     private Button signUpButton;
-    private Button tempButton;
     private EditText username;
     private EditText password;
 
@@ -34,7 +33,6 @@ public class LoginActivity extends Activity {
     private void initializeViews() {
         logInButton = findViewById(R.id.logInButton);
         signUpButton = findViewById(R.id.signUpButton);
-        tempButton = findViewById(R.id.tempButton);
         username = findViewById(R.id.username);
         password = findViewById(R.id.password);
     }
@@ -42,7 +40,6 @@ public class LoginActivity extends Activity {
     private void setUpListeners() {
         setUpLogInButtonListener();
         setUpSignUpButtonListener();
-        setUpTempButtonListener();
     }
 
     private void setUpSignUpButtonListener() {
@@ -77,20 +74,6 @@ public class LoginActivity extends Activity {
                 //login is not valid, ask the user to try again
                 Toast.makeText(this, "Invalid login information! Please try again.", Toast.LENGTH_LONG).show();
             }
-        });
-    }
-
-    private void setUpTempButtonListener() {
-            tempButton.setOnClickListener(v -> {
-            //create a temporary user just for this session
-            new User();
-
-            //temporarily store the user in the database
-
-            Toast.makeText(this, "logging in", Toast.LENGTH_LONG).show();
-
-            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-            startActivity(intent);
         });
     }
 
