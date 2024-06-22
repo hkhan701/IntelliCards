@@ -10,13 +10,13 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 
 import comp3350.intellicards.Objects.User;
+import comp3350.intellicards.Business.UserManager;
 import comp3350.intellicards.R;
 
 public class LoginActivity extends Activity {
-
+    private UserManager userManager;
     private Button logInButton;
     private Button signUpButton;
-    private Button tempButton;
     private EditText username;
     private EditText password;
 
@@ -25,6 +25,7 @@ public class LoginActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        userManager = new UserManager();
         initializeViews();
         setUpListeners();
     }
@@ -32,7 +33,6 @@ public class LoginActivity extends Activity {
     private void initializeViews() {
         logInButton = findViewById(R.id.logInButton);
         signUpButton = findViewById(R.id.signUpButton);
-        tempButton = findViewById(R.id.tempButton);
         username = findViewById(R.id.username);
         password = findViewById(R.id.password);
     }
@@ -40,7 +40,6 @@ public class LoginActivity extends Activity {
     private void setUpListeners() {
         setUpLogInButtonListener();
         setUpSignUpButtonListener();
-        setUpTempButtonListener();
     }
 
     private void setUpSignUpButtonListener() {
@@ -48,7 +47,8 @@ public class LoginActivity extends Activity {
             if(verifySignUp() && verifyInput()) {
                 new User(username.getText().toString(), password.getText().toString());
 
-                //store the new user in the database
+                //add the new user in the database
+                userManager.addUser(new User(username.getText().toString(), password.getText().toString()));
 
                 //users will have to log in again after signing up
                 //sign up successful, ask the user to log in
@@ -77,24 +77,17 @@ public class LoginActivity extends Activity {
         });
     }
 
-    private void setUpTempButtonListener() {
-            tempButton.setOnClickListener(v -> {
-            //create a temporary user just for this session
-            new User();
-
-            //temporarily store the user in the database
-
-            Toast.makeText(this, "logging in", Toast.LENGTH_LONG).show();
-
-            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-            startActivity(intent);
-        });
-    }
-
     private boolean verifyLogIn() {
-        boolean valid = true;
+        boolean valid = false;
 
         //the login is NOT valid if the username and password does not exist in the database
+        for(User user : userManager.getAllUsers()) {
+            if(user.getUsername().equals(username.getText().toString())
+                    && user.getPassword().equals(password.getText().toString())) {
+                valid = true;
+                break;
+            }
+        }
 
         return valid;
     }
@@ -103,6 +96,13 @@ public class LoginActivity extends Activity {
         boolean valid = true;
 
         //the login info is NOT valid if the username and password already exists in the database
+        for(User user : userManager.getAllUsers()) {
+            if(user.getUsername().equals(username.getText().toString())
+                    && user.getPassword().equals(password.getText().toString())) {
+                valid = false;
+                break;
+            }
+        }
 
         return valid;
     }
