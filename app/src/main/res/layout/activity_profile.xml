@@ -35,14 +35,13 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/iconView"
+        android:id="@+id/userIcon"
         android:layout_width="237dp"
         android:layout_height="234dp"
         android:layout_marginStart="141dp"
         android:layout_marginTop="264dp"
         android:layout_marginEnd="141dp"
         android:background="@color/material_dynamic_neutral50"
-        android:contentDescription="user icon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
@@ -50,17 +49,17 @@
         tools:src="@color/material_dynamic_neutral_variant50" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/usernameText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:gravity="center"
-        android:text="GUEST"
+        android:text="@string/profile_guest_user_text"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iconView" />
+        app:layout_constraintTop_toBottomOf="@+id/userIcon" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
