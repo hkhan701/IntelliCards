@@ -17,6 +17,7 @@ public class AuthActivity extends Activity {
     private UserManager userManager;
     private Button logInButton;
     private Button registerButton;
+    private Button guestButton;
     private EditText usernameEditText;
     private EditText passwordEditText;
 
@@ -33,6 +34,7 @@ public class AuthActivity extends Activity {
     private void initializeViews() {
         logInButton = findViewById(R.id.logInButton);
         registerButton = findViewById(R.id.registerButton);
+        guestButton = findViewById(R.id.guestButton);
         usernameEditText = findViewById(R.id.username);
         passwordEditText = findViewById(R.id.password);
     }
@@ -40,6 +42,7 @@ public class AuthActivity extends Activity {
     private void setUpListeners() {
         setUpLogInButtonListener();
         setUpRegisterButtonListener();
+        setUpGuestButtonListener();
     }
 
     private void setUpRegisterButtonListener() {
@@ -74,6 +77,10 @@ public class AuthActivity extends Activity {
                 Toast.makeText(this, "Invalid input! Please try again.", Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    private void setUpGuestButtonListener() {
+        guestButton.setOnClickListener(v -> navigateToMainActivity(null));
     }
 
     private boolean verifyInput() {
