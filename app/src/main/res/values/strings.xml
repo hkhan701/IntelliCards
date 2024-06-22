@@ -28,6 +28,7 @@
     <string name="username_text">Username:</string>
     <string name="password_text">Password:</string>
     <string name="guest_btn_text">Continue as Guest</string>
+    <string name="profile_guest_user_text">Guest User</string>
 
 
 </resources>
