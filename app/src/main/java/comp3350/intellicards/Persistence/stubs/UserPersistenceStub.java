@@ -48,7 +48,7 @@ public class UserPersistenceStub implements UserPersistence{
     public void updateUser(User user) {
         for(User u : users) {
             if(u.getUUID().equals(user.getUUID())) {
-                u.setPassword(user.getUsername());
+                u.setUsername(user.getUsername());
                 u.setPassword(user.getPassword());
             }
         }
