@@ -27,6 +27,7 @@
     <string name="answer_placeholder">Enter answer here</string>
     <string name="username_text">Username:</string>
     <string name="password_text">Password:</string>
+    <string name="guest_btn_text">Continue as Guest</string>
 
 
 </resources>

@@ -13,9 +13,24 @@ public class UserManager {
         userPersistence = new UserPersistenceStub();
     }
 
-    public List<User> getAllUsers() {
-        return userPersistence.getAllUsers();
+    //
+    public boolean registerUser(String username, String password) {
+        if (userPersistence.getUserByUsername(username) != null) {
+            return false; // Username already exists Should throw some sort of exception in future
+        }
+        userPersistence.addUser(new User(username, password));
+        return true;
     }
+
+    //
+    public User loginUser(String username, String password) {
+        User user = userPersistence.getUserByUsername(username);
+        if (user != null && user.getPassword().equals(password)) {
+            return user;
+        }
+        return null;
+    }
+
 
     public User getUser(String uuid) {
         return userPersistence.getUser(uuid);
