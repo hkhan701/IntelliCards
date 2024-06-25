@@ -16,7 +16,6 @@ import java.util.List;
 
 import comp3350.intellicards.Business.FlashcardManager;
 import comp3350.intellicards.Business.FlashcardSetManager;
-import comp3350.intellicards.Business.StubManager;
 import comp3350.intellicards.Objects.Flashcard;
 import comp3350.intellicards.Objects.FlashcardSet;
 import comp3350.intellicards.R;
@@ -49,8 +48,8 @@ public class EditFlashcardActivity extends Activity {
     }
 
     private void initializeManagers() {
-        flashcardManager = new FlashcardManager(StubManager.getFlashcardPersistence());
-        flashcardSetManager = new FlashcardSetManager(StubManager.getFlashcardSetPersistence());
+        flashcardManager = new FlashcardManager();
+        flashcardSetManager = new FlashcardSetManager();
     }
 
     private void initializeViews() {
@@ -129,10 +128,10 @@ public class EditFlashcardActivity extends Activity {
 
     private void moveFlashcardToNewSet(FlashcardSet newSet) {
         flashcardManager.markFlashcardAsDeleted(currentFlashcard.getUUID());
-        Flashcard newFlashcard = new Flashcard(currentFlashcard.getAnswer(), currentFlashcard.getQuestion(), currentFlashcard.getHint());
+        Flashcard newFlashcard = new Flashcard(currentFlashcard.getSetID(), currentFlashcard.getAnswer(), currentFlashcard.getQuestion(), currentFlashcard.getHint());
 
         flashcardManager.insertFlashcard(newFlashcard);
-        flashcardSetManager.addFlashcardToFlashcardSet(newSet, newFlashcard);
+        flashcardSetManager.addFlashcardToFlashcardSet(newSet.getUUID(), newFlashcard);
 
         Toast.makeText(this, "Flashcard moved to new set", Toast.LENGTH_LONG).show();
     }

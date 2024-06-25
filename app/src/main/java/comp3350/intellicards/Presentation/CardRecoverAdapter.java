@@ -11,8 +11,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+import comp3350.intellicards.Application.Services;
 import comp3350.intellicards.Objects.Flashcard;
-import comp3350.intellicards.Business.StubManager;
 import comp3350.intellicards.Presentation.Utils.FlashcardUtils;
 import comp3350.intellicards.R;
 
@@ -72,7 +72,7 @@ public class CardRecoverAdapter extends RecyclerView.Adapter<CardRecoverAdapter.
         private void recoverFlashcard() {
             int position = getBindingAdapterPosition();
             Flashcard flashcardToRecover = flashcardList.get(position);
-            StubManager.getFlashcardPersistence().restoreFlashcard(flashcardToRecover.getUUID());
+            Services.getFlashcardPersistence().restoreFlashcard(flashcardToRecover.getUUID());
 
             ViewGroup parentView = (ViewGroup) flashcardTextView.getParent();
             parentView.removeView(flashcardTextView);
