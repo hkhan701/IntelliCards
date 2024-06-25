@@ -12,7 +12,6 @@ import java.util.List;
 
 import comp3350.intellicards.Objects.Flashcard;
 import comp3350.intellicards.Business.FlashcardManager;
-import comp3350.intellicards.Business.StubManager;
 import comp3350.intellicards.R;
 
 public class RecoverFlashcardsActivity extends Activity {
@@ -21,7 +20,7 @@ public class RecoverFlashcardsActivity extends Activity {
         setContentView(R.layout.activity_recovery);
 
         // Initialize flashcard persistence
-        FlashcardManager flashcardManager = new FlashcardManager(StubManager.getFlashcardPersistence());
+        FlashcardManager flashcardManager = new FlashcardManager();
 
         // Retrieve deleted flashcards
         List<Flashcard> deletedFlashcards = flashcardManager.getAllDeletedFlashcards();
