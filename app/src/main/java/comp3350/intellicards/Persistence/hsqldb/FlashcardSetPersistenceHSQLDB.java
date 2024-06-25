@@ -48,7 +48,7 @@ public class FlashcardSetPersistenceHSQLDB implements FlashcardSetPersistence {
     }
 
     @Override
-    public boolean addFlashcardToFlashcardSet(FlashcardSet flashcardSet, Flashcard flashcard) {
+    public boolean addFlashcardToFlashcardSet(String setUUID, Flashcard flashcard) {
         return false;
     }
 

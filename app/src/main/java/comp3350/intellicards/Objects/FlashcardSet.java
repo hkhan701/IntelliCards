@@ -34,12 +34,13 @@ public class FlashcardSet {
 
     public void addFlashcard(@NonNull Flashcard flashcard) {
         flashcards.add(flashcard);
+        System.out.println(flashcards);
     }
 
     // Return a flashcard set that contains only the active flashcards
     public FlashcardSet getActiveFlashcards() {
-        FlashcardSet undeletedCards = new FlashcardSet(this.uuid, this.flashcardSetName); // Use the same UUID
-        for (Flashcard card : flashcards) {
+        FlashcardSet undeletedCards = new FlashcardSet(this.uuid, this.username, this.flashcardSetName); // Use the same UUID
+        for (Flashcard card : this.flashcards) {
             if (!card.isDeleted()) {
                 undeletedCards.addFlashcard(card);
             }

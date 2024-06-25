@@ -13,7 +13,6 @@ import java.util.List;
 
 import comp3350.intellicards.Objects.FlashcardSet;
 import comp3350.intellicards.Business.FlashcardSetManager;
-import comp3350.intellicards.Business.StubManager;
 import comp3350.intellicards.R;
 
 public class MainActivity extends Activity {
@@ -33,13 +32,8 @@ public class MainActivity extends Activity {
     }
 
     private void initializePersistence() {
-        if (!StubManager.isInitialized()) {
-            StubManager.initializeStubData();
-        }
-
         flashcardSetManager = new FlashcardSetManager();
         gridLayout = findViewById(R.id.gridLayout);
-
         loadFlashcardSets();
     }
 
@@ -50,7 +44,8 @@ public class MainActivity extends Activity {
         List<FlashcardSet> flashcardSets = flashcardSetManager.getFlashcardSetsByUsername(username);
         for (FlashcardSet set : flashcardSets) {
             Button flashcardSetButton = new Button(this);
-            String title = set.getFlashcardSetName() + " (" + set.getActiveCount() + ")";
+            String title = set.getFlashcardSetName() + " (" + set.getActiveCount() + ") ";
+            System.out.println(set);
             flashcardSetButton.setText(title);
             flashcardSetButton.setLayoutParams(new GridLayout.LayoutParams(GridLayout.spec(GridLayout.UNDEFINED, 1f), GridLayout.spec(GridLayout.UNDEFINED, 1f)));
             flashcardSetButton.setPadding(16, 16, 16, 16);
@@ -61,6 +56,7 @@ public class MainActivity extends Activity {
 
     private void openFlashcardSetActivity(String flashcardSetUUID) {
         Intent intent = new Intent(MainActivity.this, FlashcardSetActivity.class);
+        intent.putExtra("username", username);
         intent.putExtra("flashcardSetUUID", flashcardSetUUID);
         startActivity(intent);
     }

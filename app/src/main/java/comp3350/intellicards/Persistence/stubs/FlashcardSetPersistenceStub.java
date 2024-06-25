@@ -45,8 +45,8 @@ public class FlashcardSetPersistenceStub implements FlashcardSetPersistence {
         return new ArrayList<>(flashcardSets.values());
     }
 
-    public boolean addFlashcardToFlashcardSet(FlashcardSet flashcardSet, Flashcard flashcard) {
-        FlashcardSet set = flashcardSets.get(flashcardSet.getUUID());
+    public boolean addFlashcardToFlashcardSet(String setUUID, Flashcard flashcard) {
+        FlashcardSet set = flashcardSets.get(setUUID);
         if (set != null) {
             set.addFlashcard(flashcard);
             return true;

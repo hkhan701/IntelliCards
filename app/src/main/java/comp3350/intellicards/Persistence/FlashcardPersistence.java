@@ -6,7 +6,7 @@ import comp3350.intellicards.Objects.Flashcard;
 
 public interface FlashcardPersistence {
 
-    List<Flashcard> getAllActiveFlashcards();
+    List<Flashcard> getAllActiveFlashcards(String setUUID);
 
     List<Flashcard> getAllDeletedFlashcards();
 

@@ -18,10 +18,6 @@ public class FlashcardSetManager {
         flashcardSetPersistence = Services.getFlashcardSetPersistence();
     }
 
-    public FlashcardSetManager(FlashcardSetPersistence flashcardSetPersistence) {
-        this.flashcardSetPersistence = flashcardSetPersistence;
-    }
-
     public FlashcardSet getFlashcardSet(String uuid) {
         return this.flashcardSetPersistence.getFlashcardSet(uuid);
     }
@@ -38,8 +34,8 @@ public class FlashcardSetManager {
         this.flashcardSetPersistence.insertFlashcardSet(newFlashcardSet);
     }
 
-    public boolean addFlashcardToFlashcardSet(@NonNull FlashcardSet flashcardSet, @NonNull Flashcard flashcard) {
-        return this.flashcardSetPersistence.addFlashcardToFlashcardSet(flashcardSet, flashcard);
+    public boolean addFlashcardToFlashcardSet(@NonNull String setUUID, @NonNull Flashcard flashcard) {
+        return this.flashcardSetPersistence.addFlashcardToFlashcardSet(setUUID, flashcard);
     }
 
     public void shuffleFlashcardSet(FlashcardSet flashcardSet) {

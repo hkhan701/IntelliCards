@@ -14,12 +14,8 @@ public class FlashcardManager {
         flashcardPersistence = Services.getFlashcardPersistence();
     }
 
-    public FlashcardManager(final FlashcardPersistence flashcardPersistence) {
-        this.flashcardPersistence = flashcardPersistence;
-    }
-
-    public List<Flashcard> getAllActiveFlashcards() {
-        return this.flashcardPersistence.getAllActiveFlashcards();
+    public List<Flashcard> getAllActiveFlashcards(String setUUID) {
+        return this.flashcardPersistence.getAllActiveFlashcards(setUUID);
     }
 
     public List<Flashcard> getAllDeletedFlashcards() {
