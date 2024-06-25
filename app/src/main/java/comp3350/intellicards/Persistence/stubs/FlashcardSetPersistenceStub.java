@@ -15,6 +15,14 @@ public class FlashcardSetPersistenceStub implements FlashcardSetPersistence {
 
     public FlashcardSetPersistenceStub() {
         flashcardSets = new LinkedHashMap<>();
+
+        FlashcardSet set1 = new FlashcardSet("0", "user1", "Set 1");
+        FlashcardSet set2 = new FlashcardSet("1", "user1", "Set 2");
+        FlashcardSet set3 = new FlashcardSet("2", "user1", "Set 3");
+
+        flashcardSets.put(set1.getUUID(), set1);
+        flashcardSets.put(set2.getUUID(), set2);
+        flashcardSets.put(set3.getUUID(), set3);
     }
 
     @Override

@@ -37,7 +37,7 @@ public class MainActivity extends Activity {
             StubManager.initializeStubData();
         }
 
-        flashcardSetManager = new FlashcardSetManager(StubManager.getFlashcardSetPersistence());
+        flashcardSetManager = new FlashcardSetManager();
         gridLayout = findViewById(R.id.gridLayout);
 
         loadFlashcardSets();
@@ -47,7 +47,7 @@ public class MainActivity extends Activity {
     private void loadFlashcardSets() {
         gridLayout.removeAllViews();
 
-        List<FlashcardSet> flashcardSets = flashcardSetManager.getAllFlashcardSets();
+        List<FlashcardSet> flashcardSets = flashcardSetManager.getFlashcardSetsByUsername(username);
         for (FlashcardSet set : flashcardSets) {
             Button flashcardSetButton = new Button(this);
             String title = set.getFlashcardSetName() + " (" + set.getActiveCount() + ")";
@@ -74,7 +74,7 @@ public class MainActivity extends Activity {
                 .setPositiveButton("Create", (dialog, whichButton) -> {
                     String newSetName = newSetNameInput.getText().toString().trim();
                     if (!newSetName.isEmpty()) {
-                        FlashcardSet newFlashcardSet = new FlashcardSet(newSetName);
+                        FlashcardSet newFlashcardSet = new FlashcardSet(username, newSetName);
                         flashcardSetManager.insertFlashcardSet(newFlashcardSet);
                         loadFlashcardSets(); // Refresh the list of Flashcard Sets
                     } else {

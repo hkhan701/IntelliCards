@@ -32,24 +32,6 @@ public class UserPersistenceHSQLDB implements UserPersistence {
     }
 
     @Override
-    public User getUser(String uuid) {
-        try (final Connection c = connection()) {
-            final Statement st = c.createStatement();
-            final ResultSet rs = st.executeQuery("SELECT * FROM users WHERE userId = '" + uuid + "'");
-            final User user = fromResultSet(rs);
-
-            rs.close();
-            st.close();
-
-            return user;
-        }
-        catch (final SQLException e) {
-            //throw new SQLException(e);
-            return null;
-        }
-    }
-
-    @Override
     public User getUserByUsername(String username) {
         return null;
     }

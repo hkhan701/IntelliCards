@@ -24,7 +24,7 @@ public class FlashcardSetPersistenceHSQLDB implements FlashcardSetPersistence {
     private FlashcardSet fromResultSet(final ResultSet rs) throws SQLException {
         final String setName = rs.getString("setName");
 
-        return new FlashcardSet(setName);
+        return new FlashcardSet("", setName);
     }
 
     @Override

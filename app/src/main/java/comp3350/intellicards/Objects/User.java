@@ -1,15 +1,15 @@
 package comp3350.intellicards.Objects;
 
+import androidx.annotation.NonNull;
+
 import java.util.UUID;
 
 public class User {
 
-    private final String uuid;
     private String username;
     private String password;
 
-    public User(String username, String password) {
-        this.uuid = UUID.randomUUID().toString();
+    public User(@NonNull String username, @NonNull String password) {
         this.username = username;
         this.password = password;
     }
@@ -25,8 +25,5 @@ public class User {
     }
     public String getPassword() {
         return this.password;
-    }
-    public String getUUID() {
-        return this.uuid;
     }
 }

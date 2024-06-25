@@ -2,6 +2,7 @@ package comp3350.intellicards.Business;
 
 import java.util.List;
 
+import comp3350.intellicards.Application.Services;
 import comp3350.intellicards.Objects.User;
 import comp3350.intellicards.Persistence.UserPersistence;
 import comp3350.intellicards.Persistence.stubs.UserPersistenceStub;
@@ -10,7 +11,7 @@ public class UserManager {
     private UserPersistence userPersistence;
 
     public UserManager() {
-        userPersistence = new UserPersistenceStub();
+        userPersistence = Services.getUserPersistence();
     }
 
     //
@@ -32,8 +33,8 @@ public class UserManager {
     }
 
 
-    public User getUser(String uuid) {
-        return userPersistence.getUser(uuid);
+    public User getUser(String username) {
+        return userPersistence.getUserByUsername(username);
     }
 
     public void addUser(User user) {

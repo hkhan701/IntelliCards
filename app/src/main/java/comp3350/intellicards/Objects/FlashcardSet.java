@@ -9,23 +9,21 @@ import java.util.UUID;
 
 public class FlashcardSet {
     private final String uuid;
+    private final String username;
     private String flashcardSetName;
     private List<Flashcard> flashcards;
 
-    public FlashcardSet() {
+    public FlashcardSet(@NonNull String username, @NonNull String name) {
         this.uuid = UUID.randomUUID().toString();
+        this.username = username;
+        this.flashcardSetName = name;
         this.flashcards = new ArrayList<>();
     }
 
-    public FlashcardSet(String name) {
-        this();
-        this.flashcardSetName = name;
-
-    }
-
     // Constructor with custom UUID
-    public FlashcardSet(String uuid, String name) {
+    public FlashcardSet(@NonNull String uuid, @NonNull String username, @NonNull String name) {
         this.uuid = uuid;
+        this.username = username;
         this.flashcardSetName = name;
         this.flashcards = new ArrayList<>();
     }
@@ -70,6 +68,10 @@ public class FlashcardSet {
         return flashcards.size();
     }
 
+    public String getUsername() {
+        return this.username;
+    }
+
     // Return the number of active flashcards in this set
     public int getActiveCount() {
         return getActiveFlashcards().size();
@@ -82,7 +84,6 @@ public class FlashcardSet {
             Collections.shuffle(flashcards);
         }
     }
-
 
     @NonNull
     @Override

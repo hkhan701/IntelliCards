@@ -18,21 +18,24 @@ public class Services {
 
     public static synchronized FlashcardPersistence getFlashcardPersistence() {
         if (flashcardPersistence == null) {
-            flashcardPersistence = new FlashcardPersistenceHSQLDB(Main.getDBPathName());
+            //flashcardPersistence = new FlashcardPersistenceHSQLDB(Main.getDBPathName());
+            flashcardPersistence = new FlashcardPersistenceStub();
         }
         return flashcardPersistence;
     }
 
     public static synchronized FlashcardSetPersistence getFlashcardSetPersistence() {
         if (flashcardSetPersistence == null) {
-            flashcardSetPersistence = new FlashcardSetPersistenceHSQLDB(Main.getDBPathName());
+            //flashcardSetPersistence = new FlashcardSetPersistenceHSQLDB(Main.getDBPathName());
+            flashcardSetPersistence = new FlashcardSetPersistenceStub();
         }
         return flashcardSetPersistence;
     }
 
     public static synchronized UserPersistence getUserPersistence() {
         if (userPersistence == null) {
-            userPersistence = new UserPersistenceHSQLDB(Main.getDBPathName());
+            //userPersistence = new UserPersistenceHSQLDB(Main.getDBPathName());
+            userPersistence = new UserPersistenceStub();
         }
         return userPersistence;
     }
