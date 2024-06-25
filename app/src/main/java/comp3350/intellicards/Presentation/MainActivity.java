@@ -62,6 +62,7 @@ public class MainActivity extends Activity {
     private void openFlashcardSetActivity(String flashcardSetUUID) {
         Intent intent = new Intent(MainActivity.this, FlashcardSetActivity.class);
         intent.putExtra("flashcardSetUUID", flashcardSetUUID);
+        intent.putExtra("username", username); // Pass the username to FlashcardSetActivity
         startActivity(intent);
     }
 
