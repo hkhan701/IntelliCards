@@ -27,27 +27,26 @@ public class FlashcardPersistenceStub implements FlashcardPersistence {
         Flashcard flashcard8 = new Flashcard("2", "The speed of light is approximately 299,792,458 meters per second.", "What is the speed of light?", "");
         Flashcard flashcard9 = new Flashcard("2", "The human body has 206 bones.", "How many bones does the human body have?", "");
 
-        // Add flashcards to persistence
-//        flashcards.put(flashcard1.getSetID(), flashcard1);
-//        flashcards.put(flashcard2.getSetID(), flashcard2);
-//        flashcards.put(flashcard3.getSetID(), flashcard3);
-//        flashcards.put(flashcard4.getSetID(), flashcard4);
-//        flashcards.put(flashcard5.getSetID(), flashcard5);
-//        flashcards.put(flashcard6.getSetID(), flashcard6);
-//        flashcards.put(flashcard7.getSetID(), flashcard7);
-//        flashcards.put(flashcard8.getSetID(), flashcard8);
-//        flashcards.put(flashcard9.getSetID(), flashcard9);
+        //Add flashcards to persistence
+        flashcards.put(flashcard1.getUUID(), flashcard1);
+        flashcards.put(flashcard2.getUUID(), flashcard2);
+        flashcards.put(flashcard3.getUUID(), flashcard3);
+        flashcards.put(flashcard4.getUUID(), flashcard4);
+        flashcards.put(flashcard5.getUUID(), flashcard5);
+        flashcards.put(flashcard6.getUUID(), flashcard6);
+        flashcards.put(flashcard7.getUUID(), flashcard7);
+        flashcards.put(flashcard8.getUUID(), flashcard8);
+        flashcards.put(flashcard9.getUUID(), flashcard9);
 
         flashcardSetManager.addFlashcardToFlashcardSet("0", flashcard1);
         flashcardSetManager.addFlashcardToFlashcardSet("0", flashcard2);
         flashcardSetManager.addFlashcardToFlashcardSet("0", flashcard3);
-
-        flashcardSetManager.addFlashcardToFlashcardSet("1", flashcard4);
+        flashcardSetManager.addFlashcardToFlashcardSet("0", flashcard4);
         flashcardSetManager.addFlashcardToFlashcardSet("1", flashcard5);
         flashcardSetManager.addFlashcardToFlashcardSet("1", flashcard6);
-        flashcardSetManager.addFlashcardToFlashcardSet("1", flashcard7);
-        flashcardSetManager.addFlashcardToFlashcardSet("1", flashcard8);
-        flashcardSetManager.addFlashcardToFlashcardSet("1", flashcard9);
+        flashcardSetManager.addFlashcardToFlashcardSet("2", flashcard7);
+        flashcardSetManager.addFlashcardToFlashcardSet("2", flashcard8);
+        flashcardSetManager.addFlashcardToFlashcardSet("2", flashcard9);
 
     }
 

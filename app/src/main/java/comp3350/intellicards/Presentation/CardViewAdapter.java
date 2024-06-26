@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import comp3350.intellicards.Business.FlashcardManager;
 import comp3350.intellicards.Objects.Flashcard;
 import comp3350.intellicards.Objects.FlashcardSet;
 import comp3350.intellicards.Presentation.Utils.FlashcardUtils;
@@ -50,10 +51,13 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.Flashc
         private final Button flipButton;
         private boolean isFrontVisible = true; // Default to showing the front of the card
         private FlashcardSet flashcardSet;
+        private FlashcardManager flashcardManager;
 
         public FlashcardViewHolder(View itemView, FlashcardSet flashcardSet) {
             super(itemView);
             this.flashcardSet = flashcardSet;
+            this.flashcardManager = new FlashcardManager();
+
             flashcardTextView = itemView.findViewById(R.id.flashcardTextRecycle);
             deleteButton = itemView.findViewById(R.id.deleteButton);
             editButton = itemView.findViewById(R.id.editButton);
@@ -77,7 +81,7 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.Flashc
 
         private void deleteFlashcard() {
             Flashcard flashcardToDelete = flashcardSet.getFlashcardById((String) deleteButton.getTag());
-            flashcardToDelete.markDeleted();
+            flashcardManager.markFlashcardAsDeleted(flashcardToDelete.getUUID());
 
             ViewGroup parentView = (ViewGroup) flashcardTextView.getParent();
             parentView.removeView(flashcardTextView);

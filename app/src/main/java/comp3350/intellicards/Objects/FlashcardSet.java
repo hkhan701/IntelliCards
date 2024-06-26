@@ -34,7 +34,6 @@ public class FlashcardSet {
 
     public void addFlashcard(@NonNull Flashcard flashcard) {
         flashcards.add(flashcard);
-        System.out.println(flashcards);
     }
 
     // Return a flashcard set that contains only the active flashcards
