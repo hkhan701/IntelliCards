@@ -26,6 +26,10 @@ public class FlashcardSetManager {
         return this.flashcardSetPersistence.getActiveFlashcardSet(uuid);
     }
 
+    public FlashcardSet getDeletedFlashcardSet(String uuid) {
+        return this.flashcardSetPersistence.getDeletedFlashcardSet(uuid);
+    }
+
     public List<FlashcardSet> getAllFlashcardSets() {
         return this.flashcardSetPersistence.getAllFlashcardSets();
     }

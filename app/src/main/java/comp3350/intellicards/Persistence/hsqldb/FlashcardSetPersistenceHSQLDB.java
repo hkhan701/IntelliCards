@@ -38,6 +38,9 @@ public class FlashcardSetPersistenceHSQLDB implements FlashcardSetPersistence {
     }
 
     @Override
+    public FlashcardSet getDeletedFlashcardSet(String uuid) { return null; }
+
+    @Override
     public List<FlashcardSet> getAllFlashcardSets() {
         return null;
     }
