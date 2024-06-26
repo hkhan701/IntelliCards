@@ -23,6 +23,7 @@ public class RecoverFlashcardsActivity extends Activity {
         FlashcardManager flashcardManager = new FlashcardManager();
 
         // Retrieve deleted flashcards
+
         List<Flashcard> deletedFlashcards = flashcardManager.getAllDeletedFlashcards();
 
         // Print the recovered list on the UI
