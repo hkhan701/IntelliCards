@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 
 import java.util.List;
 
+import comp3350.intellicards.Application.UserSession;
 import comp3350.intellicards.Objects.FlashcardSet;
 import comp3350.intellicards.Business.FlashcardManager;
 import comp3350.intellicards.Business.FlashcardSetManager;
@@ -27,7 +28,8 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        username = getIntent().getStringExtra("username"); // Get the username from the intent
+        username = UserSession.getInstance().getUsername(); // Get the username from the UserSession singleton
+
         initializePersistence();
         setupButtons();
     }
@@ -58,9 +60,7 @@ public class MainActivity extends Activity {
 
     private void openFlashcardSetActivity(String flashcardSetUUID) {
         Intent intent = new Intent(MainActivity.this, FlashcardSetActivity.class);
-        intent.putExtra("username", username);
         intent.putExtra("flashcardSetUUID", flashcardSetUUID);
-        intent.putExtra("username", username); // Pass the username to FlashcardSetActivity
         startActivity(intent);
     }
 
@@ -97,7 +97,6 @@ public class MainActivity extends Activity {
 
     private void openProfileActivity() {
         Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
-        intent.putExtra("username", username); // Pass the username to the profile page
         startActivity(intent);
     }
 

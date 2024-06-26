@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
+import comp3350.intellicards.Application.UserSession;
 import comp3350.intellicards.Objects.User;
 import comp3350.intellicards.Business.UserManager;
 import comp3350.intellicards.R;
@@ -69,7 +70,8 @@ public class AuthActivity extends Activity {
                 User user = userManager.loginUser(username, password);
                 if (user != null) {
                     Toast.makeText(this, "Log in successful!", Toast.LENGTH_LONG).show();
-                    navigateToMainActivity(user.getUsername());
+                    UserSession.getInstance().setUsername(user.getUsername());
+                    navigateToMainActivity();
                 } else {
                     Toast.makeText(this, "Invalid login information! Please try again.", Toast.LENGTH_LONG).show();
                 }
@@ -80,7 +82,10 @@ public class AuthActivity extends Activity {
     }
 
     private void setUpGuestButtonListener() {
-        guestButton.setOnClickListener(v -> navigateToMainActivity("guest"));
+        guestButton.setOnClickListener(v -> {
+            UserSession.getInstance().setUsername("guest");
+            navigateToMainActivity();
+        });
     }
 
     private boolean verifyInput() {
@@ -89,10 +94,8 @@ public class AuthActivity extends Activity {
         return !username.isEmpty() && !password.isEmpty();
     }
 
-    private void navigateToMainActivity(String username) {
+    private void navigateToMainActivity() {
         Intent intent = new Intent(AuthActivity.this, MainActivity.class);
-        // Adding the username to the intent will allow us to determine which features they can use
-        intent.putExtra("username", username);
         startActivity(intent);
         finish();
     }

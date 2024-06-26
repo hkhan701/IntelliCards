@@ -1,11 +1,8 @@
 package comp3350.intellicards.Business;
 
-import java.util.List;
-
 import comp3350.intellicards.Application.Services;
 import comp3350.intellicards.Objects.User;
 import comp3350.intellicards.Persistence.UserPersistence;
-import comp3350.intellicards.Persistence.stubs.UserPersistenceStub;
 
 public class UserManager {
     private UserPersistence userPersistence;
@@ -15,7 +12,7 @@ public class UserManager {
     }
 
     public boolean registerUser(String username, String password) {
-        if (userPersistence.getUserByUsername(username) != null) {
+        if (userPersistence.getUserByUsername(username) != null || username.equals("guest")) {
             return false; // Username already exists Should throw some sort of exception in future
         }
         userPersistence.addUser(new User(username, password));

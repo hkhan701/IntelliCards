@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
 
+import comp3350.intellicards.Application.UserSession;
 import comp3350.intellicards.R;
 
 public class ProfileActivity extends Activity {
@@ -17,7 +18,7 @@ public class ProfileActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        username = getIntent().getStringExtra("username"); // Get the username from the intent
+        username = UserSession.getInstance().getUsername(); // Get the username from the UserSession singleton
         setupBackButton();
         setupRecoveryButton();
         populateUsername();
@@ -27,7 +28,6 @@ public class ProfileActivity extends Activity {
         Button backButton = findViewById(R.id.backButton);
         backButton.setOnClickListener(v -> {
             Intent intent = new Intent(ProfileActivity.this, MainActivity.class);
-            intent.putExtra("username", username);
             startActivity(intent);
         });
     }
