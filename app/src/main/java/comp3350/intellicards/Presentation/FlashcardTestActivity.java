@@ -207,12 +207,12 @@ public class FlashcardTestActivity extends Activity {
                 {
                     if (correctBox.isChecked())
                     {
-                        flashcardManager.markAttemptedAndCorrect(flashcard);
+                        flashcardManager.markAttemptedAndCorrect(flashcard.getUUID());
                         correct++;
                         attempted++;
                     } else
                     {
-                        flashcardManager.markAttempted(flashcard);
+                        flashcardManager.markAttempted(flashcard.getUUID());
                         attempted++;
                     }
 

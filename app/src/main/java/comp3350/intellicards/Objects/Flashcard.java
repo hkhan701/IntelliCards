@@ -54,7 +54,7 @@ public class Flashcard {
         return this.hint;
     }
 
-    public String getSetID() {
+    public String getSetUUID() {
         return this.setUUID;
     }
 
