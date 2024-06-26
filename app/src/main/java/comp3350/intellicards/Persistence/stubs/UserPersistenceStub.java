@@ -37,7 +37,7 @@ public class UserPersistenceStub implements UserPersistence{
     }
 
     @Override
-    public void deleteUser(User user) {
-        users.removeIf(u -> u.getUsername().equals(user.getUsername()));
+    public void deleteUser(String username) {
+        users.removeIf(u -> u.getUsername().equals(username));
     }
 }

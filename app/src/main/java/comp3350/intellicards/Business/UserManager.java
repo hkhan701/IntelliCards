@@ -27,7 +27,7 @@ public class UserManager {
         return null;
     }
 
-    public void deleteUser(User user) {
-        userPersistence.deleteUser(user);
+    public void deleteUser(String username) {
+        userPersistence.deleteUser(username);
     }
 }
