@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 import java.util.List;
 
 import comp3350.intellicards.Objects.FlashcardSet;
+import comp3350.intellicards.Business.FlashcardManager;
 import comp3350.intellicards.Business.FlashcardSetManager;
 import comp3350.intellicards.R;
 
@@ -33,6 +34,8 @@ public class MainActivity extends Activity {
 
     private void initializePersistence() {
         flashcardSetManager = new FlashcardSetManager();
+        FlashcardManager flashcardManager = new FlashcardManager();
+
         gridLayout = findViewById(R.id.gridLayout);
         loadFlashcardSets();
     }
@@ -45,7 +48,6 @@ public class MainActivity extends Activity {
         for (FlashcardSet set : flashcardSets) {
             Button flashcardSetButton = new Button(this);
             String title = set.getFlashcardSetName() + " (" + set.getActiveCount() + ") ";
-            System.out.println(set);
             flashcardSetButton.setText(title);
             flashcardSetButton.setLayoutParams(new GridLayout.LayoutParams(GridLayout.spec(GridLayout.UNDEFINED, 1f), GridLayout.spec(GridLayout.UNDEFINED, 1f)));
             flashcardSetButton.setPadding(16, 16, 16, 16);
@@ -70,6 +72,7 @@ public class MainActivity extends Activity {
                 .setPositiveButton("Create", (dialog, whichButton) -> {
                     String newSetName = newSetNameInput.getText().toString().trim();
                     if (!newSetName.isEmpty()) {
+
                         FlashcardSet newFlashcardSet = new FlashcardSet(username, newSetName);
                         flashcardSetManager.insertFlashcardSet(newFlashcardSet);
                         loadFlashcardSets(); // Refresh the list of Flashcard Sets
