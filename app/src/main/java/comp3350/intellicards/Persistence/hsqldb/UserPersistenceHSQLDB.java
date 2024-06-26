@@ -5,9 +5,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
 
 import comp3350.intellicards.Objects.User;
 import comp3350.intellicards.Persistence.UserPersistence;
@@ -48,6 +45,7 @@ public class UserPersistenceHSQLDB implements UserPersistence {
             //throw new PersistenceException(e);
         }
 
+        //Delete this return statement after implementing exception
         return null;
     }
 
