@@ -12,8 +12,8 @@ import androidx.annotation.Nullable;
 import java.util.List;
 
 import comp3350.intellicards.Objects.FlashcardSet;
+import comp3350.intellicards.Business.FlashcardManager;
 import comp3350.intellicards.Business.FlashcardSetManager;
-import comp3350.intellicards.Business.StubManager;
 import comp3350.intellicards.R;
 
 public class MainActivity extends Activity {
@@ -33,13 +33,10 @@ public class MainActivity extends Activity {
     }
 
     private void initializePersistence() {
-        if (!StubManager.isInitialized()) {
-            StubManager.initializeStubData();
-        }
+        flashcardSetManager = new FlashcardSetManager();
+        FlashcardManager flashcardManager = new FlashcardManager();
 
-        flashcardSetManager = new FlashcardSetManager(StubManager.getFlashcardSetPersistence());
         gridLayout = findViewById(R.id.gridLayout);
-
         loadFlashcardSets();
     }
 
@@ -47,10 +44,10 @@ public class MainActivity extends Activity {
     private void loadFlashcardSets() {
         gridLayout.removeAllViews();
 
-        List<FlashcardSet> flashcardSets = flashcardSetManager.getAllFlashcardSets();
+        List<FlashcardSet> flashcardSets = flashcardSetManager.getFlashcardSetsByUsername(username);
         for (FlashcardSet set : flashcardSets) {
             Button flashcardSetButton = new Button(this);
-            String title = set.getFlashcardSetName() + " (" + set.getActiveCount() + ")";
+            String title = set.getFlashcardSetName() + " (" + set.getActiveCount() + ") ";
             flashcardSetButton.setText(title);
             flashcardSetButton.setLayoutParams(new GridLayout.LayoutParams(GridLayout.spec(GridLayout.UNDEFINED, 1f), GridLayout.spec(GridLayout.UNDEFINED, 1f)));
             flashcardSetButton.setPadding(16, 16, 16, 16);
@@ -61,6 +58,7 @@ public class MainActivity extends Activity {
 
     private void openFlashcardSetActivity(String flashcardSetUUID) {
         Intent intent = new Intent(MainActivity.this, FlashcardSetActivity.class);
+        intent.putExtra("username", username);
         intent.putExtra("flashcardSetUUID", flashcardSetUUID);
         intent.putExtra("username", username); // Pass the username to FlashcardSetActivity
         startActivity(intent);
@@ -75,7 +73,8 @@ public class MainActivity extends Activity {
                 .setPositiveButton("Create", (dialog, whichButton) -> {
                     String newSetName = newSetNameInput.getText().toString().trim();
                     if (!newSetName.isEmpty()) {
-                        FlashcardSet newFlashcardSet = new FlashcardSet(newSetName);
+
+                        FlashcardSet newFlashcardSet = new FlashcardSet(username, newSetName);
                         flashcardSetManager.insertFlashcardSet(newFlashcardSet);
                         loadFlashcardSets(); // Refresh the list of Flashcard Sets
                     } else {

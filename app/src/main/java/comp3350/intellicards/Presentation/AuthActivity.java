@@ -80,7 +80,7 @@ public class AuthActivity extends Activity {
     }
 
     private void setUpGuestButtonListener() {
-        guestButton.setOnClickListener(v -> navigateToMainActivity(null));
+        guestButton.setOnClickListener(v -> navigateToMainActivity("guest"));
     }
 
     private boolean verifyInput() {

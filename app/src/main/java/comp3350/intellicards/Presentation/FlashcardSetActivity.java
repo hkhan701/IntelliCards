@@ -15,16 +15,14 @@ import comp3350.intellicards.Business.FlashcardManager;
 import comp3350.intellicards.Objects.Flashcard;
 import comp3350.intellicards.Objects.FlashcardSet;
 import comp3350.intellicards.Business.FlashcardSetManager;
-import comp3350.intellicards.Business.StubManager;
 import comp3350.intellicards.R;
 
 public class FlashcardSetActivity extends Activity {
 
     private RecyclerView flashcardsRecyclerView;
-    private FlashcardSetManager flashcardSetManager = new FlashcardSetManager(StubManager.getFlashcardSetPersistence());
-    private FlashcardManager flashcardManager = new FlashcardManager(StubManager.getFlashcardPersistence());
+    private FlashcardSetManager flashcardSetManager = new FlashcardSetManager();
+    private FlashcardManager flashcardManager = new FlashcardManager();
     private String username;
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -72,6 +70,7 @@ public class FlashcardSetActivity extends Activity {
         Button backButton = findViewById(R.id.backButton);
         backButton.setOnClickListener(v -> {
             Intent intent = new Intent(FlashcardSetActivity.this, MainActivity.class);
+            intent.putExtra("username", username);
             startActivity(intent);
         });
     }
@@ -79,7 +78,7 @@ public class FlashcardSetActivity extends Activity {
     private void setUpTestButton(String flashcardSetUUID) {
         Button testButton = findViewById(R.id.testButton);
         testButton.setOnClickListener(v -> {
-            if (username == null) {
+            if (username.equals("guest")) {
                 // Show a Toast message if the user is a guest
                 Toast.makeText(FlashcardSetActivity.this, "Guests cannot take tests. Please log in.", Toast.LENGTH_SHORT).show();
             } else {
@@ -90,6 +89,7 @@ public class FlashcardSetActivity extends Activity {
             }
         });
     }
+
 
 
     @Override

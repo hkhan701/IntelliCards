@@ -7,9 +7,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import comp3350.intellicards.Application.Services;
 import comp3350.intellicards.Business.FlashcardManager;
 import comp3350.intellicards.Business.FlashcardSetManager;
-import comp3350.intellicards.Business.StubManager;
 import comp3350.intellicards.Objects.Flashcard;
 import comp3350.intellicards.Objects.FlashcardSet;
 import comp3350.intellicards.R;
@@ -24,6 +24,7 @@ public class CreateFlashcardActivity extends Activity {
     private Button submitButton;
     private Button cancelButton;
     private FlashcardSet currentFlashcardSet;
+    private String flashcardSetUUID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +37,8 @@ public class CreateFlashcardActivity extends Activity {
     }
 
     private void initializeManagers() {
-        flashcardSetManager = new FlashcardSetManager(StubManager.getFlashcardSetPersistence());
-        flashcardManager = new FlashcardManager(StubManager.getFlashcardPersistence());
+        flashcardSetManager = new FlashcardSetManager();
+        flashcardManager = new FlashcardManager();
     }
 
     private void initializeViews() {
@@ -48,7 +49,7 @@ public class CreateFlashcardActivity extends Activity {
         cancelButton = findViewById(R.id.cancelButton);
 
         // Get the flashcard set UUID from the intent and fetch the corresponding FlashcardSet
-        String flashcardSetUUID = getIntent().getStringExtra("flashcardSetUUID");
+        flashcardSetUUID = getIntent().getStringExtra("flashcardSetUUID");
         currentFlashcardSet = flashcardSetManager.getFlashcardSet(flashcardSetUUID);
     }
 
@@ -80,12 +81,12 @@ public class CreateFlashcardActivity extends Activity {
             return null;
         }
 
-        return new Flashcard(answer, question, hint);
+        return new Flashcard(flashcardSetUUID, answer, question, hint);
     }
 
     private void addFlashcardToSet(Flashcard flashcard) {
         flashcardManager.insertFlashcard(flashcard);
-        flashcardSetManager.addFlashcardToFlashcardSet(currentFlashcardSet, flashcard);
+        flashcardSetManager.addFlashcardToFlashcardSet(currentFlashcardSet.getUUID(), flashcard);
     }
 
     private void clearInputFields() {

@@ -7,17 +7,29 @@ import java.util.UUID;
 public class Flashcard {
 
     private final String uuid;
+    private final String setUUID;
     private String answer;
     private String question;
     private String hint;
     private boolean deleted;
-
     private int attempted;
     private int correct;
 
     // Private constructor used internally to ensure UUID is always set
-    public Flashcard(@NonNull String answer, @NonNull String question, String hint) {
+    public Flashcard(@NonNull String setUUID, @NonNull String answer, @NonNull String question, String hint) {
         this.uuid = UUID.randomUUID().toString();
+        this.setUUID = setUUID;
+        this.answer = answer;
+        this.question = question;
+        this.hint = hint;
+        this.deleted = false;
+        this.attempted = 0;
+        this.correct = 0;
+    }
+
+    public Flashcard(@NonNull String uuid, @NonNull String setUUID, @NonNull String answer, @NonNull String question, String hint) {
+        this.uuid = uuid;
+        this.setUUID = setUUID;
         this.answer = answer;
         this.question = question;
         this.hint = hint;
@@ -27,21 +39,28 @@ public class Flashcard {
     }
 
     public String getUUID() {
-        return uuid;
+        return this.uuid;
     }
 
-
     public String getAnswer() {
-        return answer;
+        return this.answer;
     }
 
     public String getQuestion() {
-        return question;
+        return this.question;
     }
 
     public String getHint() {
-        return hint;
+        return this.hint;
     }
+
+    public String getSetID() {
+        return this.setUUID;
+    }
+
+    public int getAttempted() { return attempted; }
+
+    public int getCorrect() { return correct; }
 
     public void setAnswer(@NonNull String answer) {
         this.answer = answer;
@@ -70,10 +89,6 @@ public class Flashcard {
     public void markAttempted() { attempted++;}
 
     public void markAttemptedAndCorrect() { correct++; attempted++;}
-
-    public int getAttempted() { return attempted; }
-
-    public int getCorrect() { return correct; }
 
     @NonNull
     @Override

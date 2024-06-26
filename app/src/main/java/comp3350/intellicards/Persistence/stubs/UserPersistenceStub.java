@@ -12,21 +12,13 @@ public class UserPersistenceStub implements UserPersistence{
     public UserPersistenceStub() {
         users = new ArrayList<User>();
 
-        users.add(new User("user1", "password1"));
-        users.add(new User("user2", "password2"));
-        users.add(new User("user3", "password3"));
-        users.add(new User("user4", "password4"));
-        users.add(new User("user5", "password5"));
-    }
+        User user1 = new User("user1", "password1");
+        User user2 = new User("user2", "password2");
+        User user3 = new User("user3", "password3");
 
-    @Override
-    public User getUser(String uuid) {
-        for (User user : users) {
-            if (user.getUUID().equals(uuid)) {
-                return user;
-            }
-        }
-        return null;
+        users.add(user1);
+        users.add(user2);
+        users.add(user3);
     }
 
     @Override
@@ -45,17 +37,7 @@ public class UserPersistenceStub implements UserPersistence{
     }
 
     @Override
-    public void updateUser(User user) {
-        for(User u : users) {
-            if(u.getUUID().equals(user.getUUID())) {
-                u.setUsername(user.getUsername());
-                u.setPassword(user.getPassword());
-            }
-        }
-    }
-
-    @Override
     public void deleteUser(User user) {
-        users.removeIf(u -> u.getUUID().equals(user.getUUID()));
+        users.removeIf(u -> u.getUsername().equals(user.getUsername()));
     }
 }

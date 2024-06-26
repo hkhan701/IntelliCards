@@ -18,14 +18,13 @@ import comp3350.intellicards.Business.ReportCalculator;
 import comp3350.intellicards.Objects.Flashcard;
 import comp3350.intellicards.Objects.FlashcardSet;
 import comp3350.intellicards.Business.FlashcardSetManager;
-import comp3350.intellicards.Business.StubManager;
 import comp3350.intellicards.Presentation.Utils.FlashcardUtils;
 import comp3350.intellicards.R;
 
 public class FlashcardTestActivity extends Activity {
 
-    private FlashcardSetManager flashcardSetManager = new FlashcardSetManager(StubManager.getFlashcardSetPersistence());
-    private FlashcardManager flashcardManager = new FlashcardManager(StubManager.getFlashcardPersistence());
+    private FlashcardSetManager flashcardSetManager = new FlashcardSetManager();
+    private FlashcardManager flashcardManager = new FlashcardManager();
     private int correct = 0;
     private int attempted = 0;
     ViewFlipper viewFlipper;

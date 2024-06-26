@@ -21,7 +21,7 @@ public class FlashcardSetManagerTest {
 
     @Before
     public void setUp() {
-        flashcardSetManager = new FlashcardSetManager(new FlashcardSetPersistenceStub());
+        flashcardSetManager = new FlashcardSetManager();
     }
 
     /*
@@ -40,7 +40,7 @@ public class FlashcardSetManagerTest {
      */
     @Test
     public void testGetFlashcardSetThatExistsInPersistence() {
-        FlashcardSet flashcardSet = new FlashcardSet("COMP 3350");
+        FlashcardSet flashcardSet = new FlashcardSet("", "COMP 3350");
         String flashcardUUID = flashcardSet.getUUID();
 
         flashcardSetManager.insertFlashcardSet(flashcardSet);
@@ -62,7 +62,7 @@ public class FlashcardSetManagerTest {
      */
     @Test
     public void testGetActiveFlashcardSet() {
-        FlashcardSet flashcardSet = new FlashcardSet("COMP 3350");
+        FlashcardSet flashcardSet = new FlashcardSet("", "COMP 3350");
         Flashcard flashcard1 = new Flashcard("Answer1", "Question1", "Hint1");
         Flashcard flashcard2 = new Flashcard("Answer2", "Question2", "Hint2");
 
@@ -84,7 +84,7 @@ public class FlashcardSetManagerTest {
      */
     @Test
     public void testAddFlashcardToExistingFlashcardSet() {
-        FlashcardSet flashcardSet = new FlashcardSet("COMP 3350");
+        FlashcardSet flashcardSet = new FlashcardSet("","COMP 3350");
         Flashcard flashcard = new Flashcard("Analysis/Requirements", "What is the first stage of the software development lifecycle?", null);
         String flashcardSetUUID = flashcardSet.getUUID();
 
@@ -97,7 +97,7 @@ public class FlashcardSetManagerTest {
 
     @Test
     public void testAddFlashcardToNonExistingFlashcardSet() {
-        FlashcardSet flashcardSet = new FlashcardSet("COMP 3350");
+        FlashcardSet flashcardSet = new FlashcardSet("", "COMP 3350");
         Flashcard flashcard = new Flashcard("Analysis/Requirements", "What is the first stage of the software development lifecycle?", null);
 
         assertFalse("You cannot add a flashcard to flashcard set via the flashcardSetManager if the flashcard set is not managed",
@@ -109,9 +109,9 @@ public class FlashcardSetManagerTest {
      */
     @Test
     public void testGetAllFlashcardSets() {
-        FlashcardSet flashcardSet1 = new FlashcardSet("COMP 3350");
-        FlashcardSet flashcardSet2 = new FlashcardSet("COMP 4620");
-        FlashcardSet flashcardSet3 = new FlashcardSet("COMP 3010");
+        FlashcardSet flashcardSet1 = new FlashcardSet("", "COMP 3350");
+        FlashcardSet flashcardSet2 = new FlashcardSet("", "COMP 4620");
+        FlashcardSet flashcardSet3 = new FlashcardSet("", "COMP 3010");
 
         flashcardSetManager.insertFlashcardSet(flashcardSet1);
         flashcardSetManager.insertFlashcardSet(flashcardSet2);
