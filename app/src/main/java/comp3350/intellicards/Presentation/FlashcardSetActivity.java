@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import comp3350.intellicards.Application.UserSession;
 import comp3350.intellicards.Business.FlashcardManager;
 import comp3350.intellicards.Objects.Flashcard;
 import comp3350.intellicards.Objects.FlashcardSet;
@@ -28,9 +29,10 @@ public class FlashcardSetActivity extends Activity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_flashcard_set);
+
         // Get the flashcard set UUID and username from the intent
         String flashcardSetUUID = getIntent().getStringExtra("flashcardSetUUID");
-        username = getIntent().getStringExtra("username");
+        username = UserSession.getInstance().getUsername(); // Get the username from the UserSession singleton;
 
         setUpFlashcardRecycler(flashcardSetUUID);
         setUpBackButton();
@@ -70,7 +72,6 @@ public class FlashcardSetActivity extends Activity {
         Button backButton = findViewById(R.id.backButton);
         backButton.setOnClickListener(v -> {
             Intent intent = new Intent(FlashcardSetActivity.this, MainActivity.class);
-            intent.putExtra("username", username);
             startActivity(intent);
         });
     }
