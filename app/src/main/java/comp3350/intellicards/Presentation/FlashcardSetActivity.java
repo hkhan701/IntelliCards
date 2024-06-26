@@ -28,7 +28,7 @@ public class FlashcardSetActivity extends Activity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_flashcard_set);
-        // Get the flashcard set UUID from the intent
+        // Get the flashcard set UUID and username from the intent
         String flashcardSetUUID = getIntent().getStringExtra("flashcardSetUUID");
         username = getIntent().getStringExtra("username");
 
@@ -36,8 +36,6 @@ public class FlashcardSetActivity extends Activity {
         setUpBackButton();
         setUpAddFlashcardButton(flashcardSetUUID);
         setUpTestButton(flashcardSetUUID);
-
-
     }
 
     private void setUpFlashcardRecycler(String flashcardSetUUID)
