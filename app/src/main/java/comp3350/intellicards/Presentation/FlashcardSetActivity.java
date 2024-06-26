@@ -72,6 +72,7 @@ public class FlashcardSetActivity extends Activity {
         Button backButton = findViewById(R.id.backButton);
         backButton.setOnClickListener(v -> {
             Intent intent = new Intent(FlashcardSetActivity.this, MainActivity.class);
+            intent.putExtra("username", username);
             startActivity(intent);
         });
     }
@@ -79,7 +80,7 @@ public class FlashcardSetActivity extends Activity {
     private void setUpTestButton(String flashcardSetUUID) {
         Button testButton = findViewById(R.id.testButton);
         testButton.setOnClickListener(v -> {
-            if (username == null) {
+            if (username.equals("guest")) {
                 // Show a Toast message if the user is a guest
                 Toast.makeText(FlashcardSetActivity.this, "Guests cannot take tests. Please log in.", Toast.LENGTH_SHORT).show();
             } else {
