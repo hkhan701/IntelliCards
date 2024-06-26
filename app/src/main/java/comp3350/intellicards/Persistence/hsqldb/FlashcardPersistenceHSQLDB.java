@@ -21,12 +21,12 @@ public class FlashcardPersistenceHSQLDB implements FlashcardPersistence {
     }
 
     private Flashcard fromResultSet(final ResultSet rs) throws SQLException {
-        final String setID = rs.getString("setID");
+        final String setUUID = rs.getString("setUUID");
         final String answer = rs.getString("answer");
         final String question = rs.getString("question");
         final String hint = rs.getString("hint");
 
-        return new Flashcard(setID, answer, question, hint);
+        return new Flashcard(setUUID, answer, question, hint);
     }
 
     @Override
