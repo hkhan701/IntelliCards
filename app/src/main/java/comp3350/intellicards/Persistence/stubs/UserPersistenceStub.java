@@ -37,16 +37,6 @@ public class UserPersistenceStub implements UserPersistence{
     }
 
     @Override
-    public void updateUser(User user) {
-        for(User u : users) {
-            if(u.getUsername().equals(user.getUsername())) {
-                u.setUsername(user.getUsername());
-                u.setPassword(user.getPassword());
-            }
-        }
-    }
-
-    @Override
     public void deleteUser(User user) {
         users.removeIf(u -> u.getUsername().equals(user.getUsername()));
     }

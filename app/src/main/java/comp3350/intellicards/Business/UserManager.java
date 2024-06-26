@@ -14,7 +14,6 @@ public class UserManager {
         userPersistence = Services.getUserPersistence();
     }
 
-    //
     public boolean registerUser(String username, String password) {
         if (userPersistence.getUserByUsername(username) != null) {
             return false; // Username already exists Should throw some sort of exception in future
@@ -23,26 +22,12 @@ public class UserManager {
         return true;
     }
 
-    //
     public User loginUser(String username, String password) {
         User user = userPersistence.getUserByUsername(username);
         if (user != null && user.getPassword().equals(password)) {
             return user;
         }
         return null;
-    }
-
-
-    public User getUser(String username) {
-        return userPersistence.getUserByUsername(username);
-    }
-
-    public void addUser(User user) {
-        userPersistence.addUser(user);
-    }
-
-    public void updateUser(User user) {
-        userPersistence.updateUser(user);
     }
 
     public void deleteUser(User user) {
