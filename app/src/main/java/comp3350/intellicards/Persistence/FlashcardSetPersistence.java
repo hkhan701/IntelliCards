@@ -10,6 +10,8 @@ public interface FlashcardSetPersistence {
 
     FlashcardSet getActiveFlashcardSet(String uuid);
 
+    FlashcardSet getDeletedFlashcardSet(String uuid);
+
     List<FlashcardSet> getAllFlashcardSets();
 
     void insertFlashcardSet(FlashcardSet newFlashcardSet);

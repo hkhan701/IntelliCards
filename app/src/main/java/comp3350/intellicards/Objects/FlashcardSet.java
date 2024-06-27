@@ -47,6 +47,16 @@ public class FlashcardSet {
         return undeletedCards;
     }
 
+    public FlashcardSet getDeletedFlashcards() {
+        FlashcardSet deletedCards = new FlashcardSet(this.uuid, this.username, this.flashcardSetName); // Use the same UUID
+        for (Flashcard card : this.flashcards) {
+            if (card.isDeleted()) {
+                deletedCards.addFlashcard(card);
+            }
+        }
+        return deletedCards;
+    }
+
     public String getFlashcardSetName() {
         return flashcardSetName;
     }
