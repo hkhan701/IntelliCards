@@ -12,30 +12,30 @@ import comp3350.intellicards.Persistence.stubs.UserPersistenceStub;
 
 public class Services {
 
-    private static FlashcardPersistence flashcardPersistence;
-    private static FlashcardSetPersistence flashcardSetPersistence;
-    private static UserPersistence userPersistence;
+    private static FlashcardPersistence flashcardPersistence = null;
+    private static FlashcardSetPersistence flashcardSetPersistence = null;
+    private static UserPersistence userPersistence = null;
 
     public static synchronized FlashcardPersistence getFlashcardPersistence() {
         if (flashcardPersistence == null) {
-            //flashcardPersistence = new FlashcardPersistenceHSQLDB(Main.getDBPathName());
-            flashcardPersistence = new FlashcardPersistenceStub();
+            flashcardPersistence = new FlashcardPersistenceHSQLDB(Main.getDBPathName());
+            //flashcardPersistence = new FlashcardPersistenceStub();
         }
         return flashcardPersistence;
     }
 
     public static synchronized FlashcardSetPersistence getFlashcardSetPersistence() {
         if (flashcardSetPersistence == null) {
-            //flashcardSetPersistence = new FlashcardSetPersistenceHSQLDB(Main.getDBPathName());
-            flashcardSetPersistence = new FlashcardSetPersistenceStub();
+            flashcardSetPersistence = new FlashcardSetPersistenceHSQLDB(Main.getDBPathName());
+            //flashcardSetPersistence = new FlashcardSetPersistenceStub();
         }
         return flashcardSetPersistence;
     }
 
     public static synchronized UserPersistence getUserPersistence() {
         if (userPersistence == null) {
-            //userPersistence = new UserPersistenceHSQLDB(Main.getDBPathName());
-            userPersistence = new UserPersistenceStub();
+            userPersistence = new UserPersistenceHSQLDB(Main.getDBPathName());
+            //userPersistence = new UserPersistenceStub();
         }
         return userPersistence;
     }

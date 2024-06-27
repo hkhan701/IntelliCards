@@ -4,7 +4,7 @@ package comp3350.intellicards.Application;
 
 public class Main
 {
-    private static String dbName="SC";
+    private static String dbName="Intellicards";
 
     public static void main(String[] args)
     {
@@ -22,6 +22,7 @@ public class Main
             e.printStackTrace();
         }
         dbName = name;
+        System.out.println("DB path set to " + dbName);
     }
 
     public static String getDBPathName() {
