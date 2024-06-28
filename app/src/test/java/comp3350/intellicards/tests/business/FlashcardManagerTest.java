@@ -18,7 +18,7 @@ public class FlashcardManagerTest {
 
     @Before
     public void setUp() {
-        flashcardManager = new FlashcardManager(new FlashcardPersistenceStub());
+        flashcardManager = new FlashcardManager();
     }
 
     /*
