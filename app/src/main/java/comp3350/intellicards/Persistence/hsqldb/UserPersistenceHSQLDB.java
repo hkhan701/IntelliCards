@@ -40,7 +40,6 @@ public class UserPersistenceHSQLDB implements UserPersistence {
             rs.close();
             st.close();
 
-            System.out.println(user);
             return user;
         }
         catch (final SQLException e) {
@@ -56,24 +55,16 @@ public class UserPersistenceHSQLDB implements UserPersistence {
 
     @Override
     public void addUser(User user) {
-        System.out.println("Adding user");
         try (final Connection c = connection()) {
-            System.out.println("Got connection");
             final PreparedStatement st = c.prepareStatement("INSERT INTO USERS (USERNAME, PASSWORD) VALUES(?, ?)");
             st.setString(1, user.getUsername());
             st.setString(2, user.getPassword());
 
-            System.out.println("Executing update: " + st.toString());
             st.executeUpdate();
-            System.out.println("Successfully added user!");
         } catch (final SQLException e) {
             e.printStackTrace();
             e.toString();
             System.out.println("Error adding user");
-            //throw new PersistenceException(e);
-        }
-        catch(final Exception e) {
-            System.out.println("SOME ERROR adding user");
             //throw new PersistenceException(e);
         }
     }

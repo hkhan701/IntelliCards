@@ -25,33 +25,22 @@ public class MainActivity extends Activity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        System.out.println("In MainActivity");
         super.onCreate(savedInstanceState);
-        System.out.println("Called super.onCreate");
         setContentView(R.layout.activity_main);
-        System.out.println("Set content view");
-
-        initializePersistence();
-        System.out.println("Initialized persistence");
-        setupButtons();
-        System.out.println("Setup buttons");
 
         username = UserSession.getInstance().getUsername(); // Get the username from the UserSession singleton
-        System.out.println("Set username");
 
+        initializePersistence();
+        setupButtons();
     }
 
     private void initializePersistence() {
-        System.out.println("Initializing persistence");
         flashcardSetManager = new FlashcardSetManager();
-        System.out.println("Initialized flashcardSetManager");
         FlashcardManager flashcardManager = new FlashcardManager();
-        System.out.println("Initialized flashcardManager");
 
         gridLayout = findViewById(R.id.gridLayout);
-        System.out.println("Set gridLayout");
-        //loadFlashcardSets();
-        //System.out.println("Loaded flashcard sets");
+
+        loadFlashcardSets();
     }
 
     // Load all Flashcard Sets from the database
