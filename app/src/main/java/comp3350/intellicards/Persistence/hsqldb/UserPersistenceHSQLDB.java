@@ -30,17 +30,22 @@ public class UserPersistenceHSQLDB implements UserPersistence {
     @Override
     public User getUserByUsername(String username) {
         try (final Connection c = connection()) {
-            final PreparedStatement st = c.prepareStatement("SELECT * FROM USERS WHERE username = ?");
+            final PreparedStatement st = c.prepareStatement("SELECT * FROM USERS WHERE USERNAME = ?");
             st.setString(1, username);
 
             final ResultSet rs = st.executeQuery();
+            //rs.next();
             final User user = fromResultSet(rs);
 
             rs.close();
             st.close();
 
+            System.out.println(user);
             return user;
-        } catch (final SQLException e) {
+        }
+        catch (final SQLException e) {
+            e.printStackTrace();
+            e.toString();
             System.out.println("Error getting user");
             //throw new PersistenceException(e);
         }
@@ -51,14 +56,24 @@ public class UserPersistenceHSQLDB implements UserPersistence {
 
     @Override
     public void addUser(User user) {
+        System.out.println("Adding user");
         try (final Connection c = connection()) {
-            final PreparedStatement st = c.prepareStatement("INSERT INTO USERS VALUES(?, ?)");
+            System.out.println("Got connection");
+            final PreparedStatement st = c.prepareStatement("INSERT INTO USERS (USERNAME, PASSWORD) VALUES(?, ?)");
             st.setString(1, user.getUsername());
             st.setString(2, user.getPassword());
 
+            System.out.println("Executing update: " + st.toString());
             st.executeUpdate();
+            System.out.println("Successfully added user!");
         } catch (final SQLException e) {
+            e.printStackTrace();
+            e.toString();
             System.out.println("Error adding user");
+            //throw new PersistenceException(e);
+        }
+        catch(final Exception e) {
+            System.out.println("SOME ERROR adding user");
             //throw new PersistenceException(e);
         }
     }

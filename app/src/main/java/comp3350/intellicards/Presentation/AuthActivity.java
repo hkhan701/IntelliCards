@@ -80,6 +80,7 @@ public class AuthActivity extends Activity {
                 if (user != null) {
                     Toast.makeText(this, "Log in successful!", Toast.LENGTH_LONG).show();
                     UserSession.getInstance().setUsername(user.getUsername());
+                    System.out.println(UserSession.getInstance().getUsername());
                     navigateToMainActivity();
                 } else {
                     Toast.makeText(this, "Invalid login information! Please try again.", Toast.LENGTH_LONG).show();
@@ -106,7 +107,7 @@ public class AuthActivity extends Activity {
     private void navigateToMainActivity() {
         Intent intent = new Intent(AuthActivity.this, MainActivity.class);
         startActivity(intent);
-        finish();
+        //finish();
     }
 
     private void copyDatabaseToDevice() {
