@@ -21,8 +21,6 @@ public class UserManager {
 
     public User loginUser(String username, String password) {
         User user = userPersistence.getUserByUsername(username);
-        System.out.println(user.getUsername());
-        System.out.println(user.getPassword());
 
         if (user != null && user.getPassword().equals(password)) {
 
