@@ -2,7 +2,7 @@
 
 ### Sketch
 
-![Intellicards architecture image](![Alt text](<IntelliCards Design.png>)) 
+![Alt text](<IntelliCards Design.png>)
 
 ### Domain Specific Objects
 
