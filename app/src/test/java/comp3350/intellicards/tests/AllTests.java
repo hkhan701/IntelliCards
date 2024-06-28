@@ -5,7 +5,6 @@ import org.junit.runners.Suite;
 
 import comp3350.intellicards.tests.business.FlashcardManagerTest;
 import comp3350.intellicards.tests.business.FlashcardSetManagerTest;
-import comp3350.intellicards.tests.business.StubManagerTest;
 import comp3350.intellicards.tests.objects.FlashcardSetTest;
 import comp3350.intellicards.tests.objects.FlashcardTest;
 
@@ -14,7 +13,6 @@ import comp3350.intellicards.tests.objects.FlashcardTest;
 @Suite.SuiteClasses({
         FlashcardManagerTest.class,
         FlashcardSetManagerTest.class,
-        StubManagerTest.class,
         FlashcardTest.class,
         FlashcardSetTest.class,
 })
