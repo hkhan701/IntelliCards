@@ -34,7 +34,7 @@ public class UserPersistenceHSQLDB implements UserPersistence {
             st.setString(1, username);
 
             final ResultSet rs = st.executeQuery();
-            //rs.next();
+            rs.next();
             final User user = fromResultSet(rs);
 
             rs.close();

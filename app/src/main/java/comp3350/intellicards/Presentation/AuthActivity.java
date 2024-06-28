@@ -107,7 +107,7 @@ public class AuthActivity extends Activity {
     private void navigateToMainActivity() {
         Intent intent = new Intent(AuthActivity.this, MainActivity.class);
         startActivity(intent);
-        //finish();
+        finish();
     }
 
     private void copyDatabaseToDevice() {
