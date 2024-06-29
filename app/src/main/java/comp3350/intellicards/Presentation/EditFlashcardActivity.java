@@ -116,7 +116,7 @@ public class EditFlashcardActivity extends Activity {
 
             // If the selected flashcard set is different from the current flashcard set, move the flashcard to the new set
             FlashcardSet selectedSet = getSelectedFlashcardSet();
-            if (!selectedSet.equals(currentFlashcardSet)) {
+            if (!selectedSet.getUUID().equals(currentFlashcardSet.getUUID())) {
                 moveFlashcardToNewSet(selectedSet, newQuestion, newAnswer, newHint);
             } else {
                 // Update the flashcard if it stays in the same set
