@@ -27,15 +27,15 @@ public class Flashcard {
         this.correct = 0;
     }
 
-    public Flashcard(@NonNull String uuid, @NonNull String setUUID, @NonNull String answer, @NonNull String question, String hint) {
+    public Flashcard(@NonNull String uuid, @NonNull String setUUID, @NonNull String answer, @NonNull String question, String hint, boolean deleted, int attempted, int correct) {
         this.uuid = uuid;
         this.setUUID = setUUID;
         this.answer = answer;
         this.question = question;
         this.hint = hint;
-        this.deleted = false;
-        this.attempted = 0;
-        this.correct = 0;
+        this.deleted = deleted;
+        this.attempted = attempted;
+        this.correct = correct;
     }
 
     public String getUUID() {
