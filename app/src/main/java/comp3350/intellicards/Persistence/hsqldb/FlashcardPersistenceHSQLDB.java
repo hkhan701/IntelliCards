@@ -26,12 +26,16 @@ public class FlashcardPersistenceHSQLDB implements FlashcardPersistence {
     }
 
     private Flashcard fromResultSet(final ResultSet rs) throws SQLException {
-        final String setUUID = rs.getString("setUUID");
-        final String answer = rs.getString("answer");
+        final String uuid = rs.getString("cardID");
+        final String setUUID = rs.getString("setID");
         final String question = rs.getString("question");
+        final String answer = rs.getString("answer");
         final String hint = rs.getString("hint");
+        final boolean deleted = rs.getBoolean("deleted");
+        final int attempted = rs.getInt("attempts");
+        final int correct = rs.getInt("correct");
 
-        return new Flashcard(setUUID, answer, question, hint);
+        return new Flashcard(uuid, setUUID, answer, question, hint, deleted, attempted, correct);
     }
 
     @Override
@@ -39,7 +43,7 @@ public class FlashcardPersistenceHSQLDB implements FlashcardPersistence {
         List<Flashcard> flashcards = new ArrayList<>();
 
         try (Connection c = connection()) {
-            final PreparedStatement st = c.prepareStatement("SELECT * FROM FLASHCARDS WHERE setUUID = ? AND deleted = '0'");
+            final PreparedStatement st = c.prepareStatement("SELECT * FROM FLASHCARDS WHERE setUUID = ? AND deleted = FALSE");
             st.setString(1, setUUID);
 
             final ResultSet rs = st.executeQuery();
@@ -67,7 +71,7 @@ public class FlashcardPersistenceHSQLDB implements FlashcardPersistence {
         List<Flashcard> flashcards = new ArrayList<>();
 
         try (Connection c = connection()) {
-            final PreparedStatement st = c.prepareStatement("SELECT * FROM FLASHCARDS WHERE deleted = '1'");
+            final PreparedStatement st = c.prepareStatement("SELECT * FROM FLASHCARDS WHERE deleted = TRUE");
             final ResultSet rs = st.executeQuery();
 
             while (rs.next()) {
@@ -95,6 +99,7 @@ public class FlashcardPersistenceHSQLDB implements FlashcardPersistence {
 
             final ResultSet rs = st.executeQuery();
 
+            rs.next();
             final Flashcard flashcard = fromResultSet(rs);
 
             rs.close();
@@ -114,7 +119,7 @@ public class FlashcardPersistenceHSQLDB implements FlashcardPersistence {
     @Override
     public Flashcard insertFlashcard(@NonNull Flashcard currentFlashcard) {
         try (final Connection c = connection()) {
-            final PreparedStatement st = c.prepareStatement("INSERT INTO students VALUES(?, ?, ?, ?, ?, ?, ?, ?)");
+            final PreparedStatement st = c.prepareStatement("INSERT INTO FLASHCARDS VALUES(?, ?, ?, ?, ?, ?, ?, ?)");
             st.setString(1, currentFlashcard.getUUID());
             st.setString(2, currentFlashcard.getSetUUID());
             st.setString(3, currentFlashcard.getQuestion());
@@ -139,7 +144,7 @@ public class FlashcardPersistenceHSQLDB implements FlashcardPersistence {
     @Override
     public Flashcard updateFlashcard(Flashcard currentFlashcard) {
         try (final Connection c = connection()) {
-            final PreparedStatement st = c.prepareStatement("UPDATE FLASHCARDS SET setUUID = ?, question = ?, answer = ?, hint = ? WHERE cardID = ?");
+            final PreparedStatement st = c.prepareStatement("UPDATE FLASHCARDS SET setID = ?, question = ?, answer = ?, hint = ? WHERE cardID = ?");
             st.setString(1, currentFlashcard.getSetUUID());
             st.setString(2, currentFlashcard.getQuestion());
             st.setString(3, currentFlashcard.getAnswer());
@@ -162,7 +167,7 @@ public class FlashcardPersistenceHSQLDB implements FlashcardPersistence {
     public boolean markFlashcardAsDeleted(String uuid) {
 
         try (final Connection c = connection()) {
-            final PreparedStatement st = c.prepareStatement("UPDATE FLASHCARDS SET deleted = true WHERE cardID = ?");
+            final PreparedStatement st = c.prepareStatement("UPDATE FLASHCARDS SET deleted = TRUE WHERE cardID = ?");
             st.setString(1, uuid);
 
             st.executeUpdate();
@@ -181,7 +186,7 @@ public class FlashcardPersistenceHSQLDB implements FlashcardPersistence {
     @Override
     public boolean restoreFlashcard(String uuid) {
         try (final Connection c = connection()) {
-            final PreparedStatement st = c.prepareStatement("UPDATE FLASHCARDS SET deleted = false WHERE cardID = ?");
+            final PreparedStatement st = c.prepareStatement("UPDATE FLASHCARDS SET deleted = FALSE WHERE cardID = ?");
             st.setString(1, uuid);
 
             st.executeUpdate();

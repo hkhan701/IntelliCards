@@ -24,10 +24,11 @@ public class FlashcardSetPersistenceHSQLDB implements FlashcardSetPersistence {
     }
 
     private FlashcardSet fromResultSet(final ResultSet rs) throws SQLException {
+        final String setID = rs.getString("setID");
         final String username = rs.getString("username");
         final String setName = rs.getString("setName");
 
-        return new FlashcardSet(username, setName);
+        return new FlashcardSet(setID, username, setName);
     }
 
     @Override
@@ -38,6 +39,7 @@ public class FlashcardSetPersistenceHSQLDB implements FlashcardSetPersistence {
 
             final ResultSet rs = st.executeQuery();
 
+            rs.next();
             final FlashcardSet flashcardSet = fromResultSet(rs);
 
             rs.close();
@@ -60,6 +62,14 @@ public class FlashcardSetPersistenceHSQLDB implements FlashcardSetPersistence {
             FlashcardSet flashcardSet = getFlashcardSet(uuid);
 
             if(flashcardSet != null) {
+                final PreparedStatement st = c.prepareStatement("SELECT * FROM FLASHCARDS WHERE setID = ? AND deleted = FALSE");
+                st.setString(1, uuid);
+                final ResultSet rs = st.executeQuery();
+
+                while(rs.next()) {
+                    final Flashcard flashcard = new Flashcard(rs.getString("cardID"), rs.getString("setID"), rs.getString("answer"), rs.getString("question"), rs.getString("hint"), rs.getBoolean("deleted"), rs.getInt("attempts"), rs.getInt("correct"));
+                    flashcardSet.addFlashcard(flashcard);
+                }
                 return flashcardSet.getActiveFlashcards();
             }
         }
