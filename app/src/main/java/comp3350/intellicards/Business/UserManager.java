@@ -21,13 +21,15 @@ public class UserManager {
 
     public User loginUser(String username, String password) {
         User user = userPersistence.getUserByUsername(username);
+
         if (user != null && user.getPassword().equals(password)) {
+
             return user;
         }
         return null;
     }
 
-    public void deleteUser(User user) {
-        userPersistence.deleteUser(user);
+    public void deleteUser(String username) {
+        userPersistence.deleteUser(username);
     }
 }

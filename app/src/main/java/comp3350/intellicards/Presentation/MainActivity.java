@@ -39,6 +39,7 @@ public class MainActivity extends Activity {
         FlashcardManager flashcardManager = new FlashcardManager();
 
         gridLayout = findViewById(R.id.gridLayout);
+
         loadFlashcardSets();
     }
 

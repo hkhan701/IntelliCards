@@ -55,7 +55,7 @@ public class FlashcardPersistenceStub implements FlashcardPersistence {
     public List<Flashcard> getAllActiveFlashcards(String setUUID) {
         List<Flashcard> activeFlashcards = new ArrayList<>();
         for (Flashcard flashcard : flashcards.values()) {
-            if (!flashcard.isDeleted() && flashcard.getSetID().equals(setUUID)) {
+            if (!flashcard.isDeleted() && flashcard.getSetUUID().equals(setUUID)) {
                 activeFlashcards.add(flashcard);
             }
         }
@@ -114,12 +114,14 @@ public class FlashcardPersistenceStub implements FlashcardPersistence {
     }
 
     @Override
-    public void markAttempted(Flashcard flashcard) {
+    public void markAttempted(String uuid) {
+        Flashcard flashcard = flashcards.get(uuid);
         flashcard.markAttempted();
     }
 
     @Override
-    public void markAttemptedAndCorrect(Flashcard flashcard) {
+    public void markAttemptedAndCorrect(String uuid) {
+        Flashcard flashcard = flashcards.get(uuid);
         flashcard.markAttemptedAndCorrect();
     }
 

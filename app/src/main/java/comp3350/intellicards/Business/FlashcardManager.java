@@ -42,12 +42,12 @@ public class FlashcardManager {
         return this.flashcardPersistence.restoreFlashcard(uuid);
     }
 
-    public void markAttempted(Flashcard currFlashcard) {
-        this.flashcardPersistence.markAttempted(currFlashcard);
+    public void markAttempted(String uuid) {
+        this.flashcardPersistence.markAttempted(uuid);
     }
 
-    public void markAttemptedAndCorrect(Flashcard currFlashcard) {
-        this.flashcardPersistence.markAttemptedAndCorrect(currFlashcard);
+    public void markAttemptedAndCorrect(String uuid) {
+        this.flashcardPersistence.markAttemptedAndCorrect(uuid);
     }
 
 }

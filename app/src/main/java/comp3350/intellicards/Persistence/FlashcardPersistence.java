@@ -20,7 +20,7 @@ public interface FlashcardPersistence {
 
     boolean restoreFlashcard(String uuid);
 
-    void markAttempted(Flashcard currentFlashcard);
+    void markAttempted(String uuid);
 
-    void markAttemptedAndCorrect(Flashcard currentFlashcard);
+    void markAttemptedAndCorrect(String uuid);
 }
