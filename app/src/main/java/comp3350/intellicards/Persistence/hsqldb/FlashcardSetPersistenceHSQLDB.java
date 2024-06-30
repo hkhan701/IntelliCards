@@ -27,7 +27,6 @@ public class FlashcardSetPersistenceHSQLDB implements FlashcardSetPersistence {
         final String setID = rs.getString("setID");
         final String username = rs.getString("username");
         final String setName = rs.getString("setName");
-
         return new FlashcardSet(setID, username, setName);
     }
 
@@ -46,14 +45,9 @@ public class FlashcardSetPersistenceHSQLDB implements FlashcardSetPersistence {
             st.close();
 
             return flashcardSet;
+        } catch (SQLException e) {
+            throw new PersistenceException(e);
         }
-        catch (SQLException e) {
-            e.printStackTrace();
-            //throw new PersistenceException(e);
-        }
-
-        //Delete this return statement after implementing exception
-        return null;
     }
 
     @Override
@@ -61,29 +55,44 @@ public class FlashcardSetPersistenceHSQLDB implements FlashcardSetPersistence {
         try (final Connection c = connection()) {
             FlashcardSet flashcardSet = getFlashcardSet(uuid);
 
-            if(flashcardSet != null) {
+            if (flashcardSet != null) {
                 final PreparedStatement st = c.prepareStatement("SELECT * FROM FLASHCARDS WHERE setID = ? AND deleted = FALSE");
                 st.setString(1, uuid);
                 final ResultSet rs = st.executeQuery();
 
-                while(rs.next()) {
-                    final Flashcard flashcard = new Flashcard(rs.getString("cardID"), rs.getString("setID"), rs.getString("answer"), rs.getString("question"), rs.getString("hint"), rs.getBoolean("deleted"), rs.getInt("attempts"), rs.getInt("correct"));
+                while (rs.next()) {
+                    final Flashcard flashcard = new Flashcard(rs.getString("cardID"), rs.getString("setID"), rs.getString("question"), rs.getString("answer"), rs.getString("hint"), rs.getBoolean("deleted"), rs.getInt("attempts"), rs.getInt("correct"));
                     flashcardSet.addFlashcard(flashcard);
                 }
                 return flashcardSet.getActiveFlashcards();
             }
+        } catch (SQLException e) {
+            throw new PersistenceException(e);
         }
-        catch (SQLException e) {
-            e.printStackTrace();
-            //throw new PersistenceException(e);
-        }
-
-        //Delete this return statement after implementing exception
         return null;
     }
 
     @Override
-    public FlashcardSet getDeletedFlashcardSet(String uuid) { return null; }
+    public FlashcardSet getDeletedFlashcardSet(String uuid) {
+        try (final Connection c = connection()) {
+            FlashcardSet flashcardSet = getFlashcardSet(uuid);
+
+            if (flashcardSet != null) {
+                final PreparedStatement st = c.prepareStatement("SELECT * FROM FLASHCARDS WHERE setID = ? AND deleted = TRUE");
+                st.setString(1, uuid);
+                final ResultSet rs = st.executeQuery();
+
+                while (rs.next()) {
+                    final Flashcard flashcard = new Flashcard(rs.getString("cardID"), rs.getString("setID"), rs.getString("question"), rs.getString("answer"), rs.getString("hint"), rs.getBoolean("deleted"), rs.getInt("attempts"), rs.getInt("correct"));
+                    flashcardSet.addFlashcard(flashcard);
+                }
+                return flashcardSet.getDeletedFlashcards();
+            }
+        } catch (SQLException e) {
+            throw new PersistenceException(e);
+        }
+        return null;
+    }
 
     @Override
     public List<FlashcardSet> getAllFlashcardSets() {
@@ -93,8 +102,20 @@ public class FlashcardSetPersistenceHSQLDB implements FlashcardSetPersistence {
             final PreparedStatement st = c.prepareStatement("SELECT * FROM FLASHCARDSETS");
 
             final ResultSet rs = st.executeQuery();
-            while(rs.next()) {
-                final FlashcardSet flashcardSet  = fromResultSet(rs);
+            while (rs.next()) {
+                final FlashcardSet flashcardSet = fromResultSet(rs);
+
+                final PreparedStatement cardSt = c.prepareStatement("SELECT * FROM FLASHCARDS WHERE setID = ?");
+                cardSt.setString(1, flashcardSet.getUUID());
+                final ResultSet cardRs = cardSt.executeQuery();
+
+                while (cardRs.next()) {
+                    final Flashcard flashcard = new Flashcard(cardRs.getString("cardID"), cardRs.getString("setID"), cardRs.getString("question"), cardRs.getString("answer"), cardRs.getString("hint"), cardRs.getBoolean("deleted"), cardRs.getInt("attempts"), cardRs.getInt("correct"));
+                    flashcardSet.addFlashcard(flashcard);
+                }
+                cardRs.close();
+                cardSt.close();
+
                 flashcardSets.add(flashcardSet);
             }
 
@@ -102,14 +123,9 @@ public class FlashcardSetPersistenceHSQLDB implements FlashcardSetPersistence {
             st.close();
 
             return flashcardSets;
+        } catch (SQLException e) {
+            throw new PersistenceException(e);
         }
-        catch (SQLException e) {
-            e.printStackTrace();
-            //throw new PersistenceException(e);
-        }
-
-        //Delete this return statement after implementing exception
-        return null;
     }
 
     @Override
@@ -122,10 +138,9 @@ public class FlashcardSetPersistenceHSQLDB implements FlashcardSetPersistence {
             st.setString(3, newFlashcardSet.getFlashcardSetName());
 
             st.executeUpdate();
-        }
-        catch (SQLException e) {
-            e.printStackTrace();
-            //throw new PersistenceException(e);
+            st.close();
+        } catch (SQLException e) {
+            throw new PersistenceException(e);
         }
     }
 
@@ -134,30 +149,24 @@ public class FlashcardSetPersistenceHSQLDB implements FlashcardSetPersistence {
         try (final Connection c = connection()) {
             FlashcardSet flashcardSet = getFlashcardSet(setUUID);
 
-            if(flashcardSet != null) {
+            if (flashcardSet != null) {
                 flashcardSet.addFlashcard(flashcard);
                 return true;
             }
+        } catch (SQLException e) {
+            throw new PersistenceException(e);
         }
-        catch (SQLException e) {
-            e.printStackTrace();
-            //throw new PersistenceException(e);
-        }
-
-        //Delete this return statement after implementing exception
         return false;
     }
 
     @Override
     public void randomizeFlashcardSet(FlashcardSet flashcardSet) {
         try (final Connection c = connection()) {
-            if(flashcardSet != null) {
+            if (flashcardSet != null) {
                 flashcardSet.randomizeSet();
             }
-        }
-        catch (SQLException e) {
-            e.printStackTrace();
-            //throw new PersistenceException(e);
+        } catch (SQLException e) {
+            throw new PersistenceException(e);
         }
     }
 }

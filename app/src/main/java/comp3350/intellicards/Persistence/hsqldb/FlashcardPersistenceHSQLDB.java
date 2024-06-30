@@ -7,7 +7,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,8 +33,7 @@ public class FlashcardPersistenceHSQLDB implements FlashcardPersistence {
         final boolean deleted = rs.getBoolean("deleted");
         final int attempted = rs.getInt("attempts");
         final int correct = rs.getInt("correct");
-
-        return new Flashcard(uuid, setUUID, answer, question, hint, deleted, attempted, correct);
+        return new Flashcard(uuid, setUUID, question, answer, hint, deleted, attempted, correct);
     }
 
     @Override
@@ -56,14 +54,9 @@ public class FlashcardPersistenceHSQLDB implements FlashcardPersistence {
             st.close();
 
             return flashcards;
+        } catch (SQLException e) {
+            throw new PersistenceException(e);
         }
-        catch (SQLException e) {
-            e.printStackTrace();
-            //throw new PersistenceException(e);
-        }
-
-        //Delete this return statement after implementing exception
-        return null;
     }
 
     @Override
@@ -82,13 +75,9 @@ public class FlashcardPersistenceHSQLDB implements FlashcardPersistence {
             st.close();
 
             return flashcards;
+        } catch (SQLException e) {
+            throw new PersistenceException(e);
         }
-        catch (SQLException e) {
-            e.printStackTrace();
-            //throw new PersistenceException(e);
-        }
-        //Delete this return statement after implementing exception
-        return null;
     }
 
     @Override
@@ -106,14 +95,9 @@ public class FlashcardPersistenceHSQLDB implements FlashcardPersistence {
             st.close();
 
             return flashcard;
+        } catch (SQLException e) {
+            throw new PersistenceException(e);
         }
-        catch (SQLException e) {
-            e.printStackTrace();
-            //throw new PersistenceException(e);
-        }
-
-        //Delete this return statement after implementing exception
-        return null;
     }
 
     @Override
@@ -133,12 +117,8 @@ public class FlashcardPersistenceHSQLDB implements FlashcardPersistence {
 
             return currentFlashcard;
         } catch (final SQLException e) {
-            e.printStackTrace();
-            //throw new PersistenceException(e);
+            throw new PersistenceException(e);
         }
-
-        //Delete this return statement after implementing exception
-        return null;
     }
 
     @Override
@@ -154,13 +134,9 @@ public class FlashcardPersistenceHSQLDB implements FlashcardPersistence {
             st.executeUpdate();
 
             return currentFlashcard;
+        } catch (SQLException e) {
+            throw new PersistenceException(e);
         }
-        catch (SQLException e) {
-            e.printStackTrace();
-            //throw new PersistenceException(e);
-        }
-        //Delete this return statement after implementing exception
-        return null;
     }
 
     @Override
@@ -173,14 +149,9 @@ public class FlashcardPersistenceHSQLDB implements FlashcardPersistence {
             st.executeUpdate();
 
             return true;
+        } catch (SQLException e) {
+            throw new PersistenceException(e);
         }
-        catch (SQLException e) {
-            e.printStackTrace();
-            //throw new PersistenceException(e);
-        }
-
-        //Delete this return statement after implementing exception
-        return false;
     }
 
     @Override
@@ -192,14 +163,9 @@ public class FlashcardPersistenceHSQLDB implements FlashcardPersistence {
             st.executeUpdate();
 
             return true;
+        } catch (SQLException e) {
+            throw new PersistenceException(e);
         }
-        catch (SQLException e) {
-            e.printStackTrace();
-            //throw new PersistenceException(e);
-        }
-
-        //Delete this return statement after implementing exception
-        return false;
     }
 
     @Override
@@ -209,10 +175,8 @@ public class FlashcardPersistenceHSQLDB implements FlashcardPersistence {
             st.setString(1, uuid);
 
             st.executeUpdate();
-        }
-        catch (SQLException e) {
-            e.printStackTrace();
-            //throw new PersistenceException(e);
+        } catch (SQLException e) {
+            throw new PersistenceException(e);
         }
     }
 
@@ -223,10 +187,8 @@ public class FlashcardPersistenceHSQLDB implements FlashcardPersistence {
             st.setString(1, uuid);
 
             st.executeUpdate();
-        }
-        catch (SQLException e) {
-            e.printStackTrace();
-            //throw new PersistenceException(e);
+        } catch (SQLException e) {
+            throw new PersistenceException(e);
         }
     }
 }

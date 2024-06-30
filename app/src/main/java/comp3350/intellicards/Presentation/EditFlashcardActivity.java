@@ -139,7 +139,7 @@ public class EditFlashcardActivity extends Activity {
         flashcardManager.markFlashcardAsDeleted(currentFlashcard.getUUID());
 
         // Create a new flashcard with the updated details for the new set
-        Flashcard newFlashcard = new Flashcard(newSet.getUUID(), newAnswer, newQuestion, newHint);
+        Flashcard newFlashcard = new Flashcard(newSet.getUUID(), newQuestion, newAnswer, newHint);
         flashcardManager.insertFlashcard(newFlashcard);
         flashcardSetManager.addFlashcardToFlashcardSet(newSet.getUUID(), newFlashcard);
 

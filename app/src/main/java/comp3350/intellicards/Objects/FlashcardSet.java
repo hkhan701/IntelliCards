@@ -89,8 +89,7 @@ public class FlashcardSet {
 
     // Randomizes the arrayList containing the flashcards
     public void randomizeSet() {
-        if(flashcards != null)
-        {
+        if (flashcards != null) {
             Collections.shuffle(flashcards);
         }
     }

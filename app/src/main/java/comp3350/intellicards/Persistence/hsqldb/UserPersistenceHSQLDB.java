@@ -23,7 +23,6 @@ public class UserPersistenceHSQLDB implements UserPersistence {
     private User fromResultSet(final ResultSet rs) throws SQLException {
         final String username = rs.getString("username");
         final String password = rs.getString("password");
-
         return new User(username, password);
     }
 
@@ -41,16 +40,9 @@ public class UserPersistenceHSQLDB implements UserPersistence {
             st.close();
 
             return user;
+        } catch (final SQLException e) {
+            throw new PersistenceException(e);
         }
-        catch (final SQLException e) {
-            e.printStackTrace();
-            e.toString();
-            System.out.println("Error getting user");
-            //throw new PersistenceException(e);
-        }
-
-        //Delete this return statement after implementing exception
-        return null;
     }
 
     @Override
@@ -62,10 +54,7 @@ public class UserPersistenceHSQLDB implements UserPersistence {
 
             st.executeUpdate();
         } catch (final SQLException e) {
-            e.printStackTrace();
-            e.toString();
-            System.out.println("Error adding user");
-            //throw new PersistenceException(e);
+            throw new PersistenceException(e);
         }
     }
 
@@ -76,10 +65,8 @@ public class UserPersistenceHSQLDB implements UserPersistence {
             st.setString(1, username);
 
             st.executeUpdate();
-        }
-        catch (final SQLException e) {
-            System.out.println("Error deleting user");
-            //throw new PersistenceException(e);
+        } catch (final SQLException e) {
+            throw new PersistenceException(e);
         }
     }
 }

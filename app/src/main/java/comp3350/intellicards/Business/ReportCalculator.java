@@ -17,20 +17,16 @@ public class ReportCalculator {
         totalCorrect = 0;
     }
 
-    public String report()
-    {
+    public String report() {
         collectStats();
         return "ALL TIME TOTAL ACCURACY\nCorrect: " + totalCorrect + " / " + totalAttempted
-                + "\nThat is " + Math.round(totalCorrect * 100 / (double)totalAttempted) + "% correct: ";
+                + "\nThat is " + Math.round(totalCorrect * 100 / (double) totalAttempted) + "% correct: ";
     }
 
-    private void collectStats()
-    {
-        for(int i = 0; i < flashcardSet.size(); i++)
-        {
+    private void collectStats() {
+        for (int i = 0; i < flashcardSet.size(); i++) {
             Flashcard flashcard = flashcardSet.getIndex(i);
-            if(!flashcard.isDeleted())
-            {
+            if (!flashcard.isDeleted()) {
                 totalAttempted += flashcard.getAttempted();
                 totalCorrect += flashcard.getCorrect();
             }

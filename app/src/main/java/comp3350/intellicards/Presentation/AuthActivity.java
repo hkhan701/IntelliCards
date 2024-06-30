@@ -80,7 +80,6 @@ public class AuthActivity extends Activity {
                 if (user != null) {
                     Toast.makeText(this, "Log in successful!", Toast.LENGTH_LONG).show();
                     UserSession.getInstance().setUsername(user.getUsername());
-                    System.out.println(UserSession.getInstance().getUsername());
                     navigateToMainActivity();
                 } else {
                     Toast.makeText(this, "Invalid login information! Please try again.", Toast.LENGTH_LONG).show();
@@ -130,7 +129,7 @@ public class AuthActivity extends Activity {
             Main.setDBPathName(dataDirectory.toString() + "/" + Main.getDBPathName());
 
         } catch (final IOException ioe) {
-            //Messages.warning(this, "Unable to access application data: " + ioe.getMessage());
+            Toast.makeText(this, "Unable to access application data: " + ioe.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
 

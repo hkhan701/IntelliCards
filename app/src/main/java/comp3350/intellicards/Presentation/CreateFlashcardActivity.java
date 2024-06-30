@@ -7,7 +7,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import comp3350.intellicards.Application.Services;
 import comp3350.intellicards.Business.FlashcardManager;
 import comp3350.intellicards.Business.FlashcardSetManager;
 import comp3350.intellicards.Objects.Flashcard;
@@ -81,7 +80,7 @@ public class CreateFlashcardActivity extends Activity {
             return null;
         }
 
-        return new Flashcard(flashcardSetUUID, answer, question, hint);
+        return new Flashcard(flashcardSetUUID, question, answer,  hint);
     }
 
     private void addFlashcardToSet(Flashcard flashcard) {

@@ -10,9 +10,18 @@ GRANT DBA TO SA
 SET WRITE_DELAY 20
 SET FILES SCALE 32
 SET SCHEMA PUBLIC
-INSERT INTO USERS VALUES ('user1', 'pass1')
-INSERT INTO USERS VALUES ('user2', 'pass2')
-INSERT INTO FLASHCARDSETS VALUES ('0', 'user1', 'set1')
-INSERT INTO FLASHCARDSETS VALUES ('1', 'user1', 'set2')
-INSERT INTO FLASHCARDS VALUES ('0', '0', 'Q1', 'A1', 'H1', FALSE, 0, 0)
-INSERT INTO FLASHCARDS VALUES ('1', '0', 'Q2', 'A2', '', FALSE, 0, 0)
+INSERT INTO USERS VALUES ('user1', 'pass1');
+INSERT INTO USERS VALUES ('user2', 'pass2');
+INSERT INTO USERS VALUES ('user3', 'pass3');
+INSERT INTO FLASHCARDSETS VALUES ('set1', 'user1', 'Math');
+INSERT INTO FLASHCARDSETS VALUES ('set2', 'user1', 'Science');
+INSERT INTO FLASHCARDSETS VALUES ('set3', 'user2', 'History');
+INSERT INTO FLASHCARDSETS VALUES ('set4', 'user3', 'Geography');
+INSERT INTO FLASHCARDS VALUES ('fc1', 'set1', 'What is 2+2?', '4', 'Basic arithmetic', FALSE, 0, 0);
+INSERT INTO FLASHCARDS VALUES ('fc2', 'set1', 'What is the square root of 16?', '4', 'Basic arithmetic', FALSE, 0, 0);
+INSERT INTO FLASHCARDS VALUES ('fc3', 'set2', 'What is the chemical symbol for water?', 'H2O', 'Chemical formula', FALSE, 0, 0);
+INSERT INTO FLASHCARDS VALUES ('fc4', 'set2', 'What planet is known as the Red Planet?', 'Mars', 'Solar System', FALSE, 0, 0);
+INSERT INTO FLASHCARDS VALUES ('fc5', 'set3', 'Who was the first president of the United States?', 'George Washington', 'US History', FALSE, 0, 0);
+INSERT INTO FLASHCARDS VALUES ('fc6', 'set3', 'What year did the Titanic sink?', '1912', 'Maritime history', FALSE, 0, 0);
+INSERT INTO FLASHCARDS VALUES ('fc7', 'set4', 'What is the capital of France?', 'Paris', 'European capitals', FALSE, 0, 0);
+INSERT INTO FLASHCARDS VALUES ('fc8', 'set4', 'Which continent is the Sahara Desert located on?', 'Africa', 'World geography', FALSE, 0, 0);

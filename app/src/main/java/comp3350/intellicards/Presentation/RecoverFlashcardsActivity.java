@@ -14,7 +14,6 @@ import java.util.List;
 import comp3350.intellicards.Application.UserSession;
 import comp3350.intellicards.Business.FlashcardSetManager;
 import comp3350.intellicards.Objects.Flashcard;
-import comp3350.intellicards.Business.FlashcardManager;
 import comp3350.intellicards.Objects.FlashcardSet;
 import comp3350.intellicards.R;
 
@@ -32,7 +31,7 @@ public class RecoverFlashcardsActivity extends Activity {
         // Get the user session
         userName = UserSession.getInstance().getUsername();
 
-        List<Flashcard> deletedFlashcards = new ArrayList<Flashcard>();
+        List<Flashcard> deletedFlashcards = new ArrayList<>();
 
         //change this when refactoring so that we only use the UUID's and the logic layer
         // to get the corresponding info

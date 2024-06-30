@@ -16,7 +16,7 @@ public class Flashcard {
     private int correct;
 
     // Private constructor used internally to ensure UUID is always set
-    public Flashcard(@NonNull String setUUID, @NonNull String answer, @NonNull String question, String hint) {
+    public Flashcard(@NonNull String setUUID, @NonNull String question, @NonNull String answer, String hint) {
         this.uuid = UUID.randomUUID().toString();
         this.setUUID = setUUID;
         this.answer = answer;
@@ -27,7 +27,7 @@ public class Flashcard {
         this.correct = 0;
     }
 
-    public Flashcard(@NonNull String uuid, @NonNull String setUUID, @NonNull String answer, @NonNull String question, String hint, boolean deleted, int attempted, int correct) {
+    public Flashcard(@NonNull String uuid, @NonNull String setUUID, @NonNull String question, @NonNull String answer, String hint, boolean deleted, int attempted, int correct) {
         this.uuid = uuid;
         this.setUUID = setUUID;
         this.answer = answer;
@@ -58,9 +58,13 @@ public class Flashcard {
         return this.setUUID;
     }
 
-    public int getAttempted() { return attempted; }
+    public int getAttempted() {
+        return attempted;
+    }
 
-    public int getCorrect() { return correct; }
+    public int getCorrect() {
+        return correct;
+    }
 
     public void setAnswer(@NonNull String answer) {
         this.answer = answer;
@@ -86,9 +90,14 @@ public class Flashcard {
         deleted = false;
     }
 
-    public void markAttempted() { attempted++;}
+    public void markAttempted() {
+        attempted++;
+    }
 
-    public void markAttemptedAndCorrect() { correct++; attempted++;}
+    public void markAttemptedAndCorrect() {
+        correct++;
+        attempted++;
+    }
 
     @NonNull
     @Override
@@ -103,11 +112,4 @@ public class Flashcard {
         return info;
     }
 
-    public String getDataFormatted() {
-        String data = String.format("Q: %s\n", question);
-        if ((hint != null) && !hint.trim().isEmpty())
-            data += String.format("Hint: %s\n", hint);
-        data += String.format("\nA: %s", answer);
-        return data;
-    }
 }
