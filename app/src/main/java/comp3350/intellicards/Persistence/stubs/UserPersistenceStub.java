@@ -6,11 +6,11 @@ import java.util.List;
 import comp3350.intellicards.Objects.User;
 import comp3350.intellicards.Persistence.UserPersistence;
 
-public class UserPersistenceStub implements UserPersistence{
+public class UserPersistenceStub implements UserPersistence {
     private List<User> users;
 
     public UserPersistenceStub() {
-        users = new ArrayList<User>();
+        users = new ArrayList<>();
 
         User user1 = new User("user1", "password1");
         User user2 = new User("user2", "password2");

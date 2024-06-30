@@ -9,7 +9,6 @@ import comp3350.intellicards.Application.Services;
 import comp3350.intellicards.Objects.Flashcard;
 import comp3350.intellicards.Objects.FlashcardSet;
 import comp3350.intellicards.Persistence.FlashcardSetPersistence;
-import comp3350.intellicards.Persistence.stubs.FlashcardSetPersistenceStub;
 
 public class FlashcardSetManager {
     private FlashcardSetPersistence flashcardSetPersistence;
@@ -50,8 +49,8 @@ public class FlashcardSetManager {
         List<FlashcardSet> flashcardSets = this.flashcardSetPersistence.getAllFlashcardSets();
         List<FlashcardSet> userSets = new ArrayList<>();
 
-        for(FlashcardSet flashcardSet : flashcardSets) {
-            if(flashcardSet.getUsername().equals(username)) {
+        for (FlashcardSet flashcardSet : flashcardSets) {
+            if (flashcardSet.getUsername().equals(username)) {
                 userSets.add(flashcardSet);
             }
         }

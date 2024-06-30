@@ -54,8 +54,7 @@ public class FlashcardTestActivity extends Activity {
 
     }
 
-    private void setUpBackButton(String flashcardSetUUID)
-    {
+    private void setUpBackButton(String flashcardSetUUID) {
         backButton.setVisibility(View.INVISIBLE);
         backButton.setOnClickListener(v -> {
             Intent intent = new Intent(FlashcardTestActivity.this, FlashcardSetActivity.class);
@@ -64,33 +63,26 @@ public class FlashcardTestActivity extends Activity {
         });
     }
 
-    private void setUpFinishButton(FlashcardSet flashcardSet)
-    {
-        finishButton.setOnClickListener(v -> {
-            finishTest(flashcardSet);
-        });
+    private void setUpFinishButton(FlashcardSet flashcardSet) {
+        finishButton.setOnClickListener(v -> finishTest(flashcardSet));
     }
 
 
-    private void setUpViewFlipper(FlashcardSet flashcardSet)
-    {
+    private void setUpViewFlipper(FlashcardSet flashcardSet) {
         LayoutInflater inflater = LayoutInflater.from(this);
         FlashcardSet activeFlashcards = flashcardSet.getActiveFlashcards();
-        for(int i = 0; i < activeFlashcards.size(); i++)
-        {
+        for (int i = 0; i < activeFlashcards.size(); i++) {
             viewFlipper.addView(createView(flashcardSet, activeFlashcards.getIndex(i), inflater, viewFlipper));
         }
     }
 
-    private View createView(FlashcardSet flashcardSet, Flashcard flashcard, LayoutInflater inflater, ViewFlipper viewFlipper)
-    {
+    private View createView(FlashcardSet flashcardSet, Flashcard flashcard, LayoutInflater inflater, ViewFlipper viewFlipper) {
         View view = inflater.inflate(R.layout.flashcard_test_view, viewFlipper, false);
         TestCardView testCardView = new TestCardView(view, viewFlipper, flashcard, flashcardSet);
         return testCardView.getTestCardView();
     }
 
-    private void finishTest(FlashcardSet flashcardSet)
-    {
+    private void finishTest(FlashcardSet flashcardSet) {
         backButton.setVisibility(View.VISIBLE);
         finishButton.setVisibility(View.INVISIBLE);
         viewFlipper.setVisibility(View.INVISIBLE);
@@ -101,13 +93,12 @@ public class FlashcardTestActivity extends Activity {
         setUpResultTextBox(totalReport);
     }
 
-    private String calculateStats(){
+    private String calculateStats() {
         return "This tests accuracy, Correct: " + correct + " / " + attempted
-                + "\nThat is " + Math.round(correct * 100 / (double)attempted) + "% correct\n\n";
+                + "\nThat is " + Math.round(correct * 100 / (double) attempted) + "% correct\n\n";
     }
 
-    private void setUpResultTextBox(String string)
-    {
+    private void setUpResultTextBox(String string) {
         resultTextBox.setText(string);
     }
 
@@ -115,9 +106,9 @@ public class FlashcardTestActivity extends Activity {
     private class TestCardView {
         //the view that we are creating
         private View view;
-        //the flipper that we are adding too
+        // the flipper that we are adding too
         private ViewFlipper viewFlipper;
-        //the flashcard information
+        // the flashcard information
         private Flashcard flashcard;
         private FlashcardSet flashcardSet;
 
@@ -130,8 +121,7 @@ public class FlashcardTestActivity extends Activity {
         //check if the card should be flipped up
         private boolean isFrontVisible;
 
-        public TestCardView(View view, ViewFlipper viewFlipper, Flashcard flashcard, FlashcardSet flashcardSet)
-        {
+        public TestCardView(View view, ViewFlipper viewFlipper, Flashcard flashcard, FlashcardSet flashcardSet) {
             this.view = view;
             this.viewFlipper = viewFlipper;
             this.flashcard = flashcard;
@@ -144,41 +134,33 @@ public class FlashcardTestActivity extends Activity {
             this.isFrontVisible = true;
         }
 
-        private View getTestCardView()
-        {
+        private View getTestCardView() {
             setUp();
             return view;
         }
 
 
-        private void setUp()
-        {
+        private void setUp() {
             setUpText();
             setUpListeners();
         }
 
-        private void setUpText()
-        {
+        private void setUpText() {
             flashcardTextView.setText(FlashcardUtils.getFlashcardQuestionWithHintText(flashcard));
         }
 
-        private void setUpListeners()
-        {
+        private void setUpListeners() {
             setUpCheckBoxes();
             setUpNextCardButton();
             setUpFlipButton();
         }
 
-        private void setUpFlipButton()
-        {
-            flipButton.setOnClickListener(v -> {
-                flipFlashcard(flashcard);
-            });
+        private void setUpFlipButton() {
+            flipButton.setOnClickListener(v -> flipFlashcard(flashcard));
         }
 
 
-        private void setUpCheckBoxes()
-        {
+        private void setUpCheckBoxes() {
             // so they can't be both checked at once
             correctBox.setOnClickListener(v -> {
                 if (correctBox.isChecked()) {
@@ -193,34 +175,27 @@ public class FlashcardTestActivity extends Activity {
             });
         }
 
-        private void setUpNextCardButton()
-        {
+        private void setUpNextCardButton() {
             nextCardButton.setOnClickListener(v -> {
 
                 int currentCardIndex = viewFlipper.getDisplayedChild();
                 int totalCardCount = viewFlipper.getChildCount();
 
-                if (!correctBox.isChecked() && !incorrectBox.isChecked())
-                {
+                if (!correctBox.isChecked() && !incorrectBox.isChecked()) {
                     Toast.makeText(FlashcardTestActivity.this, "Please check the correct or incorrect checkbox", Toast.LENGTH_SHORT).show();
-                } else
-                {
-                    if (correctBox.isChecked())
-                    {
+                } else {
+                    if (correctBox.isChecked()) {
                         flashcardManager.markAttemptedAndCorrect(flashcard.getUUID());
                         correct++;
                         attempted++;
-                    } else
-                    {
+                    } else {
                         flashcardManager.markAttempted(flashcard.getUUID());
                         attempted++;
                     }
 
-                    if (currentCardIndex == totalCardCount - 1)
-                    {
+                    if (currentCardIndex == totalCardCount - 1) {
                         finishTest(flashcardSet);
-                    } else
-                    {
+                    } else {
                         viewFlipper.showNext();
                     }
                 }

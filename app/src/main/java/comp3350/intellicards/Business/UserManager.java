@@ -13,7 +13,8 @@ public class UserManager {
 
     public boolean registerUser(String username, String password) {
         if (userPersistence.getUserByUsername(username) != null || username.equals("guest")) {
-            return false; // Username already exists Should throw some sort of exception in future
+            return false; // Username already exists or it equals 'guest' which is reserved for guest mode
+            // Should throw some sort of exception in future
         }
         userPersistence.addUser(new User(username, password));
         return true;
@@ -21,7 +22,6 @@ public class UserManager {
 
     public User loginUser(String username, String password) {
         User user = userPersistence.getUserByUsername(username);
-
         if (user != null && user.getPassword().equals(password)) {
 
             return user;
