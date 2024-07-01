@@ -99,7 +99,7 @@ public class EditFlashcardActivity extends Activity {
         flashcardSetSpinner.setAdapter(adapter);
 
         // Set the spinner to the current flashcard's set
-        int currentPosition = allFlashcardSets.indexOf(currentFlashcardSet);
+        int currentPosition = flashcardSetNames.indexOf(currentFlashcardSet.getFlashcardSetName());
         flashcardSetSpinner.setSelection(currentPosition);
     }
 

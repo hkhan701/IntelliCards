@@ -88,7 +88,10 @@ public class FlashcardTestActivity extends Activity {
         viewFlipper.setVisibility(View.INVISIBLE);
         // print out the stats of the current flashcard set test
         // and overall stats
-        ReportCalculator reportCalculator = new ReportCalculator(flashcardSet);
+
+        // re-get the flashcard set from the driver so we have the update attempts and correct stats
+        FlashcardSet currSet = flashcardSetManager.getActiveFlashcardSet(flashcardSet.getUUID());
+        ReportCalculator reportCalculator = new ReportCalculator(currSet);
         String totalReport = calculateStats() + reportCalculator.report();
         setUpResultTextBox(totalReport);
     }
