@@ -1,4 +1,21 @@
 # A01-G01-IntelliCards
+
+## Startup Guide for Iteration 2
+
+| :memo:        | Please use portrait mode for the tablet to ensure proper user experience.       |
+|---------------|:------------------------|
+
+### Login Page
+
+Graders can login with the following pre-inserted usernames and passwords which contain fake data
+
+| Username | Password |
+|----------|----------|
+| user1    | pass1    |
+| user2    | pass2    |
+| user3    | pass3    |
+
+
 ## IntelliCards Vision Statement
 
 IntelliCards will be a user-friendly flashcard application that allows users to create, edit, and organize flashcards to facilitate personalized and effective learning. The goal of the application is to make study materials more accessible and to give users a variety of ways to test their knowledge. Users will be able to track their progress, save their flashcards, and access various features designed to enhance their study experience. It also offers the flexibility of being able to customize their own flashcards and sets. Furthermore, it is envisioned to be used to motivate students to actively test themselves to effectively digest the contents that they are learning, rather than simply reading the notes over and over to just memorize them.
