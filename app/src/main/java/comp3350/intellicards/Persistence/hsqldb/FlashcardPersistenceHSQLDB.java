@@ -25,8 +25,8 @@ public class FlashcardPersistenceHSQLDB implements FlashcardPersistence {
     }
 
     private Flashcard fromResultSet(final ResultSet rs) throws SQLException {
-        final String uuid = rs.getString("cardID");
-        final String setUUID = rs.getString("setID");
+        final String uuid = rs.getString("cardUUID");
+        final String setUUID = rs.getString("setUUID");
         final String question = rs.getString("question");
         final String answer = rs.getString("answer");
         final String hint = rs.getString("hint");
@@ -83,13 +83,15 @@ public class FlashcardPersistenceHSQLDB implements FlashcardPersistence {
     @Override
     public Flashcard getFlashcard(String uuid) {
         try (Connection c = connection()) {
-            final PreparedStatement st = c.prepareStatement("SELECT * FROM FLASHCARDS WHERE cardID = ?");
+            final PreparedStatement st = c.prepareStatement("SELECT * FROM FLASHCARDS WHERE cardUUID = ?");
             st.setString(1, uuid);
 
             final ResultSet rs = st.executeQuery();
 
-            rs.next();
-            final Flashcard flashcard = fromResultSet(rs);
+            Flashcard flashcard = null;
+
+            if(rs.next())
+                flashcard = fromResultSet(rs);
 
             rs.close();
             st.close();
@@ -124,7 +126,7 @@ public class FlashcardPersistenceHSQLDB implements FlashcardPersistence {
     @Override
     public Flashcard updateFlashcard(Flashcard currentFlashcard) {
         try (final Connection c = connection()) {
-            final PreparedStatement st = c.prepareStatement("UPDATE FLASHCARDS SET setID = ?, question = ?, answer = ?, hint = ? WHERE cardID = ?");
+            final PreparedStatement st = c.prepareStatement("UPDATE FLASHCARDS SET setUUID = ?, question = ?, answer = ?, hint = ? WHERE cardUUID = ?");
             st.setString(1, currentFlashcard.getSetUUID());
             st.setString(2, currentFlashcard.getQuestion());
             st.setString(3, currentFlashcard.getAnswer());
@@ -143,7 +145,7 @@ public class FlashcardPersistenceHSQLDB implements FlashcardPersistence {
     public boolean markFlashcardAsDeleted(String uuid) {
 
         try (final Connection c = connection()) {
-            final PreparedStatement st = c.prepareStatement("UPDATE FLASHCARDS SET deleted = TRUE WHERE cardID = ?");
+            final PreparedStatement st = c.prepareStatement("UPDATE FLASHCARDS SET deleted = TRUE WHERE cardUUID = ?");
             st.setString(1, uuid);
 
             st.executeUpdate();
@@ -157,7 +159,7 @@ public class FlashcardPersistenceHSQLDB implements FlashcardPersistence {
     @Override
     public boolean restoreFlashcard(String uuid) {
         try (final Connection c = connection()) {
-            final PreparedStatement st = c.prepareStatement("UPDATE FLASHCARDS SET deleted = FALSE WHERE cardID = ?");
+            final PreparedStatement st = c.prepareStatement("UPDATE FLASHCARDS SET deleted = FALSE WHERE cardUUID = ?");
             st.setString(1, uuid);
 
             st.executeUpdate();
@@ -171,7 +173,7 @@ public class FlashcardPersistenceHSQLDB implements FlashcardPersistence {
     @Override
     public void markAttempted(String uuid) {
         try (final Connection c = connection()) {
-            final PreparedStatement st = c.prepareStatement("UPDATE FLASHCARDS SET attempts = attempts + 1 WHERE cardID = ?");
+            final PreparedStatement st = c.prepareStatement("UPDATE FLASHCARDS SET attempts = attempts + 1 WHERE cardUUID = ?");
             st.setString(1, uuid);
 
             st.executeUpdate();
@@ -183,7 +185,7 @@ public class FlashcardPersistenceHSQLDB implements FlashcardPersistence {
     @Override
     public void markAttemptedAndCorrect(String uuid) {
         try (final Connection c = connection()) {
-            final PreparedStatement st = c.prepareStatement("UPDATE FLASHCARDS SET attempts = attempts + 1, correct = correct + 1 WHERE cardID = ?");
+            final PreparedStatement st = c.prepareStatement("UPDATE FLASHCARDS SET attempts = attempts + 1, correct = correct + 1 WHERE cardUUID = ?");
             st.setString(1, uuid);
 
             st.executeUpdate();

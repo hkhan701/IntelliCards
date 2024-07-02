@@ -24,22 +24,24 @@ public class FlashcardSetPersistenceHSQLDB implements FlashcardSetPersistence {
     }
 
     private FlashcardSet fromResultSet(final ResultSet rs) throws SQLException {
-        final String setID = rs.getString("setID");
+        final String setUUID = rs.getString("setUUID");
         final String username = rs.getString("username");
         final String setName = rs.getString("setName");
-        return new FlashcardSet(setID, username, setName);
+        return new FlashcardSet(setUUID, username, setName);
     }
 
     @Override
     public FlashcardSet getFlashcardSet(String uuid) {
         try (final Connection c = connection()) {
-            final PreparedStatement st = c.prepareStatement("SELECT * FROM FLASHCARDSETS WHERE setID = ?");
+            final PreparedStatement st = c.prepareStatement("SELECT * FROM FLASHCARDSETS WHERE setUUID = ?");
             st.setString(1, uuid);
 
             final ResultSet rs = st.executeQuery();
 
-            rs.next();
-            final FlashcardSet flashcardSet = fromResultSet(rs);
+            FlashcardSet flashcardSet = null;
+
+            if(rs.next())
+                flashcardSet = fromResultSet(rs);
 
             rs.close();
             st.close();
@@ -56,12 +58,12 @@ public class FlashcardSetPersistenceHSQLDB implements FlashcardSetPersistence {
             FlashcardSet flashcardSet = getFlashcardSet(uuid);
 
             if (flashcardSet != null) {
-                final PreparedStatement st = c.prepareStatement("SELECT * FROM FLASHCARDS WHERE setID = ? AND deleted = FALSE");
+                final PreparedStatement st = c.prepareStatement("SELECT * FROM FLASHCARDS WHERE setUUID = ? AND deleted = FALSE");
                 st.setString(1, uuid);
                 final ResultSet rs = st.executeQuery();
 
                 while (rs.next()) {
-                    final Flashcard flashcard = new Flashcard(rs.getString("cardID"), rs.getString("setID"), rs.getString("question"), rs.getString("answer"), rs.getString("hint"), rs.getBoolean("deleted"), rs.getInt("attempts"), rs.getInt("correct"));
+                    final Flashcard flashcard = new Flashcard(rs.getString("cardUUID"), rs.getString("setUUID"), rs.getString("question"), rs.getString("answer"), rs.getString("hint"), rs.getBoolean("deleted"), rs.getInt("attempts"), rs.getInt("correct"));
                     flashcardSet.addFlashcard(flashcard);
                 }
                 return flashcardSet.getActiveFlashcards();
@@ -78,12 +80,12 @@ public class FlashcardSetPersistenceHSQLDB implements FlashcardSetPersistence {
             FlashcardSet flashcardSet = getFlashcardSet(uuid);
 
             if (flashcardSet != null) {
-                final PreparedStatement st = c.prepareStatement("SELECT * FROM FLASHCARDS WHERE setID = ? AND deleted = TRUE");
+                final PreparedStatement st = c.prepareStatement("SELECT * FROM FLASHCARDS WHERE setUUID = ? AND deleted = TRUE");
                 st.setString(1, uuid);
                 final ResultSet rs = st.executeQuery();
 
                 while (rs.next()) {
-                    final Flashcard flashcard = new Flashcard(rs.getString("cardID"), rs.getString("setID"), rs.getString("question"), rs.getString("answer"), rs.getString("hint"), rs.getBoolean("deleted"), rs.getInt("attempts"), rs.getInt("correct"));
+                    final Flashcard flashcard = new Flashcard(rs.getString("cardUUID"), rs.getString("setUUID"), rs.getString("question"), rs.getString("answer"), rs.getString("hint"), rs.getBoolean("deleted"), rs.getInt("attempts"), rs.getInt("correct"));
                     flashcardSet.addFlashcard(flashcard);
                 }
                 return flashcardSet.getDeletedFlashcards();
@@ -105,12 +107,12 @@ public class FlashcardSetPersistenceHSQLDB implements FlashcardSetPersistence {
             while (rs.next()) {
                 final FlashcardSet flashcardSet = fromResultSet(rs);
 
-                final PreparedStatement cardSt = c.prepareStatement("SELECT * FROM FLASHCARDS WHERE setID = ?");
+                final PreparedStatement cardSt = c.prepareStatement("SELECT * FROM FLASHCARDS WHERE setUUID = ?");
                 cardSt.setString(1, flashcardSet.getUUID());
                 final ResultSet cardRs = cardSt.executeQuery();
 
                 while (cardRs.next()) {
-                    final Flashcard flashcard = new Flashcard(cardRs.getString("cardID"), cardRs.getString("setID"), cardRs.getString("question"), cardRs.getString("answer"), cardRs.getString("hint"), cardRs.getBoolean("deleted"), cardRs.getInt("attempts"), cardRs.getInt("correct"));
+                    final Flashcard flashcard = new Flashcard(cardRs.getString("cardUUID"), cardRs.getString("setUUID"), cardRs.getString("question"), cardRs.getString("answer"), cardRs.getString("hint"), cardRs.getBoolean("deleted"), cardRs.getInt("attempts"), cardRs.getInt("correct"));
                     flashcardSet.addFlashcard(flashcard);
                 }
                 cardRs.close();

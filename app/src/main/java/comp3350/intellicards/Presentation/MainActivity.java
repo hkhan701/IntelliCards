@@ -3,6 +3,7 @@ package comp3350.intellicards.Presentation;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridLayout;
@@ -66,7 +67,11 @@ public class MainActivity extends Activity {
     }
 
     private void showCreateNewSetDialog() {
+        final int MAX_NAME_LENGTH = 25;
+
         EditText newSetNameInput = new EditText(this);
+        newSetNameInput.setFilters(new InputFilter[]{new InputFilter.LengthFilter(MAX_NAME_LENGTH)});
+
         new android.app.AlertDialog.Builder(this)
                 .setTitle("Create New Flashcard Set")
                 .setMessage("Enter the name for the new Flashcard Set:")

@@ -30,5 +30,12 @@
     <string name="guest_btn_text">Continue as Guest</string>
     <string name="profile_guest_user_text">Guest User</string>
 
+    <!-- Input Limits -->
+    <string name="hint_max_length">100</string>
+    <string name="question_max_length">200</string>
+    <string name="answer_max_length">200</string>
+    <string name="username_max_length">25</string>
+    <string name="password_max_length">25</string>
+
 
 </resources>

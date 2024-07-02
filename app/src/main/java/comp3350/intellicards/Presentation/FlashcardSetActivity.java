@@ -40,8 +40,7 @@ public class FlashcardSetActivity extends Activity {
         setUpTestButton(flashcardSetUUID);
     }
 
-    private void setUpFlashcardRecycler(String flashcardSetUUID)
-    {
+    private void setUpFlashcardRecycler(String flashcardSetUUID) {
         TextView flashcardSetTitle = findViewById(R.id.flashcardSetTitle);
         flashcardsRecyclerView = findViewById(R.id.flashcardsRecyclerView);
         flashcardsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -58,8 +57,7 @@ public class FlashcardSetActivity extends Activity {
     }
 
 
-    private void setUpAddFlashcardButton(String flashcardSetUUID)
-    {
+    private void setUpAddFlashcardButton(String flashcardSetUUID) {
         Button addFlashcardButton = findViewById(R.id.addFlashcardButton);
         addFlashcardButton.setOnClickListener(v -> {
             Intent intent = new Intent(FlashcardSetActivity.this, CreateFlashcardActivity.class);
@@ -67,8 +65,8 @@ public class FlashcardSetActivity extends Activity {
             startActivityForResult(intent, 1);
         });
     }
-    private void setUpBackButton()
-    {
+
+    private void setUpBackButton() {
         Button backButton = findViewById(R.id.backButton);
         backButton.setOnClickListener(v -> {
             Intent intent = new Intent(FlashcardSetActivity.this, MainActivity.class);
@@ -82,6 +80,9 @@ public class FlashcardSetActivity extends Activity {
             if (username.equals("guest")) {
                 // Show a Toast message if the user is a guest
                 Toast.makeText(FlashcardSetActivity.this, "Guests cannot take tests. Please log in.", Toast.LENGTH_SHORT).show();
+            } else if (flashcardSetManager.getActiveFlashcardSet(flashcardSetUUID).getActiveCount() == 0) {
+                // No active flashcards in the set, can't test it
+                Toast.makeText(FlashcardSetActivity.this, "There are no active flashcards in this set. Please add a flashcard.", Toast.LENGTH_SHORT).show();
             } else {
                 // Proceed to the test activity if the user is not a guest
                 Intent intent = new Intent(FlashcardSetActivity.this, FlashcardTestActivity.class);
@@ -90,7 +91,6 @@ public class FlashcardSetActivity extends Activity {
             }
         });
     }
-
 
 
     @Override
