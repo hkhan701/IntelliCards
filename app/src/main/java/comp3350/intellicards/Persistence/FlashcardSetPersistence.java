@@ -1,5 +1,6 @@
 package comp3350.intellicards.Persistence;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import comp3350.intellicards.Objects.Flashcard;
@@ -19,4 +20,7 @@ public interface FlashcardSetPersistence {
     boolean addFlashcardToFlashcardSet(String setUUID, Flashcard flashcard);
 
     void randomizeFlashcardSet(FlashcardSet flashcardSet);
+
+    List<FlashcardSet> getFlashcardSetsByUsername(String username);
+
 }
