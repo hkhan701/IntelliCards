@@ -15,7 +15,9 @@ Graders can login with the following pre-inserted usernames and passwords which 
 | user2    | pass2    |
 | user3    | pass3    |
 
-You can also login as a guest user but will be limited by the features they can use.
+- You can sign up with a new username and password. Once it is successful you will be able to login with it.
+
+- You can also login as a guest user but will be limited by the features they can use.
 
 ## IntelliCards Vision Statement
 
