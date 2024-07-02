@@ -38,8 +38,10 @@ public class FlashcardSetPersistenceHSQLDB implements FlashcardSetPersistence {
 
             final ResultSet rs = st.executeQuery();
 
-            rs.next();
-            final FlashcardSet flashcardSet = fromResultSet(rs);
+            FlashcardSet flashcardSet = null;
+
+            if(rs.next())
+                flashcardSet = fromResultSet(rs);
 
             rs.close();
             st.close();
@@ -124,7 +126,6 @@ public class FlashcardSetPersistenceHSQLDB implements FlashcardSetPersistence {
 
             return flashcardSets;
         } catch (SQLException e) {
-            e.printStackTrace();
             throw new PersistenceException(e);
         }
     }

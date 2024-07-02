@@ -88,8 +88,10 @@ public class FlashcardPersistenceHSQLDB implements FlashcardPersistence {
 
             final ResultSet rs = st.executeQuery();
 
-            rs.next();
-            final Flashcard flashcard = fromResultSet(rs);
+            Flashcard flashcard = null;
+
+            if(rs.next())
+                flashcard = fromResultSet(rs);
 
             rs.close();
             st.close();
