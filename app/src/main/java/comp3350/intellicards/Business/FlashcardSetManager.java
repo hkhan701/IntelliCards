@@ -46,16 +46,7 @@ public class FlashcardSetManager {
     }
 
     public List<FlashcardSet> getFlashcardSetsByUsername(String username) {
-        List<FlashcardSet> flashcardSets = this.flashcardSetPersistence.getAllFlashcardSets();
-        List<FlashcardSet> userSets = new ArrayList<>();
-
-        for (FlashcardSet flashcardSet : flashcardSets) {
-            if (flashcardSet.getUsername().equals(username)) {
-                userSets.add(flashcardSet);
-            }
-        }
-
-        return userSets;
+        return this.flashcardSetPersistence.getFlashcardSetsByUsername(username);
     }
 
 }

@@ -16,13 +16,15 @@ public class FlashcardSetPersistenceStub implements FlashcardSetPersistence {
     public FlashcardSetPersistenceStub() {
         flashcardSets = new LinkedHashMap<>();
 
-        FlashcardSet set1 = new FlashcardSet("0", "user1", "Set 1");
-        FlashcardSet set2 = new FlashcardSet("1", "user1", "Set 2");
-        FlashcardSet set3 = new FlashcardSet("2", "user1", "Set 3");
+        FlashcardSet set1 = new FlashcardSet("set1", "user1", "Math");
+        FlashcardSet set2 = new FlashcardSet("set2", "user1", "Science");
+        FlashcardSet set3 = new FlashcardSet("set3", "user2", "History");
+        FlashcardSet set4 = new FlashcardSet("set4", "user3", "Geography");
 
         flashcardSets.put(set1.getUUID(), set1);
         flashcardSets.put(set2.getUUID(), set2);
         flashcardSets.put(set3.getUUID(), set3);
+        flashcardSets.put(set4.getUUID(), set4);
     }
 
     @Override
@@ -74,5 +76,19 @@ public class FlashcardSetPersistenceStub implements FlashcardSetPersistence {
         if (set != null) {
             set.randomizeSet();
         }
+    }
+
+    @Override
+    public List<FlashcardSet> getFlashcardSetsByUsername(String username) {
+        List<FlashcardSet> flashcardSets = getAllFlashcardSets();
+        List<FlashcardSet> userSets = new ArrayList<>();
+
+        for (FlashcardSet flashcardSet : flashcardSets) {
+            if (flashcardSet.getUsername().equals(username)) {
+                userSets.add(flashcardSet);
+            }
+        }
+
+        return userSets;
     }
 }
