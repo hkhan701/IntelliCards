@@ -93,6 +93,7 @@ public class AuthActivity extends Activity {
     private void setUpGuestButtonListener() {
         guestButton.setOnClickListener(v -> {
             UserSession.getInstance().setUsername("guest");
+            Toast.makeText(this, "Logged in as a guest successfully!", Toast.LENGTH_LONG).show();
             navigateToMainActivity();
         });
     }
