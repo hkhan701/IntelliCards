@@ -171,4 +171,38 @@ public class FlashcardSetPersistenceHSQLDB implements FlashcardSetPersistence {
             throw new PersistenceException(e);
         }
     }
+
+    public List<FlashcardSet> getFlashcardSetsByUsername(String username) {
+        List<FlashcardSet> flashcardSets = new ArrayList<>();
+
+        try (final Connection c = connection()) {
+            final PreparedStatement st = c.prepareStatement("SELECT * FROM FLASHCARDSETS WHERE username = ?");
+            st.setString(1, username);
+
+            final ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                final FlashcardSet flashcardSet = fromResultSet(rs);
+
+                final PreparedStatement cardSt = c.prepareStatement("SELECT * FROM FLASHCARDS WHERE setUUID = ?");
+                cardSt.setString(1, flashcardSet.getUUID());
+                final ResultSet cardRs = cardSt.executeQuery();
+
+                while (cardRs.next()) {
+                    final Flashcard flashcard = new Flashcard(cardRs.getString("cardUUID"), cardRs.getString("setUUID"), cardRs.getString("question"), cardRs.getString("answer"), cardRs.getString("hint"), cardRs.getBoolean("deleted"), cardRs.getInt("attempts"), cardRs.getInt("correct"));
+                    flashcardSet.addFlashcard(flashcard);
+                }
+                cardRs.close();
+                cardSt.close();
+
+                flashcardSets.add(flashcardSet);
+            }
+
+            rs.close();
+            st.close();
+
+            return flashcardSets;
+        } catch (SQLException e) {
+            throw new PersistenceException(e);
+        }
+    }
 }
