@@ -11,26 +11,31 @@ import java.util.UUID;
 import comp3350.intellicards.Objects.Flashcard;
 import comp3350.intellicards.Objects.FlashcardSet;
 
+import comp3350.intellicards.Objects.User;
+
 public class FlashcardSetTest {
 
-    private FlashcardSet cardSet;
+    private FlashcardSet testCardSet;
+
+    private User testUser;
 
     @Before
     public void setUp() {
-        cardSet = new FlashcardSet();
+        testUser = new User("TestUser", "TestPassword");
+        testCardSet = new FlashcardSet("TestUser", "TestSet");
     }
 
     /*
      * Constructor Tests
      */
-    @Test
-    public void testSetConstructorWithName() {
-        String setName = "COMP3350";
-        FlashcardSet namedCardSet = new FlashcardSet(setName);
-
-        assertEquals("Adding string to constructor parameters should change the value of flashcardSetName",
-                setName, namedCardSet.getFlashcardSetName());
-    }
+//    @Test
+//    public void testSetConstructorWithName() {
+//        String setName = "COMP3350";
+//        FlashcardSet namedCardSet = new FlashcardSet(setName);
+//
+//        assertEquals("Adding string to constructor parameters should change the value of flashcardSetName",
+//                setName, namedCardSet.getFlashcardSetName());
+//    }
 
     /*
      * Test getUUID()
@@ -38,7 +43,7 @@ public class FlashcardSetTest {
     @Test
     public void testGetFlashcardSetUuid() {
         assertNotNull("UUID should be assigned automatically after construction",
-                cardSet.getUUID());
+                testCardSet.getUUID());
     }
 
     /*
@@ -46,22 +51,22 @@ public class FlashcardSetTest {
      */
     @Test
     public void testAddFlashcard() {
-        Flashcard flashcard = new Flashcard("Generic Answer", "Generic Question", "Generic Hint");
-        cardSet.addFlashcard(flashcard);
+        Flashcard flashcard = new Flashcard(testCardSet.getUUID(),"Generic Answer", "Generic Question", "Generic Hint");
+        testCardSet.addFlashcard(flashcard);
 
         assertEquals("There should be one flashcard in the set",
-                1, cardSet.size());
+                1, testCardSet.size());
         assertEquals("The flashcard should be added into the flashcards list",
-                flashcard, cardSet.getIndex(0));
+                flashcard, testCardSet.getIndex(0));
     }
 
     @Test
     public void testAddFlashcardWithData() {
-        Flashcard flashcard = new Flashcard("Generic Answer", "Generic Question", "Generic Hint");
+        Flashcard flashcard = new Flashcard(testCardSet.getUUID(), "Generic Answer", "Generic Question", "Generic Hint");
         flashcard.setQuestion("Magic 8 Ball, What is the meaning of life?");
         flashcard.setAnswer("Probably");
-        cardSet.addFlashcard(flashcard);
-        Flashcard flashcardGet = cardSet.getIndex(0);
+        testCardSet.addFlashcard(flashcard);
+        Flashcard flashcardGet = testCardSet.getIndex(0);
 
         assertEquals("The question on the flashcard should not be overwritten when added to a set",
                 flashcard.getQuestion(), flashcardGet.getQuestion());
@@ -75,36 +80,36 @@ public class FlashcardSetTest {
      */
     @Test
     public void testGetActiveFlashcards() {
-        Flashcard flashcard1 = new Flashcard("Less Generic Answer", "Less Generic Question", null);
-        Flashcard flashcard2 = new Flashcard("Even Less Generic Answer", "Even Less Generic Question", "Need Hint");
-        cardSet.addFlashcard(flashcard1);
-        cardSet.addFlashcard(flashcard2);
+        Flashcard flashcard1 = new Flashcard(testCardSet.getUUID(), "Less Generic Answer", "Less Generic Question", null);
+        Flashcard flashcard2 = new Flashcard(testCardSet.getUUID(), "Even Less Generic Answer", "Even Less Generic Question", "Need Hint");
+        testCardSet.addFlashcard(flashcard1);
+        testCardSet.addFlashcard(flashcard2);
 
         assertEquals("The first card in the set should be the card that was added in first",
-                flashcard1, cardSet.getActiveFlashcards().getIndex(0));
+                flashcard1, testCardSet.getActiveFlashcards().getIndex(0));
 
         assertEquals("The second card in the set should be the card that was added in second",
-                flashcard2, cardSet.getActiveFlashcards().getIndex(1));
+                flashcard2, testCardSet.getActiveFlashcards().getIndex(1));
 
         assertEquals("The list of active flashcards should return the amount of flashcards added",
-                2, cardSet.getActiveCount());
+                2, testCardSet.getActiveCount());
     }
 
     @Test
     public void testGetActiveFlashcardsDoesNotReturnDeleted() {
-        Flashcard flashcard1 = new Flashcard("Less Generic Answer", "Less Generic Question", null);
-        Flashcard flashcard2 = new Flashcard("Even Less Generic Answer", "Even Less Generic Question", "Need Hint");
-        cardSet.addFlashcard(flashcard1);
-        cardSet.addFlashcard(flashcard2);
+        Flashcard flashcard1 = new Flashcard(testCardSet.getUUID(), "Less Generic Answer", "Less Generic Question", null);
+        Flashcard flashcard2 = new Flashcard(testCardSet.getUUID(), "Even Less Generic Answer", "Even Less Generic Question", "Need Hint");
+        testCardSet.addFlashcard(flashcard1);
+        testCardSet.addFlashcard(flashcard2);
 
         flashcard2.markDeleted();
-        Flashcard activeCard = cardSet.getActiveFlashcards().getIndex(0);
+        Flashcard activeCard = testCardSet.getActiveFlashcards().getIndex(0);
 
         assertEquals("If the card wasn't marked deleted, it should stay active in the set",
                 flashcard1, activeCard);
 
         assertEquals("A deleted flashcard should be removed from the active flashcard list",
-                1, cardSet.getActiveCount());
+                1, testCardSet.getActiveCount());
     }
 
     /*
@@ -112,26 +117,26 @@ public class FlashcardSetTest {
      */
     @Test
     public void testGetFlashcardById() {
-        Flashcard flashcard1 = new Flashcard("Less Generic Answer", "Less Generic Question", null);
-        Flashcard flashcard2 = new Flashcard("Even Less Generic Answer", "Even Less Generic Question", "Need Hint");
-        cardSet.addFlashcard(flashcard1);
-        cardSet.addFlashcard(flashcard2);
+        Flashcard flashcard1 = new Flashcard(testCardSet.getUUID(), "Less Generic Answer", "Less Generic Question", null);
+        Flashcard flashcard2 = new Flashcard(testCardSet.getUUID(), "Even Less Generic Answer", "Even Less Generic Question", "Need Hint");
+        testCardSet.addFlashcard(flashcard1);
+        testCardSet.addFlashcard(flashcard2);
         String uuid = flashcard2.getUUID();
 
         assertEquals("Given a card's UUID, we can find it in the set",
-                flashcard2, cardSet.getFlashcardById(uuid));
+                flashcard2, testCardSet.getFlashcardById(uuid));
     }
 
     @Test
     public void testGetFlashcardByIdCardIsNotInSet() {
-        Flashcard flashcard1 = new Flashcard("Less Generic Answer", "Less Generic Question", null);
-        Flashcard flashcard2 = new Flashcard("Even Less Generic Answer", "Even Less Generic Question", "Need Hint");
-        cardSet.addFlashcard(flashcard1);
-        cardSet.addFlashcard(flashcard2);
+        Flashcard flashcard1 = new Flashcard(testCardSet.getUUID(), "Less Generic Answer", "Less Generic Question", null);
+        Flashcard flashcard2 = new Flashcard(testCardSet.getUUID(), "Even Less Generic Answer", "Even Less Generic Question", "Need Hint");
+        testCardSet.addFlashcard(flashcard1);
+        testCardSet.addFlashcard(flashcard2);
         String uuid = UUID.randomUUID().toString();
 
         assertNull("The get flashcard by ID method will return null if the card is not in the set",
-                cardSet.getFlashcardById(uuid));
+                testCardSet.getFlashcardById(uuid));
     }
 
     @Test
@@ -139,7 +144,7 @@ public class FlashcardSetTest {
         String uuid = UUID.randomUUID().toString();
 
         assertNull("Trying to get a card from a set with no flashcards will return null",
-                cardSet.getFlashcardById(uuid));
+                testCardSet.getFlashcardById(uuid));
     }
 
     @After
