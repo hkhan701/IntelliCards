@@ -13,11 +13,16 @@ import comp3350.intellicards.Persistence.FlashcardPersistence;
 public class FlashcardPersistenceStub implements FlashcardPersistence {
 
     private Map<String, Flashcard> flashcards;
+    private FlashcardSetManager flashcardSetManager;
+    private boolean mockInitialized;
 
-    public FlashcardPersistenceStub() {
+    public FlashcardPersistenceStub(FlashcardSetManager setManager) {
         flashcards = new LinkedHashMap<>();
-        FlashcardSetManager flashcardSetManager = new FlashcardSetManager();
+        flashcardSetManager = setManager;
+        mockInitialized = false;
+    }
 
+    public void mockData() {
         Flashcard flashcard1 = new Flashcard("set1", "What is 2+2?", "4", "Basic arithmetic");
         Flashcard flashcard2 = new Flashcard("set1", "What is the square root of 16?", "4", "Basic arithmetic");
         Flashcard flashcard3 = new Flashcard("set2", "What is the chemical symbol for water?", "H2O", "Chemical formula");
@@ -47,6 +52,11 @@ public class FlashcardPersistenceStub implements FlashcardPersistence {
         flashcardSetManager.addFlashcardToFlashcardSet("set4", flashcard7);
         flashcardSetManager.addFlashcardToFlashcardSet("set4", flashcard8);
 
+        mockInitialized = true;
+    }
+
+    public boolean isMockInitialized() {
+        return mockInitialized;
     }
 
     // Can be used to get all active flashcards for searching capability

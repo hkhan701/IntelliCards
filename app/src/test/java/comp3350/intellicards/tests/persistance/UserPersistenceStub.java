@@ -8,10 +8,14 @@ import comp3350.intellicards.Persistence.UserPersistence;
 
 public class UserPersistenceStub implements UserPersistence {
     private List<User> users;
+    private boolean mockInitialized;
 
     public UserPersistenceStub() {
         users = new ArrayList<>();
+        mockInitialized = false;
+    }
 
+    public void mockData() {
         User user1 = new User("guest", "");
         User user2 = new User("user1", "pass1");
         User user3 = new User("user2", "pass2");
@@ -21,6 +25,12 @@ public class UserPersistenceStub implements UserPersistence {
         users.add(user2);
         users.add(user3);
         users.add(user4);
+
+        mockInitialized = true;
+    }
+
+    public boolean isMockInitialized() {
+        return mockInitialized;
     }
 
     @Override
