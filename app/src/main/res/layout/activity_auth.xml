@@ -3,21 +3,31 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/background">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_marginTop="175dp"
+        android:src="@drawable/auth_logo"
+        app:srcCompat="@drawable/auth_logo"
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
         android:id="@+id/usernameText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
-        android:layout_marginTop="150dp"
+        android:layout_marginTop="500dp"
         android:layout_marginEnd="50dp"
         android:text="@string/username_text"
+        android:textSize="25sp"
         app:layout_constraintBottom_toTopOf="@+id/username"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <EditText
         android:id="@+id/username"
@@ -29,6 +39,7 @@
         android:ems="10"
         android:inputType="text"
         android:maxLength="@string/username_max_length"
+        android:textSize="25sp"
         app:layout_constraintBottom_toTopOf="@+id/passwordText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -42,6 +53,7 @@
         android:layout_marginStart="50dp"
         android:layout_marginEnd="50dp"
         android:text="@string/password_text"
+        android:textSize="25sp"
         app:layout_constraintBottom_toTopOf="@+id/password"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -58,6 +70,7 @@
         android:ems="10"
         android:inputType="textPassword"
         android:maxLength="@string/password_max_length"
+        android:textSize="25sp"
         app:layout_constraintBottom_toTopOf="@+id/logInButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -66,10 +79,13 @@
     <Button
         android:id="@+id/logInButton"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:layout_marginStart="150dp"
         android:layout_marginEnd="150dp"
         android:text="@string/log_in_btn_text"
+        android:textSize="20sp"
+        android:backgroundTint="#55AD9B"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/registerButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -79,10 +95,14 @@
     <Button
         android:id="@+id/registerButton"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:layout_marginStart="150dp"
         android:layout_marginEnd="150dp"
+        android:layout_marginTop="5dp"
         android:text="@string/sign_up_btn_text"
+        android:textSize="20sp"
+        android:textColor="@color/white"
+        android:backgroundTint="#55AD9B"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -91,10 +111,17 @@
     <Button
         android:id="@+id/guestButton"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:layout_marginStart="150dp"
         android:layout_marginEnd="150dp"
+        android:layout_marginTop="5dp"
         android:text="@string/guest_btn_text"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:backgroundTint="@android:color/transparent"
+        android:textColor="#55AD9B"
+        app:strokeColor="#55AD9B"
+        app:strokeWidth="2dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"

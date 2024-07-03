@@ -36,6 +36,7 @@
     <string name="answer_max_length">200</string>
     <string name="username_max_length">25</string>
     <string name="password_max_length">25</string>
+    <string name="create_flashcard">Create Flashcard</string>
 
 
 </resources>
