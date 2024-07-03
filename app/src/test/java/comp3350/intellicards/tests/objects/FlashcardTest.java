@@ -12,13 +12,11 @@ import comp3350.intellicards.Objects.User;
 
 public class FlashcardTest {
 
-    private User testUser;
     private FlashcardSet testCardSet;
     private Flashcard testFlashcard;
 
     @Before
     public void setUp() {
-        testUser = new User("testUser", "testPassword");
         testCardSet = new FlashcardSet("testUser", "Test Card Set");
         testFlashcard = new Flashcard(testCardSet.getUUID(), "Generic Answer", "Generic Question", "Generic Hint");
     }

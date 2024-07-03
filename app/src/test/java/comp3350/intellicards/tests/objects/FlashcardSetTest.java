@@ -17,25 +17,10 @@ public class FlashcardSetTest {
 
     private FlashcardSet testCardSet;
 
-    private User testUser;
-
     @Before
     public void setUp() {
-        testUser = new User("TestUser", "TestPassword");
         testCardSet = new FlashcardSet("TestUser", "TestSet");
     }
-
-    /*
-     * Constructor Tests
-     */
-//    @Test
-//    public void testSetConstructorWithName() {
-//        String setName = "COMP3350";
-//        FlashcardSet namedCardSet = new FlashcardSet(setName);
-//
-//        assertEquals("Adding string to constructor parameters should change the value of flashcardSetName",
-//                setName, namedCardSet.getFlashcardSetName());
-//    }
 
     /*
      * Test getUUID()

@@ -27,17 +27,6 @@ public class FlashcardSetManagerTest {
     }
 
     /*
-     * Test Constructors()
-     */
-//    @Test
-//    public void testNullConstructorInitializesWithData() {
-//        FlashcardSetManager flashcardSetManagerNullConstructor = new FlashcardSetManager();
-//
-//        assertNotEquals("There should be data contained in the flashcardSetManager if the null constructor is called",
-//                0, flashcardSetManagerNullConstructor.getAllFlashcardSets().size());
-//    }
-
-    /*
      * Test getFlashcardSet()
      */
     @Test

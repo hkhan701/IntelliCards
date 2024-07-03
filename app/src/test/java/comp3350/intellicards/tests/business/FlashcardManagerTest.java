@@ -33,17 +33,6 @@ public class FlashcardManagerTest {
     }
 
     /*
-     * Test Constructors()
-     */
-//    @Test
-//    public void testNullConstructorInitializesWithData() {
-//        FlashcardManager flashcardManagerNullConstructor = new FlashcardManager();
-//
-//        assertNotEquals("There should be data contained in the flashcardManager if the null constructor is called",
-//                0, flashcardManagerNullConstructor.getAllActiveFlashcards().size());
-//    }
-
-    /*
      * Test getAllActiveFlashcards()
      */
     @Test
