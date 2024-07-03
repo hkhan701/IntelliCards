@@ -9,36 +9,48 @@ import org.junit.Before;
 import java.util.UUID;
 
 import comp3350.intellicards.Business.FlashcardManager;
+import comp3350.intellicards.Business.FlashcardSetManager;
 import comp3350.intellicards.Objects.Flashcard;
-import comp3350.intellicards.Persistence.stubs.FlashcardPersistenceStub;
+import comp3350.intellicards.Objects.FlashcardSet;
+import comp3350.intellicards.tests.persistance.FlashcardPersistenceStub;
+import comp3350.intellicards.tests.persistance.FlashcardSetPersistenceStub;
 
 public class FlashcardManagerTest {
 
     private FlashcardManager flashcardManager;
 
+    private FlashcardPersistenceStub flashcardData;
+    private FlashcardSetPersistenceStub flashcardSetData;
+    private FlashcardSetManager flashcardSetManager;
+
     @Before
     public void setUp() {
-        flashcardManager = new FlashcardManager();
+        flashcardSetData = new FlashcardSetPersistenceStub();
+        flashcardSetManager = new FlashcardSetManager(flashcardSetData);
+
+        flashcardData = new FlashcardPersistenceStub(flashcardSetManager);
+        flashcardManager = new FlashcardManager(flashcardData);
     }
 
     /*
      * Test Constructors()
      */
-    @Test
-    public void testNullConstructorInitializesWithData() {
-        FlashcardManager flashcardManagerNullConstructor = new FlashcardManager();
-
-        assertNotEquals("There should be data contained in the flashcardManager if the null constructor is called",
-                0, flashcardManagerNullConstructor.getAllActiveFlashcards().size());
-    }
+//    @Test
+//    public void testNullConstructorInitializesWithData() {
+//        FlashcardManager flashcardManagerNullConstructor = new FlashcardManager();
+//
+//        assertNotEquals("There should be data contained in the flashcardManager if the null constructor is called",
+//                0, flashcardManagerNullConstructor.getAllActiveFlashcards().size());
+//    }
 
     /*
      * Test getAllActiveFlashcards()
      */
     @Test
     public void testGetAllActiveFlashcardsOnlyReturnsActiveOnes() {
-        Flashcard flashcard1 = new Flashcard("Analysis/Requirements", "What is the first stage of the software development lifecycle?", null);
-        Flashcard flashcard2 = new Flashcard("Design", "What is the second stage of the software development lifecycle?", null);
+        FlashcardSet testCardSet = new FlashcardSet("testUser", "Test Card Set");
+        Flashcard flashcard1 = new Flashcard(testCardSet.getUUID(), "Test Question 1", "Test Answer 1", null);
+        Flashcard flashcard2 = new Flashcard(testCardSet.getUUID(), "Test Question 2", "Test Answer 2", null);
         String flashcard2UUID = flashcard2.getUUID();
 
         flashcardManager.insertFlashcard(flashcard1);
@@ -47,9 +59,9 @@ public class FlashcardManagerTest {
         flashcardManager.markFlashcardAsDeleted(flashcard2UUID);
 
         assertTrue("An active flashcard should be returned when calling getAllActiveFlashcards()",
-                flashcardManager.getAllActiveFlashcards().contains(flashcard1));
+                flashcardManager.getAllActiveFlashcards(testCardSet.getUUID()).contains(flashcard1));
         assertFalse("A deleted flashcard should not be returned when calling getAllActiveFlashcards()",
-                flashcardManager.getAllActiveFlashcards().contains(flashcard2));
+                flashcardManager.getAllActiveFlashcards(testCardSet.getUUID()).contains(flashcard2));
     }
 
     /*
@@ -57,8 +69,9 @@ public class FlashcardManagerTest {
      */
     @Test
     public void testGetAllDeletedFlashcardsOnlyReturnsDeletedOnes() {
-        Flashcard flashcard1 = new Flashcard("Analysis/Requirements", "What is the first stage of the software development lifecycle?", null);
-        Flashcard flashcard2 = new Flashcard("Design", "What is the second stage of the software development lifecycle?", null);
+        FlashcardSet testCardSet = new FlashcardSet("testUser", "Test Card Set");
+        Flashcard flashcard1 = new Flashcard(testCardSet.getUUID(), "Test Question 1", "Test Answer 1", null);
+        Flashcard flashcard2 = new Flashcard(testCardSet.getUUID(), "Test Question 2", "Test Answer 2", null);
         String flashcard2UUID = flashcard2.getUUID();
 
         flashcardManager.insertFlashcard(flashcard1);
@@ -77,7 +90,8 @@ public class FlashcardManagerTest {
      */
     @Test
     public void testGetFlashcardThatExistsInManager() {
-        Flashcard flashcard = new Flashcard("Analysis/Requirements", "What is the first stage of the software development lifecycle?", null);
+        FlashcardSet testCardSet = new FlashcardSet("testUser", "Test Card Set");
+        Flashcard flashcard = new Flashcard(testCardSet.getUUID(), "Test Question", "Test Answer", null);
         String flashcardId = flashcard.getUUID();
         flashcardManager.insertFlashcard(flashcard);
 
@@ -98,7 +112,8 @@ public class FlashcardManagerTest {
      */
     @Test
     public void testUpdateFlashcardWillReviseChangedFields() {
-        Flashcard flashcard = new Flashcard("Analysis/Requirements", "What is the first stage of the software development lifecycle?", null);
+        FlashcardSet testCardSet = new FlashcardSet("testUser", "Test Card Set");
+        Flashcard flashcard = new Flashcard(testCardSet.getUUID(), "Test Question", "Test Answer", null);
         flashcardManager.insertFlashcard(flashcard);
 
         flashcard.setHint("This is the stage where you talk to clients and assess their needs");
@@ -113,7 +128,8 @@ public class FlashcardManagerTest {
      */
     @Test
     public void testRestoredFlashcardOnlyShowsUpInActiveList() {
-        Flashcard flashcard = new Flashcard("Analysis/Requirements", "What is the first stage of the software development lifecycle?", null);
+        FlashcardSet testCardSet = new FlashcardSet("testUser", "Test Card Set");
+        Flashcard flashcard = new Flashcard(testCardSet.getUUID(), "Test Question", "Test Answer", null);
         String flashcardUUID = flashcard.getUUID();
 
         flashcardManager.insertFlashcard(flashcard);
@@ -122,7 +138,7 @@ public class FlashcardManagerTest {
         flashcardManager.restoreFlashcard(flashcardUUID);
 
         assertTrue("A flashcard that has been restored should show up in the active list",
-                flashcardManager.getAllActiveFlashcards().contains(flashcard));
+                flashcardManager.getAllActiveFlashcards(testCardSet.getUUID()).contains(flashcard));
         assertFalse("A flashcard that has been restored should not show up in the deleted list",
                 flashcardManager.getAllDeletedFlashcards().contains(flashcard));
     }
