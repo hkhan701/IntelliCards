@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 
 import java.util.List;
 
+import comp3350.intellicards.Application.Services;
 import comp3350.intellicards.Application.UserSession;
 import comp3350.intellicards.Objects.FlashcardSet;
 import comp3350.intellicards.Business.FlashcardManager;
@@ -36,8 +37,8 @@ public class MainActivity extends Activity {
     }
 
     private void initializePersistence() {
-        flashcardSetManager = new FlashcardSetManager();
-        FlashcardManager flashcardManager = new FlashcardManager();
+        flashcardSetManager = new FlashcardSetManager(Services.getFlashcardSetPersistence());
+        FlashcardManager flashcardManager = new FlashcardManager(Services.getFlashcardPersistence());
 
         gridLayout = findViewById(R.id.gridLayout);
 

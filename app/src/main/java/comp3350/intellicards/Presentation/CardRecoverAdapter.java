@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+import comp3350.intellicards.Application.Services;
 import comp3350.intellicards.Business.FlashcardManager;
 import comp3350.intellicards.Objects.Flashcard;
 import comp3350.intellicards.Presentation.Utils.FlashcardUtils;
@@ -23,7 +24,7 @@ public class CardRecoverAdapter extends RecyclerView.Adapter<CardRecoverAdapter.
 
     public CardRecoverAdapter(List<Flashcard> flashcardList) {
         this.flashcardList = flashcardList;
-        this.flashcardManager = new FlashcardManager();
+        this.flashcardManager = new FlashcardManager(Services.getFlashcardPersistence());
     }
 
     @NonNull

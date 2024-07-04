@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import comp3350.intellicards.Application.Services;
 import comp3350.intellicards.Business.FlashcardManager;
 import comp3350.intellicards.Business.FlashcardSetManager;
 import comp3350.intellicards.Objects.Flashcard;
@@ -36,8 +37,8 @@ public class CreateFlashcardActivity extends Activity {
     }
 
     private void initializeManagers() {
-        flashcardSetManager = new FlashcardSetManager();
-        flashcardManager = new FlashcardManager();
+        flashcardSetManager = new FlashcardSetManager(Services.getFlashcardSetPersistence());
+        flashcardManager = new FlashcardManager(Services.getFlashcardPersistence());
     }
 
     private void initializeViews() {

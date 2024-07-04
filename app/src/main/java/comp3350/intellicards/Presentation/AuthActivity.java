@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 import comp3350.intellicards.Application.Configuration;
+import comp3350.intellicards.Application.Services;
 import comp3350.intellicards.Application.UserSession;
 import comp3350.intellicards.Objects.User;
 import comp3350.intellicards.Business.UserManager;
@@ -36,7 +37,7 @@ public class AuthActivity extends Activity {
         setContentView(R.layout.activity_auth);
         copyDatabaseToDevice();
 
-        userManager = new UserManager();
+        userManager = new UserManager(Services.getUserPersistence());
         initializeViews();
         setUpListeners();
     }
