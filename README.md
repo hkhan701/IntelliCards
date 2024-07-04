@@ -5,9 +5,19 @@
 | :memo:        | Please use portrait mode for the tablet to ensure proper user experience.       |
 |---------------|:------------------------|
 
+### Changing Data Sources
+
+Graders can change between data sources by changing the variable "datasource" in "app/src/main/java/comp3350/intellicards/Application/Configuration.java"
+The following variable values are recognized:
+- "hsqldb"
+- "testHsqldb"
+- "stub"
+
+If an unrecognized variable value is declared, the app will default to the HSQLDB
+
 ### Login Page
 
-Graders can login with the following pre-inserted usernames and passwords which contain fake data
+Graders can login with the following pre-inserted usernames and passwords unless they are using the Test HSQLDB. They contain fake data.
 
 | Username | Password |
 |----------|----------|
