@@ -7,14 +7,18 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 import comp3350.intellicards.Objects.Flashcard;
+import comp3350.intellicards.Objects.FlashcardSet;
+import comp3350.intellicards.Objects.User;
 
 public class FlashcardTest {
 
-    private Flashcard flashcard;
+    private FlashcardSet testCardSet;
+    private Flashcard testFlashcard;
 
     @Before
     public void setUp() {
-        flashcard = new Flashcard("Generic Answer", "Generic Question", "Generic Hint");
+        testCardSet = new FlashcardSet("testUser", "Test Card Set");
+        testFlashcard = new Flashcard(testCardSet.getUUID(), "Generic Answer", "Generic Question", "Generic Hint");
     }
 
     /*
@@ -23,7 +27,7 @@ public class FlashcardTest {
     @Test
     public void testGetUuid() {
         assertNotNull("The flashcard's UUID is assigned automatically upon creation",
-                flashcard.getUUID());
+                testFlashcard.getUUID());
     }
 
     /*
@@ -32,7 +36,7 @@ public class FlashcardTest {
     @Test
     public void testGetAnswer() {
         assertNotNull("We can retrieve a card's answer",
-                flashcard.getAnswer());
+                testFlashcard.getAnswer());
     }
 
     /*
@@ -41,7 +45,7 @@ public class FlashcardTest {
     @Test
     public void testGetQuestion() {
         assertNotNull("We can retrieve a card's question",
-                flashcard.getQuestion());
+                testFlashcard.getQuestion());
     }
 
     /*
@@ -50,7 +54,7 @@ public class FlashcardTest {
     @Test
     public void testGetHint() {
         assertEquals("We can retrieve a card's hint",
-                "Generic Hint", flashcard.getHint());
+                "Generic Hint", testFlashcard.getHint());
     }
 
     /*
@@ -58,9 +62,9 @@ public class FlashcardTest {
      */
     @Test
     public void testSetAnswerOverwritesPreviousAnswer() {
-        flashcard.setAnswer("Test answer");
+        testFlashcard.setAnswer("Test answer");
         assertEquals("Changing the answer of a card overwrites the previous answer",
-                "Test answer", flashcard.getAnswer());
+                "Test answer", testFlashcard.getAnswer());
     }
 
     /*
@@ -68,9 +72,9 @@ public class FlashcardTest {
      */
     @Test
     public void testSetQuestionOverwritesPreviousQuestion() {
-        flashcard.setQuestion("Test question");
+        testFlashcard.setQuestion("Test question");
         assertEquals("Changing the question of a card overwrites the previous question",
-                "Test question", flashcard.getQuestion());
+                "Test question", testFlashcard.getQuestion());
     }
 
     /*
@@ -78,15 +82,15 @@ public class FlashcardTest {
      */
     @Test
     public void testSetHint() {
-        flashcard.setHint("Test hint");
+        testFlashcard.setHint("Test hint");
         assertEquals("Changing the hint of a card overwrites the previous hint",
-                "Test hint", flashcard.getHint());
+                "Test hint", testFlashcard.getHint());
     }
 
     @Test
     public void testSetHintNull() {
-        flashcard.setHint(null);
-        assertNull("Changing the hint to null should not cause any problems - it is acceptable", flashcard.getHint());
+        testFlashcard.setHint(null);
+        assertNull("Changing the hint to null should not cause any problems - it is acceptable", testFlashcard.getHint());
     }
 
 
@@ -96,7 +100,7 @@ public class FlashcardTest {
     @Test
     public void testIsDeleted() {
         assertFalse("A card is not marked as deleted unless it was marked as such",
-                flashcard.isDeleted());
+                testFlashcard.isDeleted());
     }
 
     /*
@@ -104,9 +108,9 @@ public class FlashcardTest {
      */
     @Test
     public void testMarkDeleted() {
-        flashcard.markDeleted();
+        testFlashcard.markDeleted();
         assertTrue("A flashcard that was marked as deleted will reflect that",
-                flashcard.isDeleted());
+                testFlashcard.isDeleted());
     }
 
     /*
@@ -114,10 +118,10 @@ public class FlashcardTest {
      */
     @Test
     public void testMarkRecovered() {
-        flashcard.markDeleted();
-        flashcard.markRecovered();
+        testFlashcard.markDeleted();
+        testFlashcard.markRecovered();
         assertFalse("A card can be recovered after being marked as deleted",
-                flashcard.isDeleted());
+                testFlashcard.isDeleted());
     }
 
     @After

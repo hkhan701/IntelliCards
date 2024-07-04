@@ -13,6 +13,11 @@ public class FlashcardManager {
         flashcardPersistence = Services.getFlashcardPersistence();
     }
 
+    // Should only used in testing
+    public FlashcardManager(FlashcardPersistence persistence) {
+        flashcardPersistence = persistence;
+    };
+
     public List<Flashcard> getAllActiveFlashcards(String setUUID) {
         return this.flashcardPersistence.getAllActiveFlashcards(setUUID);
     }
