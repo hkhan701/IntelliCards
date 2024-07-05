@@ -4,6 +4,8 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="background">#DBEFF8</color>
+
     <color name="buttons">#004080</color>
     <color name="buttons2">#0059b3</color>
+    <color name="btn_txt">#FFFFFFFF</color>
 </resources>

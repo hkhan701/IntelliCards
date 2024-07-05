@@ -35,11 +35,12 @@
 
             <Button
                 android:id="@+id/recoveryButton"
-                android:layout_width="150dp"
+                android:layout_width="112dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="6dp"
                 android:backgroundTint="@color/buttons"
                 android:text="@string/recover_btn_text"
+                android:textColor="@color/btn_txt"
                 android:textSize="17sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -48,11 +49,12 @@
 
             <Button
                 android:id="@+id/flipButton"
-                android:layout_width="150dp"
+                android:layout_width="112dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="6dp"
                 android:backgroundTint="@color/buttons"
                 android:text="@string/flip_btn_text"
+                android:textColor="@color/btn_txt"
                 android:textSize="17sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
