@@ -12,6 +12,7 @@ import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatImageButton;
 
 import comp3350.intellicards.Business.FlashcardManager;
 import comp3350.intellicards.Business.ReportCalculator;
@@ -28,7 +29,7 @@ public class FlashcardTestActivity extends Activity {
     private int correct = 0;
     private int attempted = 0;
     ViewFlipper viewFlipper;
-    Button backButton;
+    AppCompatImageButton backButton;
     TextView resultTextBox;
     Button finishButton;
 

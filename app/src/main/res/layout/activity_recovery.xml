@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/recoveryPage"
@@ -8,24 +9,29 @@
     tools:context="comp3350.intellicards.Presentation.RecoverFlashcardsActivity"
     android:background="#dbeff8">
 
-    <Button
+    <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/backButton"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="32dp"
-        android:text="@string/back_btn_text"
-        android:textSize="17sp"
+        android:backgroundTint="@color/buttons"
+        android:scaleType="fitCenter"
+        android:src="@drawable/baseline_arrow_back_24"
+        android:tint="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.021"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycleView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="728dp"
+        android:layout_height="197dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="40dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginEnd="15dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/backButton" />
 
