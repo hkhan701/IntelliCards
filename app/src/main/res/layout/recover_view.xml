@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/recover_layout"
     android:layout_width="match_parent"
@@ -9,7 +10,6 @@
     android:orientation="vertical"
     app:cardCornerRadius="16dp"
     app:cardElevation="12dp">
-
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -38,6 +38,7 @@
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="6dp"
+                android:backgroundTint="@color/buttons"
                 android:text="@string/recover_btn_text"
                 android:textSize="17sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -50,6 +51,7 @@
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="6dp"
+                android:backgroundTint="@color/buttons"
                 android:text="@string/flip_btn_text"
                 android:textSize="17sp"
                 app:layout_constraintBottom_toBottomOf="parent"
