@@ -4,12 +4,12 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatImageButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,8 +28,8 @@ public class EditFlashcardActivity extends Activity {
     private EditText questionEditText;
     private EditText answerEditText;
     private EditText hintEditText;
-    private Button editButton;
-    private Button cancelButton;
+    private AppCompatImageButton editButton;
+    private AppCompatImageButton cancelButton;
     private Spinner flashcardSetSpinner;
     private Flashcard currentFlashcard;
     private FlashcardSet currentFlashcardSet;

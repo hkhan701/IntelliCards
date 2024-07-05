@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    android:background="#dbeff8"
+    android:background="@color/background"
     tools:context="comp3350.intellicards.Presentation.MainActivity">
 
     <EditText
@@ -66,29 +66,29 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/hint" />
 
-    <!-- Create Set Button -->
-    <Button
+    <!-- Confirm Button -->
+    <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/editFlashcard"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="8dp"
-        android:text="@string/submit_btn_text"
-        android:backgroundTint="@android:color/holo_green_light"
-        android:textColor="@android:color/white"
+        android:src="@drawable/baseline_done_24"
+        android:tint="@color/btn_txt"
+        android:backgroundTint="@color/btn_confirm"
         app:layout_constraintEnd_toStartOf="@id/cancelButton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/flashcardSetSpinner" />
 
     <!-- Cancel Button -->
-    <Button
+    <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/cancelButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:text="@string/cancel_btn_text"
-        android:backgroundTint="@android:color/holo_red_light"
-        android:textColor="@android:color/white"
+        android:src="@drawable/baseline_close_24"
+        android:tint="@color/btn_txt"
+        android:backgroundTint="@color/btn_cancel"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/editFlashcard"
         app:layout_constraintTop_toBottomOf="@id/flashcardSetSpinner"/>

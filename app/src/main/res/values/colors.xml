@@ -7,5 +7,7 @@
 
     <color name="buttons">#004080</color>
     <color name="buttons2">#0059b3</color>
+    <color name="btn_confirm">@android:color/holo_green_light</color>
+    <color name="btn_cancel">@android:color/holo_red_light</color>
     <color name="btn_txt">#FFFFFFFF</color>
 </resources>
