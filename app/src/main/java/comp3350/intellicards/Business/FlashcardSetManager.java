@@ -2,7 +2,6 @@ package comp3350.intellicards.Business;
 
 import androidx.annotation.NonNull;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import comp3350.intellicards.Application.Services;
@@ -17,10 +16,9 @@ public class FlashcardSetManager {
         flashcardSetPersistence = Services.getFlashcardSetPersistence();
     }
 
-    // Should only be used in testing
     public FlashcardSetManager(FlashcardSetPersistence persistence) {
         flashcardSetPersistence = persistence;
-    };
+    }
 
     public FlashcardSet getFlashcardSet(String uuid) {
         return this.flashcardSetPersistence.getFlashcardSet(uuid);
