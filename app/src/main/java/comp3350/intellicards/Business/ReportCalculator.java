@@ -20,7 +20,7 @@ public class ReportCalculator {
     public String report() {
         collectStats();
         return "ALL TIME TOTAL ACCURACY\nCorrect: " + totalCorrect + " / " + totalAttempted
-                + "\nThat is " + Math.round(totalCorrect * 100 / (double) totalAttempted) + "% correct: ";
+                + "\nThat is " + Math.round(totalCorrect * 100 / (double) totalAttempted) + "% correct";
     }
 
     private void collectStats() {
