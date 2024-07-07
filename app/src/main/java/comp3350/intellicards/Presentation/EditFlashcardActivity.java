@@ -111,9 +111,9 @@ public class EditFlashcardActivity extends Activity {
 
     private void setUpEditButtonListener() {
         editButton.setOnClickListener(v -> {
-            String newQuestion = questionEditText.getText().toString();
-            String newAnswer = answerEditText.getText().toString();
-            String newHint = hintEditText.getText().toString();
+            String newQuestion = questionEditText.getText().toString().trim();
+            String newAnswer = answerEditText.getText().toString().trim();
+            String newHint = hintEditText.getText().toString().trim();
 
             // If the selected flashcard set is different from the current flashcard set, move the flashcard to the new set
             FlashcardSet selectedSet = getSelectedFlashcardSet();
@@ -126,7 +126,7 @@ public class EditFlashcardActivity extends Activity {
             }
 
             showSuccessMessage();
-            sendResultAndFinish();
+            sendResultAndFinishEditFlashcardActivity();
         });
     }
 
@@ -157,7 +157,7 @@ public class EditFlashcardActivity extends Activity {
         Toast.makeText(this, "Successfully updated flashcard", Toast.LENGTH_LONG).show();
     }
 
-    private void sendResultAndFinish() {
+    private void sendResultAndFinishEditFlashcardActivity() {
         Intent resultIntent = new Intent();
         resultIntent.putExtra("flashcardUUID", currentFlashcard.getUUID());
         setResult(RESULT_OK, resultIntent);

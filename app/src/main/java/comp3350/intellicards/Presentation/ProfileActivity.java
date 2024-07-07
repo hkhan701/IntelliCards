@@ -11,17 +11,14 @@ import comp3350.intellicards.R;
 
 public class ProfileActivity extends Activity {
 
-    private String username;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        username = UserSession.getInstance().getUsername(); // Get the username from the UserSession singleton
         setupBackButton();
         setupRecoveryButton();
-        populateUsername();
+        populateUsername(UserSession.getInstance().getUsername()); // Get the username from the UserSession singleton
     }
 
     private void setupBackButton() {
@@ -40,7 +37,7 @@ public class ProfileActivity extends Activity {
         });
     }
 
-    private void populateUsername() {
+    private void populateUsername(String username) {
         TextView usernameTextView = findViewById(R.id.usernameText);
         if (username != null) {
             usernameTextView.setText(username);

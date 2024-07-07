@@ -15,14 +15,12 @@ import java.util.List;
 import comp3350.intellicards.Application.Services;
 import comp3350.intellicards.Application.UserSession;
 import comp3350.intellicards.Objects.FlashcardSet;
-import comp3350.intellicards.Business.FlashcardManager;
 import comp3350.intellicards.Business.FlashcardSetManager;
 import comp3350.intellicards.R;
 
 public class MainActivity extends Activity {
 
     private FlashcardSetManager flashcardSetManager;
-    private GridLayout gridLayout;
     private String username;
 
     @Override
@@ -32,16 +30,14 @@ public class MainActivity extends Activity {
 
         username = UserSession.getInstance().getUsername(); // Get the username from the UserSession singleton
         flashcardSetManager = new FlashcardSetManager(Services.getFlashcardSetPersistence());
-        FlashcardManager flashcardManager = new FlashcardManager(Services.getFlashcardPersistence());
 
         loadFlashcardSets();
         setupButtons();
     }
 
-
     // Load all Flashcard Sets from the database
     private void loadFlashcardSets() {
-        gridLayout = findViewById(R.id.gridLayout);
+        GridLayout gridLayout = findViewById(R.id.gridLayout);
         gridLayout.removeAllViews();
 
         List<FlashcardSet> flashcardSets = flashcardSetManager.getFlashcardSetsByUsername(username);

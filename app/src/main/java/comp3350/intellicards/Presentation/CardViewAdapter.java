@@ -69,7 +69,7 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.Flashc
 
         private void setupListeners() {
             deleteButton.setOnClickListener(v -> deleteFlashcard());
-            editButton.setOnClickListener(v -> editFlashcard());
+            editButton.setOnClickListener(v -> moveToEditFlashcardActivity());
             flipButton.setOnClickListener(v -> flipFlashcard());
         }
 
@@ -94,7 +94,7 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.Flashc
             }
         }
 
-        private void editFlashcard() {
+        private void moveToEditFlashcardActivity() {
             Intent intent = new Intent(itemView.getContext(), EditFlashcardActivity.class);
             intent.putExtra("flashcardUUID", (String) deleteButton.getTag());
             intent.putExtra("flashcardSetUUID", flashcardSet.getUUID());
