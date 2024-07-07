@@ -31,22 +31,17 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         username = UserSession.getInstance().getUsername(); // Get the username from the UserSession singleton
-
-        initializePersistence();
-        setupButtons();
-    }
-
-    private void initializePersistence() {
         flashcardSetManager = new FlashcardSetManager(Services.getFlashcardSetPersistence());
         FlashcardManager flashcardManager = new FlashcardManager(Services.getFlashcardPersistence());
 
-        gridLayout = findViewById(R.id.gridLayout);
-
         loadFlashcardSets();
+        setupButtons();
     }
+
 
     // Load all Flashcard Sets from the database
     private void loadFlashcardSets() {
+        gridLayout = findViewById(R.id.gridLayout);
         gridLayout.removeAllViews();
 
         List<FlashcardSet> flashcardSets = flashcardSetManager.getFlashcardSetsByUsername(username);
