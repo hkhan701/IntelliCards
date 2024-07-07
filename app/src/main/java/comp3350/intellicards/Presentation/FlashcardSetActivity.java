@@ -78,7 +78,7 @@ public class FlashcardSetActivity extends Activity {
     private void setUpTestButton(String flashcardSetUUID) {
         Button testButton = findViewById(R.id.testButton);
         testButton.setOnClickListener(v -> {
-            if (username.equals("guest")) {
+            if (UserSession.getInstance().isGuest(username)) {
                 // Show a Toast message if the user is a guest
                 Toast.makeText(FlashcardSetActivity.this, "Guests cannot take tests. Please log in.", Toast.LENGTH_SHORT).show();
             } else if (flashcardSetManager.getActiveFlashcardSet(flashcardSetUUID).getActiveCount() == 0) {

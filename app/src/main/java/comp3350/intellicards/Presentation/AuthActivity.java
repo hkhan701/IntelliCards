@@ -58,9 +58,11 @@ public class AuthActivity extends Activity {
 
     private void setUpRegisterButtonListener() {
         registerButton.setOnClickListener(v -> {
-            if (verifyInput()) {
-                String username = usernameEditText.getText().toString();
-                String password = passwordEditText.getText().toString();
+
+            String username = usernameEditText.getText().toString().trim();
+            String password = passwordEditText.getText().toString().trim();
+
+            if (verifyUserInput(username, password)) {
                 if (userManager.registerUser(username, password)) {
                     Toast.makeText(this, "Sign up successful! Please log in.", Toast.LENGTH_LONG).show();
                 } else {
@@ -74,9 +76,11 @@ public class AuthActivity extends Activity {
 
     private void setUpLogInButtonListener() {
         logInButton.setOnClickListener(v -> {
-            if (verifyInput()) {
-                String username = usernameEditText.getText().toString();
-                String password = passwordEditText.getText().toString();
+
+            String username = usernameEditText.getText().toString().trim();
+            String password = passwordEditText.getText().toString().trim();
+
+            if (verifyUserInput(username, password)) {
                 User user = userManager.loginUser(username, password);
                 if (user != null) {
                     Toast.makeText(this, "Log in successful!", Toast.LENGTH_LONG).show();
@@ -93,15 +97,13 @@ public class AuthActivity extends Activity {
 
     private void setUpGuestButtonListener() {
         guestButton.setOnClickListener(v -> {
-            UserSession.getInstance().setUsername("guest");
+            UserSession.getInstance().setGuest();
             Toast.makeText(this, "Logged in as a guest successfully!", Toast.LENGTH_LONG).show();
             navigateToMainActivity();
         });
     }
 
-    private boolean verifyInput() {
-        String username = usernameEditText.getText().toString();
-        String password = passwordEditText.getText().toString();
+    private boolean verifyUserInput(String username, String password) {
         return !username.isEmpty() && !password.isEmpty();
     }
 
