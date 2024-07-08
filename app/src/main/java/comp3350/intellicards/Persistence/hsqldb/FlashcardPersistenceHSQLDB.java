@@ -35,51 +35,6 @@ public class FlashcardPersistenceHSQLDB implements FlashcardPersistence {
         final int correct = rs.getInt("correct");
         return new Flashcard(uuid, setUUID, question, answer, hint, deleted, attempted, correct);
     }
-
-    @Override
-    public List<Flashcard> getAllActiveFlashcards(String setUUID) {
-        List<Flashcard> flashcards = new ArrayList<>();
-
-        try (Connection c = connection()) {
-            final PreparedStatement st = c.prepareStatement("SELECT * FROM FLASHCARDS WHERE setUUID = ? AND deleted = FALSE");
-            st.setString(1, setUUID);
-
-            final ResultSet rs = st.executeQuery();
-
-            while (rs.next()) {
-                final Flashcard flashcard = fromResultSet(rs);
-                flashcards.add(flashcard);
-            }
-            rs.close();
-            st.close();
-
-            return flashcards;
-        } catch (SQLException e) {
-            throw new PersistenceException(e);
-        }
-    }
-
-    @Override
-    public List<Flashcard> getAllDeletedFlashcards() {
-        List<Flashcard> flashcards = new ArrayList<>();
-
-        try (Connection c = connection()) {
-            final PreparedStatement st = c.prepareStatement("SELECT * FROM FLASHCARDS WHERE deleted = TRUE");
-            final ResultSet rs = st.executeQuery();
-
-            while (rs.next()) {
-                final Flashcard flashcard = fromResultSet(rs);
-                flashcards.add(flashcard);
-            }
-            rs.close();
-            st.close();
-
-            return flashcards;
-        } catch (SQLException e) {
-            throw new PersistenceException(e);
-        }
-    }
-
     @Override
     public Flashcard getFlashcard(String uuid) {
         try (Connection c = connection()) {

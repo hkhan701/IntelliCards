@@ -5,11 +5,6 @@ import java.util.List;
 import comp3350.intellicards.Objects.Flashcard;
 
 public interface FlashcardPersistence {
-
-    List<Flashcard> getAllActiveFlashcards(String setUUID);
-
-    List<Flashcard> getAllDeletedFlashcards();
-
     Flashcard getFlashcard(String uuid);
 
     Flashcard insertFlashcard(Flashcard currentFlashcard);
