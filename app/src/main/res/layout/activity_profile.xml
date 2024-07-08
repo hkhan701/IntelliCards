@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="comp3350.intellicards.Presentation.ProfileActivity"
-    android:background="@color/background">
+    android:background="@drawable/background">
 
     <Button
         android:id="@+id/recoveryButton"

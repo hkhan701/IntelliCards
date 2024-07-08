@@ -3,11 +3,10 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="background">#DBEFF8</color>
-
-    <color name="buttons">#004080</color>
-    <color name="buttons2">#0059b3</color>
-    <color name="btn_confirm">@android:color/holo_green_light</color>
-    <color name="btn_cancel">@android:color/holo_red_light</color>
+    <color name="card_bg">#FFFFFFFF</color>
+    <color name="buttons">#55AD9B</color>
     <color name="btn_txt">#FFFFFFFF</color>
+
+    <color name="btn_confirm">#55AD9B</color>
+    <color name="btn_cancel">#FF0000</color>
 </resources>
