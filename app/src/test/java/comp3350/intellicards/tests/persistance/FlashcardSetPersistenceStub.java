@@ -81,24 +81,4 @@ public class FlashcardSetPersistenceStub implements FlashcardSetPersistence {
         flashcardSets.put(newFlashcardSet.getUUID(), newFlashcardSet);
     }
 
-    @Override
-    public void randomizeFlashcardSet(FlashcardSet set) {
-        if (set != null) {
-            set.randomizeSet();
-        }
-    }
-
-    @Override
-    public List<FlashcardSet> getFlashcardSetsByUsername(String username) {
-        List<FlashcardSet> flashcardSets = getAllFlashcardSets();
-        List<FlashcardSet> userSets = new ArrayList<>();
-
-        for (FlashcardSet flashcardSet : flashcardSets) {
-            if (flashcardSet.getUsername().equals(username)) {
-                userSets.add(flashcardSet);
-            }
-        }
-
-        return userSets;
-    }
 }
