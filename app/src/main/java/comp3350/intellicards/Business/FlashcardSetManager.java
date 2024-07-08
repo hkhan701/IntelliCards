@@ -2,6 +2,7 @@ package comp3350.intellicards.Business;
 
 import androidx.annotation.NonNull;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import comp3350.intellicards.Application.Services;
@@ -25,11 +26,22 @@ public class FlashcardSetManager {
     }
 
     public FlashcardSet getActiveFlashcardSet(String uuid) {
-        return this.flashcardSetPersistence.getActiveFlashcardSet(uuid);
+        FlashcardSet set = getFlashcardSet(uuid);
+        if (set != null) {
+            return set.getActiveFlashcards();
+        }
+
+        return null;
+
     }
 
     public FlashcardSet getDeletedFlashcardSet(String uuid) {
-        return this.flashcardSetPersistence.getDeletedFlashcardSet(uuid);
+        FlashcardSet set = getFlashcardSet(uuid);
+        if (set != null) {
+            return set.getDeletedFlashcards();
+        }
+
+        return null;
     }
 
     public List<FlashcardSet> getAllFlashcardSets() {
@@ -45,11 +57,26 @@ public class FlashcardSetManager {
     }
 
     public void shuffleFlashcardSet(FlashcardSet flashcardSet) {
-        this.flashcardSetPersistence.randomizeFlashcardSet(flashcardSet);
+        FlashcardSet set = getActiveFlashcardSet(flashcardSet.getUUID());
+        if (set != null)
+        {
+            set.randomizeSet();
+        } else
+        {
+            System.out.println("Flashcard set not found");
+        }
     }
 
     public List<FlashcardSet> getFlashcardSetsByUsername(String username) {
-        return this.flashcardSetPersistence.getFlashcardSetsByUsername(username);
+        List<FlashcardSet> flashcardSets = getAllFlashcardSets();
+        List<FlashcardSet> userSets = new ArrayList<>();
+
+        for (FlashcardSet flashcardSet : flashcardSets) {
+            if (flashcardSet.getUsername().equals(username)) {
+                userSets.add(flashcardSet);
+            }
+        }
+        return userSets;
     }
 
 }
