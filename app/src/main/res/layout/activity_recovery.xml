@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="comp3350.intellicards.Presentation.RecoverFlashcardsActivity"
-    android:background="#dbeff8">
+    android:background="@drawable/background">
 
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/backButton"
