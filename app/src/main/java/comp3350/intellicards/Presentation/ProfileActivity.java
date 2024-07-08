@@ -29,8 +29,7 @@ public class ProfileActivity extends Activity {
     private void setupBackButton() {
         AppCompatImageButton backButton = findViewById(R.id.backButton);
         backButton.setOnClickListener(v -> {
-            Intent intent = new Intent(ProfileActivity.this, MainActivity.class);
-            startActivity(intent);
+            onBackPressed();
         });
     }
 
