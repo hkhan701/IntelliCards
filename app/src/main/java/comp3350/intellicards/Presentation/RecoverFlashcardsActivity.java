@@ -48,6 +48,7 @@ public class RecoverFlashcardsActivity extends Activity {
 
         // Print the recovered list on the UI
         printRecoverList(deletedFlashcards);
+        backButtonListener();
     }
 
     private void backButtonListener() {

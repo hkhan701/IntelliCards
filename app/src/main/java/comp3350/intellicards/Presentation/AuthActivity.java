@@ -110,7 +110,7 @@ public class AuthActivity extends Activity {
     private void navigateToMainActivity() {
         Intent intent = new Intent(AuthActivity.this, MainActivity.class);
         startActivity(intent);
-        finish();
+        finish(); // Destroy the current activity so that the user cannot go back to it
     }
 
     private void copyDatabaseToDevice() {

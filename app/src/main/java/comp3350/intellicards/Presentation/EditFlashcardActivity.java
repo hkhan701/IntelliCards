@@ -46,9 +46,10 @@ public class EditFlashcardActivity extends Activity {
 
         initializeManagers();
         initializeViews();
+        retrieveIntentData();
         fetchFlashcard();
         fetchAllFlashcardSetsForUser();
-        setUpSpinner();
+        setUpFlashcardSetSpinner();
         setUpListeners();
     }
 
@@ -66,12 +67,15 @@ public class EditFlashcardActivity extends Activity {
         flashcardSetSpinner = findViewById(R.id.flashcardSetSpinner);
     }
 
-    private void fetchFlashcard() {
+    private void retrieveIntentData() {
         String flashcardUUID = getIntent().getStringExtra("flashcardUUID");
         String flashcardSetUUID = getIntent().getStringExtra("flashcardSetUUID");
         currentFlashcard = flashcardManager.getFlashcard(flashcardUUID);
+        currentFlashcardSet = flashcardSetManager.getFlashcardSet(flashcardSetUUID);
+    }
+
+    private void fetchFlashcard() {
         if (currentFlashcard != null) {
-            currentFlashcardSet = flashcardSetManager.getFlashcardSet(flashcardSetUUID);
             populateFlashcardDetails();
         } else {
             Toast.makeText(this, "Flashcard not found", Toast.LENGTH_LONG).show();
@@ -89,7 +93,7 @@ public class EditFlashcardActivity extends Activity {
         hintEditText.setText(currentFlashcard.getHint());
     }
 
-    private void setUpSpinner() {
+    private void setUpFlashcardSetSpinner() {
         List<String> flashcardSetNames = new ArrayList<>();
         for (FlashcardSet set : allFlashcardSets) {
             flashcardSetNames.add(set.getFlashcardSetName());
@@ -105,11 +109,11 @@ public class EditFlashcardActivity extends Activity {
     }
 
     private void setUpListeners() {
-        setUpEditButtonListener();
+        setUpConfirmEditButtonListener();
         setUpCancelButtonListener();
     }
 
-    private void setUpEditButtonListener() {
+    private void setUpConfirmEditButtonListener() {
         editButton.setOnClickListener(v -> {
             String newQuestion = questionEditText.getText().toString().trim();
             String newAnswer = answerEditText.getText().toString().trim();

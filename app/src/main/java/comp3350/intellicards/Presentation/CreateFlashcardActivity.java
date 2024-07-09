@@ -31,12 +31,13 @@ public class CreateFlashcardActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_flashcard);
 
-        initializeManagers();
+        initializeDependencies();
         initializeViews();
+        fetchFlashcardSet();
         setUpListeners();
     }
 
-    private void initializeManagers() {
+    private void initializeDependencies() {
         flashcardSetManager = new FlashcardSetManager(Services.getFlashcardSetPersistence());
         flashcardManager = new FlashcardManager(Services.getFlashcardPersistence());
     }
@@ -47,8 +48,9 @@ public class CreateFlashcardActivity extends Activity {
         hintEditText = findViewById(R.id.hint);
         submitButton = findViewById(R.id.createFlashcardButton);
         cancelButton = findViewById(R.id.cancelButton);
+    }
 
-        // Get the flashcard set UUID from the intent and fetch the corresponding FlashcardSet
+    private void fetchFlashcardSet() {
         flashcardSetUUID = getIntent().getStringExtra("flashcardSetUUID");
         currentFlashcardSet = flashcardSetManager.getFlashcardSet(flashcardSetUUID);
     }
@@ -76,7 +78,7 @@ public class CreateFlashcardActivity extends Activity {
         String answer = answerEditText.getText().toString().trim();
         String hint = hintEditText.getText().toString().trim();
 
-        if(validateFlashcardInput(question, answer)) {
+        if (validateFlashcardInput(question, answer)) {
             return new Flashcard(flashcardSetUUID, question, answer, hint);
         }
         return null;
