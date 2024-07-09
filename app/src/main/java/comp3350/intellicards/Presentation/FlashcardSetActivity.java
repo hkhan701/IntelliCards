@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import comp3350.intellicards.Application.Services;
 import comp3350.intellicards.Application.UserSession;
 import comp3350.intellicards.Business.FlashcardManager;
 import comp3350.intellicards.Objects.Flashcard;
@@ -21,8 +22,8 @@ import comp3350.intellicards.R;
 public class FlashcardSetActivity extends Activity {
 
     private RecyclerView flashcardsRecyclerView;
-    private FlashcardSetManager flashcardSetManager = new FlashcardSetManager();
-    private FlashcardManager flashcardManager = new FlashcardManager();
+    private FlashcardSetManager flashcardSetManager = new FlashcardSetManager(Services.getFlashcardSetPersistence());
+    private FlashcardManager flashcardManager = new FlashcardManager(Services.getFlashcardPersistence());
     private String username;
 
     @Override

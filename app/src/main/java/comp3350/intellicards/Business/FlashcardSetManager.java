@@ -17,21 +17,31 @@ public class FlashcardSetManager {
         flashcardSetPersistence = Services.getFlashcardSetPersistence();
     }
 
-    // Should only be used in testing
     public FlashcardSetManager(FlashcardSetPersistence persistence) {
         flashcardSetPersistence = persistence;
-    };
+    }
 
     public FlashcardSet getFlashcardSet(String uuid) {
         return this.flashcardSetPersistence.getFlashcardSet(uuid);
     }
 
     public FlashcardSet getActiveFlashcardSet(String uuid) {
-        return this.flashcardSetPersistence.getActiveFlashcardSet(uuid);
+        FlashcardSet set = getFlashcardSet(uuid);
+        if (set != null) {
+            return set.getActiveFlashcards();
+        }
+
+        return null;
+
     }
 
     public FlashcardSet getDeletedFlashcardSet(String uuid) {
-        return this.flashcardSetPersistence.getDeletedFlashcardSet(uuid);
+        FlashcardSet set = getFlashcardSet(uuid);
+        if (set != null) {
+            return set.getDeletedFlashcards();
+        }
+
+        return null;
     }
 
     public List<FlashcardSet> getAllFlashcardSets() {
@@ -47,11 +57,26 @@ public class FlashcardSetManager {
     }
 
     public void shuffleFlashcardSet(FlashcardSet flashcardSet) {
-        this.flashcardSetPersistence.randomizeFlashcardSet(flashcardSet);
+        FlashcardSet set = getActiveFlashcardSet(flashcardSet.getUUID());
+        if (set != null)
+        {
+            set.randomizeSet();
+        } else
+        {
+            System.out.println("Flashcard set not found");
+        }
     }
 
     public List<FlashcardSet> getFlashcardSetsByUsername(String username) {
-        return this.flashcardSetPersistence.getFlashcardSetsByUsername(username);
+        List<FlashcardSet> flashcardSets = getAllFlashcardSets();
+        List<FlashcardSet> userSets = new ArrayList<>();
+
+        for (FlashcardSet flashcardSet : flashcardSets) {
+            if (flashcardSet.getUsername().equals(username)) {
+                userSets.add(flashcardSet);
+            }
+        }
+        return userSets;
     }
 
 }

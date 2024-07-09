@@ -16,7 +16,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import comp3350.intellicards.Application.Main;
+import comp3350.intellicards.Application.Configuration;
+import comp3350.intellicards.Application.Services;
 import comp3350.intellicards.Application.UserSession;
 import comp3350.intellicards.Objects.User;
 import comp3350.intellicards.Business.UserManager;
@@ -36,7 +37,7 @@ public class AuthActivity extends Activity {
         setContentView(R.layout.activity_auth);
         copyDatabaseToDevice();
 
-        userManager = new UserManager();
+        userManager = new UserManager(Services.getUserPersistence());
         initializeViews();
         setUpListeners();
     }
@@ -111,6 +112,12 @@ public class AuthActivity extends Activity {
     }
 
     private void copyDatabaseToDevice() {
+        if (Configuration.getDatasource().equals("testHsqldb")) {
+            Configuration.setDbName("IntellicardsTest");
+        } else {
+            Configuration.setDbName("Intellicards");
+        }
+
         final String DB_PATH = "db";
 
         String[] assetNames;
@@ -127,7 +134,7 @@ public class AuthActivity extends Activity {
 
             copyAssetsToDirectory(assetNames, dataDirectory);
 
-            Main.setDBPathName(dataDirectory.toString() + "/" + Main.getDBPathName());
+            Configuration.setDBPathName(dataDirectory.toString() + "/" + Configuration.getDbName());
 
         } catch (final IOException ioe) {
             Toast.makeText(this, "Unable to access application data: " + ioe.getMessage(), Toast.LENGTH_LONG).show();

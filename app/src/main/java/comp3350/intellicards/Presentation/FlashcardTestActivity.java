@@ -13,6 +13,7 @@ import android.widget.ViewFlipper;
 
 import androidx.annotation.Nullable;
 
+import comp3350.intellicards.Application.Services;
 import comp3350.intellicards.Business.FlashcardManager;
 import comp3350.intellicards.Business.ReportCalculator;
 import comp3350.intellicards.Objects.Flashcard;
@@ -23,8 +24,8 @@ import comp3350.intellicards.R;
 
 public class FlashcardTestActivity extends Activity {
 
-    private FlashcardSetManager flashcardSetManager = new FlashcardSetManager();
-    private FlashcardManager flashcardManager = new FlashcardManager();
+    private FlashcardSetManager flashcardSetManager = new FlashcardSetManager(Services.getFlashcardSetPersistence());
+    private FlashcardManager flashcardManager = new FlashcardManager(Services.getFlashcardPersistence());
     private int correct = 0;
     private int attempted = 0;
     ViewFlipper viewFlipper;

@@ -1,5 +1,6 @@
 package comp3350.intellicards.Persistence.stubs;
 
+import comp3350.intellicards.Application.Services;
 import comp3350.intellicards.Objects.Flashcard;
 import comp3350.intellicards.Persistence.FlashcardPersistence;
 import comp3350.intellicards.Business.FlashcardSetManager;
@@ -16,7 +17,7 @@ public class FlashcardPersistenceStub implements FlashcardPersistence {
 
     public FlashcardPersistenceStub() {
         flashcards = new LinkedHashMap<>();
-        FlashcardSetManager flashcardSetManager = new FlashcardSetManager();
+        FlashcardSetManager flashcardSetManager = new FlashcardSetManager(Services.getFlashcardSetPersistence());
 
         Flashcard flashcard1 = new Flashcard("set1", "What is 2+2?", "4", "Basic arithmetic");
         Flashcard flashcard2 = new Flashcard("set1", "What is the square root of 16?", "4", "Basic arithmetic");
