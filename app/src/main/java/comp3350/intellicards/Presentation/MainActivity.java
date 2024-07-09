@@ -16,15 +16,16 @@ import java.util.List;
 import comp3350.intellicards.Application.Services;
 import comp3350.intellicards.Application.UserSession;
 import comp3350.intellicards.Objects.FlashcardSet;
-import comp3350.intellicards.Business.FlashcardManager;
 import comp3350.intellicards.Business.FlashcardSetManager;
 import comp3350.intellicards.R;
 
 public class MainActivity extends Activity {
 
     private FlashcardSetManager flashcardSetManager;
-    private GridLayout gridLayout;
     private String username;
+    private GridLayout flashcardSetGridLayout;
+    private AppCompatImageButton profilePageButton;
+    private Button createNewSetButton;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -32,44 +33,45 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         username = UserSession.getInstance().getUsername(); // Get the username from the UserSession singleton
+        flashcardSetManager = new FlashcardSetManager(Services.getFlashcardSetPersistence());
 
-        initializePersistence();
-        setupButtons();
+        initializeViews();
+        setupListeners();
+        loadFlashcardSets();
     }
 
-    private void initializePersistence() {
-        flashcardSetManager = new FlashcardSetManager(Services.getFlashcardSetPersistence());
-        FlashcardManager flashcardManager = new FlashcardManager(Services.getFlashcardPersistence());
-
-        gridLayout = findViewById(R.id.gridLayout);
-
-        loadFlashcardSets();
+    private void initializeViews() {
+        flashcardSetGridLayout = findViewById(R.id.gridLayout);
+        profilePageButton = findViewById(R.id.profileButton);
+        createNewSetButton = findViewById(R.id.createNewSetButton);
     }
 
     // Load all Flashcard Sets from the database
     private void loadFlashcardSets() {
-        gridLayout.removeAllViews();
+        flashcardSetGridLayout.removeAllViews();
 
         List<FlashcardSet> flashcardSets = flashcardSetManager.getFlashcardSetsByUsername(username);
         for (FlashcardSet set : flashcardSets) {
-            Button flashcardSetButton = new Button(this);
-            String title = set.getFlashcardSetName() + " (" + set.getActiveCount() + ") ";
-            flashcardSetButton.setText(title);
-            flashcardSetButton.setLayoutParams(new GridLayout.LayoutParams(GridLayout.spec(GridLayout.UNDEFINED, 1f), GridLayout.spec(GridLayout.UNDEFINED, 1f)));
-            flashcardSetButton.setPadding(16, 16, 16, 16);
-            flashcardSetButton.setOnClickListener(v -> openFlashcardSetActivity(set.getUUID()));
-            flashcardSetButton.setHeight(350);
-            flashcardSetButton.setTextSize(25);
-            flashcardSetButton.setWidth(55);
-            flashcardSetButton.setBackgroundColor(0xFFFFFFFD);
-            gridLayout.addView(flashcardSetButton);
+            Button flashcardSetButton = createFlashcardSetButton(set);
+            flashcardSetGridLayout.addView(flashcardSetButton);
         }
     }
 
-    private void openFlashcardSetActivity(String flashcardSetUUID) {
-        Intent intent = new Intent(MainActivity.this, FlashcardSetActivity.class);
-        intent.putExtra("flashcardSetUUID", flashcardSetUUID);
-        startActivity(intent);
+    private Button createFlashcardSetButton(FlashcardSet set) {
+        Button flashcardSetButton = new Button(this);
+        String title = set.getFlashcardSetName() + " (" + set.getActiveCount() + ") ";
+        flashcardSetButton.setText(title);
+        flashcardSetButton.setLayoutParams(new GridLayout.LayoutParams(
+                GridLayout.spec(GridLayout.UNDEFINED, 1f),
+                GridLayout.spec(GridLayout.UNDEFINED, 1f)
+        ));
+        flashcardSetButton.setPadding(16, 16, 16, 16);
+        flashcardSetButton.setOnClickListener(v -> navigateToFlashcardSetActivity(set.getUUID()));
+        flashcardSetButton.setHeight(350);
+        flashcardSetButton.setWidth(55);
+        flashcardSetButton.setTextSize(25);
+        flashcardSetButton.setBackgroundColor(0xFFFFFFFD);
+        return flashcardSetButton;
     }
 
     private void showCreateNewSetDialog() {
@@ -85,10 +87,7 @@ public class MainActivity extends Activity {
                 .setPositiveButton("Create", (dialog, whichButton) -> {
                     String newSetName = newSetNameInput.getText().toString().trim();
                     if (!newSetName.isEmpty()) {
-
-                        FlashcardSet newFlashcardSet = new FlashcardSet(username, newSetName);
-                        flashcardSetManager.insertFlashcardSet(newFlashcardSet);
-                        loadFlashcardSets(); // Refresh the list of Flashcard Sets
+                        createNewFlashcardSet(newSetName);
                     } else {
                         dialog.dismiss(); // Dismiss the dialog if the user didn't enter a name
                     }
@@ -97,23 +96,34 @@ public class MainActivity extends Activity {
                 .show();
     }
 
-    private void setupButtons() {
-        setupProfilePageButton();
-        setupCreateNewSetButton();
+    private void createNewFlashcardSet(String newSetName) {
+        FlashcardSet newFlashcardSet = new FlashcardSet(username, newSetName);
+        flashcardSetManager.insertFlashcardSet(newFlashcardSet);
+        loadFlashcardSets(); // Refresh the list of Flashcard Sets
     }
 
-    private void setupProfilePageButton() {
-        AppCompatImageButton profilePageButton = findViewById(R.id.profileButton);
-        profilePageButton.setOnClickListener(v -> openProfileActivity());
+    private void setupListeners() {
+        setupProfilePageButtonListener();
+        setupCreateNewSetButtonListener();
     }
 
-    private void openProfileActivity() {
+    private void setupProfilePageButtonListener() {
+        profilePageButton.setOnClickListener(v -> navigateToProfileActivity());
+    }
+
+    private void setupCreateNewSetButtonListener() {
+        createNewSetButton.setOnClickListener(v -> showCreateNewSetDialog());
+    }
+
+    private void navigateToProfileActivity() {
         Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
         startActivity(intent);
     }
 
-    private void setupCreateNewSetButton() {
-        Button createNewSetButton = findViewById(R.id.createNewSetButton);
-        createNewSetButton.setOnClickListener(v -> showCreateNewSetDialog());
+    private void navigateToFlashcardSetActivity(String flashcardSetUUID) {
+        Intent intent = new Intent(MainActivity.this, FlashcardSetActivity.class);
+        intent.putExtra("flashcardSetUUID", flashcardSetUUID);
+        startActivity(intent);
     }
+
 }

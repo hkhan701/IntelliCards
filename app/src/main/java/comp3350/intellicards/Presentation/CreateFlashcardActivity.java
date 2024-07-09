@@ -9,6 +9,7 @@ import android.widget.Toast;
 import androidx.appcompat.widget.AppCompatImageButton;
 
 import comp3350.intellicards.Application.Services;
+
 import comp3350.intellicards.Business.FlashcardManager;
 import comp3350.intellicards.Business.FlashcardSetManager;
 import comp3350.intellicards.Objects.Flashcard;
@@ -32,12 +33,13 @@ public class CreateFlashcardActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_flashcard);
 
-        initializeManagers();
+        initializeDependencies();
         initializeViews();
+        fetchFlashcardSet();
         setUpListeners();
     }
 
-    private void initializeManagers() {
+    private void initializeDependencies() {
         flashcardSetManager = new FlashcardSetManager(Services.getFlashcardSetPersistence());
         flashcardManager = new FlashcardManager(Services.getFlashcardPersistence());
     }
@@ -48,8 +50,9 @@ public class CreateFlashcardActivity extends Activity {
         hintEditText = findViewById(R.id.hint);
         submitButton = findViewById(R.id.createFlashcardButton);
         cancelButton = findViewById(R.id.cancelButton);
+    }
 
-        // Get the flashcard set UUID from the intent and fetch the corresponding FlashcardSet
+    private void fetchFlashcardSet() {
         flashcardSetUUID = getIntent().getStringExtra("flashcardSetUUID");
         currentFlashcardSet = flashcardSetManager.getFlashcardSet(flashcardSetUUID);
     }
@@ -67,22 +70,20 @@ public class CreateFlashcardActivity extends Activity {
                 addFlashcardToSet(newFlashcard);
                 clearInputFields();
                 showSuccessMessage();
-                sendResultAndFinish(newFlashcard);
+                sendResultAndFinishCreateFlashcardActivity(newFlashcard);
             }
         });
     }
 
     private Flashcard createFlashcardFromInput() {
-        String question = questionEditText.getText().toString();
-        String answer = answerEditText.getText().toString();
-        String hint = hintEditText.getText().toString();
+        String question = questionEditText.getText().toString().trim();
+        String answer = answerEditText.getText().toString().trim();
+        String hint = hintEditText.getText().toString().trim();
 
-        if (question.isEmpty() || answer.isEmpty()) {
-            Toast.makeText(this, "Question and answer fields cannot be empty", Toast.LENGTH_LONG).show();
-            return null;
+        if (validateFlashcardInput(question, answer)) {
+            return new Flashcard(flashcardSetUUID, question, answer, hint);
         }
-
-        return new Flashcard(flashcardSetUUID, question, answer,  hint);
+        return null;
     }
 
     private void addFlashcardToSet(Flashcard flashcard) {
@@ -96,11 +97,19 @@ public class CreateFlashcardActivity extends Activity {
         hintEditText.setText("");
     }
 
+    private boolean validateFlashcardInput(String question, String answer) {
+        if (question.isEmpty() || answer.isEmpty()) {
+            Toast.makeText(this, "Question and answer fields cannot be empty", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        return true;
+    }
+
     private void showSuccessMessage() {
         Toast.makeText(this, "Flashcard added successfully", Toast.LENGTH_LONG).show();
     }
 
-    private void sendResultAndFinish(Flashcard flashcard) {
+    private void sendResultAndFinishCreateFlashcardActivity(Flashcard flashcard) {
         Intent resultIntent = new Intent();
         resultIntent.putExtra("flashcardUUID", flashcard.getUUID());
         setResult(Activity.RESULT_OK, resultIntent);

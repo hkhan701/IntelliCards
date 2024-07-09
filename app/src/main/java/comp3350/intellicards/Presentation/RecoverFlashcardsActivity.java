@@ -33,12 +33,6 @@ public class RecoverFlashcardsActivity extends Activity {
 
         List<Flashcard> deletedFlashcards = new ArrayList<>();
 
-        //change this when refactoring so that we only use the UUID's and the logic layer
-        // to get the corresponding info
-        // for deleteFlashcards, this should be changed into an arraylist of string UUIDS
-        // also gonna have to change the cardAdapters so that it accepts a list of string uuids
-        // and change it internally so it accesses the flashcards using the logic layer and the
-        // UUID's instead of the reference to the flashcards directly using the flashcardSet
         // Retrieve deleted flashcards for the user
         List<FlashcardSet> userFlashcardSets = flashcardSetManager.getFlashcardSetsByUsername(userName);
 
@@ -53,13 +47,16 @@ public class RecoverFlashcardsActivity extends Activity {
 
         // Print the recovered list on the UI
         printRecoverList(deletedFlashcards);
+        backButtonListener();
+    }
 
+    private void backButtonListener() {
         AppCompatImageButton backButton = findViewById(R.id.backButton);
-
         backButton.setOnClickListener(v -> {
-            onBackPressed();
-        });
+            Intent intent = new Intent(RecoverFlashcardsActivity.this, ProfileActivity.class);
+            startActivity(intent);
 
+        });
     }
 
     private void printRecoverList(List<Flashcard> flashcards) {
