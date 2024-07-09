@@ -5,10 +5,7 @@ import comp3350.intellicards.Objects.Flashcard;
 import comp3350.intellicards.Persistence.FlashcardPersistence;
 import comp3350.intellicards.Business.FlashcardSetManager;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 public class FlashcardPersistenceStub implements FlashcardPersistence {
@@ -57,35 +54,29 @@ public class FlashcardPersistenceStub implements FlashcardPersistence {
 
 
     @Override
-    public Flashcard insertFlashcard(Flashcard currentFlashcard) {
+    public void insertFlashcard(Flashcard currentFlashcard) {
         flashcards.put(currentFlashcard.getUUID(), currentFlashcard);
-        return currentFlashcard;
     }
 
     @Override
-    public Flashcard updateFlashcard(Flashcard newFlashcard) {
+    public void updateFlashcard(Flashcard newFlashcard) {
         flashcards.put(newFlashcard.getUUID(), newFlashcard);
-        return newFlashcard;
     }
 
     @Override
-    public boolean markFlashcardAsDeleted(String uuid) {
+    public void markFlashcardAsDeleted(String uuid) {
         Flashcard flashcard = flashcards.get(uuid);
         if (flashcard != null) {
             flashcard.markDeleted();
-            return true;
         }
-        return false;
     }
 
     @Override
-    public boolean restoreFlashcard(String uuid) {
+    public void restoreFlashcard(String uuid) {
         Flashcard flashcard = flashcards.get(uuid);
         if (flashcard != null) {
             flashcard.markRecovered();
-            return true;
         }
-        return false;
     }
 
     @Override
