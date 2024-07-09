@@ -67,6 +67,10 @@ public class MainActivity extends Activity {
         ));
         flashcardSetButton.setPadding(16, 16, 16, 16);
         flashcardSetButton.setOnClickListener(v -> navigateToFlashcardSetActivity(set.getUUID()));
+        flashcardSetButton.setHeight(350);
+        flashcardSetButton.setWidth(55);
+        flashcardSetButton.setTextSize(25);
+        flashcardSetButton.setBackgroundColor(0xFFFFFFFD);
         return flashcardSetButton;
     }
 
