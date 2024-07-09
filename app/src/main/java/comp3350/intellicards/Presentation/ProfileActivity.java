@@ -16,6 +16,7 @@ public class ProfileActivity extends Activity {
     private AppCompatImageButton backButton;
     private Button recoveryButton;
     private TextView usernameTextView;
+    private Button logoutButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,11 +32,13 @@ public class ProfileActivity extends Activity {
         usernameTextView = findViewById(R.id.usernameText);
         recoveryButton = findViewById(R.id.recoveryButton);
         backButton = findViewById(R.id.backButton);
+        logoutButton = findViewById(R.id.logoutButton);
     }
 
     private void setupListeners() {
         setupBackButtonListener();
         setupRecoveryButtonListener();
+        setupLogoutButton();
     }
 
     private void setupBackButtonListener() {
@@ -46,6 +49,10 @@ public class ProfileActivity extends Activity {
         recoveryButton.setOnClickListener(v -> navigateToRecoverFlashcardsActivity());
     }
 
+    private void setupLogoutButton() {
+        logoutButton.setOnClickListener(v -> navigateToAuthActivity());
+    }
+
     private void navigateToMainActivity() {
         Intent intent = new Intent(ProfileActivity.this, MainActivity.class);
         startActivity(intent);
@@ -53,6 +60,11 @@ public class ProfileActivity extends Activity {
 
     private void navigateToRecoverFlashcardsActivity() {
         Intent intent = new Intent(ProfileActivity.this, RecoverFlashcardsActivity.class);
+        startActivity(intent);
+    }
+
+    private void navigateToAuthActivity() {
+        Intent intent = new Intent(ProfileActivity.this, AuthActivity.class);
         startActivity(intent);
     }
 
