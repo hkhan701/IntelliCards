@@ -4,6 +4,8 @@ public class UserSession {
     private static UserSession instance;
     private String username;
 
+    public static final String GUEST_USERNAME = "guest";
+
     private UserSession() {
         // Private constructor to prevent instantiation
     }
@@ -22,4 +24,13 @@ public class UserSession {
     public void setUsername(String username) {
         this.username = username;
     }
+
+    public boolean isGuest(String username) {
+        return username.equals(GUEST_USERNAME);
+    }
+
+    public void setGuest() {
+        username = GUEST_USERNAME;
+    }
+
 }

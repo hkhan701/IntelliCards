@@ -13,46 +13,50 @@ import comp3350.intellicards.R;
 
 public class ProfileActivity extends Activity {
 
-    private String username;
+    private Button backButton;
+    private Button recoveryButton;
+    private TextView usernameTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        username = UserSession.getInstance().getUsername(); // Get the username from the UserSession singleton
-        setUpBackButton();
-        setupRecoveryButton();
-        setupLogoutButton();
-        populateUsername();
+        initializeViews();
+        setupListeners();
+        populateUsername(UserSession.getInstance().getUsername()); // Get the username from the UserSession singleton class
     }
 
-    private void setUpBackButton() {
-        AppCompatImageButton backButton = findViewById(R.id.backButton);
-        backButton.setOnClickListener(v -> {
-            Intent intent = new Intent(ProfileActivity.this, MainActivity.class);
-            startActivity(intent);
-        });
+    private void initializeViews() {
+        usernameTextView = findViewById(R.id.usernameText);
+        recoveryButton = findViewById(R.id.recoveryButton);
+        backButton = findViewById(R.id.backButton);
     }
 
-    private void setupRecoveryButton() {
-        Button recoveryButton = findViewById(R.id.recoveryButton);
-        recoveryButton.setOnClickListener(v -> {
-            Intent intent = new Intent(ProfileActivity.this, RecoverFlashcardsActivity.class);
-            startActivity(intent);
-        });
+    private void setupListeners() {
+        setupBackButtonListener();
+        setupRecoveryButtonListener();
     }
 
-    private void setupLogoutButton() {
-        Button logoutButton = findViewById(R.id.logoutButton);
-        logoutButton.setOnClickListener(v -> {
-            Intent intent = new Intent(ProfileActivity.this, AuthActivity.class);
-            startActivity(intent);
-        });
+    private void setupBackButtonListener() {
+        backButton.setOnClickListener(v -> navigateToMainActivity());
     }
 
-    private void populateUsername() {
-        TextView usernameTextView = findViewById(R.id.usernameText);
+    private void setupRecoveryButtonListener() {
+        recoveryButton.setOnClickListener(v -> navigateToRecoverFlashcardsActivity());
+    }
+
+    private void navigateToMainActivity() {
+        Intent intent = new Intent(ProfileActivity.this, MainActivity.class);
+        startActivity(intent);
+    }
+
+    private void navigateToRecoverFlashcardsActivity() {
+        Intent intent = new Intent(ProfileActivity.this, RecoverFlashcardsActivity.class);
+        startActivity(intent);
+    }
+
+    private void populateUsername(String username) {
         if (username != null) {
             usernameTextView.setText(username);
         }
