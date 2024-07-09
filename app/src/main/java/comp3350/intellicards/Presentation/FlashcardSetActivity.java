@@ -28,8 +28,8 @@ public class FlashcardSetActivity extends Activity {
     private String username;
     private String flashcardSetUUID;
     private TextView flashcardSetTitle;
-    private Button backButton;
-    private Button addFlashcardButton;
+    private AppCompatImageButton backButton;
+    private AppCompatImageButton addFlashcardButton;
     private Button testButton;
 
     @Override

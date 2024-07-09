@@ -24,7 +24,7 @@ public class MainActivity extends Activity {
     private FlashcardSetManager flashcardSetManager;
     private String username;
     private GridLayout flashcardSetGridLayout;
-    private Button profilePageButton;
+    private AppCompatImageButton profilePageButton;
     private Button createNewSetButton;
 
     @Override

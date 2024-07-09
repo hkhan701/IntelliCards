@@ -13,7 +13,7 @@ import comp3350.intellicards.R;
 
 public class ProfileActivity extends Activity {
 
-    private Button backButton;
+    private AppCompatImageButton backButton;
     private Button recoveryButton;
     private TextView usernameTextView;
 

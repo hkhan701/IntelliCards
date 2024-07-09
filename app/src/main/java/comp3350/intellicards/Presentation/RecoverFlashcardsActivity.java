@@ -53,7 +53,7 @@ public class RecoverFlashcardsActivity extends Activity {
     }
 
     private void backButtonListener() {
-        Button backButton = findViewById(R.id.backButton);
+        AppCompatImageButton backButton = findViewById(R.id.backButton);
         backButton.setOnClickListener(v -> {
             Intent intent = new Intent(RecoverFlashcardsActivity.this, ProfileActivity.class);
             startActivity(intent);

@@ -30,7 +30,7 @@ public class FlashcardTestActivity extends Activity {
     private int correctAnswers = 0;
     private int attemptedAnswers = 0;
     private ViewFlipper viewFlipper;
-    private Button backButton;
+    private AppCompatImageButton backButton;
     private Button finishButton;
     private TextView resultTextView;
 
