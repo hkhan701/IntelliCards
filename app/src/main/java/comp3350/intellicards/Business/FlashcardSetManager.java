@@ -35,13 +35,33 @@ public class FlashcardSetManager {
 
     }
 
-    public FlashcardSet getDeletedFlashcardSet(String uuid) {
+    private FlashcardSet getDeletedFlashcardSet(String uuid) {
         FlashcardSet set = getFlashcardSet(uuid);
         if (set != null) {
             return set.getDeletedFlashcards();
         }
 
         return null;
+    }
+
+    public List<Flashcard> getAllDeletedFlashcards(String username) {
+        List<Flashcard> deletedFlashcards = new ArrayList<>();
+
+        // Retrieve deleted flashcards for the user
+        List<FlashcardSet> userFlashcardSets = getFlashcardSetsByUsername(username);
+
+        for (FlashcardSet flashcardSet : userFlashcardSets) {
+            FlashcardSet deletedSet = getDeletedFlashcardSet(flashcardSet.getUUID());
+            if (deletedSet != null)
+            {
+                for(int i = 0; i < deletedSet.size(); i++)
+                {
+                    Flashcard flashcard = deletedSet.getIndex(i);
+                    deletedFlashcards.add(flashcard);
+                }
+            }
+        }
+        return deletedFlashcards;
     }
 
     public List<FlashcardSet> getAllFlashcardSets() {
