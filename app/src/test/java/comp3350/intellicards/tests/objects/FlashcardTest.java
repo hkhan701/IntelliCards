@@ -5,6 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.mock;
 
 import comp3350.intellicards.Objects.Flashcard;
 import comp3350.intellicards.Objects.FlashcardSet;
@@ -12,13 +13,28 @@ import comp3350.intellicards.Objects.User;
 
 public class FlashcardTest {
 
-    private FlashcardSet testCardSet;
     private Flashcard testFlashcard;
 
     @Before
     public void setUp() {
-        testCardSet = new FlashcardSet("testUser", "Test Card Set");
-        testFlashcard = new Flashcard(testCardSet.getUUID(), "Generic Answer", "Generic Question", "Generic Hint");
+        testFlashcard = new Flashcard("uuid", "setUUID", "Question", "Answer", "Hint", false, 1, 0);
+    }
+
+    /*
+     * Test Constructors
+     */
+    @Test
+    public void flashcardDefaultConstructor() {
+        testFlashcard = new Flashcard("setUUID", "Question", "Answer", null);
+
+        assertNotNull("Flashcard will have UUID automatically assigned if none is provided on creation",
+                testFlashcard.getUUID());
+        assertFalse("Flashcard will not be marked as deleted if no indicator is provided",
+                testFlashcard.isDeleted());
+        assertEquals("Flashcard will have 0 attempts if number is not provided",
+                0, testFlashcard.getAttempted());
+        assertEquals("Flashcard will have 0 correct if number is not provided",
+                0, testFlashcard.getCorrect());
     }
 
     /*
@@ -26,8 +42,8 @@ public class FlashcardTest {
      */
     @Test
     public void testGetUuid() {
-        assertNotNull("The flashcard's UUID is assigned automatically upon creation",
-                testFlashcard.getUUID());
+        assertEquals("The flashcard's UUID can be retrieved",
+                "uuid", testFlashcard.getUUID());
     }
 
     /*
@@ -35,8 +51,8 @@ public class FlashcardTest {
      */
     @Test
     public void testGetAnswer() {
-        assertNotNull("We can retrieve a card's answer",
-                testFlashcard.getAnswer());
+        assertEquals("The flashcard's answer can be retrieved",
+                "Answer", testFlashcard.getAnswer());
     }
 
     /*
@@ -44,8 +60,8 @@ public class FlashcardTest {
      */
     @Test
     public void testGetQuestion() {
-        assertNotNull("We can retrieve a card's question",
-                testFlashcard.getQuestion());
+        assertEquals("The flashcard's question can be retrieved",
+                "Question", testFlashcard.getQuestion());
     }
 
     /*
@@ -53,8 +69,35 @@ public class FlashcardTest {
      */
     @Test
     public void testGetHint() {
-        assertEquals("We can retrieve a card's hint",
-                "Generic Hint", testFlashcard.getHint());
+        assertEquals("The flashcard's hint can be retrieved",
+                "Hint", testFlashcard.getHint());
+    }
+
+    /*
+     * Test getSetUUID()
+     */
+    @Test
+    public void testGetSetUUID() {
+        assertEquals("The flashcard's setUUID can be retrieved",
+                "setUUID", testFlashcard.getSetUUID());
+    }
+
+    /*
+     * Test getAttempted()
+     */
+    @Test
+    public void testGetAttempted() {
+        assertEquals("The flashcard's attempted value can be retrieved",
+                1, testFlashcard.getAttempted());
+    }
+
+    /*
+     * Test getCorrect()
+     */
+    @Test
+    public void testGetCorrect() {
+        assertEquals("The flashcard's correct value can be retrieved",
+                0, testFlashcard.getCorrect());
     }
 
     /*
@@ -93,7 +136,6 @@ public class FlashcardTest {
         assertNull("Changing the hint to null should not cause any problems - it is acceptable", testFlashcard.getHint());
     }
 
-
     /*
      * Test isDeleted()
      */
@@ -122,6 +164,29 @@ public class FlashcardTest {
         testFlashcard.markRecovered();
         assertFalse("A card can be recovered after being marked as deleted",
                 testFlashcard.isDeleted());
+    }
+
+    /*
+     * Test markAttempted()
+     */
+    @Test
+    public void testMarkAttempted() {
+        testFlashcard.markAttempted();
+        assertEquals("Marking a flashcard as attempted will increase the attempted value by one",
+                2, testFlashcard.getAttempted());
+    }
+
+    /*
+     * Test markAttemptedAndCorrect()
+     */
+    @Test
+    public void testMarkAttemptedAndCorrect() {
+        testFlashcard.markAttemptedAndCorrect();
+
+        assertEquals("Marking a flashcard as attempted and correct will increase the attempted value by one",
+                2, testFlashcard.getAttempted());
+        assertEquals("Marking a flashcard as attempted and correct will increase the correct value by one",
+                1, testFlashcard.getCorrect());
     }
 
     @After
