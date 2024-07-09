@@ -1,7 +1,6 @@
 package comp3350.intellicards.Presentation;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -119,7 +118,7 @@ public class FlashcardTestActivity extends Activity {
         private TextView flashcardTextView;
         private CheckBox correctBox;
         private CheckBox incorrectBox;
-        private Button nextCardButton;
+        private AppCompatImageButton nextCardButton;
         private Button flipButton;
         //check if the card should be flipped up
         private boolean isFrontVisible;
