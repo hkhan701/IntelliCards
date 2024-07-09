@@ -71,7 +71,8 @@ public class FlashcardSetActivity extends Activity {
     private void setUpBackButton() {
         AppCompatImageButton backButton = findViewById(R.id.backButton);
         backButton.setOnClickListener(v -> {
-            onBackPressed();
+            Intent intent = new Intent(FlashcardSetActivity.this, MainActivity.class);
+            startActivity(intent);
         });
     }
 

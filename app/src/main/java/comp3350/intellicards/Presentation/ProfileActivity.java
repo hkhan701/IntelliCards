@@ -21,16 +21,17 @@ public class ProfileActivity extends Activity {
         setContentView(R.layout.activity_profile);
 
         username = UserSession.getInstance().getUsername(); // Get the username from the UserSession singleton
-        setupBackButton();
+        setUpBackButton();
         setupRecoveryButton();
         setupLogoutButton();
         populateUsername();
     }
 
-    private void setupBackButton() {
+    private void setUpBackButton() {
         AppCompatImageButton backButton = findViewById(R.id.backButton);
         backButton.setOnClickListener(v -> {
-            onBackPressed();
+            Intent intent = new Intent(ProfileActivity.this, MainActivity.class);
+            startActivity(intent);
         });
     }
 

@@ -59,7 +59,10 @@ public class FlashcardTestActivity extends Activity {
     private void setUpBackButton(String flashcardSetUUID) {
         backButton.setVisibility(View.INVISIBLE);
         backButton.setOnClickListener(v -> {
-            onBackPressed();
+            Intent intent = new Intent(FlashcardTestActivity.this, FlashcardSetActivity.class);
+            intent.putExtra("flashcardSetUUID", flashcardSetUUID);
+            startActivity(intent);
+
         });
     }
 
