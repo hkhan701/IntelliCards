@@ -4,6 +4,7 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="card_bg">#FFFFFFFF</color>
+    <color name="icon_bg">#526D66</color>
     <color name="buttons">#55AD9B</color>
     <color name="btn_txt">#FFFFFFFF</color>
 

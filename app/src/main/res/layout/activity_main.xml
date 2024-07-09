@@ -15,26 +15,27 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="48dp"
         android:text="@string/app_name"
         android:textSize="40sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/profileButton"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
+        android:layout_width="138dp"
+        android:layout_height="137dp"
         android:layout_marginEnd="24dp"
-        android:backgroundTint="@color/buttons"
-        android:text="@string/profile_btn_text"
-        android:textColor="@color/btn_txt"
-        android:textSize="20sp"
-        app:iconSize="20dp"
+        android:backgroundTint="@android:color/transparent"
+        android:cropToPadding="true"
+        android:padding="16dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/baseline_account_circle_24"
+        android:tint="@color/buttons"
+        app:layout_constraintBottom_toBottomOf="@id/headerTitle"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/headerTitle"
-        app:layout_constraintBottom_toBottomOf="@id/headerTitle"/>
+        app:layout_constraintTop_toTopOf="@id/headerTitle" />
 
     <!-- Create New Flashcard Set -->
     <Button

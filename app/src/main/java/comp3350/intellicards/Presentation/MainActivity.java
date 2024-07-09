@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.GridLayout;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatImageButton;
 
 import java.util.List;
 
@@ -97,7 +98,7 @@ public class MainActivity extends Activity {
     }
 
     private void setupProfilePageButton() {
-        Button profilePageButton = findViewById(R.id.profileButton);
+        AppCompatImageButton profilePageButton = findViewById(R.id.profileButton);
         profilePageButton.setOnClickListener(v -> openProfileActivity());
     }
 
