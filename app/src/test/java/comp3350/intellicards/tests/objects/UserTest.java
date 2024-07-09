@@ -22,7 +22,7 @@ public class UserTest {
 
     @Test
     public void getUsername() {
-        assertEquals("Username can be retrieved",
+        assertEquals("Username can be retrieved from User",
                 "TestUser", testUser.getUsername());
     }
 
@@ -32,7 +32,7 @@ public class UserTest {
 
     @Test
     public void getPassword() {
-        assertEquals("Password can be retrieved",
+        assertEquals("Password can be retrieved from User",
                 "TestPass", testUser.getPassword());
     }
 
