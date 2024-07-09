@@ -32,22 +32,8 @@ public class RecoverFlashcardsActivity extends Activity {
         // Get the user session
         userName = UserSession.getInstance().getUsername();
 
-        List<Flashcard> deletedFlashcards = new ArrayList<>();
-
-        // Retrieve deleted flashcards for the user
-        List<FlashcardSet> userFlashcardSets = flashcardSetManager.getFlashcardSetsByUsername(userName);
-
-        for (FlashcardSet flashcardSet : userFlashcardSets) {
-            FlashcardSet deletedSet = flashcardSetManager.getDeletedFlashcardSet(flashcardSet.getUUID());
-            for(int i = 0; i < deletedSet.size(); i++)
-            {
-                Flashcard flashcard = deletedSet.getIndex(i);
-                deletedFlashcards.add(flashcard);
-            }
-        }
-
         // Print the recovered list on the UI
-        printRecoverList(deletedFlashcards);
+        printRecoverList();
         backButtonListener();
     }
 
@@ -60,10 +46,11 @@ public class RecoverFlashcardsActivity extends Activity {
         });
     }
 
-    private void printRecoverList(List<Flashcard> flashcards) {
+    private void printRecoverList() {
+        List<Flashcard> deletedFlashcards = flashcardSetManager.getAllDeletedFlashcards(userName);
         RecyclerView recyclerRecoverView = findViewById(R.id.recycleView);
         recyclerRecoverView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerRecoverView.setAdapter(new CardRecoverAdapter(flashcards));
+        recyclerRecoverView.setAdapter(new CardRecoverAdapter(deletedFlashcards));
     }
 
 }
