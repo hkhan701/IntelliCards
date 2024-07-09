@@ -81,9 +81,6 @@ public class FlashcardSetManager {
         if (set != null)
         {
             set.randomizeSet();
-        } else
-        {
-            System.out.println("Flashcard set not found");
         }
     }
 
