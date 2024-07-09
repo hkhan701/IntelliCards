@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.Before;
+import org.junit.runner.notification.Failure;
 
 import java.util.UUID;
 
@@ -131,6 +132,55 @@ public class FlashcardManagerTest {
         assertFalse("A flashcard that has been restored should not show up in the deleted list",
                 flashcardManager.getAllDeletedFlashcards().contains(flashcard));
     }
+
+    /*
+     * Test markAttempted()
+     */
+    @Test
+    public void TestMarkAttempted() {
+        FlashcardSet testCardSet = new FlashcardSet("testUser", "Test Card Set");
+        Flashcard flashcard1 = new Flashcard(testCardSet.getUUID(), "Test Question 1", "Test Answer 1", null);
+        flashcardManager.insertFlashcard(flashcard1);
+
+        flashcardManager.markAttempted(flashcard1.getUUID());
+        assertEquals("FlashcardManager can mark a flashcard as attempted via the markAttempted() method",
+                1, flashcardManager.getFlashcard(flashcard1.getUUID()).getAttempted());
+    }
+
+    @Test
+    public void TestMarkAttemptedNonExistingCard() {
+        try {
+            flashcardManager.markAttempted("nonExistingUUID");
+        } catch (Exception e) {
+            fail("FlashcardManager will not throw an exception when calling markAttempted() if the flashcard does not exist");
+        }
+    }
+
+    /*
+     * Test markAttemptedAndCorrect()
+     */
+    @Test
+    public void TestMarkAttemptedAndCorrect() {
+        FlashcardSet testCardSet = new FlashcardSet("testUser", "Test Card Set");
+        Flashcard flashcard1 = new Flashcard(testCardSet.getUUID(), "Test Question 1", "Test Answer 1", null);
+        flashcardManager.insertFlashcard(flashcard1);
+
+        flashcardManager.markAttemptedAndCorrect(flashcard1.getUUID());
+        assertEquals("FlashcardManager can mark a flashcard as attempted via the markAttemptedAndCorrect() method",
+                1, flashcardManager.getFlashcard(flashcard1.getUUID()).getAttempted());
+        assertEquals("FlashcardManager will mark a flashcard as correct via the markAttemptedAndCorrect() method",
+                1, flashcardManager.getFlashcard(flashcard1.getUUID()).getCorrect());
+    }
+
+    @Test
+    public void TestMarkAttemptedAndCorrectNonExistingCard() {
+        try {
+            flashcardManager.markAttemptedAndCorrect("nonExistingUUID");
+        } catch (Exception e) {
+            fail("FlashcardManager will not throw an exception when calling markAttemptedAndCorrect() if the flashcard does not exist");
+        }
+    }
+
 
     @After
     public void tearDown() {
