@@ -37,8 +37,8 @@ public class CreateFlashcardActivity extends Activity {
     }
 
     private void initializeManagers() {
-        flashcardSetManager = new FlashcardSetManager();
-        flashcardManager = new FlashcardManager();
+        flashcardSetManager = new FlashcardSetManager(Services.getFlashcardSetPersistence());
+        flashcardManager = new FlashcardManager(Services.getFlashcardPersistence());
     }
 
     private void initializeViews() {

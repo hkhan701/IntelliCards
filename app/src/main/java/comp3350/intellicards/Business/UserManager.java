@@ -11,6 +11,10 @@ public class UserManager {
         userPersistence = Services.getUserPersistence();
     }
 
+    public UserManager(UserPersistence persistence) {
+        userPersistence = persistence;
+    }
+
     public boolean registerUser(String username, String password) {
         if (userPersistence.getUserByUsername(username) != null || username.equals("guest")) {
             return false; // Username already exists or it equals 'guest' which is reserved for guest mode

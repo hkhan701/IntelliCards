@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.recyclerview.widget.RecyclerView;
 
+import comp3350.intellicards.Application.Services;
 import comp3350.intellicards.Business.FlashcardManager;
 import comp3350.intellicards.Objects.Flashcard;
 import comp3350.intellicards.Objects.FlashcardSet;
@@ -57,7 +58,7 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.Flashc
         public FlashcardViewHolder(View itemView, FlashcardSet flashcardSet) {
             super(itemView);
             this.flashcardSet = flashcardSet;
-            this.flashcardManager = new FlashcardManager();
+            this.flashcardManager = new FlashcardManager(Services.getFlashcardPersistence());
 
             flashcardTextView = itemView.findViewById(R.id.flashcardTextRecycle);
             deleteButton = itemView.findViewById(R.id.deleteButton);

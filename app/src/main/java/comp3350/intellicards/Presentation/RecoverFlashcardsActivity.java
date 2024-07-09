@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
+import comp3350.intellicards.Application.Services;
 import comp3350.intellicards.Application.UserSession;
 import comp3350.intellicards.Business.FlashcardSetManager;
 import comp3350.intellicards.Objects.Flashcard;
@@ -27,7 +28,7 @@ public class RecoverFlashcardsActivity extends Activity {
         setContentView(R.layout.activity_recovery);
 
         // Initialize flashcard set persistence
-        flashcardSetManager = new FlashcardSetManager();
+        flashcardSetManager = new FlashcardSetManager(Services.getFlashcardSetPersistence());
 
         // Get the user session
         userName = UserSession.getInstance().getUsername();

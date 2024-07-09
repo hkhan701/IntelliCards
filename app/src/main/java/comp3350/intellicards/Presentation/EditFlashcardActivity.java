@@ -14,6 +14,7 @@ import androidx.appcompat.widget.AppCompatImageButton;
 import java.util.ArrayList;
 import java.util.List;
 
+import comp3350.intellicards.Application.Services;
 import comp3350.intellicards.Application.UserSession;
 import comp3350.intellicards.Business.FlashcardManager;
 import comp3350.intellicards.Business.FlashcardSetManager;
@@ -52,8 +53,8 @@ public class EditFlashcardActivity extends Activity {
     }
 
     private void initializeManagers() {
-        flashcardManager = new FlashcardManager();
-        flashcardSetManager = new FlashcardSetManager();
+        flashcardManager = new FlashcardManager(Services.getFlashcardPersistence());
+        flashcardSetManager = new FlashcardSetManager(Services.getFlashcardSetPersistence());
     }
 
     private void initializeViews() {

@@ -1,4 +1,4 @@
-package comp3350.intellicards.Persistence.stubs;
+package comp3350.intellicards.tests.persistance;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -12,10 +12,14 @@ import comp3350.intellicards.Persistence.FlashcardSetPersistence;
 public class FlashcardSetPersistenceStub implements FlashcardSetPersistence {
 
     private Map<String, FlashcardSet> flashcardSets;
+    private boolean mockInitialized;
 
     public FlashcardSetPersistenceStub() {
         flashcardSets = new LinkedHashMap<>();
+        mockInitialized = false;
+    }
 
+    public void mockData() {
         FlashcardSet set1 = new FlashcardSet("set1", "user1", "Math");
         FlashcardSet set2 = new FlashcardSet("set2", "user1", "Science");
         FlashcardSet set3 = new FlashcardSet("set3", "user2", "History");
@@ -25,12 +29,19 @@ public class FlashcardSetPersistenceStub implements FlashcardSetPersistence {
         flashcardSets.put(set2.getUUID(), set2);
         flashcardSets.put(set3.getUUID(), set3);
         flashcardSets.put(set4.getUUID(), set4);
+
+        mockInitialized = true;
+    }
+
+    public boolean isMockInitialized() {
+        return mockInitialized;
     }
 
     @Override
     public FlashcardSet getFlashcardSet(String uuid) {
         return flashcardSets.get(uuid);
     }
+
 
     @Override
     public List<FlashcardSet> getAllFlashcardSets() {
