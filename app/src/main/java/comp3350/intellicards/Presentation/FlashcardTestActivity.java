@@ -112,7 +112,7 @@ public class FlashcardTestActivity extends Activity {
         private final TextView flashcardTextView;
         private final CheckBox correctCheckBox;
         private final CheckBox incorrectCheckBox;
-        private final Button nextCardButton;
+        private final AppCompatImageButton nextCardButton;
         private final Button flipCardButton;
         private boolean isFrontVisible;
 
