@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+import java.util.Random;
 import java.util.UUID;
 
 import comp3350.intellicards.Objects.Flashcard;
@@ -19,20 +20,48 @@ public class FlashcardSetTest {
 
     @Before
     public void setUp() {
+        testCardSet = new FlashcardSet("TestUUID", "TestUser", "TestSet");
+    }
+
+    /*
+     * test Constructor
+     */
+    @Test
+    public void testAssignUuid() {
         testCardSet = new FlashcardSet("TestUser", "TestSet");
+        assertNotNull("UUID should be assigned automatically after construction",
+                testCardSet.getUUID());
     }
 
     /*
      * Test getUUID()
      */
     @Test
-    public void testGetFlashcardSetUuid() {
-        assertNotNull("UUID should be assigned automatically after construction",
-                testCardSet.getUUID());
+    public void testGetUUID() {
+        assertEquals("UUID can be retrieved from FlashcardSet",
+                "TestUUID", testCardSet.getUUID());
     }
 
     /*
-     * Test addFlashcard()
+     * Test getFlashcardSetName()
+     */
+    @Test
+    public void testGetUsername() {
+        assertEquals("Associated username can be retrieved from FlashcardSet",
+                "TestUser", testCardSet.getUsername());
+    }
+
+    /*
+     * Test getFlashcardSetName()
+     */
+    @Test
+    public void testGetFlashcardSetName() {
+        assertEquals("Flashcard set name can be retrieved from FlashcardSet",
+                "TestSet", testCardSet.getFlashcardSetName());
+    }
+
+    /*
+     * Test addFlashcard() and size()
      */
     @Test
     public void testAddFlashcard() {
@@ -98,6 +127,43 @@ public class FlashcardSetTest {
     }
 
     /*
+     * Test getDeletedFlashcards()
+     */
+    @Test
+    public void getDeletedFlashcards() {
+        Flashcard flashcard1 = new Flashcard(testCardSet.getUUID(), "Less Generic Answer", "Less Generic Question", null);
+        Flashcard flashcard2 = new Flashcard(testCardSet.getUUID(), "Even Less Generic Answer", "Even Less Generic Question", "Need Hint");
+
+        flashcard1.markDeleted();
+        testCardSet.addFlashcard(flashcard1);
+        testCardSet.addFlashcard(flashcard2);
+        flashcard2.markDeleted();
+
+        FlashcardSet deletedSet = testCardSet.getDeletedFlashcards();
+
+        assertEquals("A deleted subset from a flashcardSet should contain two deleted flashcards",
+                2, deletedSet.size());
+    }
+
+    @Test
+    public void testGetDeletedFlashcardsDoesNotReturnActive() {
+        Flashcard flashcard1 = new Flashcard(testCardSet.getUUID(), "Less Generic Answer", "Less Generic Question", null);
+        Flashcard flashcard2 = new Flashcard(testCardSet.getUUID(), "Even Less Generic Answer", "Even Less Generic Question", "Need Hint");
+
+        flashcard1.markDeleted();
+        testCardSet.addFlashcard(flashcard1);
+        testCardSet.addFlashcard(flashcard2);
+
+        FlashcardSet deletedSet = testCardSet.getDeletedFlashcards();
+
+        assertEquals("A deleted subset from a flashcardSet should contain no active flashcards",
+                1, deletedSet.size());
+
+        assertEquals("A deleted subset from a flashcard should only contain the deleted flashcard",
+                flashcard1, deletedSet.getIndex(0));
+    }
+
+    /*
      * Test getFlashcardById()
      */
     @Test
@@ -132,11 +198,65 @@ public class FlashcardSetTest {
                 testCardSet.getFlashcardById(uuid));
     }
 
-    @After
-    public void tearDown() {
+    /*
+     * Test randomizeSet()
+     */
+    @Test
+    public void testRandomizeSet() {
+        Flashcard flashcard1 = new Flashcard(testCardSet.getUUID(), "Less Generic Question", "Less Generic Answer", null);
+        Flashcard flashcard2 = new Flashcard(testCardSet.getUUID(), "Even Less Generic Question", "Even Less Generic Answer", "Need Hint");
+        Flashcard flashcard3 = new Flashcard(testCardSet.getUUID(), "Question", "Answer", null);
+        Flashcard flashcard4 = new Flashcard(testCardSet.getUUID(), "Generic Question", "Generic Answer", null);
 
+        testCardSet.addFlashcard(flashcard1);
+        testCardSet.addFlashcard(flashcard2);
+        testCardSet.addFlashcard(flashcard3);
+        testCardSet.addFlashcard(flashcard4);
+
+        FlashcardSet randomizedCardSet = new FlashcardSet("TestUUIDRandom", "TestUsernameRandom", "TestNameRandom");
+        randomizedCardSet.addFlashcard(flashcard1);
+        randomizedCardSet.addFlashcard(flashcard2);
+        randomizedCardSet.addFlashcard(flashcard3);
+        randomizedCardSet.addFlashcard(flashcard4);
+        randomizedCardSet.randomizeSet();
+
+        boolean testResult = true;
+        for (int i = 0; i <= testCardSet.size() && testResult; i++) {
+            if (testCardSet.getIndex(i) != randomizedCardSet.getIndex(i)) {
+                testResult = false;
+            }
+        }
+
+        assertFalse("Shuffling a set should change the order of cards:\n" +
+                "\tPlease note that this test may fail due to the random nature of the method." +
+                "\tIf it does fail, re-run it a few times before determining that this method is not working as intended",
+                testResult);
     }
 
+    @Test
+    public void testRandomizeNullSet() {
+        try {
+            testCardSet.randomizeSet();
+        } catch (Exception e) {
+            fail("Randomizing an empty set should not result in an exception");
+        }
+    }
 
+    /*
+     * Test toString()
+     */
+    @Test
+    public void testToString() {
+        Flashcard flashcard = new Flashcard(testCardSet.getUUID(),"Generic Answer", "Generic Question", "Generic Hint");
+        testCardSet.addFlashcard(flashcard);
+        assertEquals("Flashcard set can be converted to string with an empty flashcardSet",
+                "FlashcardSet{uuid=TestUUID, flashcardSetName='TestSet', flashcards=[" + flashcard + "]}", testCardSet.toString());
+    }
+
+    @Test
+    public void testToStringEmptyFlashcards() {
+        assertEquals("Flashcard set can be converted to string with an empty flashcardSet",
+                "FlashcardSet{uuid=TestUUID, flashcardSetName='TestSet', flashcards=[]}", testCardSet.toString());
+    }
 }
 
