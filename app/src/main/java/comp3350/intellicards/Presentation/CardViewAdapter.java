@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.recyclerview.widget.RecyclerView;
 
 import comp3350.intellicards.Application.Services;
@@ -49,8 +50,8 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.Flashc
     public class FlashcardViewHolder extends RecyclerView.ViewHolder {
 
         private final TextView flashcardTextView;
-        private final Button deleteButton;
-        private final Button editButton;
+        private final AppCompatImageButton deleteButton;
+        private final AppCompatImageButton editButton;
         private final Button flipButton;
         private boolean isFrontVisible = true;
 

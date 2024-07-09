@@ -42,25 +42,6 @@ public class FlashcardSetPersistenceStub implements FlashcardSetPersistence {
         return flashcardSets.get(uuid);
     }
 
-    @Override
-    public FlashcardSet getActiveFlashcardSet(String uuid) {
-        FlashcardSet set = flashcardSets.get(uuid);
-        if (set != null) {
-            return set.getActiveFlashcards();
-        }
-
-        return null;
-    }
-
-    @Override
-    public FlashcardSet getDeletedFlashcardSet(String uuid) {
-        FlashcardSet set = flashcardSets.get(uuid);
-        if (set != null) {
-            return set.getDeletedFlashcards();
-        }
-
-        return null;
-    }
 
     @Override
     public List<FlashcardSet> getAllFlashcardSets() {
@@ -81,24 +62,4 @@ public class FlashcardSetPersistenceStub implements FlashcardSetPersistence {
         flashcardSets.put(newFlashcardSet.getUUID(), newFlashcardSet);
     }
 
-    @Override
-    public void randomizeFlashcardSet(FlashcardSet set) {
-        if (set != null) {
-            set.randomizeSet();
-        }
-    }
-
-    @Override
-    public List<FlashcardSet> getFlashcardSetsByUsername(String username) {
-        List<FlashcardSet> flashcardSets = getAllFlashcardSets();
-        List<FlashcardSet> userSets = new ArrayList<>();
-
-        for (FlashcardSet flashcardSet : flashcardSets) {
-            if (flashcardSet.getUsername().equals(username)) {
-                userSets.add(flashcardSet);
-            }
-        }
-
-        return userSets;
-    }
 }

@@ -3,11 +3,13 @@ package comp3350.intellicards.Presentation;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.appcompat.widget.AppCompatImageButton;
+
 import comp3350.intellicards.Application.Services;
+
 import comp3350.intellicards.Business.FlashcardManager;
 import comp3350.intellicards.Business.FlashcardSetManager;
 import comp3350.intellicards.Objects.Flashcard;
@@ -21,8 +23,8 @@ public class CreateFlashcardActivity extends Activity {
     private EditText questionEditText;
     private EditText answerEditText;
     private EditText hintEditText;
-    private Button submitButton;
-    private Button cancelButton;
+    private AppCompatImageButton submitButton;
+    private AppCompatImageButton cancelButton;
     private FlashcardSet currentFlashcardSet;
     private String flashcardSetUUID;
 

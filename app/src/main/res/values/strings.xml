@@ -16,7 +16,7 @@
     <string name="test_btn_text">Test</string>
     <string name="finish_btn_text">Finish</string>
     <string name="correct_checkbox_text">Correct</string>
-    <string name="incorrect_checkbox_text">Incorrect\n</string>
+    <string name="incorrect_checkbox_text">Incorrect</string>
     <string name="flip_btn_text">Flip</string>
     <string name="sign_up_btn_text">Sign Up</string>
     <string name="log_in_btn_text">Log In</string>
@@ -36,6 +36,9 @@
     <string name="answer_max_length">200</string>
     <string name="username_max_length">25</string>
     <string name="password_max_length">25</string>
+    <string name="create_flashcard">Create Flashcard</string>
+    <string name="edit_flashcard">Edit Flashcard</string>
+    <string name="log_out_text">Log out</string>
 
 
 </resources>
