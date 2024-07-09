@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 
+import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -55,11 +56,10 @@ public class RecoverFlashcardsActivity extends Activity {
         // Print the recovered list on the UI
         printRecoverList(deletedFlashcards);
 
-        Button backButton = findViewById(R.id.backButton);
+        AppCompatImageButton backButton = findViewById(R.id.backButton);
 
         backButton.setOnClickListener(v -> {
-            Intent intent = new Intent(RecoverFlashcardsActivity.this, ProfileActivity.class);
-            startActivity(intent);
+            onBackPressed();
         });
 
     }

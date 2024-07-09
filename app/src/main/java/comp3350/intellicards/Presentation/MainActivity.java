@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.GridLayout;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatImageButton;
 
 import java.util.List;
 
@@ -57,6 +58,10 @@ public class MainActivity extends Activity {
             flashcardSetButton.setLayoutParams(new GridLayout.LayoutParams(GridLayout.spec(GridLayout.UNDEFINED, 1f), GridLayout.spec(GridLayout.UNDEFINED, 1f)));
             flashcardSetButton.setPadding(16, 16, 16, 16);
             flashcardSetButton.setOnClickListener(v -> openFlashcardSetActivity(set.getUUID()));
+            flashcardSetButton.setHeight(350);
+            flashcardSetButton.setTextSize(25);
+            flashcardSetButton.setWidth(55);
+            flashcardSetButton.setBackgroundColor(0xFFFFFFFD);
             gridLayout.addView(flashcardSetButton);
         }
     }
@@ -98,7 +103,7 @@ public class MainActivity extends Activity {
     }
 
     private void setupProfilePageButton() {
-        Button profilePageButton = findViewById(R.id.profileButton);
+        AppCompatImageButton profilePageButton = findViewById(R.id.profileButton);
         profilePageButton.setOnClickListener(v -> openProfileActivity());
     }
 

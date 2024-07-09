@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.appcompat.widget.AppCompatImageButton;
+
 import comp3350.intellicards.Application.UserSession;
 import comp3350.intellicards.R;
 
@@ -21,14 +23,14 @@ public class ProfileActivity extends Activity {
         username = UserSession.getInstance().getUsername(); // Get the username from the UserSession singleton
         setupBackButton();
         setupRecoveryButton();
+        setupLogoutButton();
         populateUsername();
     }
 
     private void setupBackButton() {
-        Button backButton = findViewById(R.id.backButton);
+        AppCompatImageButton backButton = findViewById(R.id.backButton);
         backButton.setOnClickListener(v -> {
-            Intent intent = new Intent(ProfileActivity.this, MainActivity.class);
-            startActivity(intent);
+            onBackPressed();
         });
     }
 
@@ -36,6 +38,14 @@ public class ProfileActivity extends Activity {
         Button recoveryButton = findViewById(R.id.recoveryButton);
         recoveryButton.setOnClickListener(v -> {
             Intent intent = new Intent(ProfileActivity.this, RecoverFlashcardsActivity.class);
+            startActivity(intent);
+        });
+    }
+
+    private void setupLogoutButton() {
+        Button logoutButton = findViewById(R.id.logoutButton);
+        logoutButton.setOnClickListener(v -> {
+            Intent intent = new Intent(ProfileActivity.this, AuthActivity.class);
             startActivity(intent);
         });
     }

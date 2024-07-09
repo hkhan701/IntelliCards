@@ -8,6 +8,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -59,7 +60,7 @@ public class FlashcardSetActivity extends Activity {
 
 
     private void setUpAddFlashcardButton(String flashcardSetUUID) {
-        Button addFlashcardButton = findViewById(R.id.addFlashcardButton);
+        AppCompatImageButton addFlashcardButton = findViewById(R.id.addFlashcardButton);
         addFlashcardButton.setOnClickListener(v -> {
             Intent intent = new Intent(FlashcardSetActivity.this, CreateFlashcardActivity.class);
             intent.putExtra("flashcardSetUUID", flashcardSetUUID);
@@ -68,10 +69,9 @@ public class FlashcardSetActivity extends Activity {
     }
 
     private void setUpBackButton() {
-        Button backButton = findViewById(R.id.backButton);
+        AppCompatImageButton backButton = findViewById(R.id.backButton);
         backButton.setOnClickListener(v -> {
-            Intent intent = new Intent(FlashcardSetActivity.this, MainActivity.class);
-            startActivity(intent);
+            onBackPressed();
         });
     }
 

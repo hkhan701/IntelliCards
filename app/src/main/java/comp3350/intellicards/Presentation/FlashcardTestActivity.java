@@ -12,6 +12,7 @@ import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatImageButton;
 
 import comp3350.intellicards.Application.Services;
 import comp3350.intellicards.Business.FlashcardManager;
@@ -29,7 +30,7 @@ public class FlashcardTestActivity extends Activity {
     private int correct = 0;
     private int attempted = 0;
     ViewFlipper viewFlipper;
-    Button backButton;
+    AppCompatImageButton backButton;
     TextView resultTextBox;
     Button finishButton;
 
@@ -58,9 +59,7 @@ public class FlashcardTestActivity extends Activity {
     private void setUpBackButton(String flashcardSetUUID) {
         backButton.setVisibility(View.INVISIBLE);
         backButton.setOnClickListener(v -> {
-            Intent intent = new Intent(FlashcardTestActivity.this, FlashcardSetActivity.class);
-            intent.putExtra("flashcardSetUUID", flashcardSetUUID);
-            startActivity(intent);
+            onBackPressed();
         });
     }
 
