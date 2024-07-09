@@ -23,6 +23,7 @@ public class ProfileActivity extends Activity {
         username = UserSession.getInstance().getUsername(); // Get the username from the UserSession singleton
         setupBackButton();
         setupRecoveryButton();
+        setupLogoutButton();
         populateUsername();
     }
 
@@ -37,6 +38,14 @@ public class ProfileActivity extends Activity {
         Button recoveryButton = findViewById(R.id.recoveryButton);
         recoveryButton.setOnClickListener(v -> {
             Intent intent = new Intent(ProfileActivity.this, RecoverFlashcardsActivity.class);
+            startActivity(intent);
+        });
+    }
+
+    private void setupLogoutButton() {
+        Button logoutButton = findViewById(R.id.logoutButton);
+        logoutButton.setOnClickListener(v -> {
+            Intent intent = new Intent(ProfileActivity.this, AuthActivity.class);
             startActivity(intent);
         });
     }

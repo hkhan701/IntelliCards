@@ -57,6 +57,10 @@ public class MainActivity extends Activity {
             flashcardSetButton.setLayoutParams(new GridLayout.LayoutParams(GridLayout.spec(GridLayout.UNDEFINED, 1f), GridLayout.spec(GridLayout.UNDEFINED, 1f)));
             flashcardSetButton.setPadding(16, 16, 16, 16);
             flashcardSetButton.setOnClickListener(v -> openFlashcardSetActivity(set.getUUID()));
+            flashcardSetButton.setHeight(350);
+            flashcardSetButton.setTextSize(25);
+            flashcardSetButton.setWidth(55);
+            flashcardSetButton.setBackgroundColor(0xFFFFFFFD);
             gridLayout.addView(flashcardSetButton);
         }
     }
