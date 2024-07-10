@@ -221,7 +221,7 @@ public class FlashcardSetTest {
         randomizedCardSet.randomizeSet();
 
         boolean testResult = true;
-        for (int i = 0; i <= testCardSet.size() && testResult; i++) {
+        for (int i = 0; i < testCardSet.size() && testResult; i++) {
             if (testCardSet.getIndex(i) != randomizedCardSet.getIndex(i)) {
                 testResult = false;
             }

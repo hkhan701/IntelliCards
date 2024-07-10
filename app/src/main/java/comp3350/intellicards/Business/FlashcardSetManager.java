@@ -30,9 +30,7 @@ public class FlashcardSetManager {
         if (set != null) {
             return set.getActiveFlashcards();
         }
-
         return null;
-
     }
 
     public FlashcardSet getDeletedFlashcardSet(String uuid) {
@@ -60,7 +58,7 @@ public class FlashcardSetManager {
         FlashcardSet set = getActiveFlashcardSet(flashcardSet.getUUID());
         if (set != null)
         {
-            set.randomizeSet();
+            flashcardSet.randomizeSet();
         } else
         {
             System.out.println("Flashcard set not found");
