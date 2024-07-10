@@ -1,20 +1,22 @@
 package comp3350.intellicards.Business;
 
-import java.util.List;
-
 import comp3350.intellicards.Application.Services;
 import comp3350.intellicards.Objects.Flashcard;
+import comp3350.intellicards.Objects.FlashcardSet;
 import comp3350.intellicards.Persistence.FlashcardPersistence;
 
 public class FlashcardManager {
     private FlashcardPersistence flashcardPersistence;
+    private FlashcardSetManager flashcardSetManager;
 
     public FlashcardManager() {
         flashcardPersistence = Services.getFlashcardPersistence();
+        flashcardSetManager = new FlashcardSetManager(Services.getFlashcardSetPersistence());
     }
 
     public FlashcardManager(FlashcardPersistence persistence) {
         flashcardPersistence = persistence;
+        flashcardSetManager = new FlashcardSetManager(Services.getFlashcardSetPersistence());
     }
 
     public Flashcard getFlashcard(String uuid) {
@@ -25,8 +27,31 @@ public class FlashcardManager {
         this.flashcardPersistence.insertFlashcard(currFlashcard);
     }
 
-    public void updateFlashcard(Flashcard currFlashcard) {
-        this.flashcardPersistence.updateFlashcard(currFlashcard);
+    public void moveFlashcardToNewSet(Flashcard flashcard, FlashcardSet newSet, String newQuestion, String newAnswer, String newHint) {
+        markFlashcardAsDeleted(flashcard.getUUID()); // Soft delete the flashcard
+
+        Flashcard newFlashcard = new Flashcard(newSet.getUUID(), newQuestion, newAnswer, newHint);
+        insertFlashcard(newFlashcard); // Insert the new flashcard into the database for the new set
+        flashcardSetManager.addFlashcardToFlashcardSet(newSet.getUUID(), newFlashcard);
+    }
+
+    public void updateFlashcard(Flashcard flashcard) {
+        flashcardPersistence.updateFlashcard(flashcard);
+    }
+
+    private void updateFlashcardDetails(Flashcard flashcard, String newQuestion, String newAnswer, String newHint) {
+        flashcard.setQuestion(newQuestion);
+        flashcard.setAnswer(newAnswer);
+        flashcard.setHint(newHint);
+        updateFlashcard(flashcard);
+    }
+
+    public void updateFlashcard(Flashcard flashcard, FlashcardSet newSet, String newQuestion, String newAnswer, String newHint) {
+        if (!flashcard.getSetUUID().equals(newSet.getUUID())) {
+            moveFlashcardToNewSet(flashcard, newSet, newQuestion, newAnswer, newHint);
+        } else {
+            updateFlashcardDetails(flashcard, newQuestion, newAnswer, newHint);
+        }
     }
 
     public void markFlashcardAsDeleted(String uuid) {
