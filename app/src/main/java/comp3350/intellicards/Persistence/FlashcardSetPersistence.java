@@ -1,6 +1,5 @@
 package comp3350.intellicards.Persistence;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import comp3350.intellicards.Objects.Flashcard;

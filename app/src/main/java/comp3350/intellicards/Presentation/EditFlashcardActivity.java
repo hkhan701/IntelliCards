@@ -42,7 +42,7 @@ public class EditFlashcardActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_flashcard);
 
-        username = UserSession.getInstance().getUsername(); // Get the username from the UserSession singleton
+        username = UserSession.getInstance().getUsername();
 
         initializeManagers();
         initializeViews();
@@ -103,7 +103,6 @@ public class EditFlashcardActivity extends Activity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         flashcardSetSpinner.setAdapter(adapter);
 
-        // Set the spinner to the current flashcard's set
         int currentPosition = flashcardSetNames.indexOf(currentFlashcardSet.getFlashcardSetName());
         flashcardSetSpinner.setSelection(currentPosition);
     }
@@ -119,18 +118,11 @@ public class EditFlashcardActivity extends Activity {
             String newAnswer = answerEditText.getText().toString().trim();
             String newHint = hintEditText.getText().toString().trim();
 
-            // If the selected flashcard set is different from the current flashcard set, move the flashcard to the new set
             FlashcardSet selectedSet = getSelectedFlashcardSet();
-            if (!selectedSet.getUUID().equals(currentFlashcardSet.getUUID())) {
-                moveFlashcardToNewSet(selectedSet, newQuestion, newAnswer, newHint);
-            } else {
-                // Update the flashcard if it stays in the same set
-                updateFlashcardDetails(newQuestion, newAnswer, newHint);
-                flashcardManager.updateFlashcard(currentFlashcard);
-            }
+            flashcardManager.updateFlashcard(currentFlashcard, selectedSet, newQuestion, newAnswer, newHint);
 
             showSuccessMessage();
-            sendResultAndFinishEditFlashcardActivity();
+            sendResultAndFinish();
         });
     }
 
@@ -139,29 +131,11 @@ public class EditFlashcardActivity extends Activity {
         return allFlashcardSets.get(selectedPosition);
     }
 
-    private void moveFlashcardToNewSet(FlashcardSet newSet, String newQuestion, String newAnswer, String newHint) {
-        // Mark the current flashcard as deleted
-        flashcardManager.markFlashcardAsDeleted(currentFlashcard.getUUID());
-
-        // Create a new flashcard with the updated details for the new set
-        Flashcard newFlashcard = new Flashcard(newSet.getUUID(), newQuestion, newAnswer, newHint);
-        flashcardManager.insertFlashcard(newFlashcard);
-        flashcardSetManager.addFlashcardToFlashcardSet(newSet.getUUID(), newFlashcard);
-
-        Toast.makeText(this, "Flashcard moved to new set", Toast.LENGTH_LONG).show();
-    }
-
-    private void updateFlashcardDetails(String newQuestion, String newAnswer, String newHint) {
-        currentFlashcard.setQuestion(newQuestion);
-        currentFlashcard.setAnswer(newAnswer);
-        currentFlashcard.setHint(newHint);
-    }
-
     private void showSuccessMessage() {
         Toast.makeText(this, "Successfully updated flashcard", Toast.LENGTH_LONG).show();
     }
 
-    private void sendResultAndFinishEditFlashcardActivity() {
+    private void sendResultAndFinish() {
         Intent resultIntent = new Intent();
         resultIntent.putExtra("flashcardUUID", currentFlashcard.getUUID());
         setResult(RESULT_OK, resultIntent);
