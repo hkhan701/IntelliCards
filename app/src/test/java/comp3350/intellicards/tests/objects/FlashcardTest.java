@@ -42,7 +42,7 @@ public class FlashcardTest {
      */
     @Test
     public void testGetUuid() {
-        assertEquals("The flashcard's UUID can be retrieved",
+        assertEquals("Flashcard's UUID can be retrieved",
                 "uuid", testFlashcard.getUUID());
     }
 
@@ -51,7 +51,7 @@ public class FlashcardTest {
      */
     @Test
     public void testGetAnswer() {
-        assertEquals("The flashcard's answer can be retrieved",
+        assertEquals("Flashcard's answer can be retrieved",
                 "Answer", testFlashcard.getAnswer());
     }
 
@@ -60,7 +60,7 @@ public class FlashcardTest {
      */
     @Test
     public void testGetQuestion() {
-        assertEquals("The flashcard's question can be retrieved",
+        assertEquals("Flashcard's question can be retrieved",
                 "Question", testFlashcard.getQuestion());
     }
 
@@ -69,7 +69,7 @@ public class FlashcardTest {
      */
     @Test
     public void testGetHint() {
-        assertEquals("The flashcard's hint can be retrieved",
+        assertEquals("Flashcard's hint can be retrieved",
                 "Hint", testFlashcard.getHint());
     }
 
@@ -78,7 +78,7 @@ public class FlashcardTest {
      */
     @Test
     public void testGetSetUUID() {
-        assertEquals("The flashcard's setUUID can be retrieved",
+        assertEquals("Flashcard's setUUID can be retrieved",
                 "setUUID", testFlashcard.getSetUUID());
     }
 
@@ -87,7 +87,7 @@ public class FlashcardTest {
      */
     @Test
     public void testGetAttempted() {
-        assertEquals("The flashcard's attempted value can be retrieved",
+        assertEquals("Flashcard's attempted value can be retrieved",
                 1, testFlashcard.getAttempted());
     }
 
@@ -96,7 +96,7 @@ public class FlashcardTest {
      */
     @Test
     public void testGetCorrect() {
-        assertEquals("The flashcard's correct value can be retrieved",
+        assertEquals("Flashcard's correct value can be retrieved",
                 0, testFlashcard.getCorrect());
     }
 
@@ -104,9 +104,9 @@ public class FlashcardTest {
      * Test setAnswer()
      */
     @Test
-    public void testSetAnswerOverwritesPreviousAnswer() {
+    public void testSetAnswer() {
         testFlashcard.setAnswer("Test answer");
-        assertEquals("Changing the answer of a card overwrites the previous answer",
+        assertEquals("Flashcard's answer can be changed",
                 "Test answer", testFlashcard.getAnswer());
     }
 
@@ -114,9 +114,9 @@ public class FlashcardTest {
      * Test setQuestion()
      */
     @Test
-    public void testSetQuestionOverwritesPreviousQuestion() {
+    public void testSetQuestion() {
         testFlashcard.setQuestion("Test question");
-        assertEquals("Changing the question of a card overwrites the previous question",
+        assertEquals("Flashcard's question can be changed",
                 "Test question", testFlashcard.getQuestion());
     }
 
@@ -126,14 +126,14 @@ public class FlashcardTest {
     @Test
     public void testSetHint() {
         testFlashcard.setHint("Test hint");
-        assertEquals("Changing the hint of a card overwrites the previous hint",
+        assertEquals("Flashcard's hint can be changed",
                 "Test hint", testFlashcard.getHint());
     }
 
     @Test
     public void testSetHintNull() {
         testFlashcard.setHint(null);
-        assertNull("Changing the hint to null should not cause any problems - it is acceptable", testFlashcard.getHint());
+        assertNull("Flashcard's hint can be changed to null", testFlashcard.getHint());
     }
 
     /*
@@ -141,7 +141,7 @@ public class FlashcardTest {
      */
     @Test
     public void testIsDeleted() {
-        assertFalse("A card is not marked as deleted unless it was marked as such",
+        assertFalse("Flashcard's deleted status can be retrieved",
                 testFlashcard.isDeleted());
     }
 
@@ -151,7 +151,16 @@ public class FlashcardTest {
     @Test
     public void testMarkDeleted() {
         testFlashcard.markDeleted();
-        assertTrue("A flashcard that was marked as deleted will reflect that",
+        assertTrue("Flashcard can be marked as deleted",
+                testFlashcard.isDeleted());
+    }
+
+    @Test
+    public void testMarkDeletedMultiple() {
+        testFlashcard.markDeleted();
+        testFlashcard.markDeleted();
+
+        assertTrue("Flashcard will still be marked as deleted if the method is called more than once",
                 testFlashcard.isDeleted());
     }
 
@@ -162,7 +171,16 @@ public class FlashcardTest {
     public void testMarkRecovered() {
         testFlashcard.markDeleted();
         testFlashcard.markRecovered();
-        assertFalse("A card can be recovered after being marked as deleted",
+        assertFalse("Flashcard can be marked as recovered after being deleted",
+                testFlashcard.isDeleted());
+    }
+
+    @Test
+    public void testMarkRecoveredMultiple() {
+        testFlashcard.markDeleted();
+        testFlashcard.markRecovered();
+        testFlashcard.markRecovered();
+        assertFalse("Flashcard will still be marked as recovered if the method is called more than once",
                 testFlashcard.isDeleted());
     }
 
@@ -172,7 +190,7 @@ public class FlashcardTest {
     @Test
     public void testMarkAttempted() {
         testFlashcard.markAttempted();
-        assertEquals("Marking a flashcard as attempted will increase the attempted value by one",
+        assertEquals("Flashcard can have attempted value increased using the markAttempted() method",
                 2, testFlashcard.getAttempted());
     }
 
@@ -183,14 +201,10 @@ public class FlashcardTest {
     public void testMarkAttemptedAndCorrect() {
         testFlashcard.markAttemptedAndCorrect();
 
-        assertEquals("Marking a flashcard as attempted and correct will increase the attempted value by one",
+        assertEquals("Flashcard can have attempted value increased using the markAttemptedAndCorrect() method",
                 2, testFlashcard.getAttempted());
-        assertEquals("Marking a flashcard as attempted and correct will increase the correct value by one",
+        assertEquals("Flashcard can have correct value increased using the markAttemptedAndCorrect() method",
                 1, testFlashcard.getCorrect());
-    }
-
-    @After
-    public void tearDown() {
     }
 
 }
