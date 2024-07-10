@@ -1,15 +1,11 @@
 package comp3350.intellicards.tests.objects;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.mock;
 
 import comp3350.intellicards.Objects.Flashcard;
-import comp3350.intellicards.Objects.FlashcardSet;
-import comp3350.intellicards.Objects.User;
 
 public class FlashcardTest {
 

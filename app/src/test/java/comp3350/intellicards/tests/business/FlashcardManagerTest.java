@@ -2,12 +2,8 @@ package comp3350.intellicards.tests.business;
 
 import static org.junit.Assert.*;
 
-import org.junit.After;
 import org.junit.Test;
 import org.junit.Before;
-import org.junit.runner.notification.Failure;
-
-import java.util.UUID;
 
 import comp3350.intellicards.Business.FlashcardManager;
 import comp3350.intellicards.Business.FlashcardSetManager;

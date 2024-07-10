@@ -5,11 +5,8 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
-import org.junit.After;
 import org.junit.Test;
 import org.junit.Before;
-
-import java.util.UUID;
 
 import comp3350.intellicards.Business.FlashcardSetManager;
 import comp3350.intellicards.Objects.Flashcard;
