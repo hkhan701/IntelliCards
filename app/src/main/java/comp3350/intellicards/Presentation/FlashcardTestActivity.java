@@ -17,6 +17,7 @@ import androidx.appcompat.widget.AppCompatImageButton;
 import comp3350.intellicards.Application.Services;
 import comp3350.intellicards.Business.FlashcardManager;
 import comp3350.intellicards.Business.ReportCalculator;
+import comp3350.intellicards.Business.TempTestResult;
 import comp3350.intellicards.Objects.Flashcard;
 import comp3350.intellicards.Objects.FlashcardSet;
 import comp3350.intellicards.Business.FlashcardSetManager;
@@ -27,8 +28,7 @@ public class FlashcardTestActivity extends Activity {
 
     private FlashcardSetManager flashcardSetManager;
     private FlashcardManager flashcardManager;
-    private int correctAnswers = 0;
-    private int attemptedAnswers = 0;
+    private TempTestResult testResult;
     private ViewFlipper viewFlipper;
     private AppCompatImageButton backButton;
     private Button finishButton;
@@ -39,18 +39,23 @@ public class FlashcardTestActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
 
+        //set up flashcard/set manager and temporary test result
         flashcardSetManager = new FlashcardSetManager(Services.getFlashcardSetPersistence());
         flashcardManager = new FlashcardManager(Services.getFlashcardPersistence());
+        testResult = new TempTestResult();
 
-        String flashcardSetUUID = getIntent().getStringExtra("flashcardSetUUID");
-        FlashcardSet flashcardSet = flashcardSetManager.getActiveFlashcardSet(flashcardSetUUID);
-        flashcardSetManager.shuffleFlashcardSet(flashcardSet);
-
+        //find the views
         backButton = findViewById(R.id.backButton);
         finishButton = findViewById(R.id.finishButton);
         viewFlipper = findViewById(R.id.viewFlipper);
         resultTextView = findViewById(R.id.resultTextBox);
 
+        // initialize the flashcardSet and shuffle it
+        String flashcardSetUUID = getIntent().getStringExtra("flashcardSetUUID");
+        FlashcardSet flashcardSet = flashcardSetManager.getActiveFlashcardSet(flashcardSetUUID);
+        flashcardSetManager.shuffleFlashcardSet(flashcardSet);
+
+        // set up the views
         setUpBackButton(flashcardSetUUID);
         setUpFinishButton(flashcardSet);
         setUpViewFlipper(flashcardSet);
@@ -92,13 +97,8 @@ public class FlashcardTestActivity extends Activity {
 
         FlashcardSet updatedFlashcardSet = flashcardSetManager.getActiveFlashcardSet(flashcardSet.getUUID());
         ReportCalculator reportCalculator = new ReportCalculator(updatedFlashcardSet);
-        String report = generateTestStats() + reportCalculator.report();
+        String report = testResult.generateTestStats() + reportCalculator.report();
         displayTestResults(report);
-    }
-
-    private String generateTestStats() {
-        return "This tests accuracy, Correct: " + correctAnswers + " / " + attemptedAnswers
-                + "\nThat is " + Math.round(correctAnswers * 100 / (double) attemptedAnswers) + "% correct\n\n";
     }
 
     private void displayTestResults(String report) {
@@ -166,11 +166,11 @@ public class FlashcardTestActivity extends Activity {
 
             if (correctCheckBox.isChecked()) {
                 flashcardManager.markAttemptedAndCorrect(flashcard.getUUID());
-                correctAnswers++;
+                testResult.incrementCorrectAndAttempted();
             } else {
                 flashcardManager.markAttempted(flashcard.getUUID());
+                testResult.incrementAttempted();
             }
-            attemptedAnswers++;
 
             if (isLastCard()) {
                 finishTest(flashcardSet);
