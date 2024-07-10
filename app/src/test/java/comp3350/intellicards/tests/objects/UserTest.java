@@ -17,7 +17,7 @@ public class UserTest {
     }
 
     /*
-     * getUsername
+     * Test getUsername()
      */
 
     @Test
@@ -27,7 +27,7 @@ public class UserTest {
     }
 
     /*
-     * getPassword
+     * Test getPassword()
      */
 
     @Test
@@ -37,7 +37,7 @@ public class UserTest {
     }
 
     /*
-     * setUsername
+     * Test setUsername()
      */
 
     @Test
@@ -48,7 +48,7 @@ public class UserTest {
     }
 
     /*
-     * setPassword
+     * Test setPassword()
      */
 
     @Test
