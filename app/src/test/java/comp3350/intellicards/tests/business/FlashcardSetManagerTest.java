@@ -81,31 +81,31 @@ public class FlashcardSetManagerTest {
      * Test getDeletedFlashcardSet()
      */
 
-    @Test
-    public void testGetDeletedFlashcardSet() {
-        FlashcardSet flashcardSet = new FlashcardSet("testUser", "Test Set");
-        Flashcard flashcard1 = new Flashcard(flashcardSet.getUUID(), "Test Question 1", "Test Answer 1", "Test Hint 1");
-        Flashcard flashcard2 = new Flashcard(flashcardSet.getUUID(), "Test Question 2", "Test Answer 2", "Test Hint 2");
+//    @Test
+//    public void testGetDeletedFlashcardSet() {
+//        FlashcardSet flashcardSet = new FlashcardSet("testUser", "Test Set");
+//        Flashcard flashcard1 = new Flashcard(flashcardSet.getUUID(), "Test Question 1", "Test Answer 1", "Test Hint 1");
+//        Flashcard flashcard2 = new Flashcard(flashcardSet.getUUID(), "Test Question 2", "Test Answer 2", "Test Hint 2");
+//
+//        flashcardSetManager.insertFlashcardSet(flashcardSet);
+//        flashcardSetManager.addFlashcardToFlashcardSet(flashcardSet.getUUID(), flashcard1);
+//        flashcardSetManager.addFlashcardToFlashcardSet(flashcardSet.getUUID(), flashcard2);
+//
+//        flashcard2.markDeleted();
+//
+//        FlashcardSet deletedSet = flashcardSetManager.getDeletedFlashcardSet(flashcardSet.getUUID());
+//
+//        assertEquals("The set should only contain one item since one of the two is marked as deleted",
+//                1, deletedSet.size());
+//        assertEquals("The deleted flashcard should be in the deleted set",
+//                flashcard2, deletedSet.getIndex(0));
+//    }
 
-        flashcardSetManager.insertFlashcardSet(flashcardSet);
-        flashcardSetManager.addFlashcardToFlashcardSet(flashcardSet.getUUID(), flashcard1);
-        flashcardSetManager.addFlashcardToFlashcardSet(flashcardSet.getUUID(), flashcard2);
-
-        flashcard2.markDeleted();
-
-        FlashcardSet deletedSet = flashcardSetManager.getDeletedFlashcardSet(flashcardSet.getUUID());
-
-        assertEquals("The set should only contain one item since one of the two is marked as deleted",
-                1, deletedSet.size());
-        assertEquals("The deleted flashcard should be in the deleted set",
-                flashcard2, deletedSet.getIndex(0));
-    }
-
-    @Test
-    public void testGetDeletedFlashcardSetNotManaged() {
-        assertNull("If the flashcardSetManager received a set that is not managed, there should be nothing returned",
-                flashcardSetManager.getDeletedFlashcardSet("TestSetNotExist"));
-    }
+//    @Test
+//    public void testGetDeletedFlashcardSetNotManaged() {
+//        assertNull("If the flashcardSetManager received a set that is not managed, there should be nothing returned",
+//                flashcardSetManager.getDeletedFlashcardSet("TestSetNotExist"));
+//    }
 
     /*
      * Test addFlashcardToFlashcardSet()

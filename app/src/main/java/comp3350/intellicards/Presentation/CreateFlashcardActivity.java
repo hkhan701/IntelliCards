@@ -68,7 +68,6 @@ public class CreateFlashcardActivity extends Activity {
 
             if (newFlashcard != null) {
                 addFlashcardToSet(newFlashcard);
-                clearInputFields();
                 showSuccessMessage();
                 sendResultAndFinishCreateFlashcardActivity(newFlashcard);
             }
@@ -89,12 +88,6 @@ public class CreateFlashcardActivity extends Activity {
     private void addFlashcardToSet(Flashcard flashcard) {
         flashcardManager.insertFlashcard(flashcard);
         flashcardSetManager.addFlashcardToFlashcardSet(currentFlashcardSet.getUUID(), flashcard);
-    }
-
-    private void clearInputFields() {
-        questionEditText.setText("");
-        answerEditText.setText("");
-        hintEditText.setText("");
     }
 
     private boolean validateFlashcardInput(String question, String answer) {

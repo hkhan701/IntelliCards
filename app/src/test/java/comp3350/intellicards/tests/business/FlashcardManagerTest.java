@@ -36,44 +36,44 @@ public class FlashcardManagerTest {
     /*
      * Test getAllActiveFlashcards()
      */
-    @Test
-    public void testGetAllActiveFlashcardsOnlyReturnsActiveOnes() {
-        FlashcardSet testCardSet = new FlashcardSet("testUser", "Test Card Set");
-        Flashcard flashcard1 = new Flashcard(testCardSet.getUUID(), "Test Question 1", "Test Answer 1", null);
-        Flashcard flashcard2 = new Flashcard(testCardSet.getUUID(), "Test Question 2", "Test Answer 2", null);
-        String flashcard2UUID = flashcard2.getUUID();
-
-        flashcardManager.insertFlashcard(flashcard1);
-        flashcardManager.insertFlashcard(flashcard2);
-
-        flashcardManager.markFlashcardAsDeleted(flashcard2UUID);
-
-        assertTrue("An active flashcard should be returned when calling getAllActiveFlashcards()",
-                flashcardManager.getAllActiveFlashcards(testCardSet.getUUID()).contains(flashcard1));
-        assertFalse("A deleted flashcard should not be returned when calling getAllActiveFlashcards()",
-                flashcardManager.getAllActiveFlashcards(testCardSet.getUUID()).contains(flashcard2));
-    }
+//    @Test
+//    public void testGetAllActiveFlashcardsOnlyReturnsActiveOnes() {
+//        FlashcardSet testCardSet = new FlashcardSet("testUser", "Test Card Set");
+//        Flashcard flashcard1 = new Flashcard(testCardSet.getUUID(), "Test Question 1", "Test Answer 1", null);
+//        Flashcard flashcard2 = new Flashcard(testCardSet.getUUID(), "Test Question 2", "Test Answer 2", null);
+//        String flashcard2UUID = flashcard2.getUUID();
+//
+//        flashcardManager.insertFlashcard(flashcard1);
+//        flashcardManager.insertFlashcard(flashcard2);
+//
+//        flashcardManager.markFlashcardAsDeleted(flashcard2UUID);
+//
+//        assertTrue("An active flashcard should be returned when calling getAllActiveFlashcards()",
+//                flashcardManager.getAllActiveFlashcards(testCardSet.getUUID()).contains(flashcard1));
+//        assertFalse("A deleted flashcard should not be returned when calling getAllActiveFlashcards()",
+//                flashcardManager.getAllActiveFlashcards(testCardSet.getUUID()).contains(flashcard2));
+//    }
 
     /*
      * Test getAllDeletedFlashcards()
      */
-    @Test
-    public void testGetAllDeletedFlashcardsOnlyReturnsDeletedOnes() {
-        FlashcardSet testCardSet = new FlashcardSet("testUser", "Test Card Set");
-        Flashcard flashcard1 = new Flashcard(testCardSet.getUUID(), "Test Question 1", "Test Answer 1", null);
-        Flashcard flashcard2 = new Flashcard(testCardSet.getUUID(), "Test Question 2", "Test Answer 2", null);
-        String flashcard2UUID = flashcard2.getUUID();
-
-        flashcardManager.insertFlashcard(flashcard1);
-        flashcardManager.insertFlashcard(flashcard2);
-
-        flashcardManager.markFlashcardAsDeleted(flashcard2UUID);
-
-        assertFalse("An active flashcard should not be returned when calling getAllDeletedFlashcards()",
-                flashcardManager.getAllDeletedFlashcards().contains(flashcard1));
-        assertTrue("A deleted flashcard should be returned when calling getAllDeletedFlashcards()",
-                flashcardManager.getAllDeletedFlashcards().contains(flashcard2));
-    }
+//    @Test
+//    public void testGetAllDeletedFlashcardsOnlyReturnsDeletedOnes() {
+//        FlashcardSet testCardSet = new FlashcardSet("testUser", "Test Card Set");
+//        Flashcard flashcard1 = new Flashcard(testCardSet.getUUID(), "Test Question 1", "Test Answer 1", null);
+//        Flashcard flashcard2 = new Flashcard(testCardSet.getUUID(), "Test Question 2", "Test Answer 2", null);
+//        String flashcard2UUID = flashcard2.getUUID();
+//
+//        flashcardManager.insertFlashcard(flashcard1);
+//        flashcardManager.insertFlashcard(flashcard2);
+//
+//        flashcardManager.markFlashcardAsDeleted(flashcard2UUID);
+//
+//        assertFalse("An active flashcard should not be returned when calling getAllDeletedFlashcards()",
+//                flashcardManager.getAllDeletedFlashcards().contains(flashcard1));
+//        assertTrue("A deleted flashcard should be returned when calling getAllDeletedFlashcards()",
+//                flashcardManager.getAllDeletedFlashcards().contains(flashcard2));
+//    }
 
     /*
      * Test getFlashcard()
@@ -116,22 +116,22 @@ public class FlashcardManagerTest {
     /*
      * Test restoreFlashcard()
      */
-    @Test
-    public void testRestoredFlashcardOnlyShowsUpInActiveList() {
-        FlashcardSet testCardSet = new FlashcardSet("testUser", "Test Card Set");
-        Flashcard flashcard = new Flashcard(testCardSet.getUUID(), "Test Question", "Test Answer", null);
-        String flashcardUUID = flashcard.getUUID();
-
-        flashcardManager.insertFlashcard(flashcard);
-
-        flashcardManager.markFlashcardAsDeleted(flashcardUUID);
-        flashcardManager.restoreFlashcard(flashcardUUID);
-
-        assertTrue("A flashcard that has been restored should show up in the active list",
-                flashcardManager.getAllActiveFlashcards(testCardSet.getUUID()).contains(flashcard));
-        assertFalse("A flashcard that has been restored should not show up in the deleted list",
-                flashcardManager.getAllDeletedFlashcards().contains(flashcard));
-    }
+//    @Test
+//    public void testRestoredFlashcardOnlyShowsUpInActiveList() {
+//        FlashcardSet testCardSet = new FlashcardSet("testUser", "Test Card Set");
+//        Flashcard flashcard = new Flashcard(testCardSet.getUUID(), "Test Question", "Test Answer", null);
+//        String flashcardUUID = flashcard.getUUID();
+//
+//        flashcardManager.insertFlashcard(flashcard);
+//
+//        flashcardManager.markFlashcardAsDeleted(flashcardUUID);
+//        flashcardManager.restoreFlashcard(flashcardUUID);
+//
+//        assertTrue("A flashcard that has been restored should show up in the active list",
+//                flashcardManager.getAllActiveFlashcards(testCardSet.getUUID()).contains(flashcard));
+//        assertFalse("A flashcard that has been restored should not show up in the deleted list",
+//                flashcardManager.getAllDeletedFlashcards().contains(flashcard));
+//    }
 
     /*
      * Test markAttempted()

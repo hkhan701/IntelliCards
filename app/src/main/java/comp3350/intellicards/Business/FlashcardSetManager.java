@@ -80,7 +80,7 @@ public class FlashcardSetManager {
         FlashcardSet set = getActiveFlashcardSet(flashcardSet.getUUID());
         if (set != null)
         {
-            set.randomizeSet();
+            flashcardSet.randomizeSet();
         }
     }
 
