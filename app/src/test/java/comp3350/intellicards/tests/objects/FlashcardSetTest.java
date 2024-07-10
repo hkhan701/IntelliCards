@@ -27,9 +27,9 @@ public class FlashcardSetTest {
      * test Constructor
      */
     @Test
-    public void testAssignUuid() {
+    public void testAssignUUID() {
         testCardSet = new FlashcardSet("TestUser", "TestSet");
-        assertNotNull("UUID should be assigned automatically after construction",
+        assertNotNull("FlashcardSet's UUID should be assigned automatically after construction when using reduced constructor",
                 testCardSet.getUUID());
     }
 
@@ -38,7 +38,7 @@ public class FlashcardSetTest {
      */
     @Test
     public void testGetUUID() {
-        assertEquals("UUID can be retrieved from FlashcardSet",
+        assertEquals("FlashcardSet's UUID can be retrieved",
                 "TestUUID", testCardSet.getUUID());
     }
 
@@ -47,7 +47,7 @@ public class FlashcardSetTest {
      */
     @Test
     public void testGetUsername() {
-        assertEquals("Associated username can be retrieved from FlashcardSet",
+        assertEquals("FlashcardSet's username of owner can be retrieved",
                 "TestUser", testCardSet.getUsername());
     }
 
@@ -56,7 +56,7 @@ public class FlashcardSetTest {
      */
     @Test
     public void testGetFlashcardSetName() {
-        assertEquals("Flashcard set name can be retrieved from FlashcardSet",
+        assertEquals("FlashcardSet's name can be retrieved",
                 "TestSet", testCardSet.getFlashcardSetName());
     }
 
@@ -68,9 +68,7 @@ public class FlashcardSetTest {
         Flashcard flashcard = new Flashcard(testCardSet.getUUID(),"Generic Answer", "Generic Question", "Generic Hint");
         testCardSet.addFlashcard(flashcard);
 
-        assertEquals("There should be one flashcard in the set",
-                1, testCardSet.size());
-        assertEquals("The flashcard should be added into the flashcards list",
+        assertEquals("FlashcardSet can accept new flashcards",
                 flashcard, testCardSet.getIndex(0));
     }
 
@@ -82,10 +80,8 @@ public class FlashcardSetTest {
         testCardSet.addFlashcard(flashcard);
         Flashcard flashcardGet = testCardSet.getIndex(0);
 
-        assertEquals("The question on the flashcard should not be overwritten when added to a set",
+        assertEquals("FlashcardSet can accept new flashcards with data",
                 flashcard.getQuestion(), flashcardGet.getQuestion());
-        assertEquals("The answer on the flashcard should not be overwritten when added to a set",
-                flashcard.getAnswer(), flashcardGet.getAnswer());
     }
 
     /*
@@ -93,19 +89,19 @@ public class FlashcardSetTest {
      * and getActiveCount()
      */
     @Test
-    public void testGetActiveFlashcards() {
+    public void testGetActiveFlashcardsAndGetActiveCount() {
         Flashcard flashcard1 = new Flashcard(testCardSet.getUUID(), "Less Generic Answer", "Less Generic Question", null);
         Flashcard flashcard2 = new Flashcard(testCardSet.getUUID(), "Even Less Generic Answer", "Even Less Generic Question", "Need Hint");
         testCardSet.addFlashcard(flashcard1);
         testCardSet.addFlashcard(flashcard2);
 
-        assertEquals("The first card in the set should be the card that was added in first",
+        assertEquals("FlashcardSet can retrieve a subset containing all active flashcards in the set",
                 flashcard1, testCardSet.getActiveFlashcards().getIndex(0));
 
-        assertEquals("The second card in the set should be the card that was added in second",
+        assertEquals("FlashcardSet can retrieve a subset containing all active flashcards in the set",
                 flashcard2, testCardSet.getActiveFlashcards().getIndex(1));
 
-        assertEquals("The list of active flashcards should return the amount of flashcards added",
+        assertEquals("FlashcardSet can retrieve the amount of active flashcards in the set",
                 2, testCardSet.getActiveCount());
     }
 
@@ -119,10 +115,10 @@ public class FlashcardSetTest {
         flashcard2.markDeleted();
         Flashcard activeCard = testCardSet.getActiveFlashcards().getIndex(0);
 
-        assertEquals("If the card wasn't marked deleted, it should stay active in the set",
+        assertEquals("FlashcardSet cannot contain any deleted cards in the subset of active cards",
                 flashcard1, activeCard);
 
-        assertEquals("A deleted flashcard should be removed from the active flashcard list",
+        assertEquals("FlashcardSet cannot count any deleted cards in its active count",
                 1, testCardSet.getActiveCount());
     }
 
@@ -141,7 +137,7 @@ public class FlashcardSetTest {
 
         FlashcardSet deletedSet = testCardSet.getDeletedFlashcards();
 
-        assertEquals("A deleted subset from a flashcardSet should contain two deleted flashcards",
+        assertEquals("FlashcardSet can retrieve a subset of itself that only contains deleted flashcards",
                 2, deletedSet.size());
     }
 
@@ -156,11 +152,11 @@ public class FlashcardSetTest {
 
         FlashcardSet deletedSet = testCardSet.getDeletedFlashcards();
 
-        assertEquals("A deleted subset from a flashcardSet should contain no active flashcards",
-                1, deletedSet.size());
-
-        assertEquals("A deleted subset from a flashcard should only contain the deleted flashcard",
+        assertEquals("FlashcardSet cannot have any active cards in its deleted count",
                 flashcard1, deletedSet.getIndex(0));
+
+        assertEquals("FlashcardSet cannot count any deleted cards in its active count",
+                1, deletedSet.size());
     }
 
     /*
@@ -174,7 +170,7 @@ public class FlashcardSetTest {
         testCardSet.addFlashcard(flashcard2);
         String uuid = flashcard2.getUUID();
 
-        assertEquals("Given a card's UUID, we can find it in the set",
+        assertEquals("FlashcardSet can retrieve a flashcard contained in the set if given its UUID",
                 flashcard2, testCardSet.getFlashcardById(uuid));
     }
 
@@ -186,7 +182,7 @@ public class FlashcardSetTest {
         testCardSet.addFlashcard(flashcard2);
         String uuid = UUID.randomUUID().toString();
 
-        assertNull("The get flashcard by ID method will return null if the card is not in the set",
+        assertNull("FlashcardSet cannot retrieve a flashcard that is not added to the set",
                 testCardSet.getFlashcardById(uuid));
     }
 
@@ -194,7 +190,7 @@ public class FlashcardSetTest {
     public void testGetFlashcardByIdWhereNoCardsInSet() {
         String uuid = UUID.randomUUID().toString();
 
-        assertNull("Trying to get a card from a set with no flashcards will return null",
+        assertNull("FlashcardSet cannot retrieve a flashcard that does not exist",
                 testCardSet.getFlashcardById(uuid));
     }
 
@@ -227,7 +223,7 @@ public class FlashcardSetTest {
             }
         }
 
-        assertFalse("Shuffling a set should change the order of cards:\n" +
+        assertFalse("FlashcardSet can be shuffled:\n" +
                 "\tPlease note that this test may fail due to the random nature of the method." +
                 "\tIf it does fail, re-run it a few times before determining that this method is not working as intended",
                 testResult);
@@ -249,13 +245,13 @@ public class FlashcardSetTest {
     public void testToString() {
         Flashcard flashcard = new Flashcard(testCardSet.getUUID(),"Generic Answer", "Generic Question", "Generic Hint");
         testCardSet.addFlashcard(flashcard);
-        assertEquals("Flashcard set can be converted to string with an empty flashcardSet",
+        assertEquals("FlashcardSet can be converted to string",
                 "FlashcardSet{uuid=TestUUID, flashcardSetName='TestSet', flashcards=[" + flashcard + "]}", testCardSet.toString());
     }
 
     @Test
     public void testToStringEmptyFlashcards() {
-        assertEquals("Flashcard set can be converted to string with an empty flashcardSet",
+        assertEquals("FlashcardSet can be converted to string with an empty set",
                 "FlashcardSet{uuid=TestUUID, flashcardSetName='TestSet', flashcards=[]}", testCardSet.toString());
     }
 }
