@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/recover_layout"
     android:layout_width="match_parent"
@@ -10,7 +11,6 @@
     app:cardCornerRadius="16dp"
     app:cardElevation="12dp">
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -18,9 +18,9 @@
 
         <TextView
             android:id="@+id/flashcardTextRecycle"
-            android:layout_width="600dp"
+            android:layout_width="620dp"
             android:layout_height="145dp"
-            android:background="#FFFFFF"
+            android:background="@color/white"
             android:text=""
             android:textSize="22sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -35,10 +35,13 @@
 
             <Button
                 android:id="@+id/recoveryButton"
-                android:layout_width="150dp"
+                android:layout_width="112dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="6dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:backgroundTint="@color/buttons"
                 android:text="@string/recover_btn_text"
+                android:textColor="@color/btn_txt"
                 android:textSize="17sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -47,10 +50,13 @@
 
             <Button
                 android:id="@+id/flipButton"
-                android:layout_width="150dp"
+                android:layout_width="112dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="6dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="10dp"
+                android:backgroundTint="@color/buttons"
                 android:text="@string/flip_btn_text"
+                android:textColor="@color/btn_txt"
                 android:textSize="17sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.recyclerview.widget.RecyclerView;
 
 import comp3350.intellicards.Application.Services;
@@ -20,17 +21,19 @@ import comp3350.intellicards.R;
 
 public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.FlashcardViewHolder> {
 
-    private FlashcardSet flashcardSet;
+    private final FlashcardSet flashcardSet;
+    private final FlashcardManager flashcardManager;
 
     public CardViewAdapter(FlashcardSet flashcardSet) {
         this.flashcardSet = flashcardSet;
+        this.flashcardManager = new FlashcardManager(Services.getFlashcardPersistence());
     }
 
     @NonNull
     @Override
     public FlashcardViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.flashcard_view, parent, false);
-        return new FlashcardViewHolder(view, flashcardSet);
+        return new FlashcardViewHolder(view);
     }
 
     @Override
@@ -44,32 +47,26 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.Flashc
         return flashcardSet.size();
     }
 
-    public static class FlashcardViewHolder extends RecyclerView.ViewHolder {
+    public class FlashcardViewHolder extends RecyclerView.ViewHolder {
 
         private final TextView flashcardTextView;
-        private final Button deleteButton;
-        private final Button editButton;
+        private final AppCompatImageButton deleteButton;
+        private final AppCompatImageButton editButton;
         private final Button flipButton;
-        private boolean isFrontVisible = true; // Default to showing the front of the card
-        private FlashcardSet flashcardSet;
-        private FlashcardManager flashcardManager;
+        private boolean isFrontVisible = true;
 
-        public FlashcardViewHolder(View itemView, FlashcardSet flashcardSet) {
+        public FlashcardViewHolder(View itemView) {
             super(itemView);
-            this.flashcardSet = flashcardSet;
-            this.flashcardManager = new FlashcardManager(Services.getFlashcardPersistence());
-
             flashcardTextView = itemView.findViewById(R.id.flashcardTextRecycle);
             deleteButton = itemView.findViewById(R.id.deleteButton);
             editButton = itemView.findViewById(R.id.editButton);
             flipButton = itemView.findViewById(R.id.flipButton);
-
             setupListeners();
         }
 
         private void setupListeners() {
             deleteButton.setOnClickListener(v -> deleteFlashcard());
-            editButton.setOnClickListener(v -> editFlashcard());
+            editButton.setOnClickListener(v -> moveToEditFlashcardActivity());
             flipButton.setOnClickListener(v -> flipFlashcard());
         }
 
@@ -81,8 +78,8 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.Flashc
         }
 
         private void deleteFlashcard() {
-            Flashcard flashcardToDelete = flashcardSet.getFlashcardById((String) deleteButton.getTag());
-            flashcardManager.markFlashcardAsDeleted(flashcardToDelete.getUUID());
+            String flashcardUUID = (String) deleteButton.getTag();
+            flashcardManager.markFlashcardAsDeleted(flashcardUUID);
 
             ViewGroup parentView = (ViewGroup) flashcardTextView.getParent();
             parentView.removeView(flashcardTextView);
@@ -94,7 +91,7 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.Flashc
             }
         }
 
-        private void editFlashcard() {
+        private void moveToEditFlashcardActivity() {
             Intent intent = new Intent(itemView.getContext(), EditFlashcardActivity.class);
             intent.putExtra("flashcardUUID", (String) deleteButton.getTag());
             intent.putExtra("flashcardSetUUID", flashcardSet.getUUID());
@@ -102,7 +99,8 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.Flashc
         }
 
         private void flipFlashcard() {
-            Flashcard flashcard = flashcardSet.getFlashcardById((String) deleteButton.getTag());
+            String flashcardUUID = (String) deleteButton.getTag();
+            Flashcard flashcard = flashcardSet.getFlashcardById(flashcardUUID);
             if (flashcard != null) {
                 FlashcardUtils.toggleFlip(flashcard, flashcardTextView, isFrontVisible);
                 isFrontVisible = !isFrontVisible;

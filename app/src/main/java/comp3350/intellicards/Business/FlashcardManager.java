@@ -17,32 +17,24 @@ public class FlashcardManager {
         flashcardPersistence = persistence;
     }
 
-    public List<Flashcard> getAllActiveFlashcards(String setUUID) {
-        return this.flashcardPersistence.getAllActiveFlashcards(setUUID);
-    }
-
-    public List<Flashcard> getAllDeletedFlashcards() {
-        return this.flashcardPersistence.getAllDeletedFlashcards();
-    }
-
     public Flashcard getFlashcard(String uuid) {
         return this.flashcardPersistence.getFlashcard(uuid);
     }
 
-    public Flashcard insertFlashcard(Flashcard currFlashcard) {
-        return this.flashcardPersistence.insertFlashcard(currFlashcard);
+    public void insertFlashcard(Flashcard currFlashcard) {
+        this.flashcardPersistence.insertFlashcard(currFlashcard);
     }
 
-    public Flashcard updateFlashcard(Flashcard currFlashcard) {
-        return this.flashcardPersistence.updateFlashcard(currFlashcard);
+    public void updateFlashcard(Flashcard currFlashcard) {
+        this.flashcardPersistence.updateFlashcard(currFlashcard);
     }
 
-    public boolean markFlashcardAsDeleted(String uuid) {
-        return this.flashcardPersistence.markFlashcardAsDeleted(uuid);
+    public void markFlashcardAsDeleted(String uuid) {
+        this.flashcardPersistence.markFlashcardAsDeleted(uuid);
     }
 
-    public boolean restoreFlashcard(String uuid) {
-        return this.flashcardPersistence.restoreFlashcard(uuid);
+    public void restoreFlashcard(String uuid) {
+        this.flashcardPersistence.restoreFlashcard(uuid);
     }
 
     public void markAttempted(String uuid) {
