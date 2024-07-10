@@ -29,9 +29,8 @@ public class UserManagerTest {
     }
 
     /*
-     * registerUser
+     * Test registerUser()
      */
-
     @Test
     public void addNewUser() {
         assertTrue("UserManager will allow registration of brand new user",
@@ -53,9 +52,8 @@ public class UserManagerTest {
     }
 
     /*
-     * loginUser
+     * Test loginUser()
      */
-
     @Test
     public void loginUserSuccess() {
         when(userMock.getPassword()).thenReturn("Pass1");
@@ -81,9 +79,8 @@ public class UserManagerTest {
     }
 
     /*
-     * deleteUser
+     * Test deleteUser()
      */
-
     @Test
     public void deleteUserExists() {
         when(userPersistenceMock.getUserByUsername("Test1")).thenReturn(userMock);
