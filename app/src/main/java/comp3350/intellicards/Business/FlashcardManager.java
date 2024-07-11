@@ -4,6 +4,7 @@ import comp3350.intellicards.Application.Services;
 import comp3350.intellicards.Objects.Flashcard;
 import comp3350.intellicards.Objects.FlashcardSet;
 import comp3350.intellicards.Persistence.FlashcardPersistence;
+import comp3350.intellicards.Persistence.FlashcardSetPersistence;
 
 public class FlashcardManager {
     private FlashcardPersistence flashcardPersistence;
@@ -17,6 +18,11 @@ public class FlashcardManager {
     public FlashcardManager(FlashcardPersistence persistence) {
         flashcardPersistence = persistence;
         flashcardSetManager = new FlashcardSetManager(Services.getFlashcardSetPersistence());
+    }
+
+    public FlashcardManager(FlashcardPersistence flashcardPersistence, FlashcardSetPersistence flashcardSetPersistence) {
+        this.flashcardPersistence = flashcardPersistence;
+        this.flashcardSetManager = new FlashcardSetManager(flashcardSetPersistence);
     }
 
     public Flashcard getFlashcard(String uuid) {
@@ -39,19 +45,19 @@ public class FlashcardManager {
         flashcardPersistence.updateFlashcard(flashcard);
     }
 
+    public void updateFlashcard(Flashcard flashcard, FlashcardSet newSet, String newQuestion, String newAnswer, String newHint) {
+        if (newSet != null && !flashcard.getSetUUID().equals(newSet.getUUID())) {
+            moveFlashcardToNewSet(flashcard, newSet, newQuestion, newAnswer, newHint);
+        } else {
+            updateFlashcardDetails(flashcard, newQuestion, newAnswer, newHint);
+        }
+    }
+
     private void updateFlashcardDetails(Flashcard flashcard, String newQuestion, String newAnswer, String newHint) {
         flashcard.setQuestion(newQuestion);
         flashcard.setAnswer(newAnswer);
         flashcard.setHint(newHint);
         updateFlashcard(flashcard);
-    }
-
-    public void updateFlashcard(Flashcard flashcard, FlashcardSet newSet, String newQuestion, String newAnswer, String newHint) {
-        if (!flashcard.getSetUUID().equals(newSet.getUUID())) {
-            moveFlashcardToNewSet(flashcard, newSet, newQuestion, newAnswer, newHint);
-        } else {
-            updateFlashcardDetails(flashcard, newQuestion, newAnswer, newHint);
-        }
     }
 
     public void markFlashcardAsDeleted(String uuid) {

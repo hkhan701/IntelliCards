@@ -6,7 +6,6 @@ import org.junit.Test;
 import org.junit.Before;
 
 import comp3350.intellicards.Business.FlashcardManager;
-import comp3350.intellicards.Business.FlashcardSetManager;
 import comp3350.intellicards.Objects.Flashcard;
 import comp3350.intellicards.Objects.FlashcardSet;
 import comp3350.intellicards.tests.persistance.FlashcardPersistenceStub;
@@ -18,15 +17,12 @@ public class FlashcardManagerTest {
 
     private FlashcardPersistenceStub flashcardData;
     private FlashcardSetPersistenceStub flashcardSetData;
-    private FlashcardSetManager flashcardSetManager;
 
     @Before
     public void setUp() {
         flashcardSetData = new FlashcardSetPersistenceStub();
-        flashcardSetManager = new FlashcardSetManager(flashcardSetData);
-
-        flashcardData = new FlashcardPersistenceStub(flashcardSetManager);
-        flashcardManager = new FlashcardManager(flashcardData);
+        flashcardData = new FlashcardPersistenceStub(flashcardSetData);
+        flashcardManager = new FlashcardManager(flashcardData, flashcardSetData);
     }
 
     /*
@@ -50,7 +46,12 @@ public class FlashcardManagerTest {
     }
 
     /*
-     * Test updateFlashcard()
+     * Test moveFlashcardToNewSet()
+     */
+
+
+    /*
+     * Test updateFlashcard(Flashcard)
      */
     @Test
     public void testUpdateFlashcard() {
@@ -100,6 +101,44 @@ public class FlashcardManagerTest {
                 updateFlashcard.getCorrect(), flashcard.getCorrect());
         assertNotEquals("FlashcardManager cannot update a non managed flashcard's deleted state",
                 updateFlashcard.isDeleted(), flashcard.isDeleted());
+    }
+
+    /*
+     * Test updateFlashcard(Flashcard, FlashcardSet, String, String, String)
+     */
+
+    @Test
+    public void testUpdateFlashcardNewSet() {
+        FlashcardSet testCardSet = new FlashcardSet("testUser", "Test Card Set");
+        FlashcardSet testCardSetMove = new FlashcardSet("testUser", "Test Card Set Update");
+        Flashcard flashcard = new Flashcard(testCardSet.getUUID(), "Test Question", "Test Answer", null);
+
+        flashcardSetData.insertFlashcardSet(testCardSet);
+        flashcardSetData.insertFlashcardSet(testCardSetMove);
+
+        flashcardManager.updateFlashcard(flashcard, testCardSetMove, "Test Question", "Test Answer", null);
+        testCardSetMove = flashcardSetData.getFlashcardSet(testCardSetMove.getUUID());
+
+        assertNotNull("FlashcardManager can move a flashcard between sets",
+                testCardSetMove.getActiveFlashcards().getIndex(0));
+
+        assertFalse("FlashcardManager deletes old card when it is moved to new set",
+                flashcard.isDeleted());
+    }
+
+    @Test
+    public void testUpdateFlashcardDetails() {
+        FlashcardSet testCardSet = new FlashcardSet("testUser", "Test Card Set");
+        Flashcard flashcard = new Flashcard(testCardSet.getUUID(), "Test Question", "Test Answer", null);
+
+        flashcardManager.updateFlashcard(flashcard, null, "Test Question Update", "Test Answer Update", "Test Hint Update");
+
+        assertEquals("FlashcardManager will update flashcard's question if given",
+                "Test Question Update", flashcard.getQuestion());
+        assertEquals("FlashcardManager will update flashcard's answer if given",
+                "Test Answer Update", flashcard.getAnswer());
+        assertEquals("FlashcardManager will update flashcard's hint if given",
+                "Test Hint Update", flashcard.getHint());
     }
 
     /*

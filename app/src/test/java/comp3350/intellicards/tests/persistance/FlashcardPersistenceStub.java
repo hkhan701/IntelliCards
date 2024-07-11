@@ -16,9 +16,9 @@ public class FlashcardPersistenceStub implements FlashcardPersistence {
     private FlashcardSetManager flashcardSetManager;
     private boolean mockInitialized;
 
-    public FlashcardPersistenceStub(FlashcardSetManager setManager) {
+    public FlashcardPersistenceStub(FlashcardSetPersistenceStub setPersistence) {
         flashcards = new LinkedHashMap<>();
-        flashcardSetManager = setManager;
+        flashcardSetManager = new FlashcardSetManager(setPersistence);
         mockInitialized = false;
     }
 
