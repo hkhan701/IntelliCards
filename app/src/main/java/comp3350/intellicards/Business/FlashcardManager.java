@@ -34,11 +34,13 @@ public class FlashcardManager {
     }
 
     public void moveFlashcardToNewSet(Flashcard flashcard, FlashcardSet newSet, String newQuestion, String newAnswer, String newHint) {
-        markFlashcardAsDeleted(flashcard.getUUID()); // Soft delete the flashcard
+        if (flashcardSetManager.getFlashcardSet(newSet.getUUID()) != null) {
+            Flashcard newFlashcard = new Flashcard(newSet.getUUID(), newQuestion, newAnswer, newHint);
+            insertFlashcard(newFlashcard); // Insert the new flashcard into the database for the new set
+            flashcardSetManager.addFlashcardToFlashcardSet(newSet.getUUID(), newFlashcard);
 
-        Flashcard newFlashcard = new Flashcard(newSet.getUUID(), newQuestion, newAnswer, newHint);
-        insertFlashcard(newFlashcard); // Insert the new flashcard into the database for the new set
-        flashcardSetManager.addFlashcardToFlashcardSet(newSet.getUUID(), newFlashcard);
+            markFlashcardAsDeleted(flashcard.getUUID()); // Soft delete the flashcard
+        }
     }
 
     public void updateFlashcard(Flashcard flashcard) {

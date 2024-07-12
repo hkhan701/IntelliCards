@@ -25,7 +25,8 @@ public class FlashcardSetManagerTest {
     }
 
     /*
-     * Test getFlashcardSet()
+     * Test insertFlashcardSet()
+     * and getFlashcardSet()
      */
     @Test
     public void testGetFlashcardSet() {
@@ -42,6 +43,12 @@ public class FlashcardSetManagerTest {
     public void testGetFlashcardSetNotManaged() {
         assertNull("FlashcardSetManager cannot retrieve a non managed set",
                 flashcardSetManager.getFlashcardSet("TestUUID"));
+    }
+
+    @Test
+    public void testGetFlashcardSetNull() {
+        assertNull("FlashcardSetManager cannot retrieve a set if given a null",
+                flashcardSetManager.getFlashcardSet(null));
     }
 
     /*
@@ -74,7 +81,6 @@ public class FlashcardSetManagerTest {
     /*
      * Test getAllDeletedFlashcards()
      */
-
     @Test
     public void testGetAllDeletedFlashcards() {
         FlashcardSet flashcardSet = new FlashcardSet("testUser", "Test Set");
@@ -146,7 +152,9 @@ public class FlashcardSetManagerTest {
         Flashcard flashcard = new Flashcard(flashcardSetUUID, "Test Question", "Test Answer", "Test Hint");
 
         flashcardSetManager.insertFlashcardSet(flashcardSet);
-        assertTrue(flashcardSetManager.addFlashcardToFlashcardSet(flashcardSetUUID, flashcard));
+
+        assertTrue("FlashcardSetManager verifies that the flashcard was added to the set with a return value",
+                flashcardSetManager.addFlashcardToFlashcardSet(flashcardSetUUID, flashcard));
 
         assertEquals("You can add a flashcard to a flashcard set from the flashcardSetManager",
                 1, flashcardSetManager.getFlashcardSet(flashcardSetUUID).getActiveFlashcards().size());
@@ -187,9 +195,8 @@ public class FlashcardSetManagerTest {
     /*
      * Test shuffleFlashcardSet()
      */
-
     @Test
-    public void shuffleFlashcards() {
+    public void testShuffleFlashcards() {
         FlashcardSet flashcardSet = new FlashcardSet("TestUser", "TestSetName");
 
         Flashcard flashcard1 = new Flashcard(flashcardSet.getUUID(), "Less Generic Question", "Less Generic Answer", null);
@@ -225,7 +232,7 @@ public class FlashcardSetManagerTest {
     }
 
     @Test
-    public void shuffleNonManagedFlashcardSet() {
+    public void testShuffleNonManagedFlashcardSet() {
         FlashcardSet flashcardSet = new FlashcardSet("TestUser", "TestSetName");
 
         Flashcard flashcard1 = new Flashcard(flashcardSet.getUUID(), "Less Generic Question", "Less Generic Answer", null);
@@ -260,9 +267,8 @@ public class FlashcardSetManagerTest {
     /*
      * Test getFlashcardSetsByUsername()
      */
-
     @Test
-    public void getFlashcardSetsByUsername() {
+    public void testGetFlashcardSetsByUsername() {
         FlashcardSet flashcardSet = new FlashcardSet("TestUser", "TestSetName");
         flashcardSetManager.insertFlashcardSet(flashcardSet);
 
@@ -271,7 +277,7 @@ public class FlashcardSetManagerTest {
     }
 
     @Test
-    public void getFlashcardSetByUserMixed() {
+    public void testGetFlashcardSetByUserMixed() {
         FlashcardSet flashcardSet1 = new FlashcardSet("TestUser1", "TestSetName");
         FlashcardSet flashcardSet2 = new FlashcardSet("TestUser2", "TestSetName");
 
@@ -286,7 +292,7 @@ public class FlashcardSetManagerTest {
     }
 
     @Test
-    public void getFlashcardSetByUserNonManaged() {
+    public void testGetFlashcardSetByUserNonManaged() {
         assertEquals("FlashcardSetManager will not retrieve non-managed sets from a user",
                 new ArrayList<>(), flashcardSetManager.getFlashcardSetsByUsername("TestUser"));
     }
