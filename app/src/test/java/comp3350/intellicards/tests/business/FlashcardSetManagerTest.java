@@ -253,6 +253,9 @@ public class FlashcardSetManagerTest {
 
         flashcardSetManager.shuffleFlashcardSet(randomizedCardSet);
 
+        assertNull("FlashcardSetManager will not add a set if it is shuffled",
+                flashcardSetManager.getFlashcardSet(randomizedCardSet.getUUID()));
+
         boolean shuffled = false;
         for (int i = 0; i < flashcardSet.size() && !shuffled; i++) {
             if (flashcardSet.getIndex(i) != randomizedCardSet.getIndex(i)) {

@@ -39,7 +39,7 @@ public class ReportCalculatorTest {
         assertEquals("Report statistics are correct",
                 "ALL TIME TOTAL ACCURACY\n" +
                         "Correct: 2 / 3\n" +
-                        "That is 67% correct", reportCalculator.report());
+                        "That is 67% correct: ", reportCalculator.report());
     }
 
     @Test()
@@ -47,7 +47,7 @@ public class ReportCalculatorTest {
         assertEquals("Report is generated for case with 0 cards",
                 "ALL TIME TOTAL ACCURACY\n" +
                         "Correct: 0 / 0\n" +
-                        "That is 0% correct", reportCalculator.report());
+                        "That is 0% correct: ", reportCalculator.report());
     }
 
 }
