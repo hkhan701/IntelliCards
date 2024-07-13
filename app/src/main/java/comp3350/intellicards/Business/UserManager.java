@@ -32,7 +32,11 @@ public class UserManager {
         return null;
     }
 
-    public void deleteUser(String username) {
-        userPersistence.deleteUser(username);
+    public boolean deleteUser(String username) {
+        if (userPersistence.getUserByUsername(username) != null && !username.equals("guest")) {
+            userPersistence.deleteUser(username);
+            return true;
+        }
+        return false;
     }
 }
