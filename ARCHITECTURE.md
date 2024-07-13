@@ -2,7 +2,7 @@
 
 ### Sketch
 
-![Alt text](<3350 Architecture Design - Iteration 2.png>)
+![Alt text](Architecture_Diagram.png)
 
 ### Domain Specific Object Layer
 
