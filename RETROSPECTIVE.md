@@ -8,7 +8,7 @@ TODO:
 
 3. Include a chart (as an image) showing the 2 data points of project velocity from the last two iterations
 
-![Alt text](images/ProjectVelocityStories.png)
+![Alt text](images/ProjectVelocityTime.png)
 
 ![Alt text](images/ProjectVelocityStories.png)
 
