@@ -29,6 +29,7 @@
     <string name="password_text">Password:</string>
     <string name="guest_btn_text">Continue as Guest</string>
     <string name="profile_guest_user_text">Guest User</string>
+    <string name="no_info">No data to be displayed!</string>
 
     <!-- Input Limits -->
     <string name="hint_max_length">100</string>
