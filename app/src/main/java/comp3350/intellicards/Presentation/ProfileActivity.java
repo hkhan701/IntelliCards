@@ -17,6 +17,7 @@ public class ProfileActivity extends Activity {
     private Button recoveryButton;
     private TextView usernameTextView;
     private Button logoutButton;
+    private Button aboutMeButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,12 +34,18 @@ public class ProfileActivity extends Activity {
         recoveryButton = findViewById(R.id.recoveryButton);
         backButton = findViewById(R.id.backButton);
         logoutButton = findViewById(R.id.logoutButton);
+        aboutMeButton = findViewById(R.id.aboutMeButton);
     }
 
     private void setupListeners() {
         setupBackButtonListener();
         setupRecoveryButtonListener();
         setupLogoutButton();
+        setUpAboutMeButtonListener();
+    }
+
+    private void setUpAboutMeButtonListener(){
+        aboutMeButton.setOnClickListener(v -> navigateToAboutMeActivity());
     }
 
     private void setupBackButtonListener() {
@@ -51,6 +58,11 @@ public class ProfileActivity extends Activity {
 
     private void setupLogoutButton() {
         logoutButton.setOnClickListener(v -> navigateToAuthActivity());
+    }
+
+    private void navigateToAboutMeActivity() {
+        Intent intent = new Intent(ProfileActivity.this, AboutMeActivity.class);
+        startActivity(intent);
     }
 
     private void navigateToMainActivity() {

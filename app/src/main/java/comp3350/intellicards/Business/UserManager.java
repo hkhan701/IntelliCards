@@ -39,4 +39,26 @@ public class UserManager {
         }
         return false;
     }
+
+    public void incrementLoginCount(String username)
+    {
+        User user = userPersistence.getUserByUsername(username);
+        if(user != null)
+        {
+            userPersistence.incrementLoginCount(user);
+        }
+    }
+
+    public int getUserLoginCount(String username){
+        User user = userPersistence.getUserByUsername(username);
+        if(user != null)
+        {
+            return user.getLoginCount();
+        }
+        return -1;
+    }
+
+
+
+
 }
