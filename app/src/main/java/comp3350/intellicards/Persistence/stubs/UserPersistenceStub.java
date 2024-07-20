@@ -43,4 +43,10 @@ public class UserPersistenceStub implements UserPersistence {
     public void deleteUser(String username) {
         users.removeIf(u -> u.getUsername().equals(username));
     }
+
+    @Override
+    public void incrementLoginCount(User user) {
+        user.incrementLoginCount();
+    }
+
 }
