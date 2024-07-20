@@ -41,6 +41,7 @@
     <string name="about_me_btn_text">About Me</string>
     <string name="edit_flashcard">Edit Flashcard</string>
     <string name="log_out_text">Log out</string>
+    <string name="add_reminder">Add Reminder</string>
 
 
 </resources>

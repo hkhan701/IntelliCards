@@ -26,7 +26,7 @@ public class ProfileActivity extends Activity {
 
         initializeViews();
         setupListeners();
-        populateUsername(UserSession.getInstance().getUsername()); // Get the username from the UserSession singleton class
+        populateUsername(UserSession.getInstance(this).getUsername()); // Get the username from the UserSession singleton class
     }
 
     private void initializeViews() {
@@ -76,6 +76,7 @@ public class ProfileActivity extends Activity {
     }
 
     private void navigateToAuthActivity() {
+        UserSession.getInstance(this).logout();
         Intent intent = new Intent(ProfileActivity.this, AuthActivity.class);
         startActivity(intent);
     }
