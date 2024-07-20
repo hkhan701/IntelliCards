@@ -25,6 +25,9 @@ public class AboutMeActivity extends Activity {
         // Get the user session
         userName = UserSession.getInstance().getUsername();
 
+        //set up views
+        setUpBackButton();
+
 
     }
 
