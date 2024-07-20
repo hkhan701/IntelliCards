@@ -37,6 +37,13 @@ public class AuthActivity extends Activity {
         setContentView(R.layout.activity_auth);
         copyDatabaseToDevice();
 
+        // Check if user is already logged in
+        UserSession userSession = UserSession.getInstance(this);
+        if (userSession.getUsername() != null) {
+            navigateToMainActivity();
+            return; // Exit the onCreate method to prevent further execution
+        }
+
         userManager = new UserManager(Services.getUserPersistence());
         initializeViews();
         setUpListeners();
@@ -84,7 +91,7 @@ public class AuthActivity extends Activity {
                 User user = userManager.loginUser(username, password);
                 if (user != null) {
                     Toast.makeText(this, "Log in successful!", Toast.LENGTH_LONG).show();
-                    UserSession.getInstance().setUsername(user.getUsername());
+                    UserSession.getInstance(this).setUsername(user.getUsername());
                     navigateToMainActivity();
                 } else {
                     Toast.makeText(this, "Invalid login information! Please try again.", Toast.LENGTH_LONG).show();
@@ -97,7 +104,7 @@ public class AuthActivity extends Activity {
 
     private void setUpGuestButtonListener() {
         guestButton.setOnClickListener(v -> {
-            UserSession.getInstance().setGuest();
+            UserSession.getInstance(this).setGuest();
             Toast.makeText(this, "Logged in as a guest successfully!", Toast.LENGTH_LONG).show();
             navigateToMainActivity();
         });

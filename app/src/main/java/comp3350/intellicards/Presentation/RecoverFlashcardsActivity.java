@@ -28,7 +28,7 @@ public class RecoverFlashcardsActivity extends Activity {
         flashcardSetManager = new FlashcardSetManager(Services.getFlashcardSetPersistence());
 
         // Get the user session
-        userName = UserSession.getInstance().getUsername();
+        userName = UserSession.getInstance(this).getUsername();
 
         // Print the recovered list on the UI
         printRecoverList();

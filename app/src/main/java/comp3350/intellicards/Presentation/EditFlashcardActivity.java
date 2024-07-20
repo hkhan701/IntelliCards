@@ -42,7 +42,7 @@ public class EditFlashcardActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_flashcard);
 
-        username = UserSession.getInstance().getUsername();
+        username = UserSession.getInstance(this).getUsername();
 
         initializeManagers();
         initializeViews();
