@@ -52,6 +52,15 @@ public class UserManager {
         }
     }
 
+    public int getUserLoginCount(String username){
+        User user = userPersistence.getUserByUsername(username);
+        if(user != null)
+        {
+            return user.getLoginCount();
+        }
+        return -1;
+    }
+
 
 
 

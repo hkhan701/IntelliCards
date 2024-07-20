@@ -81,8 +81,7 @@ public class AboutMeActivity extends Activity {
         List<FlashcardSet> flashcardSetList = flashcardSetManager.getFlashcardSetsByUsername(userName);
         String userSetInformationString = ReportCalculator.getUserInformation(flashcardSetList);
         // now get the user login count
-        User user = userManager.getUserByUsername(userName);
-        int count = user.getLoginCount();
+        int count = userManager.getUserLoginCount(userName);
 
         return userSetInformationString
                 +"\n\nLogin Count: " + count;
