@@ -9,6 +9,18 @@
     tools:context="comp3350.intellicards.Presentation.ProfileActivity"
     android:background="@drawable/background">
 
+
+    <Button
+        android:id="@+id/aboutMeButton"
+        android:layout_width="699dp"
+        android:layout_height="98dp"
+        android:layout_marginTop="40dp"
+        android:text="@string/about_me_btn_text"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/usernameText" />
+
     <Button
         android:id="@+id/recoveryButton"
         android:layout_width="match_parent"
@@ -23,7 +35,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/usernameText"
+        app:layout_constraintTop_toBottomOf="@+id/aboutMeButton"/>
         app:layout_constraintVertical_bias="0.145" />
 
     <Button
