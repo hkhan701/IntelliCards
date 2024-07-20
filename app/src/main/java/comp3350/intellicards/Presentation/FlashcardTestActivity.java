@@ -97,7 +97,7 @@ public class FlashcardTestActivity extends Activity {
 
         FlashcardSet updatedFlashcardSet = flashcardSetManager.getActiveFlashcardSet(flashcardSet.getUUID());
         ReportCalculator reportCalculator = new ReportCalculator(updatedFlashcardSet);
-        String report = testResult.generateTestStats() + reportCalculator.report();
+        String report = testResult.generateTestStats() + reportCalculator.reportSetAccuracy();
         displayTestResults(report);
     }
 
