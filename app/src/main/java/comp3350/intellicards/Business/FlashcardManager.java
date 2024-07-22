@@ -1,5 +1,7 @@
 package comp3350.intellicards.Business;
 
+import java.util.List;
+
 import comp3350.intellicards.Application.Services;
 import comp3350.intellicards.Objects.Flashcard;
 import comp3350.intellicards.Objects.FlashcardSet;
@@ -27,6 +29,10 @@ public class FlashcardManager {
 
     public Flashcard getFlashcard(String uuid) {
         return this.flashcardPersistence.getFlashcard(uuid);
+    }
+
+    public List<Flashcard> getFlashcardsByKey(String key) {
+        return this.flashcardPersistence.getFlashcardsByKey(key);
     }
 
     public void insertFlashcard(Flashcard currFlashcard) {

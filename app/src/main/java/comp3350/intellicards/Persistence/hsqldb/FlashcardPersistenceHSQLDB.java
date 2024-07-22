@@ -7,6 +7,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import comp3350.intellicards.Objects.Flashcard;
 import comp3350.intellicards.Persistence.FlashcardPersistence;
@@ -50,6 +52,32 @@ public class FlashcardPersistenceHSQLDB implements FlashcardPersistence {
             st.close();
 
             return flashcard;
+        } catch (SQLException e) {
+            throw new PersistenceException(e);
+        }
+    }
+
+    @Override
+    public List<Flashcard> getFlashcardsByKey(String key) {
+        List<Flashcard> flashcards = new ArrayList<>();
+
+        try (Connection c = connection()) {
+            final PreparedStatement st = c.prepareStatement("SELECT * FROM FLASHCARDS WHERE question LIKE ? OR answer LIKE ? OR hint LIKE ?");
+            st.setString(1, "%" + key + "%");
+            st.setString(2, "%" + key + "%");
+            st.setString(3, "%" + key + "%");
+
+            final ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                final Flashcard flashcard = getFlashcard(rs.getString("cardUUID"));
+                flashcards.add(flashcard);
+            }
+
+            rs.close();
+            st.close();
+
+            return flashcards;
         } catch (SQLException e) {
             throw new PersistenceException(e);
         }
