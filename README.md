@@ -28,3 +28,7 @@ Graders can login with the following pre-inserted usernames and passwords unless
 - You can sign up with a new username and password. Once it is successful you will be able to login with it.
 
 - You can also login as a guest user but will be limited by the features they can use.
+
+### Notifications
+
+Upon clicking the notification button, graders should allow permissions for notifications, and then toggle on the alarm permissions as well for the notifications to work as intended. 

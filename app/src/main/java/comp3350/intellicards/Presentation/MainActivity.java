@@ -33,7 +33,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        username = UserSession.getInstance().getUsername(); // Get the username from the UserSession singleton
+        username = UserSession.getInstance(this).getUsername(); // Get the username from the UserSession singleton
         flashcardSetManager = new FlashcardSetManager(Services.getFlashcardSetPersistence());
         FlashcardManager flashcardManager = new FlashcardManager(Services.getFlashcardPersistence());
 

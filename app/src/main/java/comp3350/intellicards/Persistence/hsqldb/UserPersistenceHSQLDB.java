@@ -23,7 +23,11 @@ public class UserPersistenceHSQLDB implements UserPersistence {
     private User fromResultSet(final ResultSet rs) throws SQLException {
         final String username = rs.getString("username");
         final String password = rs.getString("password");
-        return new User(username, password);
+        final int opens = rs.getInt("opens");
+        User user = new User(username, password);
+        user.setLoginCount(opens);
+        return user;
+
     }
 
     @Override
@@ -71,4 +75,18 @@ public class UserPersistenceHSQLDB implements UserPersistence {
             throw new PersistenceException(e);
         }
     }
+
+    @Override
+    public void incrementLoginCount(User user)
+    {
+        try (final Connection c = connection()) {
+            final PreparedStatement st = c.prepareStatement("UPDATE USERS SET OPENS = COALESCE(OPENS, 0) + 1 WHERE USERNAME = ?");
+            st.setString(1, user.getUsername());
+
+            st.executeUpdate();
+        } catch (final SQLException e) {
+            throw new PersistenceException(e);
+        }
+    }
+
 }
