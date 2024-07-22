@@ -75,7 +75,7 @@
         app:layout_constraintTop_toBottomOf="@id/flashcardSetTitle" />
 
     <ImageButton
-        android:id="@+id/serachButton"
+        android:id="@+id/searchButton"
         android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="25dp"
