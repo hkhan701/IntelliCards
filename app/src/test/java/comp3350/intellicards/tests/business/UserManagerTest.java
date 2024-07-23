@@ -98,4 +98,48 @@ public class UserManagerTest {
         assertFalse("UserManager will never delete the guest user",
                 userManager.deleteUser("guest"));
     }
+
+    /*
+     * Test incrementLoginCount()
+     */
+    @Test
+    public void incrementLoginCount() {
+        when(userPersistenceMock.getUserByUsername("Test")).thenReturn(userMock);
+
+        userManager.incrementLoginCount("Test");
+
+        // UserManager can increment the login value of a user
+        verify(userPersistenceMock, times(1)).incrementLoginCount(userMock);
+    }
+
+    @Test
+    public void incrementLoginCountNotManaged() {
+        when(userPersistenceMock.getUserByUsername("Test")).thenReturn(null);
+
+        userManager.incrementLoginCount("Test");
+
+        // UserManager cannot increment the login value of a non-managed user
+        verify(userPersistenceMock, times(0)).incrementLoginCount(userMock);
+    }
+
+
+    /*
+     * Test getUserLoginCount()
+     */
+    @Test
+    public void getUserLoginCount() {
+        when(userPersistenceMock.getUserByUsername(any())).thenReturn(userMock);
+        when(userMock.getLoginCount()).thenReturn(3);
+
+        assertEquals("UserManager can retrieve the login count of a managed user",
+                3, userManager.getUserLoginCount("Test"));
+    }
+
+    @Test
+    public void getUserLoginCountNotManaged() {
+        when(userPersistenceMock.getUserByUsername(any())).thenReturn(null);
+
+        assertEquals("UserManager cannot retrieve the login count of a non-managed user",
+                -1, userManager.getUserLoginCount("Test"));
+    }
 }
