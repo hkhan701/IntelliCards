@@ -17,7 +17,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import comp3350.intellicards.Application.Services;
 import comp3350.intellicards.Application.UserSession;
 import comp3350.intellicards.Business.FlashcardManager;
-import comp3350.intellicards.Business.NotificationManager;
 import comp3350.intellicards.Objects.Flashcard;
 import comp3350.intellicards.Objects.FlashcardSet;
 import comp3350.intellicards.Business.FlashcardSetManager;
