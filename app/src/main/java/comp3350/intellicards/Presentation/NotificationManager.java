@@ -1,4 +1,4 @@
-package comp3350.intellicards.Business;
+package comp3350.intellicards.Presentation;
 
 import android.Manifest;
 import android.app.Activity;
