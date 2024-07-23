@@ -2,34 +2,48 @@
 
 ### Sketch
 
-![Alt text](<IntelliCards Design.png>)
+![Alt text](images/Architecture_Diagram-1.png)
 
-### Domain Specific Objects
+### Domain Specific Object Layer
 
-- Flashcard: Item to create, view, and store flashcards (includes question, answer, and hint fields). 
-- FlashcardSet: Item to create, view, and store sets of flashcards.
+- Flashcard: Object to create, view, and store flashcards (includes question, answer, and hint fields). 
+- FlashcardSet: Object to create, view, and store sets of flashcards.
+- User: Object to create and view accounts, each with their own username, password, sets of flashcards, and test statistics.
 
-### UI/Presentation
+### Application Layer
 
+- Configuration: Object which configures the type of the database being used.
+- Services: Object which instantiates all databases (either HSQLDB or stub).
+- UserSession: Object which instantiates the user session type (either a specific account or guest).
+
+### Presentation Layer
+
+- AuthActivity: Login page for users to create an account, enter existing credentials, or continue as a guest.
 - CardRecoverAdapter: A display for individual cards to be recovered.
 - CardViewAdapter: A display for individual cards to be edited and deleted.
-- EditFlashcardActivity: Display for users to edit an existing card.
-- FlashcardSetActivity: Display to browse all flashcards in an individual set.
-- MainActivity: Creation display for new cards, and main page for all sets.
-- ProfileActivity: Account viewer which allows users to access certain features, like deleted card recovery.
-- RecoverFlashcardActivity: List display for all deleted cards.
+- CreateFlashcardActivity: Flashcard creation page, where a user can input a question, answer, and optional hint for a new card.
+- EditFlashcardActivity: Flashcard editing page, where a card's existing data can be changed, including its set.
+- FlashcardSetActivity: Flashcard set display page, where a user can view all the cards in a set, and initiate a "test" of all cards.
+- FlashcardTestActivity: Testing page to review all flashcards in a set. The user must mark a card as answered correctly or incorrectly to continue, but testing can be stopped at any time by selecting "finish".
+- FlashcardUtils: Manages the flaschard utility.
+- MainActivity: Home page for viewing all sets and accessing the profile page.
+- ProfileActivity: Profile page which allows users to recover deleted cards and to log out.
+- RecoverFlashcardActivity: Display page for all deleted cards.
 
-### Business/Logic
+### Logic Layer
 
 - FlashcardManager: Manages insertion of new cards into persistence data, and retrieval of stored cards to display.
 - FlashcardSetManager: Manages insertion of new sets into persistence, insertion of individual cards into sets, and retrieval of sets to display.
-- StubManager: Temporary card and set manager for stub persistence data.
+- ReportCalculator: Gathers the "all time" statistics of the total tests for a particular flashcard set.
+- TempTestResult: Temporarily stores the test results of one test session. 
+- UserManager: Manages insertion of new accounts into persistence data, and retrieval of existing accounts.
 
-### Data/Persistence
+### Persistence Layer
 
-- FlashcardPersistence: Interface for future flascard database.
-- FlashcardPersistenceStub: Temporary stub database for initial flashcards.
-- FlashcardSetPersistence: Interface for future flashcard set database.
-- FlashcardSetPersistenceStub: Temporary stub database for initial flashcard sets.
-
-*Note: Persistence stubs are for Iteration 1 only.*
+- FlashcardPersistence: Interface for the flashcard database.
+- FlashcardPersistenceHSQLDB: Implementation of the flashcard database, using HSQLDB.
+- FlashcardSetPersistence: Interface for the flashcard set database.
+- FlashcardSetPersistenceHSQLDB: Implementation of the flashcard set database, using HSQLDB.
+- PersistenceException: The exception to throw when an error occurs in HSQLDB.
+- UserPersistence: Interface for the account database.
+- UserPersistenceHSQLDB: Implementation of the account database, using HSQLDB.

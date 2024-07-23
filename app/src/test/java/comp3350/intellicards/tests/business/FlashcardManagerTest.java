@@ -2,14 +2,10 @@ package comp3350.intellicards.tests.business;
 
 import static org.junit.Assert.*;
 
-import org.junit.After;
 import org.junit.Test;
 import org.junit.Before;
 
-import java.util.UUID;
-
 import comp3350.intellicards.Business.FlashcardManager;
-import comp3350.intellicards.Business.FlashcardSetManager;
 import comp3350.intellicards.Objects.Flashcard;
 import comp3350.intellicards.Objects.FlashcardSet;
 import comp3350.intellicards.tests.persistance.FlashcardPersistenceStub;
@@ -21,102 +17,202 @@ public class FlashcardManagerTest {
 
     private FlashcardPersistenceStub flashcardData;
     private FlashcardSetPersistenceStub flashcardSetData;
-    private FlashcardSetManager flashcardSetManager;
 
     @Before
     public void setUp() {
         flashcardSetData = new FlashcardSetPersistenceStub();
-        flashcardSetManager = new FlashcardSetManager(flashcardSetData);
-
-        flashcardData = new FlashcardPersistenceStub(flashcardSetManager);
-        flashcardManager = new FlashcardManager(flashcardData);
-    }
-
-    /*
-     * Test getAllActiveFlashcards()
-     */
-    @Test
-    public void testGetAllActiveFlashcardsOnlyReturnsActiveOnes() {
-        FlashcardSet testCardSet = new FlashcardSet("testUser", "Test Card Set");
-        Flashcard flashcard1 = new Flashcard(testCardSet.getUUID(), "Test Question 1", "Test Answer 1", null);
-        Flashcard flashcard2 = new Flashcard(testCardSet.getUUID(), "Test Question 2", "Test Answer 2", null);
-        String flashcard2UUID = flashcard2.getUUID();
-
-        flashcardManager.insertFlashcard(flashcard1);
-        flashcardManager.insertFlashcard(flashcard2);
-
-        flashcardManager.markFlashcardAsDeleted(flashcard2UUID);
-
-        assertTrue("An active flashcard should be returned when calling getAllActiveFlashcards()",
-                flashcardManager.getAllActiveFlashcards(testCardSet.getUUID()).contains(flashcard1));
-        assertFalse("A deleted flashcard should not be returned when calling getAllActiveFlashcards()",
-                flashcardManager.getAllActiveFlashcards(testCardSet.getUUID()).contains(flashcard2));
-    }
-
-    /*
-     * Test getAllDeletedFlashcards()
-     */
-    @Test
-    public void testGetAllDeletedFlashcardsOnlyReturnsDeletedOnes() {
-        FlashcardSet testCardSet = new FlashcardSet("testUser", "Test Card Set");
-        Flashcard flashcard1 = new Flashcard(testCardSet.getUUID(), "Test Question 1", "Test Answer 1", null);
-        Flashcard flashcard2 = new Flashcard(testCardSet.getUUID(), "Test Question 2", "Test Answer 2", null);
-        String flashcard2UUID = flashcard2.getUUID();
-
-        flashcardManager.insertFlashcard(flashcard1);
-        flashcardManager.insertFlashcard(flashcard2);
-
-        flashcardManager.markFlashcardAsDeleted(flashcard2UUID);
-
-        assertFalse("An active flashcard should not be returned when calling getAllDeletedFlashcards()",
-                flashcardManager.getAllDeletedFlashcards().contains(flashcard1));
-        assertTrue("A deleted flashcard should be returned when calling getAllDeletedFlashcards()",
-                flashcardManager.getAllDeletedFlashcards().contains(flashcard2));
+        flashcardData = new FlashcardPersistenceStub(flashcardSetData);
+        flashcardManager = new FlashcardManager(flashcardData, flashcardSetData);
     }
 
     /*
      * Test getFlashcard()
      */
     @Test
-    public void testGetFlashcardThatExistsInManager() {
+    public void testGetFlashcard() {
         FlashcardSet testCardSet = new FlashcardSet("testUser", "Test Card Set");
         Flashcard flashcard = new Flashcard(testCardSet.getUUID(), "Test Question", "Test Answer", null);
         String flashcardId = flashcard.getUUID();
         flashcardManager.insertFlashcard(flashcard);
 
-        assertEquals("You should be able to retrieve a flashcard from the manager if you have its UUID",
+        assertEquals("FlashcardManager can retrieve managed flashcard given its UUID",
                 flashcard.toString(), flashcardManager.getFlashcard(flashcardId).toString());
     }
 
     @Test
-    public void testGetFlashcardNotInManager() {
-        String randomUUID = UUID.randomUUID().toString();
+    public void testGetFlashcardNotInManaged() {
+        assertNull("FlashcardManager cannot retrieve non managed flashcard",
+                flashcardManager.getFlashcard("TestUUID"));
+    }
 
-        assertNull("If a flashcard is not in the flashcardManager, getFlashcard() should return null",
-                flashcardManager.getFlashcard(randomUUID));
+    @Test
+    public void testGetFlashcardNull() {
+        assertNull("FlashcardManager cannot retrieve a flashcard with a null uuid",
+                flashcardManager.getFlashcard(null));
+    }
+
+
+    /*
+     * Test updateFlashcard(Flashcard)
+     */
+    @Test
+    public void testUpdateFlashcard() {
+        FlashcardSet testCardSet = new FlashcardSet("testUser", "Test Card Set");
+        Flashcard flashcard = new Flashcard(testCardSet.getUUID(), "Test Question", "Test Answer", null);
+        Flashcard updateFlashcard = new Flashcard(flashcard.getUUID(), "EditSetUUID", "Edit Question", "Edit Answer", "Edit Hint", true, 6, 1);
+        flashcardManager.insertFlashcard(flashcard);
+
+        flashcardManager.updateFlashcard(updateFlashcard);
+        flashcard = flashcardManager.getFlashcard(flashcard.getUUID());
+
+        assertEquals("FlashcardManager can update a flashcard's setUUID",
+                updateFlashcard.getSetUUID(), flashcard.getSetUUID());
+        assertEquals("FlashcardManager can update a flashcard's question",
+                updateFlashcard.getQuestion(), flashcard.getQuestion());
+        assertEquals("FlashcardManager can update a flashcard's answer",
+                updateFlashcard.getAnswer(), flashcard.getAnswer());
+        assertEquals("FlashcardManager can update a flashcard's hint",
+                updateFlashcard.getHint(), flashcard.getHint());
+        assertEquals("FlashcardManager can update a flashcard's attempted count",
+                updateFlashcard.getAttempted(), flashcard.getAttempted());
+        assertEquals("FlashcardManager can update a flashcard's correct count",
+                updateFlashcard.getCorrect(), flashcard.getCorrect());
+        assertEquals("FlashcardManager can update a flashcard's deleted state",
+                updateFlashcard.isDeleted(), flashcard.isDeleted());
+    }
+
+    @Test
+    public void testUpdateFlashcardNotManaged() {
+        FlashcardSet testCardSet = new FlashcardSet("testUser", "Test Card Set");
+        Flashcard flashcard = new Flashcard(testCardSet.getUUID(), "Test Question", "Test Answer", null);
+
+        flashcardManager.updateFlashcard(flashcard);
+        flashcard = flashcardManager.getFlashcard(flashcard.getUUID());
+
+        assertNotNull("FlashcardManager will add unmanaged flashcard via updateFlashcard",
+                flashcardManager.getFlashcard(flashcard.getUUID()));
     }
 
     /*
-     * Test updateFlashcard()
+     * Test updateFlashcard(Flashcard, FlashcardSet, String, String, String)
+     * and moveFlashcardToNewSet()
+     * and updateFlashcardDetails()
      */
     @Test
-    public void testUpdateFlashcardWillReviseChangedFields() {
+    public void testUpdateFlashcardNewSet() {
+        FlashcardSet testCardSet = new FlashcardSet("testUser", "Test Card Set");
+        FlashcardSet testCardSetMove = new FlashcardSet("testUser", "Test Card Set Update");
+        Flashcard flashcard = new Flashcard(testCardSet.getUUID(), "Test Question", "Test Answer", null);
+
+        flashcardSetData.insertFlashcardSet(testCardSet);
+        flashcardSetData.insertFlashcardSet(testCardSetMove);
+        flashcardManager.insertFlashcard(flashcard);
+        flashcardSetData.addFlashcardToFlashcardSet(testCardSet.getUUID(), flashcard);
+
+        flashcardManager.updateFlashcard(flashcard, testCardSetMove, "Test Question", "Test Answer", null);
+        testCardSetMove = flashcardSetData.getFlashcardSet(testCardSetMove.getUUID());
+        flashcard = flashcardManager.getFlashcard(flashcard.getUUID());
+
+        assertNotNull("FlashcardManager can move a flashcard between sets",
+                testCardSetMove.getActiveFlashcards().getIndex(0));
+
+        assertTrue("FlashcardManager deletes old card when it is moved to new set",
+                flashcard.isDeleted());
+    }
+
+    @Test
+    public void testUpdateFlashcardNewSetNotManaged() {
+        FlashcardSet testCardSet = new FlashcardSet("testUser", "Test Card Set");
+        FlashcardSet testCardSetMove = new FlashcardSet("testUser", "Test Card Set Update");
+        Flashcard flashcard = new Flashcard(testCardSet.getUUID(), "Test Question", "Test Answer", null);
+
+        flashcardSetData.insertFlashcardSet(testCardSet);
+        flashcardManager.insertFlashcard(flashcard);
+        flashcardSetData.addFlashcardToFlashcardSet(testCardSet.getUUID(), flashcard);
+
+        flashcardManager.updateFlashcard(flashcard, testCardSetMove, "Test Question", "Test Answer", null);
+
+        flashcard = flashcardManager.getFlashcard(flashcard.getUUID());
+
+        assertEquals("FlashcardManager cannot move a flashcard to a new set that is unmanaged",
+                0, testCardSetMove.getActiveFlashcards().size());
+
+        assertFalse("FlashcardManager does not delete old card when it is not moved to new set",
+                flashcard.isDeleted());
+    }
+
+    @Test
+    public void testUpdateFlashcardDetails() {
         FlashcardSet testCardSet = new FlashcardSet("testUser", "Test Card Set");
         Flashcard flashcard = new Flashcard(testCardSet.getUUID(), "Test Question", "Test Answer", null);
+
+        flashcardManager.insertFlashcard(flashcard);
+        flashcardManager.updateFlashcard(flashcard, null, "Test Question Update", "Test Answer Update", "Test Hint Update");
+
+        assertEquals("FlashcardManager will update the original instance of flashcard's question if given",
+                "Test Question Update", flashcard.getQuestion());
+        assertEquals("FlashcardManager will update the original instance of flashcard's answer if given",
+                "Test Answer Update", flashcard.getAnswer());
+        assertEquals("FlashcardManager will update the original instance of flashcard's hint if given",
+                "Test Hint Update", flashcard.getHint());
+    }
+
+    @Test
+    public void testUpdateFlashcardDetailsNotManaged() {
+        Flashcard flashcard = new Flashcard("TestSetUUID", "Test Question", "Test Answer", null);
+
+        flashcardManager.updateFlashcard(flashcard, null, "Test Question Update", "Test Answer Update", "Test Hint Update");
+
+        assertNotNull("FlashcardManager will add unmanaged flashcard via updateFlashcard",
+                flashcardManager.getFlashcard(flashcard.getUUID()));
+
+        assertEquals("FlashcardManager will update the original instance of flashcard's question if given",
+                "Test Question Update", flashcard.getQuestion());
+        assertEquals("FlashcardManager will update the original instance of flashcard's answer if given",
+                "Test Answer Update", flashcard.getAnswer());
+        assertEquals("FlashcardManager will update the original instance of flashcard's hint if given",
+                "Test Hint Update", flashcard.getHint());
+    }
+
+    /*
+     * Test markFlashcardAsDeleted()
+     */
+    @Test
+    public void testMarkFlashcardAsDeleted() {
+        FlashcardSet testCardSet = new FlashcardSet("testUser", "Test Card Set");
+        Flashcard flashcard = new Flashcard(testCardSet.getUUID(), "Test Question", "Test Answer", null);
+        String flashcardUUID = flashcard.getUUID();
+
         flashcardManager.insertFlashcard(flashcard);
 
-        flashcard.setHint("This is the stage where you talk to clients and assess their needs");
-        flashcardManager.updateFlashcard(flashcard);
+        flashcardManager.markFlashcardAsDeleted(flashcardUUID);
+        flashcard = flashcardManager.getFlashcard(flashcard.getUUID());
 
-        assertEquals("You can update a flashcard with new parameters in the manager",
-                flashcard.toString(), flashcardManager.getFlashcard(flashcard.getUUID()).toString());
+        assertTrue("FlashcardManager can mark a managed flashcard as deleted",
+                flashcardManager.getFlashcard(flashcard.getUUID()).isDeleted());
     }
+
+    @Test
+    public void testMarkFlashcardAsDeletedNotManaged() {
+        FlashcardSet testCardSet = new FlashcardSet("testUser", "Test Card Set");
+        Flashcard flashcard = new Flashcard(testCardSet.getUUID(), "Test Question", "Test Answer", null);
+        String flashcardUUID = flashcard.getUUID();
+
+        flashcardManager.markFlashcardAsDeleted(flashcardUUID);
+
+        assertNull("FlashcardManager will not add a non-managed flashcard when calling the markFlashcardAsDeleted method",
+                flashcardManager.getFlashcard(flashcard.getUUID()));
+
+        assertFalse("FlashcardManager cannot mark a non managed flashcard as deleted",
+                flashcard.isDeleted());
+    }
+
 
     /*
      * Test restoreFlashcard()
      */
     @Test
-    public void testRestoredFlashcardOnlyShowsUpInActiveList() {
+    public void testRestoreFlashcard() {
         FlashcardSet testCardSet = new FlashcardSet("testUser", "Test Card Set");
         Flashcard flashcard = new Flashcard(testCardSet.getUUID(), "Test Question", "Test Answer", null);
         String flashcardUUID = flashcard.getUUID();
@@ -125,14 +221,86 @@ public class FlashcardManagerTest {
 
         flashcardManager.markFlashcardAsDeleted(flashcardUUID);
         flashcardManager.restoreFlashcard(flashcardUUID);
+        flashcard = flashcardManager.getFlashcard(flashcard.getUUID());
 
-        assertTrue("A flashcard that has been restored should show up in the active list",
-                flashcardManager.getAllActiveFlashcards(testCardSet.getUUID()).contains(flashcard));
-        assertFalse("A flashcard that has been restored should not show up in the deleted list",
-                flashcardManager.getAllDeletedFlashcards().contains(flashcard));
+        assertFalse("FlashcardManager can mark a managed flashcard as restored",
+                flashcardManager.getFlashcard(flashcard.getUUID()).isDeleted());
     }
 
-    @After
-    public void tearDown() {
+    @Test
+    public void testRestoreFlashcardNotManaged() {
+        Flashcard flashcard = new Flashcard("TestSet", "Test Question", "Test Answer", null);
+
+        flashcard.markDeleted();
+        flashcardManager.restoreFlashcard(flashcard.getUUID());
+
+        assertNull("FlashcardManager will not add a non-managed flashcard when calling the restore function",
+                flashcardManager.getFlashcard(flashcard.getUUID()));
+
+        assertTrue("FlashcardManager cannot mark a non managed flashcard as restored",
+                flashcard.isDeleted());
+    }
+
+    /*
+     * Test markAttempted()
+     */
+    @Test
+    public void TestMarkAttempted() {
+        FlashcardSet testCardSet = new FlashcardSet("testUser", "Test Card Set");
+        Flashcard flashcard1 = new Flashcard(testCardSet.getUUID(), "Test Question 1", "Test Answer 1", null);
+        flashcardManager.insertFlashcard(flashcard1);
+
+        flashcardManager.markAttempted(flashcard1.getUUID());
+        flashcard1 = flashcardManager.getFlashcard(flashcard1.getUUID());
+
+        assertEquals("FlashcardManager can mark a flashcard as attempted via the markAttempted() method",
+                1, flashcardManager.getFlashcard(flashcard1.getUUID()).getAttempted());
+    }
+
+    @Test
+    public void TestMarkAttemptedNotManaged() {
+        FlashcardSet testCardSet = new FlashcardSet("testUser", "Test Card Set");
+        Flashcard flashcard1 = new Flashcard(testCardSet.getUUID(), "Test Question 1", "Test Answer 1", null);
+
+        flashcardManager.markAttempted(flashcard1.getUUID());
+
+        assertNull("FlashcardManager will not add a non-managed flashcard when calling the markAttempted method",
+                flashcardManager.getFlashcard(flashcard1.getUUID()));
+
+        assertEquals("FlashcardManager cannot mark a non managed flashcard as attempted via the markAttempted() method",
+                0, flashcard1.getAttempted());
+    }
+
+    /*
+     * Test markAttemptedAndCorrect()
+     */
+    @Test
+    public void TestMarkAttemptedAndCorrect() {
+        FlashcardSet testCardSet = new FlashcardSet("testUser", "Test Card Set");
+        Flashcard flashcard1 = new Flashcard(testCardSet.getUUID(), "Test Question 1", "Test Answer 1", null);
+        flashcardManager.insertFlashcard(flashcard1);
+
+        flashcardManager.markAttemptedAndCorrect(flashcard1.getUUID());
+        flashcard1 = flashcardManager.getFlashcard(flashcard1.getUUID());
+
+        assertEquals("FlashcardManager can mark a flashcard as attempted via the markAttemptedAndCorrect() method",
+                1, flashcardManager.getFlashcard(flashcard1.getUUID()).getAttempted());
+        assertEquals("FlashcardManager can mark a flashcard as correct via the markAttemptedAndCorrect() method",
+                1, flashcardManager.getFlashcard(flashcard1.getUUID()).getCorrect());
+    }
+
+    @Test
+    public void TestMarkAttemptedAndCorrectNotManaged() {
+        Flashcard flashcard1 = new Flashcard("TestCardUUID", "TestSetUUID", "Test Question 1", "Test Answer 1", null, false, 0, 0);
+
+        flashcardManager.markAttemptedAndCorrect(flashcard1.getUUID());
+
+        assertNull("FlashcardManager will not add a non-managed flashcard when calling the markAttemptedAndCorrect method",
+                flashcardManager.getFlashcard(flashcard1.getUUID()));
+
+        assertEquals("FlashcardManager cannot mark a non managed flashcard as attempted via the markAttemptedAndCorrect() method",
+                0, flashcard1.getAttempted());
+        assertEquals("FlashcardManager cannot mark a non managed flashcard as correct via the markAttemptedAndCorrect() method",
+                0, flashcard1.getCorrect());
     }
 }

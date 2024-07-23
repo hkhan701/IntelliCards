@@ -4,16 +4,17 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatImageButton;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import comp3350.intellicards.Application.Services;
 import comp3350.intellicards.Application.UserSession;
 import comp3350.intellicards.Business.FlashcardManager;
 import comp3350.intellicards.Business.FlashcardSetManager;
@@ -28,8 +29,8 @@ public class EditFlashcardActivity extends Activity {
     private EditText questionEditText;
     private EditText answerEditText;
     private EditText hintEditText;
-    private Button editButton;
-    private Button cancelButton;
+    private AppCompatImageButton editButton;
+    private AppCompatImageButton cancelButton;
     private Spinner flashcardSetSpinner;
     private Flashcard currentFlashcard;
     private FlashcardSet currentFlashcardSet;
@@ -41,19 +42,20 @@ public class EditFlashcardActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_flashcard);
 
-        username = UserSession.getInstance().getUsername(); // Get the username from the UserSession singleton
+        username = UserSession.getInstance(this).getUsername();
 
         initializeManagers();
         initializeViews();
+        retrieveIntentData();
         fetchFlashcard();
         fetchAllFlashcardSetsForUser();
-        setUpSpinner();
+        setUpFlashcardSetSpinner();
         setUpListeners();
     }
 
     private void initializeManagers() {
-        flashcardManager = new FlashcardManager();
-        flashcardSetManager = new FlashcardSetManager();
+        flashcardManager = new FlashcardManager(Services.getFlashcardPersistence());
+        flashcardSetManager = new FlashcardSetManager(Services.getFlashcardSetPersistence());
     }
 
     private void initializeViews() {
@@ -65,12 +67,15 @@ public class EditFlashcardActivity extends Activity {
         flashcardSetSpinner = findViewById(R.id.flashcardSetSpinner);
     }
 
-    private void fetchFlashcard() {
+    private void retrieveIntentData() {
         String flashcardUUID = getIntent().getStringExtra("flashcardUUID");
         String flashcardSetUUID = getIntent().getStringExtra("flashcardSetUUID");
         currentFlashcard = flashcardManager.getFlashcard(flashcardUUID);
+        currentFlashcardSet = flashcardSetManager.getFlashcardSet(flashcardSetUUID);
+    }
+
+    private void fetchFlashcard() {
         if (currentFlashcard != null) {
-            currentFlashcardSet = flashcardSetManager.getFlashcardSet(flashcardSetUUID);
             populateFlashcardDetails();
         } else {
             Toast.makeText(this, "Flashcard not found", Toast.LENGTH_LONG).show();
@@ -88,7 +93,7 @@ public class EditFlashcardActivity extends Activity {
         hintEditText.setText(currentFlashcard.getHint());
     }
 
-    private void setUpSpinner() {
+    private void setUpFlashcardSetSpinner() {
         List<String> flashcardSetNames = new ArrayList<>();
         for (FlashcardSet set : allFlashcardSets) {
             flashcardSetNames.add(set.getFlashcardSetName());
@@ -98,31 +103,23 @@ public class EditFlashcardActivity extends Activity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         flashcardSetSpinner.setAdapter(adapter);
 
-        // Set the spinner to the current flashcard's set
         int currentPosition = flashcardSetNames.indexOf(currentFlashcardSet.getFlashcardSetName());
         flashcardSetSpinner.setSelection(currentPosition);
     }
 
     private void setUpListeners() {
-        setUpEditButtonListener();
+        setUpConfirmEditButtonListener();
         setUpCancelButtonListener();
     }
 
-    private void setUpEditButtonListener() {
+    private void setUpConfirmEditButtonListener() {
         editButton.setOnClickListener(v -> {
-            String newQuestion = questionEditText.getText().toString();
-            String newAnswer = answerEditText.getText().toString();
-            String newHint = hintEditText.getText().toString();
+            String newQuestion = questionEditText.getText().toString().trim();
+            String newAnswer = answerEditText.getText().toString().trim();
+            String newHint = hintEditText.getText().toString().trim();
 
-            // If the selected flashcard set is different from the current flashcard set, move the flashcard to the new set
             FlashcardSet selectedSet = getSelectedFlashcardSet();
-            if (!selectedSet.getUUID().equals(currentFlashcardSet.getUUID())) {
-                moveFlashcardToNewSet(selectedSet, newQuestion, newAnswer, newHint);
-            } else {
-                // Update the flashcard if it stays in the same set
-                updateFlashcardDetails(newQuestion, newAnswer, newHint);
-                flashcardManager.updateFlashcard(currentFlashcard);
-            }
+            flashcardManager.updateFlashcard(currentFlashcard, selectedSet, newQuestion, newAnswer, newHint);
 
             showSuccessMessage();
             sendResultAndFinish();
@@ -132,24 +129,6 @@ public class EditFlashcardActivity extends Activity {
     private FlashcardSet getSelectedFlashcardSet() {
         int selectedPosition = flashcardSetSpinner.getSelectedItemPosition();
         return allFlashcardSets.get(selectedPosition);
-    }
-
-    private void moveFlashcardToNewSet(FlashcardSet newSet, String newQuestion, String newAnswer, String newHint) {
-        // Mark the current flashcard as deleted
-        flashcardManager.markFlashcardAsDeleted(currentFlashcard.getUUID());
-
-        // Create a new flashcard with the updated details for the new set
-        Flashcard newFlashcard = new Flashcard(newSet.getUUID(), newQuestion, newAnswer, newHint);
-        flashcardManager.insertFlashcard(newFlashcard);
-        flashcardSetManager.addFlashcardToFlashcardSet(newSet.getUUID(), newFlashcard);
-
-        Toast.makeText(this, "Flashcard moved to new set", Toast.LENGTH_LONG).show();
-    }
-
-    private void updateFlashcardDetails(String newQuestion, String newAnswer, String newHint) {
-        currentFlashcard.setQuestion(newQuestion);
-        currentFlashcard.setAnswer(newAnswer);
-        currentFlashcard.setHint(newHint);
     }
 
     private void showSuccessMessage() {

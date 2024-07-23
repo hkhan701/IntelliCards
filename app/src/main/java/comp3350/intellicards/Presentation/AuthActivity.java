@@ -16,7 +16,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import comp3350.intellicards.Application.Main;
+import comp3350.intellicards.Application.Configuration;
+import comp3350.intellicards.Application.Services;
 import comp3350.intellicards.Application.UserSession;
 import comp3350.intellicards.Objects.User;
 import comp3350.intellicards.Business.UserManager;
@@ -36,7 +37,14 @@ public class AuthActivity extends Activity {
         setContentView(R.layout.activity_auth);
         copyDatabaseToDevice();
 
-        userManager = new UserManager();
+        // Check if user is already logged in
+        UserSession userSession = UserSession.getInstance(this);
+        if (userSession.getUsername() != null) {
+            navigateToMainActivity();
+            return; // Exit the onCreate method to prevent further execution
+        }
+
+        userManager = new UserManager(Services.getUserPersistence());
         initializeViews();
         setUpListeners();
     }
@@ -57,9 +65,11 @@ public class AuthActivity extends Activity {
 
     private void setUpRegisterButtonListener() {
         registerButton.setOnClickListener(v -> {
-            if (verifyInput()) {
-                String username = usernameEditText.getText().toString();
-                String password = passwordEditText.getText().toString();
+
+            String username = usernameEditText.getText().toString().trim();
+            String password = passwordEditText.getText().toString().trim();
+
+            if (verifyUserInput(username, password)) {
                 if (userManager.registerUser(username, password)) {
                     Toast.makeText(this, "Sign up successful! Please log in.", Toast.LENGTH_LONG).show();
                 } else {
@@ -73,13 +83,17 @@ public class AuthActivity extends Activity {
 
     private void setUpLogInButtonListener() {
         logInButton.setOnClickListener(v -> {
-            if (verifyInput()) {
-                String username = usernameEditText.getText().toString();
-                String password = passwordEditText.getText().toString();
+
+            String username = usernameEditText.getText().toString().trim();
+            String password = passwordEditText.getText().toString().trim();
+
+            if (verifyUserInput(username, password)) {
                 User user = userManager.loginUser(username, password);
                 if (user != null) {
                     Toast.makeText(this, "Log in successful!", Toast.LENGTH_LONG).show();
                     UserSession.getInstance().setUsername(user.getUsername());
+                    //update the login count
+                    userManager.incrementLoginCount(username);
                     navigateToMainActivity();
                 } else {
                     Toast.makeText(this, "Invalid login information! Please try again.", Toast.LENGTH_LONG).show();
@@ -92,25 +106,29 @@ public class AuthActivity extends Activity {
 
     private void setUpGuestButtonListener() {
         guestButton.setOnClickListener(v -> {
-            UserSession.getInstance().setUsername("guest");
+            UserSession.getInstance(this).setGuest();
             Toast.makeText(this, "Logged in as a guest successfully!", Toast.LENGTH_LONG).show();
             navigateToMainActivity();
         });
     }
 
-    private boolean verifyInput() {
-        String username = usernameEditText.getText().toString();
-        String password = passwordEditText.getText().toString();
+    private boolean verifyUserInput(String username, String password) {
         return !username.isEmpty() && !password.isEmpty();
     }
 
     private void navigateToMainActivity() {
         Intent intent = new Intent(AuthActivity.this, MainActivity.class);
         startActivity(intent);
-        finish();
+        finish(); // Destroy the current activity so that the user cannot go back to it
     }
 
     private void copyDatabaseToDevice() {
+        if (Configuration.getDatasource().equals("testHsqldb")) {
+            Configuration.setDbName("IntellicardsTest");
+        } else {
+            Configuration.setDbName("Intellicards");
+        }
+
         final String DB_PATH = "db";
 
         String[] assetNames;
@@ -127,7 +145,7 @@ public class AuthActivity extends Activity {
 
             copyAssetsToDirectory(assetNames, dataDirectory);
 
-            Main.setDBPathName(dataDirectory.toString() + "/" + Main.getDBPathName());
+            Configuration.setDBPathName(dataDirectory.toString() + "/" + Configuration.getDbName());
 
         } catch (final IOException ioe) {
             Toast.makeText(this, "Unable to access application data: " + ioe.getMessage(), Toast.LENGTH_LONG).show();

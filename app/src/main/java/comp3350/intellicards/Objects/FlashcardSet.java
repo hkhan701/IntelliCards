@@ -32,6 +32,22 @@ public class FlashcardSet {
         return uuid;
     }
 
+    public String getUsername() {
+        return this.username;
+    }
+
+    public String getFlashcardSetName() {
+        return flashcardSetName;
+    }
+
+    public Flashcard getIndex(int index) {
+        return flashcards.get(index);
+    }
+
+    public int size() {
+        return flashcards.size();
+    }
+
     public void addFlashcard(@NonNull Flashcard flashcard) {
         flashcards.add(flashcard);
     }
@@ -47,6 +63,11 @@ public class FlashcardSet {
         return undeletedCards;
     }
 
+    // Return the number of active flashcards in this set
+    public int getActiveCount() {
+        return getActiveFlashcards().size();
+    }
+
     public FlashcardSet getDeletedFlashcards() {
         FlashcardSet deletedCards = new FlashcardSet(this.uuid, this.username, this.flashcardSetName); // Use the same UUID
         for (Flashcard card : this.flashcards) {
@@ -57,10 +78,6 @@ public class FlashcardSet {
         return deletedCards;
     }
 
-    public String getFlashcardSetName() {
-        return flashcardSetName;
-    }
-
     public Flashcard getFlashcardById(String uuid) {
         for (Flashcard card : flashcards) {
             if (card.getUUID().equals(uuid)) {
@@ -68,23 +85,6 @@ public class FlashcardSet {
             }
         }
         return null;
-    }
-
-    public Flashcard getIndex(int index) {
-        return flashcards.get(index);
-    }
-
-    public int size() {
-        return flashcards.size();
-    }
-
-    public String getUsername() {
-        return this.username;
-    }
-
-    // Return the number of active flashcards in this set
-    public int getActiveCount() {
-        return getActiveFlashcards().size();
     }
 
     // Randomizes the arrayList containing the flashcards

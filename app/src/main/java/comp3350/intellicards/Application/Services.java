@@ -18,24 +18,36 @@ public class Services {
 
     public static synchronized FlashcardPersistence getFlashcardPersistence() {
         if (flashcardPersistence == null) {
-            flashcardPersistence = new FlashcardPersistenceHSQLDB(Main.getDBPathName());
-//            flashcardPersistence = new FlashcardPersistenceStub();
+            if (Configuration.getDatasource().equals("stub")) {
+                flashcardPersistence = new FlashcardPersistenceStub();
+            }
+            else {
+                flashcardPersistence = new FlashcardPersistenceHSQLDB(Configuration.getDBPathName());
+            }
         }
         return flashcardPersistence;
     }
 
     public static synchronized FlashcardSetPersistence getFlashcardSetPersistence() {
         if (flashcardSetPersistence == null) {
-            flashcardSetPersistence = new FlashcardSetPersistenceHSQLDB(Main.getDBPathName());
-//            flashcardSetPersistence = new FlashcardSetPersistenceStub();
+            if (Configuration.getDatasource().equals("stub")) {
+                flashcardSetPersistence = new FlashcardSetPersistenceStub();
+            }
+            else {
+                flashcardSetPersistence = new FlashcardSetPersistenceHSQLDB(Configuration.getDBPathName());
+            }
         }
         return flashcardSetPersistence;
     }
 
     public static synchronized UserPersistence getUserPersistence() {
         if (userPersistence == null) {
-            userPersistence = new UserPersistenceHSQLDB(Main.getDBPathName());
-//            userPersistence = new UserPersistenceStub();
+            if (Configuration.getDatasource().equals("stub")) {
+                userPersistence = new UserPersistenceStub();
+            }
+            else {
+                userPersistence = new UserPersistenceHSQLDB(Configuration.getDBPathName());
+            }
         }
         return userPersistence;
     }
