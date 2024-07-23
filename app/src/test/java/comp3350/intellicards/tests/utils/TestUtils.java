@@ -6,7 +6,7 @@ import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 import java.io.File;
 import java.io.IOException;
 
-import comp3350.intellicards.Application.Main;
+import comp3350.intellicards.Application.Configuration;
 
 public class TestUtils {
     private static final File DB_SRC = new File("src/main/assets/db/Intellicards.script");
@@ -19,7 +19,7 @@ public class TestUtils {
         } else {
             copy(DB_SRC.toPath(), target.toPath(), REPLACE_EXISTING);
         }
-        Main.setDBPathName(target.getAbsolutePath().replace(".script", ""));
+        Configuration.setDBPathName(target.getAbsolutePath().replace(".script", ""));
         return target;
     }
 }

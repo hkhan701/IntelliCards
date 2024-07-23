@@ -40,7 +40,7 @@ public class AboutMeActivity extends Activity {
         userManager = new UserManager();
 
         // Get the user session
-        userName = UserSession.getInstance().getUsername();
+        userName = UserSession.getInstance(this).getUsername();
 
         //set up views
         initializeViews();
