@@ -26,11 +26,14 @@
         android:id="@+id/testButton"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:layout_margin="32dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="100dp"
         android:backgroundTint="@color/buttons"
         android:text="@string/test_btn_text"
         android:textColor="@color/btn_txt"
         android:textSize="20sp"
+        android:gravity="center"
         app:layout_constraintStart_toEndOf="@id/backButton"
         app:layout_constraintEnd_toStartOf="@id/addFlashcardButton"
         app:layout_constraintBottom_toBottomOf="parent" />
@@ -67,7 +70,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginStart="15sp"
         android:layout_marginEnd="15sp"
-        android:layout_marginBottom="130sp"
+        android:layout_marginBottom="180sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/flashcardSetTitle"
         app:layout_constraintVertical_bias="0.0"
@@ -75,12 +78,18 @@
 
     <Button
         android:id="@+id/addReminderButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
         android:text="@string/add_reminder"
+        android:textColor="@color/btn_txt"
+        android:textSize="20sp"
+        android:backgroundTint="@color/buttons"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="30dp"
+        android:gravity="center"
         app:layout_constraintEnd_toStartOf="@+id/addFlashcardButton"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/testButton"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

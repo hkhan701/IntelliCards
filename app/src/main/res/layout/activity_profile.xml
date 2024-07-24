@@ -12,11 +12,15 @@
 
     <Button
         android:id="@+id/aboutMeButton"
-        android:layout_width="699dp"
-        android:layout_height="98dp"
-        android:layout_marginTop="40dp"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginStart="100dp"
+        android:layout_marginEnd="100dp"
+        android:layout_marginTop="50dp"
+        android:backgroundTint="@color/buttons"
+        android:textColor="@color/btn_txt"
         android:text="@string/about_me_btn_text"
-        android:textSize="20sp"
+        android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/usernameText" />
@@ -27,16 +31,14 @@
         android:layout_height="100dp"
         android:layout_marginStart="100dp"
         android:layout_marginEnd="100dp"
+        android:layout_marginTop="30dp"
         android:backgroundTint="@color/buttons"
         android:text="@string/recovery_page_btn_text"
         android:textColor="@color/btn_txt"
         android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/aboutMeButton"
-        app:layout_constraintVertical_bias="0.145" />
+        app:layout_constraintTop_toBottomOf="@+id/aboutMeButton" />
 
     <Button
         android:id="@+id/logoutButton"
@@ -78,7 +80,7 @@
         android:layout_width="237dp"
         android:layout_height="234dp"
         android:layout_marginStart="141dp"
-        android:layout_marginTop="264dp"
+        android:layout_marginTop="230dp"
         android:layout_marginEnd="141dp"
         android:background="@drawable/baseline_account_box_24"
         android:backgroundTint="@color/icon_bg"
@@ -92,13 +94,12 @@
         android:id="@+id/usernameText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="30dp"
         android:gravity="center"
         android:text="@string/profile_guest_user_text"
         android:textSize="50sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/userIcon" />
 
