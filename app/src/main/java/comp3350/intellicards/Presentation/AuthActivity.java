@@ -91,7 +91,7 @@ public class AuthActivity extends Activity {
                 User user = userManager.loginUser(username, password);
                 if (user != null) {
                     Toast.makeText(this, "Log in successful!", Toast.LENGTH_LONG).show();
-                    UserSession.getInstance().setUsername(user.getUsername());
+                    UserSession.getInstance(this).setUsername(user.getUsername());
                     //update the login count
                     userManager.incrementLoginCount(username);
                     navigateToMainActivity();
