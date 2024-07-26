@@ -11,7 +11,4 @@ public interface FlashcardSetPersistence {
     List<FlashcardSet> getAllFlashcardSets();
 
     void insertFlashcardSet(FlashcardSet newFlashcardSet);
-
-    boolean addFlashcardToFlashcardSet(String setUUID, Flashcard flashcard);
-
 }

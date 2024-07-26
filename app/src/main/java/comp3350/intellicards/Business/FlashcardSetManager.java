@@ -73,7 +73,14 @@ public class FlashcardSetManager {
     }
 
     public boolean addFlashcardToFlashcardSet(@NonNull String setUUID, @NonNull Flashcard flashcard) {
-        return this.flashcardSetPersistence.addFlashcardToFlashcardSet(setUUID, flashcard);
+        FlashcardSet flashcardSet = getFlashcardSet(setUUID);
+
+        if (flashcardSet != null) {
+            flashcardSet.addFlashcard(flashcard);
+            return true;
+        }
+
+        return false;
     }
 
     public void shuffleFlashcardSet(FlashcardSet flashcardSet) {

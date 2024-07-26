@@ -112,22 +112,4 @@ public class FlashcardSetPersistenceHSQLDB implements FlashcardSetPersistence {
             throw new PersistenceException(e);
         }
     }
-
-    // this might need functinoality or taken out, we are inserting the flashcard
-    // using the flashcard persistence, since we are adding the setUUID field there
-    @Override
-    public boolean addFlashcardToFlashcardSet(String setUUID, Flashcard flashcard) {
-        try (final Connection c = connection()) {
-            FlashcardSet flashcardSet = getFlashcardSet(setUUID);
-
-            if (flashcardSet != null) {
-                flashcardSet.addFlashcard(flashcard);
-                return true;
-            }
-        } catch (SQLException e) {
-            throw new PersistenceException(e);
-        }
-        return false;
-    }
-
 }
