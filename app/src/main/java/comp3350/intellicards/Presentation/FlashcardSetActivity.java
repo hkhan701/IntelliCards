@@ -43,6 +43,7 @@ public class FlashcardSetActivity extends Activity {
     private NotificationManager notificationManager;
     private ImageButton searchButton;
     private EditText searchEditText;
+    private ImageButton searchClearButton;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -87,6 +88,7 @@ public class FlashcardSetActivity extends Activity {
         addReminderButton = findViewById(R.id.addReminderButton);
         searchButton = findViewById(R.id.searchButton);
         searchEditText = findViewById(R.id.search);
+        searchClearButton = findViewById(R.id.setSearchClearButton);
     }
 
     private void setupListeners() {
@@ -95,6 +97,7 @@ public class FlashcardSetActivity extends Activity {
         setupTestButtonListener();
         setupAddReminderButtonListener();
         setupSearchButtonListener();
+        setupSearchClearButtonListener();
     }
 
     private void setupBackButtonListener() {
@@ -111,6 +114,10 @@ public class FlashcardSetActivity extends Activity {
 
     private void setupSearchButtonListener() {
         searchButton.setOnClickListener(v -> handleSearchButtonClick());
+    }
+
+    private void setupSearchClearButtonListener() {
+        searchClearButton.setOnClickListener(v ->  handleSearchClearButtonClick());
     }
 
     private void loadFlashcardSet() {
@@ -155,6 +162,12 @@ public class FlashcardSetActivity extends Activity {
             flashcardsRecyclerView.setAdapter(new CardViewAdapter(flashcardSetManager.getSearchedFlashcards(flashcardSetUUID, searchedFlashcards)));
             Toast.makeText(this, "Displaying search results for \"" + searchKey + "\"", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void handleSearchClearButtonClick() {
+        searchEditText.setText("");
+        loadFlashcardSet();
+        Toast.makeText(this, "Displaying all flashcards", Toast.LENGTH_SHORT).show();
     }
 
     private boolean isFlashcardSetEmpty() {

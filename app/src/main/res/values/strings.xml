@@ -21,6 +21,7 @@
     <string name="sign_up_btn_text">Sign Up</string>
     <string name="log_in_btn_text">Log In</string>
     <string name="search_btn_text">search</string>
+    <string name="search_clear_btn_text">clear</string>
 
     <!-- Labels and Placeholders -->
     <string name="hint_placeholder">Enter hint here</string>
