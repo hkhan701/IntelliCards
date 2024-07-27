@@ -32,6 +32,7 @@
     <string name="profile_guest_user_text">Guest User</string>
     <string name="no_info">No data to be displayed!</string>
     <string name="flashcard_set_search_placeholder">Search for a Flashcard Set</string>
+    <string name="search_placeholder">Search a keyword</string>
 
     <!-- Input Limits -->
     <string name="hint_max_length">100</string>
@@ -44,8 +45,6 @@
     <string name="edit_flashcard">Edit Flashcard</string>
     <string name="log_out_text">Log out</string>
     <string name="add_reminder">Add Reminder</string>
-    <string name="search_placeholder">Search a keyword</string>
-    <string name="search_btn_text">search</string>
 
 
 </resources>
