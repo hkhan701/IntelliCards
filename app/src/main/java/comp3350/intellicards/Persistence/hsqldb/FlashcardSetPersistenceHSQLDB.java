@@ -98,6 +98,29 @@ public class FlashcardSetPersistenceHSQLDB implements FlashcardSetPersistence {
     }
 
     @Override
+    public List<FlashcardSet> getFlashcardSetsByKey(String key) {
+        List<FlashcardSet> flashcardSets = new ArrayList<>();
+
+        try (final Connection c = connection()) {
+            final PreparedStatement st = c.prepareStatement("SELECT SETUUID FROM FLASHCARDSETS WHERE setname LIKE ?");
+            st.setString(1, "%" + key + "%");
+
+            final ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                final FlashcardSet flashcardSet = getFlashcardSet(rs.getString("setUUID"));
+                flashcardSets.add(flashcardSet);
+            }
+
+            rs.close();
+            st.close();
+
+            return flashcardSets;
+        } catch (SQLException e) {
+            throw new PersistenceException(e);
+        }
+    }
+
+    @Override
     public void insertFlashcardSet(FlashcardSet newFlashcardSet) {
         try (final Connection c = connection()) {
             final PreparedStatement st = c.prepareStatement("INSERT INTO FLASHCARDSETS VALUES(?, ?, ?)");

@@ -10,6 +10,8 @@ public interface FlashcardSetPersistence {
 
     List<FlashcardSet> getAllFlashcardSets();
 
+    List<FlashcardSet> getFlashcardSetsByKey(String key);
+
     void insertFlashcardSet(FlashcardSet newFlashcardSet);
 
     boolean addFlashcardToFlashcardSet(String setUUID, Flashcard flashcard);
