@@ -62,7 +62,7 @@ public class FlashcardPersistenceHSQLDB implements FlashcardPersistence {
         List<Flashcard> flashcards = new ArrayList<>();
 
         try (Connection c = connection()) {
-            final PreparedStatement st = c.prepareStatement("SELECT * FROM FLASHCARDS WHERE deleted = FALSE AND (question LIKE ? OR answer LIKE ? OR hint LIKE ?)");
+            final PreparedStatement st = c.prepareStatement("SELECT * FROM FLASHCARDS WHERE deleted = FALSE AND (LOWER(question) LIKE LOWER(?) OR LOWER(answer) LIKE LOWER(?) OR LOWER(hint) LIKE LOWER(?))");
             st.setString(1, "%" + key + "%");
             st.setString(2, "%" + key + "%");
             st.setString(3, "%" + key + "%");
