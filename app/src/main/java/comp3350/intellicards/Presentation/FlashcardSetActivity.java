@@ -148,10 +148,12 @@ public class FlashcardSetActivity extends Activity {
         String searchKey = searchEditText.getText().toString().trim();
         if(searchKey.isEmpty()) {
             loadFlashcardSet();
+            Toast.makeText(this, "Displaying all flashcards", Toast.LENGTH_SHORT).show();
         }
         else {
             List<Flashcard> searchedFlashcards = flashcardManager.getFlashcardsByKey(searchKey);
             flashcardsRecyclerView.setAdapter(new CardViewAdapter(flashcardSetManager.getSearchedFlashcards(flashcardSetUUID, searchedFlashcards)));
+            Toast.makeText(this, "Displaying search results for \"" + searchKey + "\"", Toast.LENGTH_SHORT).show();
         }
     }
 
