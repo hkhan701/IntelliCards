@@ -20,6 +20,7 @@
     <string name="flip_btn_text">Flip</string>
     <string name="sign_up_btn_text">Sign Up</string>
     <string name="log_in_btn_text">Log In</string>
+    <string name="search_btn_text">search</string>
 
     <!-- Labels and Placeholders -->
     <string name="hint_placeholder">Enter hint here</string>
@@ -30,6 +31,7 @@
     <string name="guest_btn_text">Continue as Guest</string>
     <string name="profile_guest_user_text">Guest User</string>
     <string name="no_info">No data to be displayed!</string>
+    <string name="flashcard_set_search_placeholder">Search for a Flashcard Set</string>
 
     <!-- Input Limits -->
     <string name="hint_max_length">100</string>
