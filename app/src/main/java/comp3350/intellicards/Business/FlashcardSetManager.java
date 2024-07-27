@@ -96,5 +96,17 @@ public class FlashcardSetManager {
         return userSets;
     }
 
+    public FlashcardSet getSearchedFlashcards(String uuid, List<Flashcard> searchedFlashcards) {
+        FlashcardSet originalFlashcardSet = getFlashcardSet(uuid);
+        FlashcardSet searchedFlashcardSet = new FlashcardSet(uuid, originalFlashcardSet.getUsername(), originalFlashcardSet.getFlashcardSetName());
+
+        for(Flashcard flashcard : searchedFlashcards) {
+            if(flashcard.getSetUUID().equals(uuid)) {
+                searchedFlashcardSet.addFlashcard(flashcard);
+            }
+        }
+
+        return searchedFlashcardSet;
+    }
 }
 
