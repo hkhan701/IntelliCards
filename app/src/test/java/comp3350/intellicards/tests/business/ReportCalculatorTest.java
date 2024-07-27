@@ -13,41 +13,93 @@ import comp3350.intellicards.Objects.FlashcardSet;
 
 public class ReportCalculatorTest {
 
-    private FlashcardSet mockedSet;
-    private Flashcard mockedFlashcard;
-
+    private FlashcardSet flashcardSetMock;
+    private Flashcard flashcardMock;
     private ReportCalculator reportCalculator;
 
     @Before
     public void setUp() {
-        mockedSet = mock(FlashcardSet.class);
-        mockedFlashcard = mock(Flashcard.class);
-        reportCalculator = new ReportCalculator(mockedSet);
+        flashcardSetMock = mock(FlashcardSet.class);
+        flashcardMock = mock(Flashcard.class);
+        reportCalculator = new ReportCalculator(flashcardSetMock);
+    }
+
+    @Test
+    public void test() {
+        assertTrue(true);
     }
 
     /*
-     * report
+     * Test Constructor/collectStats()
      */
+    @Test
+    public void collectStats() {
+        when(flashcardSetMock.size()).thenReturn(3);
+        when(flashcardSetMock.getIndex(anyInt())).thenReturn(flashcardMock);
+
+        when(flashcardMock.isDeleted()).thenReturn(false);
+        when(flashcardMock.getAttempted()).thenReturn(4, 2, 3);
+        when(flashcardMock.getCorrect()).thenReturn(3, 2, 3);
+
+        reportCalculator = new ReportCalculator(flashcardSetMock);
+
+        assertEquals("ReportCalculator will accurately sum the attempted amount of all cards in the flashcard set upon creation",
+                9, reportCalculator.getTotalAttempted());
+        assertEquals("ReportCalculator will accurately sum the correct amount of all cards in the flashcard set upon creation",
+                8, reportCalculator.getTotalCorrect());
+    }
 
     @Test
-    public void testReportGeneration() {
-        when(mockedSet.size()).thenReturn(3);
-        when(mockedSet.getIndex(anyInt())).thenReturn(mockedFlashcard);
-        when(mockedFlashcard.getAttempted()).thenReturn(1, 1, 1);
-        when(mockedFlashcard.getCorrect()).thenReturn(1, 0, 1);
+    public void collectStatsWithDeletedCards() {
+        when(flashcardSetMock.size()).thenReturn(4);
+        when(flashcardSetMock.getIndex(anyInt())).thenReturn(flashcardMock);
 
-        assertEquals("Report statistics are correct",
-                "ALL TIME TOTAL ACCURACY\n" +
-                        "Correct: 2 / 3\n" +
-                        "That is 67% correct: ", reportCalculator.report());
+        when(flashcardMock.isDeleted()).thenReturn(false, false, true, false);
+        when(flashcardMock.getAttempted()).thenReturn(4, 2, 3, 8);
+        when(flashcardMock.getCorrect()).thenReturn(3, 2, 3, 8);
+
+        reportCalculator = new ReportCalculator(flashcardSetMock);
+
+        assertEquals("ReportCalculator will not include the attempted count of deleted cards when the flashcard set is created",
+                9, reportCalculator.getTotalAttempted());
+        assertEquals("ReportCalculator will not include the correct count of deleted cards when the flashcard set is created",
+                8, reportCalculator.getTotalCorrect());
     }
 
-    @Test()
-    public void emptyFlashcardSet() {
-        assertEquals("Report is generated for case with 0 cards",
-                "ALL TIME TOTAL ACCURACY\n" +
-                        "Correct: 0 / 0\n" +
-                        "That is 0% correct: ", reportCalculator.report());
+    @Test
+    public void collectStatsEmptyFlashcardSet() {
+        when(flashcardSetMock.size()).thenReturn(0);
+
+        reportCalculator = new ReportCalculator(flashcardSetMock);
+
+        assertEquals("ReportManager will set attempted count to 0 if there are no cards in the given flashcardSet",
+                0, reportCalculator.getTotalAttempted());
+        assertEquals("ReportManager will set correct count to 0 if there are no cards in the given flashcardSet",
+                0, reportCalculator.getTotalCorrect());
     }
 
+    /*
+     * Test getUserInformation()
+     */
+
+
+    /*
+     * Test getAllTimeFlashcardCounts()
+     */
+
+    /*
+     * Test getAllTimeAccuracy()
+     */
+
+    /*
+     * Test reportSetAccuracy()
+     */
+
+    /*
+     * Test getTotalAttempted()
+     */
+
+    /*
+     * Test getTotalCorrect
+     */
 }
