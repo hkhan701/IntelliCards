@@ -18,6 +18,7 @@ import comp3350.intellicards.Application.Services;
 import comp3350.intellicards.Application.UserSession;
 import comp3350.intellicards.Business.FlashcardManager;
 import comp3350.intellicards.Business.FlashcardSetManager;
+import comp3350.intellicards.Business.UpdateFlashcardService;
 import comp3350.intellicards.Objects.Flashcard;
 import comp3350.intellicards.Objects.FlashcardSet;
 import comp3350.intellicards.R;
@@ -26,6 +27,7 @@ public class EditFlashcardActivity extends Activity {
 
     private FlashcardManager flashcardManager;
     private FlashcardSetManager flashcardSetManager;
+    private UpdateFlashcardService updateFlashcardService;
     private EditText questionEditText;
     private EditText answerEditText;
     private EditText hintEditText;
@@ -45,6 +47,7 @@ public class EditFlashcardActivity extends Activity {
         username = UserSession.getInstance(this).getUsername();
 
         initializeManagers();
+        initializeServices();
         initializeViews();
         retrieveIntentData();
         fetchFlashcard();
@@ -56,6 +59,10 @@ public class EditFlashcardActivity extends Activity {
     private void initializeManagers() {
         flashcardManager = new FlashcardManager(Services.getFlashcardPersistence());
         flashcardSetManager = new FlashcardSetManager(Services.getFlashcardSetPersistence());
+    }
+
+    private void initializeServices() {
+        updateFlashcardService = new UpdateFlashcardService(flashcardManager, flashcardSetManager);
     }
 
     private void initializeViews() {
@@ -119,7 +126,7 @@ public class EditFlashcardActivity extends Activity {
             String newHint = hintEditText.getText().toString().trim();
 
             FlashcardSet selectedSet = getSelectedFlashcardSet();
-            flashcardManager.updateFlashcard(currentFlashcard, selectedSet, newQuestion, newAnswer, newHint);
+            updateFlashcardService.updateFlashcard(currentFlashcard, selectedSet, newQuestion, newAnswer, newHint);
 
             showSuccessMessage();
             sendResultAndFinish();
