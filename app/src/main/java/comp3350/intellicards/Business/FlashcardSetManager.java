@@ -73,7 +73,14 @@ public class FlashcardSetManager {
     }
 
     public boolean addFlashcardToFlashcardSet(@NonNull String setUUID, @NonNull Flashcard flashcard) {
-        return this.flashcardSetPersistence.addFlashcardToFlashcardSet(setUUID, flashcard);
+        FlashcardSet flashcardSet = getFlashcardSet(setUUID);
+
+        if (flashcardSet != null) {
+            flashcardSet.addFlashcard(flashcard);
+            return true;
+        }
+
+        return false;
     }
 
     public void shuffleFlashcardSet(FlashcardSet flashcardSet) {
@@ -108,5 +115,17 @@ public class FlashcardSetManager {
 
         return searchedFlashcardSets;
     }
+
+    public FlashcardSet getSearchedFlashcards(String uuid, List<Flashcard> searchedFlashcards) {
+        FlashcardSet originalFlashcardSet = getFlashcardSet(uuid);
+        FlashcardSet searchedFlashcardSet = new FlashcardSet(uuid, originalFlashcardSet.getUsername(), originalFlashcardSet.getFlashcardSetName());
+
+        for(Flashcard flashcard : searchedFlashcards) {
+            if(flashcard.getSetUUID().equals(uuid)) {
+                searchedFlashcardSet.addFlashcard(flashcard);
+            }
+        }
+
+        return searchedFlashcardSet;
 }
 
