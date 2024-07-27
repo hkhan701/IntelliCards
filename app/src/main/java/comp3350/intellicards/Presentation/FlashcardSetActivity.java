@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -13,6 +15,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.List;
 
 import comp3350.intellicards.Application.Services;
 import comp3350.intellicards.Application.UserSession;
@@ -36,6 +40,8 @@ public class FlashcardSetActivity extends Activity {
     private Button testButton;
     private Button addReminderButton;
     private NotificationManager notificationManager;
+    private ImageButton searchButton;
+    private EditText searchEditText;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -78,13 +84,16 @@ public class FlashcardSetActivity extends Activity {
         addFlashcardButton = findViewById(R.id.addFlashcardButton);
         testButton = findViewById(R.id.testButton);
         addReminderButton = findViewById(R.id.addReminderButton);
+        searchButton = findViewById(R.id.searchButton);
+        searchEditText = findViewById(R.id.search);
     }
 
     private void setupListeners() {
         setupBackButtonListener();
         setupAddFlashcardButtonListener();
         setupTestButtonListener();
-        setUpAddReminderButtonListener();
+        setupAddReminderButtonListener();
+        setupSearchButtonListener();
     }
 
     private void setupBackButtonListener() {
@@ -97,6 +106,10 @@ public class FlashcardSetActivity extends Activity {
 
     private void setupTestButtonListener() {
         testButton.setOnClickListener(v -> handleTestButtonClick());
+    }
+
+    private void setupSearchButtonListener() {
+        searchButton.setOnClickListener(v -> handleSearchButtonClick());
     }
 
     private void loadFlashcardSet() {
@@ -130,6 +143,19 @@ public class FlashcardSetActivity extends Activity {
         }
     }
 
+    private void handleSearchButtonClick() {
+        String searchKey = searchEditText.getText().toString().trim();
+        if(searchKey.isEmpty()) {
+            loadFlashcardSet();
+            Toast.makeText(this, "Displaying all flashcards", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            List<Flashcard> searchedFlashcards = flashcardManager.getFlashcardsByKey(searchKey);
+            flashcardsRecyclerView.setAdapter(new CardViewAdapter(flashcardSetManager.getSearchedFlashcards(flashcardSetUUID, searchedFlashcards)));
+            Toast.makeText(this, "Displaying search results for \"" + searchKey + "\"", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     private boolean isFlashcardSetEmpty() {
         FlashcardSet flashcardSet = flashcardSetManager.getActiveFlashcardSet(flashcardSetUUID);
         return flashcardSet != null && flashcardSet.getActiveCount() == 0;
@@ -158,7 +184,7 @@ public class FlashcardSetActivity extends Activity {
         }
     }
 
-    private void setUpAddReminderButtonListener() {
+    private void setupAddReminderButtonListener() {
         addReminderButton.setOnClickListener(v -> {
             if (notificationManager.checkNotificationPermission()) {
                 notificationManager.showDateTimePicker(this, flashcardSetUUID);

@@ -7,6 +7,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 
+import androidx.appcompat.widget.AppCompatImageButton;
+
 import java.util.List;
 
 import comp3350.intellicards.Application.UserSession;
@@ -18,12 +20,14 @@ import comp3350.intellicards.Objects.User;
 import comp3350.intellicards.R;
 
 public class AboutMeActivity extends Activity {
+
     private FlashcardSetManager flashcardSetManager;
+
     private UserManager userManager;
 
     private String userName;
 
-    private Button backButton;
+    private AppCompatImageButton backButton;
 
     private TextView informationText;
 

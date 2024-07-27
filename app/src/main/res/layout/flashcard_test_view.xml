@@ -25,7 +25,9 @@
             android:background="@color/white"
             android:layout_gravity="center"
             android:text=""
-            android:textSize="22sp"
+            android:textSize="25sp"
+            android:gravity="center"
+            android:lineSpacingExtra="5sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -63,21 +65,20 @@
             <CheckBox
                 android:id="@+id/incorrectCheckbox"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginStart="30dp"
                 android:checked="false"
                 android:text="@string/incorrect_checkbox_text"
                 android:textSize="25sp"
-                app:layout_constraintStart_toEndOf="@id/correctCheckbox"/>
+                app:layout_constraintStart_toEndOf="@id/correctCheckbox" />
 
             <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/nextCardButton"
-                android:layout_width="54dp"
-                android:layout_height="match_parent"
+                android:layout_width="60dp"
+                android:layout_height="50dp"
                 android:layout_marginStart="30dp"
                 android:backgroundTint="@color/buttons"
                 android:cropToPadding="true"
-                android:padding="2dp"
                 android:src="@drawable/baseline_arrow_forward_24"
                 android:tint="@color/btn_txt"
                 app:layout_constraintStart_toEndOf="@id/incorrectCheckbox" />

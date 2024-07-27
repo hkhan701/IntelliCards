@@ -1,5 +1,9 @@
 package comp3350.intellicards.Persistence.stubs;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -8,6 +12,7 @@ import java.util.Map;
 import comp3350.intellicards.Objects.Flashcard;
 import comp3350.intellicards.Objects.FlashcardSet;
 import comp3350.intellicards.Persistence.FlashcardSetPersistence;
+import comp3350.intellicards.Persistence.hsqldb.PersistenceException;
 
 public class FlashcardSetPersistenceStub implements FlashcardSetPersistence {
 
@@ -35,6 +40,20 @@ public class FlashcardSetPersistenceStub implements FlashcardSetPersistence {
     @Override
     public List<FlashcardSet> getAllFlashcardSets() {
         return new ArrayList<>(flashcardSets.values());
+    }
+
+    @Override
+    public List<FlashcardSet> getFlashcardSetsByKey(String key) {
+        List<FlashcardSet> searchedFlashcardSets = new ArrayList<>();
+        String lowerKey = key.toLowerCase();
+
+        for(FlashcardSet set : flashcardSets.values()) {
+            if(set.getFlashcardSetName().toLowerCase().contains(lowerKey)) {
+                searchedFlashcardSets.add(set);
+            }
+        }
+
+        return searchedFlashcardSets;
     }
 
     public boolean addFlashcardToFlashcardSet(String setUUID, Flashcard flashcard) {

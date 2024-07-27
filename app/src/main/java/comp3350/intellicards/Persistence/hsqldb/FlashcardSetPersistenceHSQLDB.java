@@ -98,6 +98,29 @@ public class FlashcardSetPersistenceHSQLDB implements FlashcardSetPersistence {
     }
 
     @Override
+    public List<FlashcardSet> getFlashcardSetsByKey(String key) {
+        List<FlashcardSet> flashcardSets = new ArrayList<>();
+
+        try (final Connection c = connection()) {
+            final PreparedStatement st = c.prepareStatement("SELECT setUUID FROM FLASHCARDSETS WHERE LOWER(setname) LIKE LOWER(?)");
+            st.setString(1, "%" + key + "%");
+
+            final ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                final FlashcardSet flashcardSet = getFlashcardSet(rs.getString("setUUID"));
+                flashcardSets.add(flashcardSet);
+            }
+
+            rs.close();
+            st.close();
+
+            return flashcardSets;
+        } catch (SQLException e) {
+            throw new PersistenceException(e);
+        }
+    }
+
+    @Override
     public void insertFlashcardSet(FlashcardSet newFlashcardSet) {
         try (final Connection c = connection()) {
             final PreparedStatement st = c.prepareStatement("INSERT INTO FLASHCARDSETS VALUES(?, ?, ?)");
@@ -112,22 +135,4 @@ public class FlashcardSetPersistenceHSQLDB implements FlashcardSetPersistence {
             throw new PersistenceException(e);
         }
     }
-
-    // this might need functinoality or taken out, we are inserting the flashcard
-    // using the flashcard persistence, since we are adding the setUUID field there
-    @Override
-    public boolean addFlashcardToFlashcardSet(String setUUID, Flashcard flashcard) {
-        try (final Connection c = connection()) {
-            FlashcardSet flashcardSet = getFlashcardSet(setUUID);
-
-            if (flashcardSet != null) {
-                flashcardSet.addFlashcard(flashcard);
-                return true;
-            }
-        } catch (SQLException e) {
-            throw new PersistenceException(e);
-        }
-        return false;
-    }
-
 }
