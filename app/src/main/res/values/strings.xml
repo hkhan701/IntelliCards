@@ -42,6 +42,8 @@
     <string name="edit_flashcard">Edit Flashcard</string>
     <string name="log_out_text">Log out</string>
     <string name="add_reminder">Add Reminder</string>
+    <string name="search_placeholder">Search a keyword</string>
+    <string name="search_btn_text">search</string>
 
 
 </resources>

@@ -5,7 +5,9 @@ import comp3350.intellicards.Objects.Flashcard;
 import comp3350.intellicards.Persistence.FlashcardPersistence;
 import comp3350.intellicards.Business.FlashcardSetManager;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 public class FlashcardPersistenceStub implements FlashcardPersistence {
@@ -52,6 +54,20 @@ public class FlashcardPersistenceStub implements FlashcardPersistence {
         return flashcards.get(uuid);
     }
 
+    @Override
+    public List<Flashcard> getFlashcardsByKey(String key) {
+        List<Flashcard> flashcardsWithKey = new ArrayList<>();
+
+        for (Flashcard flashcard : flashcards.values()) {
+            if (flashcard.getAnswer().contains(key)
+                    || flashcard.getQuestion().contains(key)
+                    || flashcard.getHint().contains(key)) {
+                flashcardsWithKey.add(flashcard);
+            }
+        }
+
+        return flashcardsWithKey;
+    }
 
     @Override
     public void insertFlashcard(Flashcard currentFlashcard) {
