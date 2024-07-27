@@ -103,12 +103,25 @@ public class FlashcardSetManager {
         return userSets;
     }
 
+    public List<FlashcardSet> getFlashcardSetsByKey(String username, String key) {
+        List<FlashcardSet> allFlashcardSets = this.flashcardSetPersistence.getFlashcardSetsByKey(key);
+        List<FlashcardSet> searchedFlashcardSets = new ArrayList<>();
+
+        for(FlashcardSet flashcardSet : allFlashcardSets) {
+            if(username.equals(flashcardSet.getUsername())) {
+                searchedFlashcardSets.add(flashcardSet);
+            }
+        }
+
+        return searchedFlashcardSets;
+    }
+
     public FlashcardSet getSearchedFlashcards(String uuid, List<Flashcard> searchedFlashcards) {
         FlashcardSet originalFlashcardSet = getFlashcardSet(uuid);
         FlashcardSet searchedFlashcardSet = new FlashcardSet(uuid, originalFlashcardSet.getUsername(), originalFlashcardSet.getFlashcardSetName());
 
-        for(Flashcard flashcard : searchedFlashcards) {
-            if(flashcard.getSetUUID().equals(uuid)) {
+        for (Flashcard flashcard : searchedFlashcards) {
+            if (flashcard.getSetUUID().equals(uuid)) {
                 searchedFlashcardSet.addFlashcard(flashcard);
             }
         }

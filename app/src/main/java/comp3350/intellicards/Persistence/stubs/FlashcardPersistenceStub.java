@@ -57,11 +57,13 @@ public class FlashcardPersistenceStub implements FlashcardPersistence {
     @Override
     public List<Flashcard> getFlashcardsByKey(String key) {
         List<Flashcard> flashcardsWithKey = new ArrayList<>();
+        String lowerKey = key.toLowerCase();
 
         for (Flashcard flashcard : flashcards.values()) {
-            if (flashcard.getAnswer().contains(key)
-                    || flashcard.getQuestion().contains(key)
-                    || flashcard.getHint().contains(key)) {
+            if (!flashcard.isDeleted()
+                    && (flashcard.getAnswer().toLowerCase().contains(lowerKey)
+                    || flashcard.getQuestion().toLowerCase().contains(lowerKey)
+                    || flashcard.getHint().toLowerCase().contains(lowerKey))) {
                 flashcardsWithKey.add(flashcard);
             }
         }
