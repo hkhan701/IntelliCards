@@ -45,9 +45,10 @@ public class FlashcardSetPersistenceStub implements FlashcardSetPersistence {
     @Override
     public List<FlashcardSet> getFlashcardSetsByKey(String key) {
         List<FlashcardSet> searchedFlashcardSets = new ArrayList<>();
+        String lowerKey = key.toLowerCase();
 
         for(FlashcardSet set : flashcardSets.values()) {
-            if(set.getFlashcardSetName().contains(key)) {
+            if(set.getFlashcardSetName().toLowerCase().contains(lowerKey)) {
                 searchedFlashcardSets.add(set);
             }
         }
