@@ -96,5 +96,17 @@ public class FlashcardSetManager {
         return userSets;
     }
 
+    public List<FlashcardSet> getFlashcardSetsByKey(String username, String key) {
+        List<FlashcardSet> allFlashcardSets = this.flashcardSetPersistence.getFlashcardSetsByKey(key);
+        List<FlashcardSet> searchedFlashcardSets = new ArrayList<>();
+
+        for(FlashcardSet flashcardSet : allFlashcardSets) {
+            if(username.equals(flashcardSet.getUsername())) {
+                searchedFlashcardSets.add(flashcardSet);
+            }
+        }
+
+        return searchedFlashcardSets;
+    }
 }
 
