@@ -7,6 +7,8 @@ import android.text.InputFilter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridLayout;
+import android.widget.ImageButton;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageButton;
@@ -27,6 +29,8 @@ public class MainActivity extends Activity {
     private GridLayout flashcardSetGridLayout;
     private AppCompatImageButton profilePageButton;
     private Button createNewSetButton;
+    private ImageButton searchButton;
+    private EditText searchEditText;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -46,6 +50,8 @@ public class MainActivity extends Activity {
         flashcardSetGridLayout = findViewById(R.id.gridLayout);
         profilePageButton = findViewById(R.id.profileButton);
         createNewSetButton = findViewById(R.id.createNewSetButton);
+        searchButton = findViewById(R.id.searchButton);
+        searchEditText = findViewById(R.id.search);
     }
 
     // Load all Flashcard Sets from the database
@@ -107,6 +113,7 @@ public class MainActivity extends Activity {
     private void setupListeners() {
         setupProfilePageButtonListener();
         setupCreateNewSetButtonListener();
+        setupSearchButtonListener();
     }
 
     private void setupProfilePageButtonListener() {
@@ -126,6 +133,28 @@ public class MainActivity extends Activity {
         Intent intent = new Intent(MainActivity.this, FlashcardSetActivity.class);
         intent.putExtra("flashcardSetUUID", flashcardSetUUID);
         startActivity(intent);
+    }
+
+    private void setupSearchButtonListener() {
+        searchButton.setOnClickListener(v -> handleSearchButtonClick());
+    }
+
+    private void handleSearchButtonClick() {
+        String searchKey = searchEditText.getText().toString().trim();
+        if(searchKey.isEmpty()) {
+            loadFlashcardSets();
+            Toast.makeText(this, "Displaying all Flashcard Sets", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            flashcardSetGridLayout.removeAllViews();
+
+            List<FlashcardSet> flashcardSets = flashcardSetManager.getFlashcardSetsByKey(username, searchKey);
+            for (FlashcardSet set : flashcardSets) {
+                Button flashcardSetButton = createFlashcardSetButton(set);
+                flashcardSetGridLayout.addView(flashcardSetButton);
+            }
+            Toast.makeText(this, "Displaying search results for \"" + searchKey + "\"", Toast.LENGTH_SHORT).show();
+        }
     }
 
 }
