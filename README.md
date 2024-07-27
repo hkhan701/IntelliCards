@@ -29,6 +29,8 @@ Graders can login with the following pre-inserted usernames and passwords unless
 
 - You can also login as a guest user but will be limited by the features they can use.
 
+- Login uses local state to save the current logged in user even when exiting the app. In order to use another user please use the log out button in the profile page.
+
 ### Notifications
 
 Upon clicking the notification button, graders should allow permissions for notifications, and then toggle on the alarm permissions as well for the notifications to work as intended. 
