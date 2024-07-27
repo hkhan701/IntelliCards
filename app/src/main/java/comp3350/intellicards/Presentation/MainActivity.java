@@ -31,6 +31,7 @@ public class MainActivity extends Activity {
     private Button createNewSetButton;
     private ImageButton searchButton;
     private EditText searchEditText;
+    private ImageButton searchClearButton;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -52,6 +53,7 @@ public class MainActivity extends Activity {
         createNewSetButton = findViewById(R.id.createNewSetButton);
         searchButton = findViewById(R.id.searchButton);
         searchEditText = findViewById(R.id.search);
+        searchClearButton = findViewById(R.id.setSearchClearButton);
     }
 
     // Load all Flashcard Sets from the database
@@ -114,6 +116,7 @@ public class MainActivity extends Activity {
         setupProfilePageButtonListener();
         setupCreateNewSetButtonListener();
         setupSearchButtonListener();
+        setupSearchClearButtonListener();
     }
 
     private void setupProfilePageButtonListener() {
@@ -139,6 +142,10 @@ public class MainActivity extends Activity {
         searchButton.setOnClickListener(v -> handleSearchButtonClick());
     }
 
+    private void setupSearchClearButtonListener() {
+        searchClearButton.setOnClickListener(v -> handleSearchClearButtonClick());
+    }
+
     private void handleSearchButtonClick() {
         String searchKey = searchEditText.getText().toString().trim();
         if(searchKey.isEmpty()) {
@@ -157,4 +164,9 @@ public class MainActivity extends Activity {
         }
     }
 
+    private void handleSearchClearButtonClick() {
+        searchEditText.setText("");
+        loadFlashcardSets();
+        Toast.makeText(this, "Displaying all Flashcard Sets", Toast.LENGTH_SHORT).show();
+    }
 }
