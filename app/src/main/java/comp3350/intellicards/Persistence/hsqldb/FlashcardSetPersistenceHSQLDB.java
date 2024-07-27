@@ -102,7 +102,7 @@ public class FlashcardSetPersistenceHSQLDB implements FlashcardSetPersistence {
         List<FlashcardSet> flashcardSets = new ArrayList<>();
 
         try (final Connection c = connection()) {
-            final PreparedStatement st = c.prepareStatement("SELECT SETUUID FROM FLASHCARDSETS WHERE setname LIKE ?");
+            final PreparedStatement st = c.prepareStatement("SELECT setUUID FROM FLASHCARDSETS WHERE LOWER(setname) LIKE LOWER(?)");
             st.setString(1, "%" + key + "%");
 
             final ResultSet rs = st.executeQuery();
