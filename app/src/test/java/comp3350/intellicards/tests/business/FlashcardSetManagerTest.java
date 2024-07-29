@@ -197,9 +197,7 @@ public class FlashcardSetManagerTest {
      */
     @Test
     public void testAddFlashcardToFlashcardSet() {
-        when(flashcardSetData.addFlashcardToFlashcardSet("TestSet", flashcard)).thenReturn(true);
-
-
+        when(flashcardSetData.getFlashcardSet("flashcard")).thenReturn(flashcardSet);
 
         assertTrue("FlashcardSetManager verifies that the flashcard was added to the set with a return value",
                 flashcardSetManager.addFlashcardToFlashcardSet("TestSet", flashcard));
@@ -207,9 +205,7 @@ public class FlashcardSetManagerTest {
 
     @Test
     public void testAddFlashcardToNonManagedFlashcardSet() {
-        when(flashcardSetData.addFlashcardToFlashcardSet("TestSet", flashcard)).thenReturn(false);
-
-        assertFalse("FlashcardSetManager cannot retrieve all deleted cards for single user if they have no managed sets",
+        assertFalse("FlashcardSetManager cannot add a flashcard to a set if the set is not managed",
                 flashcardSetManager.addFlashcardToFlashcardSet(flashcardSet.getUUID(), flashcard));
     }
 
