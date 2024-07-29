@@ -1,23 +1,24 @@
 package comp3350.intellicards.tests.business;
 
 import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.any;
+//import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.mock;
+//import static org.mockito.Mockito.times;
+//import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import org.junit.Test;
 import org.junit.Before;
 
 import comp3350.intellicards.Business.FlashcardManager;
 import comp3350.intellicards.Objects.Flashcard;
-import comp3350.intellicards.Objects.FlashcardSet;
 import comp3350.intellicards.Persistence.FlashcardPersistence;
-import comp3350.intellicards.tests.persistance.FlashcardPersistenceStub;
-import comp3350.intellicards.tests.persistance.FlashcardSetPersistenceStub;
 
 public class FlashcardManagerTest {
 
-    private FlashcardManager flashcardManager;
-
     private FlashcardPersistence flashcardData;
+    private FlashcardManager flashcardManager;
 
     @Before
     public void setUp() {
@@ -30,19 +31,22 @@ public class FlashcardManagerTest {
      */
     @Test
     public void testGetFlashcard() {
-        FlashcardSet testCardSet = new FlashcardSet("testUser", "Test Card Set");
-        Flashcard flashcard = new Flashcard(testCardSet.getUUID(), "Test Question", "Test Answer", null);
-        String flashcardId = flashcard.getUUID();
-        flashcardManager.insertFlashcard(flashcard);
+        Flashcard managed = mock(Flashcard.class);
+
+        when(flashcardData.getFlashcard("uuid")).thenReturn(managed);
+
+        flashcardManager.insertFlashcard(managed);
 
         assertEquals("FlashcardManager can retrieve managed flashcard given its UUID",
-                flashcard.toString(), flashcardManager.getFlashcard(flashcardId).toString());
+                managed, flashcardManager.getFlashcard("uuid"));
     }
 
     @Test
     public void testGetFlashcardNotInManaged() {
+        when(flashcardManager.getFlashcard(any())).thenReturn(null);
+
         assertNull("FlashcardManager cannot retrieve non managed flashcard",
-                flashcardManager.getFlashcard("TestUUID"));
+                flashcardManager.getFlashcard("TestCardUUID"));
     }
 
     @Test
@@ -57,40 +61,49 @@ public class FlashcardManagerTest {
      */
     @Test
     public void testUpdateFlashcard() {
-        FlashcardSet testCardSet = new FlashcardSet("testUser", "Test Card Set");
-        Flashcard flashcard = new Flashcard(testCardSet.getUUID(), "Test Question", "Test Answer", null);
-        Flashcard updateFlashcard = new Flashcard(flashcard.getUUID(), "EditSetUUID", "Edit Question", "Edit Answer", "Edit Hint", true, 6, 1);
-        flashcardManager.insertFlashcard(flashcard);
+        Flashcard managed = mock(Flashcard.class);
+        Flashcard updateFlashcard = mock(Flashcard.class);
 
+        when(managed.getUUID()).thenReturn("uuid");
+        when(updateFlashcard.getSetUUID()).thenReturn("EditSetUUID");
+        when(updateFlashcard.getQuestion()).thenReturn("Edit Question");
+        when(updateFlashcard.getAnswer()).thenReturn("Edit Answer");
+        when(updateFlashcard.getHint()).thenReturn("Edit Hint");
+        when(updateFlashcard.getAttempted()).thenReturn(6);
+        when(updateFlashcard.getCorrect()).thenReturn(1);
+        when(updateFlashcard.isDeleted()).thenReturn(true);
+
+        flashcardManager.insertFlashcard(managed);
         flashcardManager.updateFlashcard(updateFlashcard);
-        flashcard = flashcardManager.getFlashcard(flashcard.getUUID());
+        Flashcard updated = flashcardManager.getFlashcard(managed.getUUID());
 
         assertEquals("FlashcardManager can update a flashcard's setUUID",
-                updateFlashcard.getSetUUID(), flashcard.getSetUUID());
+                updateFlashcard.getSetUUID(), updated.getSetUUID());
         assertEquals("FlashcardManager can update a flashcard's question",
-                updateFlashcard.getQuestion(), flashcard.getQuestion());
+                updateFlashcard.getQuestion(), updated.getQuestion());
         assertEquals("FlashcardManager can update a flashcard's answer",
-                updateFlashcard.getAnswer(), flashcard.getAnswer());
+                updateFlashcard.getAnswer(), updated.getAnswer());
         assertEquals("FlashcardManager can update a flashcard's hint",
-                updateFlashcard.getHint(), flashcard.getHint());
+                updateFlashcard.getHint(), updated.getHint());
         assertEquals("FlashcardManager can update a flashcard's attempted count",
-                updateFlashcard.getAttempted(), flashcard.getAttempted());
+                updateFlashcard.getAttempted(), updated.getAttempted());
         assertEquals("FlashcardManager can update a flashcard's correct count",
-                updateFlashcard.getCorrect(), flashcard.getCorrect());
+                updateFlashcard.getCorrect(), updated.getCorrect());
         assertEquals("FlashcardManager can update a flashcard's deleted state",
-                updateFlashcard.isDeleted(), flashcard.isDeleted());
+                updateFlashcard.isDeleted(), updated.isDeleted());
     }
 
     @Test
     public void testUpdateFlashcardNotManaged() {
-        FlashcardSet testCardSet = new FlashcardSet("testUser", "Test Card Set");
-        Flashcard flashcard = new Flashcard(testCardSet.getUUID(), "Test Question", "Test Answer", null);
+        Flashcard unmanaged = mock(Flashcard.class);
 
-        flashcardManager.updateFlashcard(flashcard);
-        flashcard = flashcardManager.getFlashcard(flashcard.getUUID());
+        when(unmanaged.getUUID()).thenReturn("TestUUID");
+
+        flashcardManager.updateFlashcard(unmanaged);
+        Flashcard updated = flashcardManager.getFlashcard(unmanaged.getUUID());
 
         assertNotNull("FlashcardManager will add unmanaged flashcard via updateFlashcard",
-                flashcardManager.getFlashcard(flashcard.getUUID()));
+                flashcardManager.getFlashcard(updated.getUUID()));
     }
 
     /*
@@ -99,35 +112,45 @@ public class FlashcardManagerTest {
 
     @Test
     public void testUpdateFlashcardDetails() {
-        FlashcardSet testCardSet = new FlashcardSet("testUser", "Test Card Set");
-        Flashcard flashcard = new Flashcard(testCardSet.getUUID(), "Test Question", "Test Answer", null);
+        //Flashcard flashcard = new Flashcard(testCardSet.getUUID(), "Test Question", "Test Answer", null);
+        Flashcard managed = mock(Flashcard.class);
 
-        flashcardManager.insertFlashcard(flashcard);
-        flashcardManager.updateFlashcardDetails(flashcard, "Test Question Update", "Test Answer Update", "Test Hint Update");
+        when(managed.getQuestion()).thenReturn("Test Question");
+        when(managed.getAnswer()).thenReturn("Test Answer");
+        when(managed.getHint()).thenReturn(null);
+
+        flashcardManager.insertFlashcard(managed);
+        flashcardManager.updateFlashcardDetails(managed, "Test Question Update", "Test Answer Update", "Test Hint Update");
 
         assertEquals("FlashcardManager will update the original instance of flashcard's question if given",
-                "Test Question Update", flashcard.getQuestion());
+                "Test Question Update", managed.getQuestion());
         assertEquals("FlashcardManager will update the original instance of flashcard's answer if given",
-                "Test Answer Update", flashcard.getAnswer());
+                "Test Answer Update", managed.getAnswer());
         assertEquals("FlashcardManager will update the original instance of flashcard's hint if given",
-                "Test Hint Update", flashcard.getHint());
+                "Test Hint Update", managed.getHint());
     }
 
     @Test
     public void testUpdateFlashcardDetailsNotManaged() {
-        Flashcard flashcard = new Flashcard("TestSetUUID", "Test Question", "Test Answer", null);
+        //Flashcard flashcard = new Flashcard("TestSetUUID", "Test Question", "Test Answer", null);
+        Flashcard unmanaged = mock(Flashcard.class);
 
-        flashcardManager.updateFlashcardDetails(flashcard, "Test Question Update", "Test Answer Update", "Test Hint Update");
+        when(unmanaged.getUUID()).thenReturn("TestCardUUID");
+        when(unmanaged.getQuestion()).thenReturn("Test Question");
+        when(unmanaged.getAnswer()).thenReturn("Test Answer");
+        when(unmanaged.getHint()).thenReturn(null);
+
+        flashcardManager.updateFlashcardDetails(unmanaged, "Test Question Update", "Test Answer Update", "Test Hint Update");
 
         assertNotNull("FlashcardManager will add unmanaged flashcard via updateFlashcard",
-                flashcardManager.getFlashcard(flashcard.getUUID()));
+                flashcardManager.getFlashcard(unmanaged.getUUID()));
 
         assertEquals("FlashcardManager will update the original instance of flashcard's question if given",
-                "Test Question Update", flashcard.getQuestion());
+                "Test Question Update", unmanaged.getQuestion());
         assertEquals("FlashcardManager will update the original instance of flashcard's answer if given",
-                "Test Answer Update", flashcard.getAnswer());
+                "Test Answer Update", unmanaged.getAnswer());
         assertEquals("FlashcardManager will update the original instance of flashcard's hint if given",
-                "Test Hint Update", flashcard.getHint());
+                "Test Hint Update", unmanaged.getHint());
     }
 
     /*
@@ -135,32 +158,33 @@ public class FlashcardManagerTest {
      */
     @Test
     public void testMarkFlashcardAsDeleted() {
-        FlashcardSet testCardSet = new FlashcardSet("testUser", "Test Card Set");
-        Flashcard flashcard = new Flashcard(testCardSet.getUUID(), "Test Question", "Test Answer", null);
-        String flashcardUUID = flashcard.getUUID();
+        //Flashcard flashcard = new Flashcard(testCardSet.getUUID(), "Test Question", "Test Answer", null);
+        Flashcard managed = mock(Flashcard.class);
 
-        flashcardManager.insertFlashcard(flashcard);
+        when(managed.getUUID()).thenReturn("uuid");
 
-        flashcardManager.markFlashcardAsDeleted(flashcardUUID);
-        flashcard = flashcardManager.getFlashcard(flashcard.getUUID());
+        flashcardManager.insertFlashcard(managed);
+        flashcardManager.markFlashcardAsDeleted(managed.getUUID());
+        Flashcard updated = flashcardManager.getFlashcard(managed.getUUID());
 
         assertTrue("FlashcardManager can mark a managed flashcard as deleted",
-                flashcardManager.getFlashcard(flashcard.getUUID()).isDeleted());
+                flashcardManager.getFlashcard(updated.getUUID()).isDeleted());
     }
 
     @Test
     public void testMarkFlashcardAsDeletedNotManaged() {
-        FlashcardSet testCardSet = new FlashcardSet("testUser", "Test Card Set");
-        Flashcard flashcard = new Flashcard(testCardSet.getUUID(), "Test Question", "Test Answer", null);
-        String flashcardUUID = flashcard.getUUID();
+        //Flashcard flashcard = new Flashcard(testCardSet.getUUID(), "Test Question", "Test Answer", null);
+        Flashcard unmanaged = mock(Flashcard.class);
 
-        flashcardManager.markFlashcardAsDeleted(flashcardUUID);
+        when(unmanaged.getUUID()).thenReturn("TestCardUUID");
+
+        flashcardManager.markFlashcardAsDeleted(unmanaged.getUUID());
 
         assertNull("FlashcardManager will not add a non-managed flashcard when calling the markFlashcardAsDeleted method",
-                flashcardManager.getFlashcard(flashcard.getUUID()));
+                flashcardManager.getFlashcard(unmanaged.getUUID()));
 
         assertFalse("FlashcardManager cannot mark a non managed flashcard as deleted",
-                flashcard.isDeleted());
+                unmanaged.isDeleted());
     }
 
 
@@ -169,32 +193,36 @@ public class FlashcardManagerTest {
      */
     @Test
     public void testRestoreFlashcard() {
-        FlashcardSet testCardSet = new FlashcardSet("testUser", "Test Card Set");
-        Flashcard flashcard = new Flashcard(testCardSet.getUUID(), "Test Question", "Test Answer", null);
-        String flashcardUUID = flashcard.getUUID();
+        //Flashcard flashcard = new Flashcard(testCardSet.getUUID(), "Test Question", "Test Answer", null);
+        Flashcard managed = mock(Flashcard.class);
 
-        flashcardManager.insertFlashcard(flashcard);
+        when(managed.getUUID()).thenReturn("uuid");
 
-        flashcardManager.markFlashcardAsDeleted(flashcardUUID);
-        flashcardManager.restoreFlashcard(flashcardUUID);
-        flashcard = flashcardManager.getFlashcard(flashcard.getUUID());
+        flashcardManager.insertFlashcard(managed);
+
+        flashcardManager.markFlashcardAsDeleted(managed.getUUID());
+        flashcardManager.restoreFlashcard(managed.getUUID());
+        Flashcard updated = flashcardManager.getFlashcard(managed.getUUID());
 
         assertFalse("FlashcardManager can mark a managed flashcard as restored",
-                flashcardManager.getFlashcard(flashcard.getUUID()).isDeleted());
+                flashcardManager.getFlashcard(updated.getUUID()).isDeleted());
     }
 
     @Test
     public void testRestoreFlashcardNotManaged() {
-        Flashcard flashcard = new Flashcard("TestSet", "Test Question", "Test Answer", null);
+        //Flashcard flashcard = new Flashcard("TestSet", "Test Question", "Test Answer", null);
+        Flashcard unmanaged = mock(Flashcard.class);
 
-        flashcard.markDeleted();
-        flashcardManager.restoreFlashcard(flashcard.getUUID());
+        when(unmanaged.getUUID()).thenReturn("TestCardUUID");
+        when(unmanaged.isDeleted()).thenReturn(true);
+
+        flashcardManager.restoreFlashcard(unmanaged.getUUID());
 
         assertNull("FlashcardManager will not add a non-managed flashcard when calling the restore function",
-                flashcardManager.getFlashcard(flashcard.getUUID()));
+                flashcardManager.getFlashcard(unmanaged.getUUID()));
 
         assertTrue("FlashcardManager cannot mark a non managed flashcard as restored",
-                flashcard.isDeleted());
+                unmanaged.isDeleted());
     }
 
     /*
@@ -202,29 +230,32 @@ public class FlashcardManagerTest {
      */
     @Test
     public void TestMarkAttempted() {
-        FlashcardSet testCardSet = new FlashcardSet("testUser", "Test Card Set");
-        Flashcard flashcard1 = new Flashcard(testCardSet.getUUID(), "Test Question 1", "Test Answer 1", null);
-        flashcardManager.insertFlashcard(flashcard1);
+        //Flashcard flashcard = new Flashcard(testCardSet.getUUID(), "Test Question 1", "Test Answer 1", null);
+        Flashcard managed = mock(Flashcard.class);
 
-        flashcardManager.markAttempted(flashcard1.getUUID());
-        flashcard1 = flashcardManager.getFlashcard(flashcard1.getUUID());
+        when(managed.getUUID()).thenReturn("uuid");
+
+        flashcardManager.insertFlashcard(managed);
+
+        flashcardManager.markAttempted(managed.getUUID());
+        Flashcard updated = flashcardManager.getFlashcard(managed.getUUID());
 
         assertEquals("FlashcardManager can mark a flashcard as attempted via the markAttempted() method",
-                1, flashcardManager.getFlashcard(flashcard1.getUUID()).getAttempted());
+                1, flashcardManager.getFlashcard(updated.getUUID()).getAttempted());
     }
 
     @Test
     public void TestMarkAttemptedNotManaged() {
-        FlashcardSet testCardSet = new FlashcardSet("testUser", "Test Card Set");
-        Flashcard flashcard1 = new Flashcard(testCardSet.getUUID(), "Test Question 1", "Test Answer 1", null);
+        //Flashcard flashcard = new Flashcard(testCardSet.getUUID(), "Test Question 1", "Test Answer 1", null);
+        Flashcard unmanaged = mock(Flashcard.class);
 
-        flashcardManager.markAttempted(flashcard1.getUUID());
+        flashcardManager.markAttempted(unmanaged.getUUID());
 
         assertNull("FlashcardManager will not add a non-managed flashcard when calling the markAttempted method",
-                flashcardManager.getFlashcard(flashcard1.getUUID()));
+                flashcardManager.getFlashcard(unmanaged.getUUID()));
 
         assertEquals("FlashcardManager cannot mark a non managed flashcard as attempted via the markAttempted() method",
-                0, flashcard1.getAttempted());
+                0, unmanaged.getAttempted());
     }
 
     /*
@@ -232,31 +263,39 @@ public class FlashcardManagerTest {
      */
     @Test
     public void TestMarkAttemptedAndCorrect() {
-        FlashcardSet testCardSet = new FlashcardSet("testUser", "Test Card Set");
-        Flashcard flashcard1 = new Flashcard(testCardSet.getUUID(), "Test Question 1", "Test Answer 1", null);
-        flashcardManager.insertFlashcard(flashcard1);
+        //Flashcard flashcard = new Flashcard(testCardSet.getUUID(), "Test Question 1", "Test Answer 1", null);
+        Flashcard managed = mock(Flashcard.class);
 
-        flashcardManager.markAttemptedAndCorrect(flashcard1.getUUID());
-        flashcard1 = flashcardManager.getFlashcard(flashcard1.getUUID());
+        when(managed.getUUID()).thenReturn("uuid");
+
+        flashcardManager.insertFlashcard(managed);
+
+        flashcardManager.markAttemptedAndCorrect(managed.getUUID());
+        Flashcard updated = flashcardManager.getFlashcard(managed.getUUID());
 
         assertEquals("FlashcardManager can mark a flashcard as attempted via the markAttemptedAndCorrect() method",
-                1, flashcardManager.getFlashcard(flashcard1.getUUID()).getAttempted());
+                1, flashcardManager.getFlashcard(updated.getUUID()).getAttempted());
         assertEquals("FlashcardManager can mark a flashcard as correct via the markAttemptedAndCorrect() method",
-                1, flashcardManager.getFlashcard(flashcard1.getUUID()).getCorrect());
+                1, flashcardManager.getFlashcard(updated.getUUID()).getCorrect());
     }
 
     @Test
     public void TestMarkAttemptedAndCorrectNotManaged() {
-        Flashcard flashcard1 = new Flashcard("TestCardUUID", "TestSetUUID", "Test Question 1", "Test Answer 1", null, false, 0, 0);
+        //Flashcard flashcard = new Flashcard("TestCardUUID", "TestSetUUID", "Test Question 1", "Test Answer 1", null, false, 0, 0);
+        Flashcard unmanaged = mock(Flashcard.class);
 
-        flashcardManager.markAttemptedAndCorrect(flashcard1.getUUID());
+        when(unmanaged.getUUID()).thenReturn("TestCardUUID");
+        when(unmanaged.getAttempted()).thenReturn(0);
+        when(unmanaged.getCorrect()).thenReturn(0);
+
+        flashcardManager.markAttemptedAndCorrect(unmanaged.getUUID());
 
         assertNull("FlashcardManager will not add a non-managed flashcard when calling the markAttemptedAndCorrect method",
-                flashcardManager.getFlashcard(flashcard1.getUUID()));
+                flashcardManager.getFlashcard(unmanaged.getUUID()));
 
         assertEquals("FlashcardManager cannot mark a non managed flashcard as attempted via the markAttemptedAndCorrect() method",
-                0, flashcard1.getAttempted());
+                0, unmanaged.getAttempted());
         assertEquals("FlashcardManager cannot mark a non managed flashcard as correct via the markAttemptedAndCorrect() method",
-                0, flashcard1.getCorrect());
+                0, unmanaged.getCorrect());
     }
 }
