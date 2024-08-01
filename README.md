@@ -48,5 +48,5 @@ Upon clicking the notification button, graders should allow permissions for noti
 
 ### Retrospective
 
-[RETROSPECTIVE.md.md](RETROSPECTIVE.md.md)
+[RETROSPECTIVE.md](RETROSPECTIVE.md)
 
