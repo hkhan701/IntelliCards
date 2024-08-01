@@ -34,3 +34,19 @@ Graders can login with the following pre-inserted usernames and passwords unless
 ### Notifications
 
 Upon clicking the notification button, graders should allow permissions for notifications, and then toggle on the alarm permissions as well for the notifications to work as intended. 
+
+## Links to other documentation
+
+### Vision Statmement
+
+[VISON.md](VISION.md)
+
+### Architecture
+
+[ARCHITECTURE.md](ARCHITECTURE.md)
+
+
+### Retrospective
+
+[RETROSPECTIVE.md.md](RETROSPECTIVE.md.md)
+
