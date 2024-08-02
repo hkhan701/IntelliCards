@@ -9,7 +9,7 @@ public class Configuration {
      * - stub
      * If value is not recognized, datasource will default to hsqldb
      */
-    private static final String datasource = "hsqldb";
+    private static final String datasource = "stub";
     private static String dbName;
     private static String dbPathName;
 

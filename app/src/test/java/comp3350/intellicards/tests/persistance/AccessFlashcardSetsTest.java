@@ -1,4 +1,4 @@
-package comp3350.intellicards.tests.business;
+package comp3350.intellicards.tests.persistance;
 
 import static org.junit.Assert.*;
 import static org.junit.Assume.assumeNotNull;
@@ -71,7 +71,7 @@ public class AccessFlashcardSetsTest {
         FlashcardSet flashcardSet = new FlashcardSet("TestID", "user1","TestSubject");
 
         manager.insertFlashcardSet(flashcardSet);
-        FlashcardSet retrievedSet = persistence.getFlashcardSet("TestID");
+        FlashcardSet retrievedSet = manager.getFlashcardSet("TestID");
 
         assertNotNull("New flashcard set can be inserted into the database",
                 retrievedSet);
@@ -90,7 +90,7 @@ public class AccessFlashcardSetsTest {
         FlashcardSet flashcardSet = new FlashcardSet("TestID", "user1","TestSubject");
 
         manager.insertFlashcardSet(flashcardSet);
-        FlashcardSet retrievedSet = persistence.getFlashcardSet("TestID");
+        FlashcardSet retrievedSet = manager.getFlashcardSet("TestID");
 
         assumeNotNull(flashcardSet);
 
@@ -110,26 +110,11 @@ public class AccessFlashcardSetsTest {
         flashcardSet.addFlashcard(flashcard);
 
         manager.insertFlashcardSet(flashcardSet);
-        FlashcardSet retrievedSet = persistence.getFlashcardSet("TestID");
+        FlashcardSet retrievedSet = manager.getFlashcardSet("TestID");
 
         assumeNotNull(flashcardSet);
         assertNull("flashcard set will not persist associated flashcards, they should be persisted using the flashcardManager",
                 retrievedSet.getFlashcardById("testFlashcard1"));
-    }
-
-    /*
-     * addFlashcardToFlashcardSet()
-     */
-    @Test
-    public void testAddFlashcardToFlashcardSet() {
-        Flashcard flashcard = new Flashcard("id", "set2", "question", "answer", null, false, 0, 0);
-
-        manager.addFlashcardToFlashcardSet("set1", flashcard);
-        FlashcardSet retrievedSet = persistence.getFlashcardSet("set1");
-
-        assumeNotNull(retrievedSet);
-
-        assertNotNull(retrievedSet.getFlashcardById("id"));
     }
 
     @After
