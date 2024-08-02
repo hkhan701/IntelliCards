@@ -194,14 +194,22 @@ public class FlashcardSetManagerTest {
     public void testAddFlashcardToFlashcardSet() {
         when(flashcardSetData.getFlashcardSet("TestSet")).thenReturn(flashcardSet);
 
-        assertTrue("FlashcardSetManager verifies that the flashcard was added to the set with a return value",
-                flashcardSetManager.addFlashcardToFlashcardSet("TestSet", flashcard));
+        FlashcardSet retrievedFlashcardSet = flashcardSetManager.addFlashcardToFlashcardSet("TestSet", flashcard);
+
+        // FlashcardSetManager adds flashcard to flashcard set instance if it is managed
+        verify(flashcardSet).addFlashcard(flashcard);
+        assertEquals("FlashcardSetManager returns flashcardSet with added flashcard",
+                flashcardSet, retrievedFlashcardSet);
     }
 
     @Test
     public void testAddFlashcardToNonManagedFlashcardSet() {
-        assertFalse("FlashcardSetManager cannot add a flashcard to a set if the set is not managed",
-                flashcardSetManager.addFlashcardToFlashcardSet(flashcardSet.getUUID(), flashcard));
+        FlashcardSet retrievedFlashcardSet = flashcardSetManager.addFlashcardToFlashcardSet("TestSet", flashcard);
+
+        // FlashcardSetManager does not add flashcard to flashcard set instance if the set is not managed
+        verify(flashcardSet, times(0)).addFlashcard(flashcard);
+        assertNull("FlashcardSetManager does not return a flashcard set since there was nothing modified",
+                retrievedFlashcardSet);
     }
 
     /*

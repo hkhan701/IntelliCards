@@ -75,15 +75,15 @@ public class FlashcardSetManager {
         return this.flashcardSetPersistence.getFlashcardSetsByKey(key);
     }
 
-    public boolean addFlashcardToFlashcardSet(@NonNull String setUUID, @NonNull Flashcard flashcard) {
+    public FlashcardSet addFlashcardToFlashcardSet(@NonNull String setUUID, @NonNull Flashcard flashcard) {
         FlashcardSet flashcardSet = getFlashcardSet(setUUID);
 
         if (flashcardSet != null) {
             flashcardSet.addFlashcard(flashcard);
-            return true;
+            return flashcardSet;
         }
 
-        return false;
+        return null;
     }
 
     public void shuffleFlashcardSet(FlashcardSet flashcardSet) {
