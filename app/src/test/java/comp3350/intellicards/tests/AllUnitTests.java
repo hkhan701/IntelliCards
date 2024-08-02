@@ -7,6 +7,7 @@ import comp3350.intellicards.tests.business.FlashcardManagerTest;
 import comp3350.intellicards.tests.business.FlashcardSetManagerTest;
 import comp3350.intellicards.tests.business.ReportCalculatorTest;
 import comp3350.intellicards.tests.business.TempTestResultTest;
+import comp3350.intellicards.tests.business.UpdateFlashcardServiceTest;
 import comp3350.intellicards.tests.business.UserManagerTest;
 import comp3350.intellicards.tests.objects.FlashcardSetTest;
 import comp3350.intellicards.tests.objects.FlashcardTest;
@@ -22,8 +23,9 @@ import comp3350.intellicards.tests.objects.UserTest;
         FlashcardSetManagerTest.class,
         UserManagerTest.class,
         ReportCalculatorTest.class,
-        TempTestResultTest.class
+        TempTestResultTest.class,
+        UpdateFlashcardServiceTest.class
 })
 
-public class AllTests {
+public class AllUnitTests {
 }
