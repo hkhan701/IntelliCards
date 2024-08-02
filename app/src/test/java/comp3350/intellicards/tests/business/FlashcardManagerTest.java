@@ -75,18 +75,16 @@ public class FlashcardManagerTest {
      */
     @Test
     public void testUpdateFlashcardDetails() {
-        when(flashcard.getQuestion()).thenReturn("Test Question");
-        when(flashcard.getAnswer()).thenReturn("Test Answer");
-        when(flashcard.getHint()).thenReturn(null);
-
         flashcardManager.updateFlashcardDetails(flashcard, "Test Question Update", "Test Answer Update", "Test Hint Update");
 
-        assertEquals("FlashcardManager will update the original instance of flashcard's question if given",
-                "Test Question Update", flashcard.getQuestion());
-        assertEquals("FlashcardManager will update the original instance of flashcard's answer if given",
-                "Test Answer Update", flashcard.getAnswer());
-        assertEquals("FlashcardManager will update the original instance of flashcard's hint if given",
-                "Test Hint Update", flashcard.getHint());
+        // FlashcardManager will update the original instance of flashcard's question if given
+        verify(flashcard).setQuestion("Test Question Update");
+
+        // FlashcardManager will update the original instance of flashcard's answer if given
+        verify(flashcard).setAnswer("Test Answer Update");
+
+        // FlashcardManager will update the original instance of flashcard's hint if given
+        verify(flashcard).setHint("Test Hint Update");
     }
 
     /*
