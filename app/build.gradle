@@ -40,7 +40,9 @@ dependencies {
     testImplementation libs.mockito
     androidTestImplementation libs.ext.junit
     androidTestImplementation libs.espresso.core
+    androidTestImplementation libs.espresso.contrib
     androidTestImplementation libs.runner
     androidTestImplementation libs.rules
+    androidTestImplementation libs.ui.automator
 
 }
