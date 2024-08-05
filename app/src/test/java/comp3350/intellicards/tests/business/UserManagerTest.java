@@ -75,31 +75,6 @@ public class UserManagerTest {
     }
 
     /*
-     * Test deleteUser()
-     */
-    @Test
-    public void deleteUserExists() {
-        when(userPersistenceMock.getUserByUsername("Test1")).thenReturn(userMock);
-
-        assertTrue("UserManager will delete a user if it exists",
-                userManager.deleteUser("Test1"));
-    }
-
-    @Test
-    public void deleteUserDoesNotExist() {
-        assertFalse("UserManager will not attempt a delete of a user that does not exist",
-                userManager.deleteUser("Test1"));
-    }
-
-    @Test
-    public void deleteGuest() {
-        when(userPersistenceMock.getUserByUsername(any())).thenReturn(userMock);
-
-        assertFalse("UserManager will never delete the guest user",
-                userManager.deleteUser("guest"));
-    }
-
-    /*
      * Test incrementLoginCount()
      */
     @Test
