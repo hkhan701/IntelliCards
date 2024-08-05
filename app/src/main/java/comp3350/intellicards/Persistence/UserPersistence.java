@@ -7,6 +7,5 @@ public interface UserPersistence {
 
     void addUser(User user);
 
-    void deleteUser(String username);
     void incrementLoginCount(User user);
 }
