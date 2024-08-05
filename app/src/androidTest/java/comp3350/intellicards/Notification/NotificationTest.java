@@ -2,8 +2,6 @@ package comp3350.intellicards.Notification;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
-import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
-import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
@@ -31,6 +29,7 @@ import org.junit.runner.RunWith;
 
 import comp3350.intellicards.Presentation.AuthActivity;
 import comp3350.intellicards.R;
+import comp3350.intellicards.TestUtils;
 
 @RunWith(AndroidJUnit4.class)
 public class NotificationTest {
@@ -42,18 +41,6 @@ public class NotificationTest {
 
     private final int WAIT_TIME = 5000;
     UiDevice device;
-
-    public void loginUserFromAuthPage(String username, String password) {
-        onView(ViewMatchers.withId(R.id.username)).perform(typeText(username), closeSoftKeyboard());
-        onView(withId(R.id.password)).perform(typeText(password), closeSoftKeyboard());
-
-        onView(withId(R.id.logInButton)).perform(click());
-    }
-
-    public void logoutUserFromMainPage() {
-        onView(withId(R.id.profileButton)).perform(click());
-        onView(withId(R.id.logoutButton)).perform(click());
-    }
 
     public void enableNotificationsAfterPopUp() throws UiObjectNotFoundException {
         UiObject allowPermissionsIntellicards = device.findObject(new UiSelector().text("IntelliCards"));
@@ -93,9 +80,9 @@ public class NotificationTest {
 
     @Test
     public void setNotificationTest() throws UiObjectNotFoundException {
-        loginUserFromAuthPage(USERNAME, PASSWORD);
+        TestUtils.loginUserFromAuthPage(USERNAME, PASSWORD);
 
-        onView(withId(R.id.headerTitle)).check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
+        onView(withId(R.id.headerTitle)).check(ViewAssertions.matches(allOf(ViewMatchers.isDisplayed(), ViewMatchers.withText("IntelliCards"))));
 
         onView(allOf(withId(-1), withText("Math (2) "))).perform(click());
         onView(withId(R.id.addReminderButton)).perform(click());
@@ -118,13 +105,16 @@ public class NotificationTest {
 
         assertTrue("Notification did not show up",
                 device.wait(Until.hasObject(By.textContains("Flashcard Study Reminder")), 1000));
+
+        onView(withId(R.id.backButton)).perform(click());
+        TestUtils.logoutUserFromMainPage();
     }
 
     @Test
     public void clickOnNotificationTest() throws UiObjectNotFoundException {
-        loginUserFromAuthPage(USERNAME, PASSWORD);
+        TestUtils.loginUserFromAuthPage(USERNAME, PASSWORD);
 
-        onView(withId(R.id.headerTitle)).check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
+        onView(withId(R.id.headerTitle)).check(ViewAssertions.matches(allOf(ViewMatchers.isDisplayed(), ViewMatchers.withText("IntelliCards"))));
 
         onView(allOf(withId(-1), withText("Math (2) "))).perform(click());
         onView(withId(R.id.addReminderButton)).perform(click());
@@ -159,13 +149,13 @@ public class NotificationTest {
         }
 
         onView(withId(R.id.flashcardSetTitle)).check(ViewAssertions.matches(allOf(ViewMatchers.isDisplayed(), ViewMatchers.withText("Math"))));
+
+        onView(withId(R.id.backButton)).perform(click());
+        TestUtils.logoutUserFromMainPage();
     }
 
     @After
     public void tearDown() {
-        onView(withId(R.id.backButton)).perform(click());
-
-        logoutUserFromMainPage();
         device.pressHome();
     }
 }
