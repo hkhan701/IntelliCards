@@ -4,7 +4,12 @@ import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.action.ViewActions.typeText;
+import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withText;
+import static org.hamcrest.Matchers.allOf;
 
 import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
@@ -16,6 +21,7 @@ import org.junit.runner.RunWith;
 
 import comp3350.intellicards.Presentation.AuthActivity;
 import comp3350.intellicards.R;
+import comp3350.intellicards.TestUtils;
 
 @RunWith(AndroidJUnit4.class)
 public class SearchTest {
@@ -25,18 +31,39 @@ public class SearchTest {
     private final String USERNAME = "user1";
     private final String PASSWORD = "pass1";
 
-    public void loginUser(String username, String password) {
-        onView(ViewMatchers.withId(R.id.username)).perform(typeText(username), closeSoftKeyboard());
-        onView(withId(R.id.password)).perform(typeText(password), closeSoftKeyboard());
+    @Test
+    public void searchFlashcardSetsTest() {
+        TestUtils.loginUserFromAuthPage(USERNAME, PASSWORD);
 
-        onView(withId(R.id.logInButton)).perform(click());
+        onView(withId(R.id.headerTitle)).check(matches(allOf(isDisplayed(), ViewMatchers.withText("IntelliCards"))));
+
+        onView(withId(R.id.search)).perform(typeText("Math"), closeSoftKeyboard());
+
+        onView(withId(R.id.searchButton)).perform(click());
+
+        onView(allOf(withId(-1), withText("Math (2) "))).check(matches(isDisplayed()));
+        onView(allOf(withId(-1), withText("Science (2) "))).check(doesNotExist());
+
+        TestUtils.logoutUserFromMainPage();
     }
 
     @Test
-    public void searchFlashcardSets() {
-        loginUser(USERNAME, PASSWORD);
+    public void searchFlashcardsTest() {
+        TestUtils.loginUserFromAuthPage(USERNAME, PASSWORD);
+
+        onView(withId(R.id.headerTitle)).check(matches(allOf(isDisplayed(), ViewMatchers.withText("IntelliCards"))));
+
+        onView(allOf(withId(-1), withText("Math (2) "))).perform(click());
+
+        onView(withId(R.id.search)).perform(typeText("What is 2+2?"), closeSoftKeyboard());
+
+        onView(withId(R.id.searchButton)).perform(click());
+
+        onView(allOf(withId(R.id.flashcardTextRecycle), withText("What is 2+2? \nHint: Basic arithmetic"))).check(matches(isDisplayed()));
+        onView(allOf(withId(R.id.flashcardTextRecycle), withText("What is the square root of 16? \nHint: Basic arithmetic"))).check(doesNotExist());
+
+        onView(withId(R.id.backButton)).perform(click());
+        TestUtils.logoutUserFromMainPage();
     }
 
-    @Test
-    public void searchFlashcards() {}
 }
