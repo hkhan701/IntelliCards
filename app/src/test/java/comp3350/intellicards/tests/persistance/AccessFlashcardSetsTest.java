@@ -40,7 +40,14 @@ public class AccessFlashcardSetsTest {
     public void testGetFlashcardSet() {
         FlashcardSet flashcardSet = manager.getFlashcardSet("set1");
 
-        assertNotNull("Flashcard set can be retrieved from database", flashcardSet);
+        assertNotNull("Flashcard set can be retrieved from database",
+                flashcardSet);
+    }
+
+    @Test
+    public void testGetFlashcardSetNotExist() {
+        assertNull("Flashcard set cannot retrieve data that does not exist" ,
+                manager.getFlashcardSet("TestSet"));
     }
 
     @Test
@@ -80,6 +87,14 @@ public class AccessFlashcardSetsTest {
     @Test
     public void testInsertFlashcardUserNotPersisted() {
         FlashcardSet flashcardSet = new FlashcardSet("TestID", "TestUser","TestSubject");
+
+        assertThrows("New flashcard set cannot be inserted into the database if the username has not been persisted",
+                PersistenceException.class, () -> manager.insertFlashcardSet(flashcardSet));
+    }
+
+    @Test
+    public void testInsertFlashcardDupe() {
+        FlashcardSet flashcardSet = new FlashcardSet("set1", "user1","TestSubject");
 
         assertThrows("New flashcard set cannot be inserted into the database if the username has not been persisted",
                 PersistenceException.class, () -> manager.insertFlashcardSet(flashcardSet));
