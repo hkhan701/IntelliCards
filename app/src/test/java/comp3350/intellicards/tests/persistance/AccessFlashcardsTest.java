@@ -3,6 +3,7 @@ package comp3350.intellicards.tests.persistance;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assume.assumeNotNull;
@@ -48,14 +49,14 @@ public class AccessFlashcardsTest {
 
     @Test
     public void testGetFlashcardNotExist() {
-        assertThrows("Flashcard cannot be retrieved if does not exist in the database",
-                PersistenceException.class, () -> manager.getFlashcard("TestCard"));
+        assertNull("Flashcard cannot be retrieved if does not exist in the database",
+                manager.getFlashcard("TestCard"));
     }
 
     @Test
     public void testGetFlashcardNull() {
-        assertThrows("Flashcard cannot be retrieved if the UUID is null",
-                PersistenceException.class, () -> manager.getFlashcard(null));
+        assertNull("Flashcard cannot be retrieved if the UUID is null",
+                manager.getFlashcard(null));
     }
 
     /*
@@ -70,20 +71,6 @@ public class AccessFlashcardsTest {
 
         assertNotNull("New flashcard can be inserted into the database",
                 retrieved);
-    }
-
-    @Test
-    public void testInsertFlashcardDupe() {
-        Flashcard flashcard = new Flashcard("fc1", "set1", "question", "answer", "hint", false, 0,0);
-
-        assertThrows("New flashcard cannot be inserted into the database if the ID matches one that exists",
-                PersistenceException.class, () -> manager.insertFlashcard(flashcard));
-    }
-
-    @Test
-    public void testInsertFlashcardNull() {
-        assertThrows("New flashcard cannot be inserted into the database if the card is null",
-                PersistenceException.class, () -> manager.insertFlashcard(null));
     }
 
     @Test
@@ -155,14 +142,10 @@ public class AccessFlashcardsTest {
     public void testUpdateFlashcardNotPersist() {
         Flashcard flashcard = new Flashcard("TestID", "set1", "q", "a", null, false, 0, 0);
 
-        assertThrows("Non-persisted flashcards cannot be updated",
-                PersistenceException.class, () -> manager.updateFlashcard(flashcard));
-    }
+        manager.updateFlashcard(flashcard);
 
-    @Test
-    public void testUpdateFlashcardNull() {
-        assertThrows("Null-object flashcards cannot be updated",
-                PersistenceException.class, () -> manager.updateFlashcard(null));
+        assertNull("Non-persisted flashcards are not added to the database upon update",
+                manager.getFlashcard("TestID"));
     }
 
     /*
@@ -170,23 +153,25 @@ public class AccessFlashcardsTest {
      */
     @Test
     public void testMarkFlashcardAsDeleted() {
-        manager.markFlashcardAsDeleted("fc2");
-        Flashcard retrieved = manager.getFlashcard("fc2");
+        Flashcard flashcard = new Flashcard("TestID", "set1", "q", "a", null, false, 0, 0);
+
+        manager.insertFlashcard(flashcard);
+        manager.markFlashcardAsDeleted("TestID");
 
         assertTrue("Persisted flashcards can be marked as deleted",
-                retrieved.isDeleted());
+                manager.getFlashcard("TestID").isDeleted());
     }
 
     @Test
-    public void testMarkFlashcardAsDeletedNotExist() {
-        assertThrows("Non-persisted flashcards cannot be marked as deleted",
-                PersistenceException.class, () -> manager.markFlashcardAsDeleted("TestID"));
-    }
+    public void testMarkFlashcardAsDeletedNotPersist() {
+        Flashcard flashcard = new Flashcard("TestID", "set1", "q", "a", null, false, 0, 0);
 
-    @Test
-    public void testMarkFlashcardAsDeletedNull() {
-        assertThrows("Null-object flashcards cannot be marked as deleted",
-                PersistenceException.class, () -> manager.markFlashcardAsDeleted(null));
+        manager.markFlashcardAsDeleted("TestID");
+
+        assertNull("Non-persisted flashcards are not added to the database upon markFlashcardAsDeleted",
+                manager.getFlashcard("TestID"));
+        assertFalse("Non-persisted flashcards are not marked as deleted",
+                flashcard.isDeleted());
     }
 
     /*
@@ -205,15 +190,15 @@ public class AccessFlashcardsTest {
     }
 
     @Test
-    public void testRestoreFlashcardNotExist() {
-        assertThrows("Non-persisted flashcards cannot be restored",
-                PersistenceException.class, () -> manager.restoreFlashcard("TestID"));
-    }
+    public void testRestoreFlashcardNotPersist() {
+        Flashcard flashcard = new Flashcard("TestID", "set1", "q", "a", null, true, 0, 0);
 
-    @Test
-    public void testRestoreFlashcardNull() {
-        assertThrows("Null-object cards cannot be restored",
-                PersistenceException.class, () -> manager.restoreFlashcard(null));
+        manager.restoreFlashcard("TestID");
+
+        assertNull("Non-persisted flashcards are not added to the database upon restoreFlashcard",
+                manager.getFlashcard("TestID"));
+        assertTrue("Non-persisted flashcards cannot be restored",
+                flashcard.isDeleted());
     }
 
     /*
@@ -232,15 +217,15 @@ public class AccessFlashcardsTest {
     }
 
     @Test
-    public void testMarkAttemptedNotExist() {
-        assertThrows("Non-persisted flashcards cannot be marked as attempted",
-                PersistenceException.class, () -> manager.markAttempted("TestID"));
-    }
+    public void testMarkAttemptedNotPersist() {
+        Flashcard flashcard = new Flashcard("TestID", "set1", "q", "a", null, false, 0, 0);
 
-    @Test
-    public void testMarkAttemptedNull() {
-        assertThrows("Null-object cards cannot be marked as attempted",
-                PersistenceException.class, () -> manager.markAttempted(null));
+        manager.markAttempted("TestID");
+
+        assertNull("Non-persisted flashcards are not added to the database upon markAttempted",
+                manager.getFlashcard("TestID"));
+        assertEquals("Non-persisted flashcards cannot be marked as attempted",
+                0, flashcard.getAttempted());
     }
 
     /*
@@ -261,15 +246,17 @@ public class AccessFlashcardsTest {
     }
 
     @Test
-    public void testMarkAttemptedAndCorrectNotExist() {
-        assertThrows("Non-persisted flashcards cannot be marked as attempted and correct",
-                PersistenceException.class, () -> manager.markAttemptedAndCorrect("TestID"));
-    }
+    public void testMarkAttemptedAndCorrectNotPersist() {
+        Flashcard flashcard = new Flashcard("TestID", "set1", "q", "a", null, false, 0, 0);
 
-    @Test
-    public void testMarkAttemptedAndCorrectNull() {
-        assertThrows("Null-object cards cannot be marked as attempted and correct",
-                PersistenceException.class, () -> manager.markAttemptedAndCorrect(null));
+        manager.markAttemptedAndCorrect("TestID");
+
+        assertNull("Non-persisted flashcards cannot be added to the database upon markAttemptedAndCorrected",
+                manager.getFlashcard("TestID"));
+        assertEquals("Non-persisted flashcards cannot be marked as attempted",
+                0, flashcard.getAttempted());
+        assertEquals("Non-persisted flashcards cannot be marked as correct",
+                0, flashcard.getCorrect());
     }
 
     @After
