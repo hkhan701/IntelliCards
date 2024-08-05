@@ -1,3 +1,4 @@
+# Reminder System Tests
 ## Set Reminder
 1. Login as a Registered User (username: user1, password: pass1)
 2. Verify Login
@@ -11,6 +12,9 @@
 10. Select Time as Right Now
 11. Select OK
 12. Verify Notification shows up
+13. Click back button 
+14. Click profile button 
+15. Click logout button
 
 ## Click Notification
 1. Login as a Registered User (username: user1, password: pass1)
@@ -26,4 +30,7 @@
 11. Select OK
 12. Verify Notification shows up
 13. Open Notification
-14. Verify User is on Math Flashcard Set Page
+14. Verify User is on Math Flashcard Set Page 
+15. Click back button 
+16. Click profile button 
+17. Click logout button
