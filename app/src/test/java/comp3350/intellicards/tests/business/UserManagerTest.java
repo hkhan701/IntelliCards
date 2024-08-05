@@ -1,8 +1,11 @@
 package comp3350.intellicards.tests.business;
 
-import static org.junit.Assert.*;
-import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -72,30 +75,5 @@ public class UserManagerTest {
     public void loginUserDoesNotExist() {
         assertNull("UserManager does not allow login if user does not exist",
                 userManager.loginUser("Test1", "Pass1"));
-    }
-
-    /*
-     * Test deleteUser()
-     */
-    @Test
-    public void deleteUserExists() {
-        when(userPersistenceMock.getUserByUsername("Test1")).thenReturn(userMock);
-
-        assertTrue("UserManager will delete a user if it exists",
-                userManager.deleteUser("Test1"));
-    }
-
-    @Test
-    public void deleteUserDoesNotExist() {
-        assertFalse("UserManager will not attempt a delete of a user that does not exist",
-                userManager.deleteUser("Test1"));
-    }
-
-    @Test
-    public void deleteGuest() {
-        when(userPersistenceMock.getUserByUsername(any())).thenReturn(userMock);
-
-        assertFalse("UserManager will never delete the guest user",
-                userManager.deleteUser("guest"));
     }
 }
