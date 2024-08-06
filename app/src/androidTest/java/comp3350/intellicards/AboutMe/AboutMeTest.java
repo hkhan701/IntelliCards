@@ -50,19 +50,24 @@ public class AboutMeTest {
         onView(withId(R.id.profileButton)).perform(click());
         onView(withId(R.id.aboutMeButton)).perform(click());
 
-        //parse informationText
+        //parse informationText [total flashcards 0]
 
         onView(withId(R.id.backButton)).perform(click());
         onView(withId(R.id.backButton)).perform(click());
 
-        //select set
+        onView(allOf(withId(-1), withText("set 7.1 (0) "))).perform(click());
 
-        //add flashcard
+        onView(withId(R.id.addFlashcardButton)).perform(click());
+        onView(withId(R.id.question)).perform(typeText("test question"));
+        onView(withId(R.id.answer)).perform(typeText("answer"));
+        onView(withId(R.id.hint)).perform(typeText("helpful hint"));
+        onView(withId(R.id.createFlashcardButton)).perform(click());
 
+        onView(withId(R.id.backButton)).perform(click());
         onView(withId(R.id.profileButton)).perform(click());
         onView(withId(R.id.aboutMeButton)).perform(click());
 
-        //parse informationText
+        //parse informationText [total flashcards 1]
 
         TestUtils.logoutUserFromAboutMePage();
     }
@@ -79,17 +84,19 @@ public class AboutMeTest {
         onView(withId(R.id.profileButton)).perform(click());
         onView(withId(R.id.aboutMeButton)).perform(click());
 
-        //parse informationText
+        //parse informationText [total sets 0]
 
         onView(withId(R.id.backButton)).perform(click());
         onView(withId(R.id.backButton)).perform(click());
 
         //add flashcard set
+        onView(withId(R.id.createNewSetButton)).perform(click());
+
 
         onView(withId(R.id.profileButton)).perform(click());
         onView(withId(R.id.aboutMeButton)).perform(click());
 
-        //parse informationText
+        //parse informationText [total sets 1]
 
         TestUtils.logoutUserFromAboutMePage();
     }
@@ -106,7 +113,7 @@ public class AboutMeTest {
         onView(withId(R.id.profileButton)).perform(click());
         onView(withId(R.id.aboutMeButton)).perform(click());
 
-        //parse informationText
+        //parse informationText [logins 1]
 
         TestUtils.logoutUserFromAboutMePage();
 
@@ -117,7 +124,7 @@ public class AboutMeTest {
         onView(withId(R.id.profileButton)).perform(click());
         onView(withId(R.id.aboutMeButton)).perform(click());
 
-        //parse informationText
+        //parse informationText [logins 2]
 
         TestUtils.logoutUserFromAboutMePage();
     }
@@ -134,19 +141,21 @@ public class AboutMeTest {
         onView(withId(R.id.profileButton)).perform(click());
         onView(withId(R.id.aboutMeButton)).perform(click());
 
-        //parse informationText
+        //parse informationText [accuracy report 0/0]
 
         onView(withId(R.id.backButton)).perform(click());
         onView(withId(R.id.backButton)).perform(click());
 
-        //select set
+        onView(allOf(withId(-1), withText("set 7.4 (2) "))).perform(click());
 
         //do a test
+        onView(withId(R.id.testButton)).perform(click());
+
 
         onView(withId(R.id.profileButton)).perform(click());
         onView(withId(R.id.aboutMeButton)).perform(click());
 
-        //parse informationText
+        //parse informationText [accuracy report 1/2]
 
         TestUtils.logoutUserFromAboutMePage();
     }
