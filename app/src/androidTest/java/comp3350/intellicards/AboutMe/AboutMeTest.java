@@ -51,9 +51,9 @@ public class AboutMeTest {
 
         onView(allOf(withId(-1), withText("set 7.1 (3) "))).perform(click());
 
-        onView(allOf(withId(R.id.flashcardsRecyclerView), withText("q1"))).check(matches(isDisplayed()));
-        onView(allOf(withId(R.id.flashcardsRecyclerView), withText("q2"))).check(matches(isDisplayed()));
-        onView(allOf(withId(R.id.flashcardsRecyclerView), withText("q3"))).check(matches(isDisplayed()));
+        onView(allOf(withId(R.id.flashcardTextRecycle), withText("q1"))).check(matches(isDisplayed()));
+        onView(allOf(withId(R.id.flashcardTextRecycle), withText("q2"))).check(matches(isDisplayed()));
+        onView(allOf(withId(R.id.flashcardTextRecycle), withText("q3"))).check(matches(isDisplayed()));
 
         onView(withId(R.id.backButton)).perform(click());
         onView(withId(R.id.profileButton)).perform(click());
@@ -146,10 +146,10 @@ public class AboutMeTest {
         onView(allOf(withId(-1), withText("set 7.4 (2) "))).perform(click());
 
         onView(withId(R.id.testButton)).perform(click());
-        onView(withId(R.id.correctCheckbox)).perform(click());
-        onView(withId(R.id.nextCardButton)).perform(click());
-        onView(withId(R.id.incorrectCheckbox)).perform(click());
-        onView(withId(R.id.nextCardButton)).perform(click());
+        onView(allOf(withId(R.id.correctCheckbox), isDisplayed())).perform(click());
+        onView(allOf(withId(R.id.nextCardButton), isDisplayed())).perform(click());
+        onView(allOf(withId(R.id.incorrectCheckbox), isDisplayed())).perform(click());
+        onView(allOf(withId(R.id.nextCardButton), isDisplayed())).perform(click());
 
         onView(withId(R.id.backButton)).perform(click());
         onView(withId(R.id.backButton)).perform(click());
