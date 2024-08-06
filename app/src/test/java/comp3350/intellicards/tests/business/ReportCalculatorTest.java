@@ -101,21 +101,23 @@ public class ReportCalculatorTest {
     public void testGetUserInformation() {
         List<FlashcardSet> flashcardSetList = mock(List.class);
 
-        // == this flashcard set will have 3 correct, 5 attempted
+        // == this flashcard has 3 correct, 5 attempted
         when(flashcardMock1.getAttempted()).thenReturn(5);
         when(flashcardMock1.getCorrect()).thenReturn(3);
         when(flashcardMock1.isDeleted()).thenReturn(false);
 
-        // == this flashcard set will have 6 correct, 10 attempted
+        // == this flashcard has 6 correct, 10 attempted
         when(flashcardMock2.getAttempted()).thenReturn(10);
         when(flashcardMock2.getCorrect()).thenReturn(6);
         when(flashcardMock2.isDeleted()).thenReturn(false);
 
+        // flashcardMock1 is inside flashcardSetMock1
         when(flashcardSetMock1.size()).thenReturn(1);
         when(flashcardSetMock1.getActiveCount()).thenReturn(1);
         when(flashcardSetMock1.getDeletedCount()).thenReturn(0);
         when(flashcardSetMock1.getIndex(anyInt())).thenReturn(flashcardMock1);
 
+        // flashcardMock2 is inside flashcardSetMock2
         when(flashcardSetMock2.size()).thenReturn(1);
         when(flashcardSetMock2.getActiveCount()).thenReturn(1);
         when(flashcardSetMock2.getDeletedCount()).thenReturn(0);
@@ -133,34 +135,33 @@ public class ReportCalculatorTest {
 
     @Test
     public void testGetUserInformationWithDeletedFlashcards() {
-        flashcardMock1 = new Flashcard("setUUID1", "Question1", "Answer1", null);
-        flashcardMock2 = new Flashcard("setUUID2", "Question2", "Answer2", null);
+        List<FlashcardSet> flashcardSetList = mock(List.class);
 
-        flashcardSetMock1 = new FlashcardSet("Test1", "Test1");
-        flashcardSetMock2 = new FlashcardSet("Test2", "Test2");
+        // == this flashcard is deleted
+        when(flashcardMock1.isDeleted()).thenReturn(true);
+        when(flashcardMock1.getAttempted()).thenReturn(5);
+        when(flashcardMock1.getCorrect()).thenReturn(3);
 
-        flashcardSetMock1.addFlashcard(flashcardMock1);
-        flashcardMock1.markAttemptedAndCorrect();
-        flashcardMock1.markAttemptedAndCorrect();
-        flashcardMock1.markAttemptedAndCorrect();
-        flashcardMock1.markAttempted();
-        flashcardMock1.markAttempted();
-        flashcardMock1.markDeleted();
+        // == this flashcard has 6 correct, 10 attempted
+        when(flashcardMock2.getAttempted()).thenReturn(10);
+        when(flashcardMock2.getCorrect()).thenReturn(6);
+        when(flashcardMock2.isDeleted()).thenReturn(false);
 
-        flashcardSetMock2.addFlashcard(flashcardMock2);
-        flashcardMock2.markAttemptedAndCorrect();
-        flashcardMock2.markAttemptedAndCorrect();
-        flashcardMock2.markAttemptedAndCorrect();
-        flashcardMock2.markAttemptedAndCorrect();
-        flashcardMock2.markAttemptedAndCorrect();
-        flashcardMock2.markAttemptedAndCorrect();
-        flashcardMock2.markAttempted();
-        flashcardMock2.markAttempted();
-        flashcardMock2.markAttempted();
-        flashcardMock2.markAttempted();
-        // == this flashcard set will have 6 correct, 10 attempted
+        // the deleted flashcardMock1 is inside flashcardSetMock1
+        when(flashcardSetMock1.size()).thenReturn(1);
+        when(flashcardSetMock1.getActiveCount()).thenReturn(0);
+        when(flashcardSetMock1.getDeletedCount()).thenReturn(1);  // deleted flashcardMock1
+        when(flashcardSetMock1.getIndex(anyInt())).thenReturn(flashcardMock1);
 
-        List<FlashcardSet> flashcardSetList = Arrays.asList(flashcardSetMock1, flashcardSetMock2);
+        // flashcardMock2 is inside flashcardSetMock2
+        when(flashcardSetMock2.size()).thenReturn(1);
+        when(flashcardSetMock2.getActiveCount()).thenReturn(1);
+        when(flashcardSetMock2.getDeletedCount()).thenReturn(0);
+        when(flashcardSetMock2.getIndex(anyInt())).thenReturn(flashcardMock2);
+
+        when(flashcardSetList.size()).thenReturn(2);
+        when(flashcardSetList.get(0)).thenReturn(flashcardSetMock1);
+        when(flashcardSetList.get(1)).thenReturn(flashcardSetMock2);
 
         assertEquals("ReportCalculator will display accurate information even when there are flashcards deleted in a set.",
                 "Total Flashcard Sets: 2\nFlashcard count: 2\nActive Flashcard count: 1\nDeleted Flashcard count: 1" +
@@ -170,24 +171,23 @@ public class ReportCalculatorTest {
 
     @Test
     public void testGetUserInformationWithNoFlashcards() {
-        flashcardMock1 = new Flashcard("setUUID1", "Question1", "Answer1", null);
+        List<FlashcardSet> flashcardSetList = mock(List.class);
 
-        flashcardSetMock1 = new FlashcardSet("Test1", "Test1");
-        flashcardSetMock2 = new FlashcardSet("Test2", "Test2");
+        when(flashcardSetMock1.size()).thenReturn(0);
+        when(flashcardSetMock1.getActiveCount()).thenReturn(0);
+        when(flashcardSetMock1.getDeletedCount()).thenReturn(0);
 
-        flashcardSetMock1.addFlashcard(flashcardMock1);
-        flashcardMock1.markAttemptedAndCorrect();
-        flashcardMock1.markAttemptedAndCorrect();
-        flashcardMock1.markAttemptedAndCorrect();
-        flashcardMock1.markAttempted();
-        flashcardMock1.markAttempted();
-        // == this flashcard set will have 6 correct, 10 attempted
+        when(flashcardSetMock2.size()).thenReturn(0);
+        when(flashcardSetMock2.getActiveCount()).thenReturn(0);
+        when(flashcardSetMock2.getDeletedCount()).thenReturn(0);
 
-        List<FlashcardSet> flashcardSetList = Arrays.asList(flashcardSetMock1, flashcardSetMock2);
+        when(flashcardSetList.size()).thenReturn(2);
+        when(flashcardSetList.get(0)).thenReturn(flashcardSetMock1);
+        when(flashcardSetList.get(1)).thenReturn(flashcardSetMock2);
 
         assertEquals("ReportCalculator will display accurate information even when there are no flashcards in a set.",
-                "Total Flashcard Sets: 2\nFlashcard count: 1\nActive Flashcard count: 1\nDeleted Flashcard count: 0" +
-                        "\n\n\nALL TIME TOTAL ACCURACY\nCorrect: 3 / 5\nThat is 60% correct: ",
+                "Total Flashcard Sets: 2\nFlashcard count: 0\nActive Flashcard count: 0\nDeleted Flashcard count: 0" +
+                        "\n\n\nALL TIME TOTAL ACCURACY\nCorrect: 0 / 0\nThat is 0% correct: ",
                 ReportCalculator.getUserInformation(flashcardSetList));
     }
 
@@ -242,34 +242,25 @@ public class ReportCalculatorTest {
      */
     @Test
     public void testGetAllTimeAccuracy() {
-        flashcardMock1 = new Flashcard("setUUID1", "Question1", "Answer1", null);
-        flashcardMock2 = new Flashcard("setUUID2", "Question2", "Answer2", null);
+        List<FlashcardSet> flashcardSetList = mock(List.class);
 
-        flashcardSetMock1 = new FlashcardSet("Test1", "Test1");
-        flashcardSetMock2 = new FlashcardSet("Test2", "Test2");
+        when(flashcardMock1.getAttempted()).thenReturn(5);
+        when(flashcardMock1.getCorrect()).thenReturn(3);
+        when(flashcardMock1.isDeleted()).thenReturn(false);
 
-        flashcardSetMock1.addFlashcard(flashcardMock1);
-        flashcardMock1.markAttemptedAndCorrect();
-        flashcardMock1.markAttemptedAndCorrect();
-        flashcardMock1.markAttemptedAndCorrect();
-        flashcardMock1.markAttempted();
-        flashcardMock1.markAttempted();
-        // == this flashcard set will have 3 correct, 5 attempted
+        when(flashcardMock2.getAttempted()).thenReturn(10);
+        when(flashcardMock2.getCorrect()).thenReturn(6);
+        when(flashcardMock2.isDeleted()).thenReturn(false);
 
-        flashcardSetMock2.addFlashcard(flashcardMock2);
-        flashcardMock2.markAttemptedAndCorrect();
-        flashcardMock2.markAttemptedAndCorrect();
-        flashcardMock2.markAttemptedAndCorrect();
-        flashcardMock2.markAttemptedAndCorrect();
-        flashcardMock2.markAttemptedAndCorrect();
-        flashcardMock2.markAttemptedAndCorrect();
-        flashcardMock2.markAttempted();
-        flashcardMock2.markAttempted();
-        flashcardMock2.markAttempted();
-        flashcardMock2.markAttempted();
-        // == this flashcard set will have 6 correct, 10 attempted
+        when(flashcardSetMock1.size()).thenReturn(1);
+        when(flashcardSetMock1.getIndex(anyInt())).thenReturn(flashcardMock1);
 
-        List<FlashcardSet> flashcardSetList = Arrays.asList(flashcardSetMock1, flashcardSetMock2);
+        when(flashcardSetMock2.size()).thenReturn(1);
+        when(flashcardSetMock2.getIndex(anyInt())).thenReturn(flashcardMock2);
+
+        when(flashcardSetList.size()).thenReturn(2);
+        when(flashcardSetList.get(0)).thenReturn(flashcardSetMock1);
+        when(flashcardSetList.get(1)).thenReturn(flashcardSetMock2);
 
         assertEquals("ReportCalculator will accurately calculate the number of correct and attempt of each flashcard.",
                 "ALL TIME TOTAL ACCURACY\nCorrect: 9 / 15\nThat is 60% correct: ",
@@ -278,34 +269,25 @@ public class ReportCalculatorTest {
 
     @Test
     public void getAllTimeAccuracyWithDeletedFlashcards() {
-        flashcardMock1 = new Flashcard("setUUID1", "Question1", "Answer1", null);
-        flashcardMock2 = new Flashcard("setUUID2", "Question2", "Answer2", null);
+        List<FlashcardSet> flashcardSetList = mock(List.class);
 
-        flashcardSetMock1 = new FlashcardSet("Test1", "Test1");
-        flashcardSetMock2 = new FlashcardSet("Test2", "Test2");
+        when(flashcardMock1.getAttempted()).thenReturn(5);
+        when(flashcardMock1.getCorrect()).thenReturn(3);
+        when(flashcardMock1.isDeleted()).thenReturn(true);
 
-        flashcardSetMock1.addFlashcard(flashcardMock1);
-        flashcardMock1.markAttemptedAndCorrect();
-        flashcardMock1.markAttemptedAndCorrect();
-        flashcardMock1.markAttemptedAndCorrect();
-        flashcardMock1.markAttempted();
-        flashcardMock1.markAttempted();
-        flashcardMock1.markDeleted();
+        when(flashcardMock2.getAttempted()).thenReturn(10);
+        when(flashcardMock2.getCorrect()).thenReturn(6);
+        when(flashcardMock2.isDeleted()).thenReturn(false);
 
-        flashcardSetMock2.addFlashcard(flashcardMock2);
-        flashcardMock2.markAttemptedAndCorrect();
-        flashcardMock2.markAttemptedAndCorrect();
-        flashcardMock2.markAttemptedAndCorrect();
-        flashcardMock2.markAttemptedAndCorrect();
-        flashcardMock2.markAttemptedAndCorrect();
-        flashcardMock2.markAttemptedAndCorrect();
-        flashcardMock2.markAttempted();
-        flashcardMock2.markAttempted();
-        flashcardMock2.markAttempted();
-        flashcardMock2.markAttempted();
-        // == this flashcard set will have 6 correct, 10 attempted
+        when(flashcardSetMock1.size()).thenReturn(1);
+        when(flashcardSetMock1.getIndex(anyInt())).thenReturn(flashcardMock1);
 
-        List<FlashcardSet> flashcardSetList = Arrays.asList(flashcardSetMock1, flashcardSetMock2);
+        when(flashcardSetMock2.size()).thenReturn(1);
+        when(flashcardSetMock2.getIndex(anyInt())).thenReturn(flashcardMock2);
+
+        when(flashcardSetList.size()).thenReturn(2);
+        when(flashcardSetList.get(0)).thenReturn(flashcardSetMock1);
+        when(flashcardSetList.get(1)).thenReturn(flashcardSetMock2);
 
         assertEquals("ReportCalculator will accurately calculate the right number of total correctness and attempted even if a deleted flashcard is detected.",
                 "ALL TIME TOTAL ACCURACY\nCorrect: 6 / 10\nThat is 60% correct: ",
@@ -314,10 +296,14 @@ public class ReportCalculatorTest {
 
     @Test
     public void getAllTimeAccuracyWithNoFlashcards() {
-        flashcardSetMock1 = new FlashcardSet("Test1", "Test1");
-        flashcardSetMock2 = new FlashcardSet("Test2", "Test2");
+        List<FlashcardSet> flashcardSetList = mock(List.class);
 
-        List<FlashcardSet> flashcardSetList = Arrays.asList(flashcardSetMock1, flashcardSetMock2);
+        when(flashcardSetMock1.size()).thenReturn(0);
+        when(flashcardSetMock1.size()).thenReturn(0);
+
+        when(flashcardSetList.size()).thenReturn(2);
+        when(flashcardSetList.get(0)).thenReturn(flashcardSetMock1);
+        when(flashcardSetList.get(1)).thenReturn(flashcardSetMock2);
 
         assertEquals("ReportCalculator will accurately calculate the right number of total correctness and attempted even if there are no flashcards detected.",
                 "ALL TIME TOTAL ACCURACY\nCorrect: 0 / 0\nThat is 0% correct: ",
