@@ -1,6 +1,6 @@
 # Reminder System Tests
 ## Set Reminder
-1. Login as a Registered User (username: user1, password: pass1)
+1. Login as a Registered User (username: user81, password: pass81)
 2. Verify Login
 3. Select Flashcard Set Button (name: Math)
 4. Select Add Reminder Button 
@@ -17,7 +17,7 @@
 15. Click logout button
 
 ## Click Notification
-1. Login as a Registered User (username: user1, password: pass1)
+1. Login as a Registered User (username: user82, password: pass82)
 2. Verify Login
 3. Select Flashcard Set Button (name: Math)
 4. Select Add Reminder Button

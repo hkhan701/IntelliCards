@@ -1,6 +1,6 @@
 # Search System Tests
 ## Search for Flashcard Set
-1. Login as a Registered User (username: user1, password: pass1)
+1. Login as a Registered User (username: user91, password: pass91)
 2. Verify Login 
 3. Type text of wanted flashcard in search bar (text: Math)
 4. Click search button 
@@ -10,7 +10,7 @@
 8. Click logout button
 
 ## Search for Flashcard
-1. Login as a Registered User (username: user1, password: pass1)
+1. Login as a Registered User (username: user92, password: pass92)
 2. Verify Login
 3. Select Flashcard Set Button (name: Math)
 4. Type text of wanted flashcard in search bar (text: What is 2+2?)
