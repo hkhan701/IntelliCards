@@ -15,24 +15,34 @@ import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import comp3350.intellicards.Presentation.AuthActivity;
 import comp3350.intellicards.R;
-import comp3350.intellicards.TestUtils;
+import comp3350.intellicards.TestUtils.TestUtils;
+import comp3350.intellicards.TestUtils.WrongDatabaseException;
 
 @RunWith(AndroidJUnit4.class)
 public class SearchTest {
     @Rule
     public ActivityScenarioRule<AuthActivity> activityScenarioRule = new ActivityScenarioRule<>(AuthActivity.class);
 
-    private final String USERNAME = "user1";
-    private final String PASSWORD = "pass1";
+    private String USERNAME;
+    private String PASSWORD;
+
+    @Before
+    public void verifyDatasource() throws WrongDatabaseException {
+        TestUtils.checkDatabase();
+    }
 
     @Test
     public void searchFlashcardSetsTest() {
+        USERNAME = "user91";
+        PASSWORD = "pass91";
+
         TestUtils.loginUserFromAuthPage(USERNAME, PASSWORD);
 
         onView(withId(R.id.headerTitle)).check(matches(allOf(isDisplayed(), ViewMatchers.withText("IntelliCards"))));
@@ -49,6 +59,9 @@ public class SearchTest {
 
     @Test
     public void searchFlashcardsTest() {
+        USERNAME = "user92";
+        PASSWORD = "pass92";
+
         TestUtils.loginUserFromAuthPage(USERNAME, PASSWORD);
 
         onView(withId(R.id.headerTitle)).check(matches(allOf(isDisplayed(), ViewMatchers.withText("IntelliCards"))));
@@ -65,5 +78,4 @@ public class SearchTest {
         onView(withId(R.id.backButton)).perform(click());
         TestUtils.logoutUserFromMainPage();
     }
-
 }

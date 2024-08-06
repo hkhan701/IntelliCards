@@ -29,15 +29,16 @@ import org.junit.runner.RunWith;
 
 import comp3350.intellicards.Presentation.AuthActivity;
 import comp3350.intellicards.R;
-import comp3350.intellicards.TestUtils;
+import comp3350.intellicards.TestUtils.TestUtils;
+import comp3350.intellicards.TestUtils.WrongDatabaseException;
 
 @RunWith(AndroidJUnit4.class)
 public class NotificationTest {
     @Rule
     public ActivityScenarioRule<AuthActivity> activityScenarioRule = new ActivityScenarioRule<>(AuthActivity.class);
 
-    private final String USERNAME = "user1";
-    private final String PASSWORD = "pass1";
+    private String USERNAME;
+    private String PASSWORD;
 
     private final int WAIT_TIME = 5000;
     UiDevice device;
@@ -74,12 +75,17 @@ public class NotificationTest {
     }
 
     @Before
-    public void setup() {
+    public void setup() throws WrongDatabaseException {
         device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
+
+        TestUtils.checkDatabase();
     }
 
     @Test
     public void setNotificationTest() throws UiObjectNotFoundException {
+        USERNAME = "user81";
+        PASSWORD = "pass81";
+
         TestUtils.loginUserFromAuthPage(USERNAME, PASSWORD);
 
         onView(withId(R.id.headerTitle)).check(ViewAssertions.matches(allOf(ViewMatchers.isDisplayed(), ViewMatchers.withText("IntelliCards"))));
@@ -112,6 +118,9 @@ public class NotificationTest {
 
     @Test
     public void clickOnNotificationTest() throws UiObjectNotFoundException {
+        USERNAME = "user82";
+        PASSWORD = "pass82";
+
         TestUtils.loginUserFromAuthPage(USERNAME, PASSWORD);
 
         onView(withId(R.id.headerTitle)).check(ViewAssertions.matches(allOf(ViewMatchers.isDisplayed(), ViewMatchers.withText("IntelliCards"))));
