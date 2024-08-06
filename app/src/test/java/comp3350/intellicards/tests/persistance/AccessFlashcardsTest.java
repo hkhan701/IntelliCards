@@ -14,6 +14,7 @@ import org.junit.Test;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import comp3350.intellicards.Application.Configuration;
 import comp3350.intellicards.Business.FlashcardManager;
@@ -251,6 +252,29 @@ public class AccessFlashcardsTest {
                 0, flashcard.getAttempted());
         assertEquals("Non-persisted flashcards cannot be marked as correct",
                 0, flashcard.getCorrect());
+    }
+
+    /*
+     * test getFlashcardsByKey()
+     */
+    @Test
+    public void testGetFlashcardsByKey() {
+        List<Flashcard> receivedList = manager.getFlashcardsByKey("What is 2+2?");
+
+        assumeNotNull(receivedList);
+        assertEquals("Flashcard can be retrieved from database given a key",
+                1, receivedList.size());
+        assertEquals("Flashcard can be retrieved from database given a key",
+                "fc1", receivedList.get(0).getUUID());
+    }
+
+    @Test
+    public void testGetFlashcardsByKeyNoMatch() {
+        List<Flashcard> receivedList = manager.getFlashcardsByKey("What did I have for breakfast this morning?");
+
+        assumeNotNull(receivedList);
+        assertEquals("If key to return flashcards does not match any item in the database, an empty list is returned",
+                0, receivedList.size());
     }
 
     @After

@@ -132,6 +132,29 @@ public class AccessFlashcardSetsTest {
                 retrievedSet.getFlashcardById("testFlashcard1"));
     }
 
+    /*
+     * getFlashcardSetsByKey()
+     */
+    @Test
+    public void testGetFlashcardSetsByKey() {
+        List<FlashcardSet> receivedSets = manager.getFlashcardSetsByKey("Math");
+
+        assumeNotNull(receivedSets);
+        assertEquals("FlashcardSet can be retrieved from database given it's set name",
+                1, receivedSets.size());
+        assertEquals("FlashcardSet can be retrieved from database given it's set name",
+                "set1", receivedSets.get(0).getUUID());
+    }
+
+    @Test
+    public void testGetFlashcardSetsByKeyNoMatch() {
+        List<FlashcardSet> receivedSets = manager.getFlashcardSetsByKey("Gym");
+
+        assumeNotNull(receivedSets);
+        assertEquals("If key to retrieve flashcard sets does not match with any items, an empty list is returned",
+                0, receivedSets.size());
+    }
+
     @After
     public void tearDown() {
         tempDB.delete();
