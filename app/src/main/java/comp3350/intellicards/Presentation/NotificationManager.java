@@ -1,4 +1,4 @@
-package comp3350.intellicards.Business;
+package comp3350.intellicards.Presentation;
 
 import android.Manifest;
 import android.app.Activity;
@@ -23,6 +23,7 @@ import androidx.core.content.ContextCompat;
 import java.util.Calendar;
 
 import comp3350.intellicards.Application.UserSession;
+import comp3350.intellicards.Business.FlashcardSetManager;
 import comp3350.intellicards.Objects.FlashcardSet;
 import comp3350.intellicards.Presentation.AuthActivity;
 import comp3350.intellicards.Presentation.FlashcardSetActivity;

@@ -1,6 +1,5 @@
 package comp3350.intellicards.Business;
 
-import comp3350.intellicards.Application.Services;
 import comp3350.intellicards.Objects.Flashcard;
 import comp3350.intellicards.Objects.FlashcardSet;
 
@@ -8,11 +7,6 @@ public class UpdateFlashcardService {
 
     private FlashcardManager flashcardManager;
     private FlashcardSetManager flashcardSetManager;
-
-    public UpdateFlashcardService() {
-        flashcardManager = new FlashcardManager(Services.getFlashcardPersistence());
-        flashcardSetManager = new FlashcardSetManager(Services.getFlashcardSetPersistence());
-    }
 
     public UpdateFlashcardService(FlashcardManager flashcardManager, FlashcardSetManager flashcardSetManager) {
         this.flashcardManager = flashcardManager;

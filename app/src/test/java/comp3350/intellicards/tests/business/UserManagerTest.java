@@ -1,11 +1,8 @@
 package comp3350.intellicards.tests.business;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -75,5 +72,49 @@ public class UserManagerTest {
     public void loginUserDoesNotExist() {
         assertNull("UserManager does not allow login if user does not exist",
                 userManager.loginUser("Test1", "Pass1"));
+    }
+
+    /*
+     * Test incrementLoginCount()
+     */
+    @Test
+    public void incrementLoginCount() {
+        when(userPersistenceMock.getUserByUsername("Test")).thenReturn(userMock);
+
+        userManager.incrementLoginCount("Test");
+
+        // UserManager can increment the login value of a user
+        verify(userPersistenceMock, times(1)).incrementLoginCount(userMock);
+    }
+
+    @Test
+    public void incrementLoginCountNotManaged() {
+        when(userPersistenceMock.getUserByUsername("Test")).thenReturn(null);
+
+        userManager.incrementLoginCount("Test");
+
+        // UserManager cannot increment the login value of a non-managed user
+        verify(userPersistenceMock, times(0)).incrementLoginCount(userMock);
+    }
+
+
+    /*
+     * Test getUserLoginCount()
+     */
+    @Test
+    public void getUserLoginCount() {
+        when(userPersistenceMock.getUserByUsername(any())).thenReturn(userMock);
+        when(userMock.getLoginCount()).thenReturn(3);
+
+        assertEquals("UserManager can retrieve the login count of a managed user",
+                3, userManager.getUserLoginCount("Test"));
+    }
+
+    @Test
+    public void getUserLoginCountNotManaged() {
+        when(userPersistenceMock.getUserByUsername(any())).thenReturn(null);
+
+        assertEquals("UserManager cannot retrieve the login count of a non-managed user",
+                -1, userManager.getUserLoginCount("Test"));
     }
 }

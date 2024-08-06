@@ -32,7 +32,6 @@ public class FlashcardSetManager {
         }
 
         return null;
-
     }
 
     private FlashcardSet getDeletedFlashcardSet(String uuid) {
@@ -72,15 +71,19 @@ public class FlashcardSetManager {
         this.flashcardSetPersistence.insertFlashcardSet(newFlashcardSet);
     }
 
-    public boolean addFlashcardToFlashcardSet(@NonNull String setUUID, @NonNull Flashcard flashcard) {
+    public List<FlashcardSet> getFlashcardSetsByKey(String key) {
+        return this.flashcardSetPersistence.getFlashcardSetsByKey(key);
+    }
+
+    public FlashcardSet addFlashcardToFlashcardSet(@NonNull String setUUID, @NonNull Flashcard flashcard) {
         FlashcardSet flashcardSet = getFlashcardSet(setUUID);
 
         if (flashcardSet != null) {
             flashcardSet.addFlashcard(flashcard);
-            return true;
+            return flashcardSet;
         }
 
-        return false;
+        return null;
     }
 
     public void shuffleFlashcardSet(FlashcardSet flashcardSet) {
@@ -104,7 +107,7 @@ public class FlashcardSetManager {
     }
 
     public List<FlashcardSet> getFlashcardSetsByKey(String username, String key) {
-        List<FlashcardSet> allFlashcardSets = this.flashcardSetPersistence.getFlashcardSetsByKey(key);
+        List<FlashcardSet> allFlashcardSets = getFlashcardSetsByKey(key);
         List<FlashcardSet> searchedFlashcardSets = new ArrayList<>();
 
         for(FlashcardSet flashcardSet : allFlashcardSets) {
@@ -116,16 +119,19 @@ public class FlashcardSetManager {
         return searchedFlashcardSets;
     }
 
-    public FlashcardSet getSearchedFlashcards(String uuid, List<Flashcard> searchedFlashcards) {
-        FlashcardSet originalFlashcardSet = getFlashcardSet(uuid);
-        FlashcardSet searchedFlashcardSet = new FlashcardSet(uuid, originalFlashcardSet.getUsername(), originalFlashcardSet.getFlashcardSetName());
+    public FlashcardSet getSearchedFlashcards(String setUUID, List<Flashcard> searchedFlashcards) {
+        FlashcardSet originalFlashcardSet = getFlashcardSet(setUUID);
+        FlashcardSet searchedFlashcardSet = null;
 
-        for (Flashcard flashcard : searchedFlashcards) {
-            if (flashcard.getSetUUID().equals(uuid)) {
-                searchedFlashcardSet.addFlashcard(flashcard);
+        if (originalFlashcardSet != null) {
+            searchedFlashcardSet = new FlashcardSet(setUUID, originalFlashcardSet.getUsername(), originalFlashcardSet.getFlashcardSetName());
+
+            for (Flashcard flashcard : searchedFlashcards) {
+                if (flashcard.getSetUUID().equals(setUUID)) {
+                    searchedFlashcardSet.addFlashcard(flashcard);
+                }
             }
         }
-
         return searchedFlashcardSet;
     }
 }
