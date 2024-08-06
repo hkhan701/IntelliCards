@@ -1,0 +1,690 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Website - Group 1: IntelliCards</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-uiBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-transparentGray { background-color: rgba(227, 226, 224, 0); }
+.select-value-color-translucentGray { background-color: rgba(0, 0, 0, 0.06); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="c6b603f8-0d33-452f-a125-7f4c5e9645df" class="page sans"><header><h1 class="page-title">Website - Group 1: IntelliCards</h1><p class="page-description"></p></header><div class="page-body"><details open=""><summary style="font-weight:600;font-size:1.5em;line-height:1.3;margin:0">IntelliCards Vision Statement</summary><div class="indented"><hr id="fcaf4396-763d-4808-8c34-68f4b8233a11"/><p id="bfa9772f-7b57-4ef6-8391-a8f9c67754e6" class="">IntelliCards will be a user-friendly flashcard application that allows users to create, edit, and organize flashcards to facilitate personalized and effective learning. The goal of the application is to make study materials more accessible and to give users a variety of ways to test their knowledge. Users will be able to track their progress, save their flashcards, and access various features designed to enhance their study experience. It also offers the flexibility of being able to customize their own flashcards and sets. Furthermore, it is envisioned to be used to motivate students to actively test themselves to effectively digest the contents that they are learning, rather than simply reading the notes over and over to just memorize them.</p><p id="21aa8187-9ae9-4a22-8292-d4499c9ec02b" class=""><br/>This mobile application is designed for students of all ages. The target users are those looking for help with testing and reviewing materials for their school, work, or personal education purposes, regardless of age. IntelliCards strives to bring enjoyment and interaction to studying. New users can register with a username and password. However, the app also caters to guest users. Registered users benefit from saved study progress, and notifications. Guests, on the other hand, can explore the app’s features and get a feel for its functionality before committing to registering. Each registered user will have a personalized profile page where they can view their study metrics. It will display the number of flashcards they have created, the number of sets they have for studying, their accuracy metrics for each set of flashcards, and their log in frequency.<br/></p><p id="bd22725f-d8c9-4133-9efd-32f36b08f5ff" class=""><br/>As for the main creation of the flashcards, users will be able to create sets of flashcards to keep study sessions organized. The cards consist of a question, answer, and if wanted, a hint that can be used to study some contents that the users find challenging. Users will also be able to edit existing flashcards information and change their contained set if wanted to re-organize the existing flahscards. Additionally, users can delete old flashcards they no longer need, but will able to recover them if needed.<br/></p><p id="e56746da-d9c9-4bd0-8d42-ae6103654204" class=""><br/>The project is valuable because as AI systems consistently develop, people tend to stop studying or solving problems on their own, and simply ask AI to do the tasks for them. For everyone’s sake of actually understanding the concepts, introducing enjoyable studying methods that people can easily access anytime, anywhere, is crucial for success. The goal is to motivate people to learn information on their own. It also adds significant value by employing scientifically backed methods like space repetition through notifications to improve knowledge retention.<br/></p><p id="f657186e-2684-4c41-ac2c-7419b1489632" class=""><br/>This project&#x27;s success will be measured by user engagement through notifications, retention, and improved user performance. Some key performance indicators include achieving over 500 user registrations within the first three months and a 20% increase in the number of correct answers on flashcards after one month of use for 80% of the user base. Additionally, the goal is for at least 70% of users to log in for study sessions at least three times per week. The ultimate goal is for users to feel that the app significantly enhances their learning experience and also contributes to their academic growth.<br/></p></div></details><h3 id="b2db20f2-7211-4831-b637-2027807e90b4" class="">Intended Users</h3><p id="71ecdb69-ce87-461b-b064-dab9377a3970" class="">The intended users for IntelliCards are:</p><ul id="854556a3-5d08-4b57-aff9-38bb9f807c19" class="bulleted-list"><li style="list-style-type:disc"><strong>Students of all ages</strong>: The app is designed to cater to the needs of learners regardless of their educational level, from primary school to university and beyond.</li></ul><ul id="58db22b2-e17a-4f66-a348-2031d722aea3" class="bulleted-list"><li style="list-style-type:disc"><strong>Individuals preparing for work-related certifications</strong>: Professionals who need to study and retain information for career advancements.</li></ul><ul id="7b397c20-e741-4374-bb5e-035f606555a4" class="bulleted-list"><li style="list-style-type:disc"><strong>Lifelong learners</strong>: Those who engage in personal education and self-improvement</li></ul><h3 id="3735866a-1752-4b73-a7ae-3e6932611d50" class="">Major Functionality</h3><p id="aae7b672-1f5d-4893-8da8-8189894aa8c4" class="">The major functionalities of IntelliCards include:</p><ul id="d3eda206-6041-42fe-bbac-fd2c136b1a52" class="bulleted-list"><li style="list-style-type:disc"><strong>User Registration and Profiles</strong>: New users can register with a nickname and password, while guest users can explore the app without registering. </li></ul><ul id="705867c9-0c8f-477f-a298-cf40eced4dbf" class="bulleted-list"><li style="list-style-type:disc"><strong>Flashcard Creation and Organization</strong>: Users can create, edit, and organize flashcards into folders and sets, enhancing the structure of their study sessions.</li></ul><ul id="510e0013-52ca-4a1a-9059-472635e10a06" class="bulleted-list"><li style="list-style-type:disc"><strong>Progress Tracking and Metrics</strong>: The app tracks user progress, displaying metrics such as the number of flashcards created, flashcard sets created, accuracy rates for each set, and the number of logins.</li></ul><ul id="49f88b05-9772-4155-ba0f-1370d8361931" class="bulleted-list"><li style="list-style-type:disc"><strong>Interactive Features</strong>: The app includes features such as testing a flashcard set, changing the set a card belongs to, and being able to recover deleted flashcards.</li></ul><ul id="60f5d722-c54c-47d0-a495-a1c84f64b5c9" class="bulleted-list"><li style="list-style-type:disc"><strong>Motivational and Engagement Tools</strong>: To encourage active learning, the app employs notifications in order to set reminders to study for the future. </li></ul><h3 id="f3ba71ef-85c5-4b86-955e-5ee26e3b604d" class="">Team Members</h3><ul id="8967544d-d489-4cf0-9faa-7558bd6ea59f" class="bulleted-list"><li style="list-style-type:disc">Hassan Khan - HSQLDB, Singleton Design Pattern, Login/Register, SOLID</li></ul><ul id="a4bdfce0-e300-4fa2-8f13-73603e2b046c" class="bulleted-list"><li style="list-style-type:disc">Jimin Ryu - JUnit testing, Low coupling, Android GUI</li></ul><ul id="da935b5e-5cdd-495e-9477-1255380c85a9" class="bulleted-list"><li style="list-style-type:disc">Emily Bonds - Junit Testing, Mocking, Refactoring </li></ul><ul id="9a9242e2-4524-42ee-8353-ae050c4cfd9f" class="bulleted-list"><li style="list-style-type:disc">Jade Lee - Android Studio, HSQLDB, Refactoring, SOLID, N-tier architecture</li></ul><ul id="37307036-99a4-4a1e-aced-ca1bf0ceb4be" class="bulleted-list"><li style="list-style-type:disc">Kaye Ruwe - Android GUI, XML, JUnit Testing</li></ul><ul id="01222079-8e63-4a56-9d7f-a10b17f5a3d1" class="bulleted-list"><li style="list-style-type:disc">Katherine Gabrielson - Android Studio, Android GUI, XML, JUnit testing</li></ul>
+	
+	<h2 id="df6ead3f-d5de-4e14-a6a2-ada5357f1941" class="">Features Displayed</h2>
+
+		<div class="source">
+			<video controls>
+				<source src="/intellicards.mp4" type="video/mp4">
+				Your browser does not support the video tag.
+			</video>
+		</div>
+
+
+	<h2 id="cfc4606c-3584-4777-a575-2880f2ed5804" class="">Postmortem of our development experience</h2><h3 id="55a5f85b-ee99-4d00-8bba-3cc79a060eb7" class="">Area you identified for improvement after your iteration 2 retrospective; how did it go?</h3><ul id="037c475b-fc2d-4a8a-908a-dc0ff997b807" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-default">The implementation of Facade into our code was able to reduce the application’s coupling. As a result, we were able to release Features 7, 8, and 9 to be implemented into our code within one week of Iteration 3. In addition, since each method was highly focused, it helped develop tests more quickly and concentrated. </mark></li></ul><h3 id="efad8afa-772f-42b8-8389-22c4cee1561a" class="">Are there any outstanding bugs?</h3><ul id="c9c36bd5-f143-47cf-87f7-06ed36f6c3f1" class="bulleted-list"><li style="list-style-type:disc">One of the outstanding minor bugs we have that we moved to our ‘Future’ milestone is that some elements of our app do not work when using the built-in Android emulator buttons, however using the back buttons we implemented, it works as expected.</li></ul><h3 id="e7551dc6-8dec-45af-a6fb-fa61cc53cc71" class="">How Did the Project Change from Your Initial (Iteration 0) Vision or Stories, or Did It Work Out as Predicted?</h3><p id="535ce928-2eb7-4432-b490-b579a9ef3612" class="">The project underwent several changes from our initial vision and stories laid out in iteration 0. While many core features were implemented successfully, we had to adapt and modify some aspects of the project based on practical constraints and new insights gained during development:</p><ol type="1" id="3b0a96e9-2bfb-4b91-afe6-274a1fc3a14d" class="numbered-list" start="1"><li><strong>Feature Adjustments</strong>:<ul id="83ece919-de90-41c2-8504-6f53e722997f" class="bulleted-list"><li style="list-style-type:disc"><strong>Removed Features</strong>: We initially planned to include badges and gamification elements to increase user engagement. However, we decided to remove these features to focus on the core functionalities and ensure a polished user experience. We also wanted the ability to add images to a flashcard but decided it would be more of a hassle, and decided to go with adding a hint instead.</li></ul><ul id="eccbe646-dbaa-473a-b820-f4a44350224b" class="bulleted-list"><li style="list-style-type:disc"><strong>Simplified Notifications</strong>: Our original vision included a comprehensive notification system to support spaced repetition. We found this to be too complex to implement within our timeline, so we opted for a simpler notification system that users can enable for each flashcard set.</li></ul></li></ol><ol type="1" id="c07d799b-0551-43dc-82bd-b76fd2747686" class="numbered-list" start="2"><li><strong>Revised User Stories</strong>:<ul id="d64b006f-2831-4202-bb35-93627db20929" class="bulleted-list"><li style="list-style-type:disc"><strong>Card Prioritization</strong>: Initially, we wanted users to reorder flashcards within a set to change their priority. This proved challenging due to the complexity of persisting the order, so we decided not to implement this feature.</li></ul><ul id="367f2825-cb5e-425e-aeac-78fd0becd3f5" class="bulleted-list"><li style="list-style-type:disc"><strong>Additional Successful Features</strong>: Despite these changes, we successfully implemented the testing mode, progress tracking, flashcard search functionality, the ability to change the set a flashcard belongs to, and the ability to recover deleted flashcards.</li></ul></li></ol><p id="223c4039-d090-4385-9c47-88d7bd48d52a" class="">Overall, while our project’s final iteration differed from our initial vision, the adjustments made were essential for delivering a functional and user-friendly application.</p><h3 id="5555e981-7c4d-4c66-8adb-fa6b3ab7ed62" class="">What Went Right in the Development Process?</h3><ul id="13de0e78-06c1-4c76-abd8-418b3cfd6235" class="bulleted-list"><li style="list-style-type:disc"><strong>Effective Team Collaboration</strong>: Regular meetings and clear communication helped in aligning the team and addressing issues promptly.</li></ul><ul id="9da0683a-30e0-4e86-9b0f-2f6b54390f29" class="bulleted-list"><li style="list-style-type:disc"><strong>Iterative Development</strong>: Following an iterative approach allowed us to incrementally build, test, and refine the application, ensuring continuous improvement.</li></ul><h3 id="5af22861-686d-4701-9f84-c48c45a54150" class="">What Went Wrong in the Development Process?</h3><ul id="5f55a859-749d-46ae-acc5-35934cb9f521" class="bulleted-list"><li style="list-style-type:disc"><strong>Scope Creep</strong>: Initially, we aimed to implement a wide range of features, which led to overcommitting and subsequent removal of some planned functionalities.</li></ul><ul id="341b3f1c-191d-4b77-92bd-f60d3812f62d" class="bulleted-list"><li style="list-style-type:disc"><strong>Complex Features</strong>: Certain features, like the comprehensive notification system and card prioritization, proved more complex than anticipated and were scaled back.</li></ul><h3 id="2bed6bed-640d-4064-b08e-e3422f296102" class="">Are There Any Outstanding Bugs?</h3><p id="032ac47a-0517-4e81-ac98-d2b056e44411" class="">Yes, there is one outstanding minor bug that we moved to our &#x27;Future&#x27; milestone:</p><ul id="a6718c39-ba76-4d36-bf51-01c73661d4bd" class="bulleted-list"><li style="list-style-type:disc"><strong>Emulator Button Issue</strong>: Some elements of the app do not work correctly when using the built-in Android emulator buttons. However, using the back buttons we implemented within the app itself works as expected.</li></ul><p id="48b02ea6-2665-4870-ba2f-23454d062f7d" class="">We plan to address this issue in future updates to ensure a seamless user experience across all devices and interactions.</p><h3 id="8824fbdf-bfdb-4ac1-b202-7f3c69bfc6cd" class="">What Did You Learn About Team or Large Project Development?</h3><p id="1ed8f0b7-2695-46c4-933d-90f28976200b" class="">Through the development of IntelliCards, we gained several valuable insights into team dynamics and large project management:</p><ol type="1" id="62718e11-4328-4523-97d4-1a40a7f8507b" class="numbered-list" start="1"><li><strong>Communication and Collaboration</strong>: Effective communication and collaboration are crucial for the success of a project. Regular meetings, clear documentation, and open communication helped us stay aligned and address issues promptly.</li></ol><ol type="1" id="a4542561-c654-487a-ab44-b6539d3cd9dd" class="numbered-list" start="2"><li><strong>Flexibility and Adaptability</strong>: We learned the importance of being flexible and adaptable. Our initial vision evolved significantly based on practical constraints and time limitations, demonstrating the need to pivot and adjust our plans as necessary.</li></ol><ol type="1" id="32f1a5f0-3258-4ab2-8a56-5c3cc69d9a3c" class="numbered-list" start="3"><li><strong>Task Delegation and Specialization</strong>: Delegating tasks based on team members&#x27; strengths and allowing them to specialize in certain areas enhanced our efficiency and the quality of the final product.</li></ol><ol type="1" id="7dcb2553-1895-4fc4-8101-682c68308256" class="numbered-list" start="4"><li><strong>Iterative Development and Testing</strong>: An iterative approach to development, where we built, tested, and refined the app in cycles, proved to be effective. Continuous integration and regular testing helped us identify and fix issues early, ensuring a stable and functional application.</li></ol><h3 id="15ba1319-f105-4c5e-bba3-f5d2b0ef5af8" class="">What Will You Start Doing, Keep Doing, or Stop Doing Next Time?</h3><p id="46c3aeef-02b3-44bc-8533-1b2913283be2" class=""><strong>Start Doing:</strong></p><ul id="379673b7-1f00-4e14-8b5f-03d16144c5c0" class="bulleted-list"><li style="list-style-type:disc"><strong>More Comprehensive Planning</strong>: We will invest more time in the initial planning phase to outline a clear roadmap and identify potential challenges early.</li></ul><p id="9fbaba49-ea4c-4ee2-b50b-931a40d41771" class=""><strong>Keep Doing:</strong></p><ul id="d4b968bc-349c-4020-b357-519cd2ad5569" class="bulleted-list"><li style="list-style-type:disc"><strong>Regular Communication</strong>: Maintaining regular communication and collaboration within the team to ensure everyone is on the same page.</li></ul><ul id="ea9309b4-6973-45e2-960f-8f4c9b38c18d" class="bulleted-list"><li style="list-style-type:disc"><strong>Iterative Development</strong>: Continuing with the iterative development process, allowing for continuous improvement and adaptation.</li></ul><ul id="06cc877e-ab6b-4e68-98c7-8d4d59f88893" class="bulleted-list"><li style="list-style-type:disc"><strong>Testing and Quality Assurance</strong>: Emphasizing the importance of rigorous testing and quality assurance throughout the development process.</li></ul><p id="2c40c4ae-c6c9-4097-b4ee-b16517d5c3b9" class=""><strong>Stop Doing:</strong></p><ul id="2b1897ba-92c8-43c5-b327-4967250b1224" class="bulleted-list"><li style="list-style-type:disc"><strong>Overcommitting to Features</strong>: Avoiding the tendency to overcommit to too many features, which can lead to scope creep and burnout. Focusing on delivering core functionalities effectively.</li></ul><h3 id="3ffebf70-045c-48e0-93bc-ea3be132e2b0" class="">Conclusions Drawn from Our Experience</h3><p id="7d3d518b-49fe-45dd-84f2-81cf38dc887e" class="">From our development journey with IntelliCards, we concluded that:</p><ul id="176c366b-1618-4ef0-bce8-7869b497e0a5" class="bulleted-list"><li style="list-style-type:disc"><strong>User Engagement is Key</strong>: Creating an application that actively engages users through interactive and motivational tools significantly enhances their learning experience.</li></ul><ul id="7ea2683b-b009-4d6d-86bb-043fc7e52738" class="bulleted-list"><li style="list-style-type:disc"><strong>Flexibility in Planning</strong>: Being flexible and ready to adapt plans based on practical constraints and user feedback is crucial for project success.</li></ul><ul id="34322200-d53a-4350-80fe-f9edf9e28d59" class="bulleted-list"><li style="list-style-type:disc"><strong>Importance of Team Dynamics</strong>: A well-coordinated team, with clear communication and defined roles, can overcome challenges and deliver a high-quality product.</li></ul><h2 id="c1f6b813-aa9e-4baa-88e5-9522e450b00f" class="">Retrospective</h2><h3 id="080172cd-d484-4483-91f8-7af5bf2ce838" class="">Discussing Project Challenges and Improvements</h3><ul id="d7036bc1-b16a-449e-9942-304ed7e02c52" class="bulleted-list"><li style="list-style-type:disc">Discuss a part of your project that has not been as successful as you would have liked, and how it can be improved in this iteration</li></ul><p id="183f9aaf-2663-46a9-8081-94bee1b5e087" class="">A part of our project that hasn&#x27;t been as successful as we&#x27;d hoped is the amount of coupling in the application. Initially, it seemed easier to continuously add features and link them together. However, as we enter iteration 3, the complexity of this approach has become apparent. Changes to one class affect other classes, leading to a snowball effect of modifications. This has introduced more bugs and extended our debugging time. Implementing new features has become more time-consuming, making the need for refactoring clear.</p><p id="8be1169a-8b43-44d7-a8be-41f76b2d2367" class="">We can address this issue by implementing a design strategy that organizes our code, making feature delivery and testing more modifiable. Refactoring should focus on reducing coupling between classes and ensuring that some methods are used strictly within their own class. One approach could be the introduction of design patterns such as Dependency Injection or the use of interfaces to decouple components. By isolating changes to specific areas of the code, we can minimize the ripple effect of modifications, making our application more robust and easier to maintain.</p><p id="0251f04a-ca42-4039-ae13-1ce9f41da9b8" class="">Another area where our project has fallen short is in our work output. During the initial planning, we had high ambitions and aimed to implement more features than originally intended. As we progressed, it became clear that we hadn&#x27;t considered the structure of our project adequately. For example, implementing features like a small social network where users can share their progress and achievements, along with a comment system for kudos, didn&#x27;t align well with our project design. These features, while exciting, proved to be unrealistic given our current framework and time constraints.</p><p id="adca67c0-0d6d-440b-9226-7bf48e35a7d3" class="">Through the first and second iterations, we learned the importance of planning before starting a feature, rather than diving in blindly and getting trapped in complicated logic. Each new feature needs to be carefully evaluated not just for its feasibility but also for its alignment with the overall project goals and architecture.</p><p id="54aa5aa7-066b-4af5-a703-a32401d04f0e" class="">To improve this, we need to ensure ample preparation and planning before each user story, rather than relying on a general idea. Group discussions at the start of each iteration can help us determine if a feature is realistic to implement within the given time. We should discuss how to integrate it into the back-end layer, the logic layer, and the front-end layer. These discussions should include all members of our project, ensuring that every perspective is considered and that the feature can be smoothly integrated across all layers of the application.</p><p id="5d170408-ed2f-4c73-8baa-6cedc9a96ea7" class="">One specific area to address is where we have implemented the Facade pattern, such as in the UpdateFlashcardService. By clearly identifying where and how patterns like Facade are used, we can streamline interactions between components and simplify the overall design.</p><p id="2b4e0da5-4e42-479e-81be-5cdaaf5d7165" class="">
+</p><ul id="191393ff-87dc-4213-8782-99fd60c5db14" class="bulleted-list"><li style="list-style-type:disc">Determine concrete (and realistic) ways of improvement, and decide how its success will be evaluated at the end of the iteration (measurable and objective)</li></ul><p id="d67b3e7c-7ea6-439f-8ce9-8ff99b825708" class="">We can evaluate the success of our refactoring by looking at the time estimates for Features 7, 8, and 9 in Iteration 3. The goal is to see how reducing coupling speeds up the integration of new features. Tracking these time estimates will provide concrete data on the effectiveness of our refactoring efforts. If we see a reduction in the time taken to implement new features, it will indicate that our approach is working.</p><p id="b81ea750-a956-4dff-821b-1f14e5a27e0a" class="">Additionally, we need to refactor our code, particularly in the presentation and logic layers, to conform to the single responsibility principle and pursue low coupling. This means each class should have one and only one reason to change, which simplifies both development and maintenance.</p><p id="afb15934-f518-470a-bbaf-4309cb72dc2f" class="">We will measure success by the ratio of classes with a single responsibility compared to all classes. A higher ratio will indicate that we have succeeded in our improvement efforts. Furthermore, we will track the number of bugs reported and the time taken to resolve them. A decrease in both metrics will signify that our refactoring has led to a more stable and maintainable codebase.</p><p id="a551385c-8029-4d69-b543-11f2a76683d7" class="">We can finally measure the success of our planning by seeing how many user stories go deleted or unimplemented during the implementation process of our project compared to the first 2 iterations. If we have little to no user stories go unimplemented or deleted that means we have succeeded in our goal of planning better for realistic user story implementation.</p><p id="ccd5fbf4-b495-4ca0-a1eb-a163c8c7655b" class="">Overall, these steps will not only enhance our project&#x27;s current functionality but also pave the way for more sustainable and scalable development in the future.</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
