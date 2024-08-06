@@ -74,7 +74,7 @@ public class AccessFlashcardSetsTest {
      * insertFlashcardSet
      */
     @Test
-    public void testInsertFlashcard() {
+    public void testInsertFlashcardSet() {
         FlashcardSet flashcardSet = new FlashcardSet("TestID", "user1","TestSubject");
 
         manager.insertFlashcardSet(flashcardSet);
@@ -85,7 +85,7 @@ public class AccessFlashcardSetsTest {
     }
 
     @Test
-    public void testInsertFlashcardUserNotPersisted() {
+    public void testInsertFlashcardSetUserNotPersisted() {
         FlashcardSet flashcardSet = new FlashcardSet("TestID", "TestUser","TestSubject");
 
         assertThrows("New flashcard set cannot be inserted into the database if the username has not been persisted",
@@ -93,7 +93,7 @@ public class AccessFlashcardSetsTest {
     }
 
     @Test
-    public void testInsertFlashcardDupe() {
+    public void testInsertFlashcardSetDupe() {
         FlashcardSet flashcardSet = new FlashcardSet("set1", "user1","TestSubject");
 
         assertThrows("New flashcard set cannot be inserted into the database if the username has not been persisted",
@@ -101,7 +101,7 @@ public class AccessFlashcardSetsTest {
     }
 
     @Test
-    public void testInsertFlashcardAssociatedData() {
+    public void testInsertFlashcardSetAssociatedData() {
         FlashcardSet flashcardSet = new FlashcardSet("TestID", "user1","TestSubject");
 
         manager.insertFlashcardSet(flashcardSet);
