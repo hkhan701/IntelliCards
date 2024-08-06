@@ -5,6 +5,7 @@ import org.junit.runners.Suite;
 
 import comp3350.intellicards.tests.business.FlashcardManagerTest;
 import comp3350.intellicards.tests.business.FlashcardSetManagerTest;
+import comp3350.intellicards.tests.business.ReportCalculatorTest;
 import comp3350.intellicards.tests.business.TempTestResultTest;
 import comp3350.intellicards.tests.business.UpdateFlashcardServiceTest;
 import comp3350.intellicards.tests.business.UserManagerTest;
@@ -22,7 +23,8 @@ import comp3350.intellicards.tests.objects.UserTest;
         FlashcardSetManagerTest.class,
         UserManagerTest.class,
         TempTestResultTest.class,
-        UpdateFlashcardServiceTest.class
+        UpdateFlashcardServiceTest.class,
+        ReportCalculatorTest.class
 })
 
 public class AllUnitTests {
