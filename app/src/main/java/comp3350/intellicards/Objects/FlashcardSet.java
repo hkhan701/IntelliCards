@@ -78,6 +78,8 @@ public class FlashcardSet {
         return deletedCards;
     }
 
+    public int getDeletedCount() { return getDeletedFlashcards().size();}
+
     public Flashcard getFlashcardById(String uuid) {
         for (Flashcard card : flashcards) {
             if (card.getUUID().equals(uuid)) {
