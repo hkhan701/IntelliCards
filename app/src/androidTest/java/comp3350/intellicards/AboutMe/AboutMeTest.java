@@ -91,20 +91,18 @@ public class AboutMeTest {
         USERNAME = "user73";
         PASSWORD = "pass73";
 
-        UserManager userManager = new UserManager();
-        int loginCount = userManager.getUserLoginCount("user72") + 1;
-
-        String priorCount = "Login Count: " + loginCount;
-        String postCount = "Login Count: " + (loginCount + 1);
-
         TestUtils.loginUserFromAuthPage(USERNAME, PASSWORD);
+
+        UserManager userManager = new UserManager();
+        int loginCount = userManager.getUserLoginCount("user73");
 
         onView(withId(R.id.headerTitle)).check(matches(allOf(isDisplayed(), ViewMatchers.withText("IntelliCards"))));
 
         onView(withId(R.id.profileButton)).perform(click());
         onView(withId(R.id.aboutMeButton)).perform(click());
 
-        onView(withId(R.id.informationText)).check(matches(withText(containsString(priorCount))));
+        String verify = "Login Count: " + loginCount;
+        onView(withId(R.id.informationText)).check(matches(withText(containsString(verify))));
 
         TestUtils.logoutUserFromAboutMePage();
 
@@ -115,7 +113,8 @@ public class AboutMeTest {
         onView(withId(R.id.profileButton)).perform(click());
         onView(withId(R.id.aboutMeButton)).perform(click());
 
-        onView(withId(R.id.informationText)).check(matches(withText(containsString(postCount))));
+        verify = "Login Count: " + (loginCount + 1);
+        onView(withId(R.id.informationText)).check(matches(withText(containsString(verify))));
 
         TestUtils.logoutUserFromAboutMePage();
     }
@@ -136,8 +135,8 @@ public class AboutMeTest {
         onView(withId(R.id.profileButton)).perform(click());
         onView(withId(R.id.aboutMeButton)).perform(click());
 
-        String priorReport = "Correct: " + correct + " / " + attempted;
-        onView(withId(R.id.informationText)).check(matches(withText(containsString(priorReport))));
+        String verify = "Correct: " + correct + " / " + attempted;
+        onView(withId(R.id.informationText)).check(matches(withText(containsString(verify))));
 
         onView(withId(R.id.backButton)).perform(click());
         onView(withId(R.id.backButton)).perform(click());
@@ -156,8 +155,8 @@ public class AboutMeTest {
         onView(withId(R.id.profileButton)).perform(click());
         onView(withId(R.id.aboutMeButton)).perform(click());
 
-        String postReport = "Correct: " + (correct+1) + " / " + (attempted + 2);
-        onView(withId(R.id.informationText)).check(matches(withText(containsString(postReport))));
+        verify = "Correct: " + (correct+1) + " / " + (attempted + 2);
+        onView(withId(R.id.informationText)).check(matches(withText(containsString(verify))));
 
         TestUtils.logoutUserFromAboutMePage();
     }
