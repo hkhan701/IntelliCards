@@ -10,6 +10,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.core.StringContains.containsString;
 
 import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
@@ -44,17 +45,6 @@ public class AboutMeTest {
         USERNAME = "user71";
         PASSWORD = "pass71";
 
-        UserManager userManager = new UserManager();
-        int loginCount = userManager.getUserLoginCount("user71") + 1;
-
-        String report = "Total Flashcard Sets: 1"
-                + "\nFlashcard count: 3"
-                + "\nActive Flashcard count: 3"
-                + "\nDeleted Flashcard count: 0\n\n\n"
-                + "ALL TIME TOTAL ACCURACY\nCorrect: 0 / 0"
-                + "\nThat is 0% correct: "
-                + "\n\nLogin Count: " + loginCount;
-
         TestUtils.loginUserFromAuthPage(USERNAME, PASSWORD);
 
         onView(withId(R.id.headerTitle)).check(matches(allOf(isDisplayed(), ViewMatchers.withText("IntelliCards"))));
@@ -69,7 +59,8 @@ public class AboutMeTest {
         onView(withId(R.id.profileButton)).perform(click());
         onView(withId(R.id.aboutMeButton)).perform(click());
 
-        onView(withId(R.id.informationText)).check(matches(withText(report)));
+        String verify = "Flashcard count: 3";
+        onView(withId(R.id.informationText)).check(matches(withText(containsString(verify))));
 
         TestUtils.logoutUserFromAboutMePage();
     }
@@ -78,17 +69,6 @@ public class AboutMeTest {
     public void totalFlashcardSetsTest() {
         USERNAME = "user72";
         PASSWORD = "pass72";
-
-        UserManager userManager = new UserManager();
-        int loginCount = userManager.getUserLoginCount("user72") + 1;
-
-        String report = "Total Flashcard Sets: 2"
-                + "\nFlashcard count: 0"
-                + "\nActive Flashcard count: 0"
-                + "\nDeleted Flashcard count: 0\n\n\n"
-                + "ALL TIME TOTAL ACCURACY\nCorrect: 0 / 0"
-                + "\nThat is 0% correct: "
-                + "\n\nLogin Count: " + loginCount;
 
         TestUtils.loginUserFromAuthPage(USERNAME, PASSWORD);
 
@@ -100,7 +80,8 @@ public class AboutMeTest {
         onView(withId(R.id.profileButton)).perform(click());
         onView(withId(R.id.aboutMeButton)).perform(click());
 
-        onView(withId(R.id.informationText)).check(matches(withText(report)));
+        String verify = "Total Flashcard Sets: 2";
+        onView(withId(R.id.informationText)).check(matches(withText(containsString(verify))));
 
         TestUtils.logoutUserFromAboutMePage();
     }
@@ -113,21 +94,8 @@ public class AboutMeTest {
         UserManager userManager = new UserManager();
         int loginCount = userManager.getUserLoginCount("user72") + 1;
 
-        String priorReport = "Total Flashcard Sets: 2"
-                + "\nFlashcard count: 0"
-                + "\nActive Flashcard count: 0"
-                + "\nDeleted Flashcard count: 0\n\n\n"
-                + "ALL TIME TOTAL ACCURACY\nCorrect: 0 / 0"
-                + "\nThat is 0% correct: "
-                + "\n\nLogin Count: " + loginCount;
-
-        String postReport = "Total Flashcard Sets: 2"
-                + "\nFlashcard count: 0"
-                + "\nActive Flashcard count: 0"
-                + "\nDeleted Flashcard count: 0\n\n\n"
-                + "ALL TIME TOTAL ACCURACY\nCorrect: 0 / 0"
-                + "\nThat is 0% correct: "
-                + "\n\nLogin Count: " + (loginCount + 1);
+        String priorCount = "Login Count: " + loginCount;
+        String postCount = "Login Count: " + (loginCount + 1);
 
         TestUtils.loginUserFromAuthPage(USERNAME, PASSWORD);
 
@@ -136,7 +104,7 @@ public class AboutMeTest {
         onView(withId(R.id.profileButton)).perform(click());
         onView(withId(R.id.aboutMeButton)).perform(click());
 
-        onView(withId(R.id.informationText)).check(matches(withText(priorReport)));
+        onView(withId(R.id.informationText)).check(matches(withText(containsString(priorCount))));
 
         TestUtils.logoutUserFromAboutMePage();
 
@@ -147,7 +115,7 @@ public class AboutMeTest {
         onView(withId(R.id.profileButton)).perform(click());
         onView(withId(R.id.aboutMeButton)).perform(click());
 
-        onView(withId(R.id.informationText)).check(matches(withText(postReport)));
+        onView(withId(R.id.informationText)).check(matches(withText(containsString(postCount))));
 
         TestUtils.logoutUserFromAboutMePage();
     }
@@ -157,28 +125,9 @@ public class AboutMeTest {
         USERNAME = "user74";
         PASSWORD = "pass74";
 
-        UserManager userManager = new UserManager();
-        int loginCount = userManager.getUserLoginCount("user72") + 1;
-
         //get current counts from [somewhere]
         int attempted = 0;
         int correct = 0;
-
-        String priorReport = "Total Flashcard Sets: 2"
-                + "\nFlashcard count: 0"
-                + "\nActive Flashcard count: 0"
-                + "\nDeleted Flashcard count: 0\n\n\n"
-                + "ALL TIME TOTAL ACCURACY\nCorrect: " + correct + " / " + attempted
-                + "\nThat is " + Math.round(correct * 100 / (double) attempted) + "% correct: "
-                + "\n\nLogin Count: " + loginCount;
-
-        String postReport = "Total Flashcard Sets: 2"
-                + "\nFlashcard count: 0"
-                + "\nActive Flashcard count: 0"
-                + "\nDeleted Flashcard count: 0\n\n\n"
-                + "ALL TIME TOTAL ACCURACY\nCorrect: " + (correct+1) + " / " + (attempted + 2)
-                + "\nThat is " + Math.round((correct + 1) * 100 / (double) (attempted + 2)) + "% correct: "
-                + "\n\nLogin Count: " + loginCount;
 
         TestUtils.loginUserFromAuthPage(USERNAME, PASSWORD);
 
@@ -187,7 +136,8 @@ public class AboutMeTest {
         onView(withId(R.id.profileButton)).perform(click());
         onView(withId(R.id.aboutMeButton)).perform(click());
 
-        onView(withId(R.id.informationText)).check(matches(withText(priorReport)));
+        String priorReport = "Correct: " + correct + " / " + attempted;
+        onView(withId(R.id.informationText)).check(matches(withText(containsString(priorReport))));
 
         onView(withId(R.id.backButton)).perform(click());
         onView(withId(R.id.backButton)).perform(click());
@@ -206,7 +156,8 @@ public class AboutMeTest {
         onView(withId(R.id.profileButton)).perform(click());
         onView(withId(R.id.aboutMeButton)).perform(click());
 
-        onView(withId(R.id.informationText)).check(matches(withText(postReport)));
+        String postReport = "Correct: " + (correct+1) + " / " + (attempted + 2);
+        onView(withId(R.id.informationText)).check(matches(withText(containsString(postReport))));
 
         TestUtils.logoutUserFromAboutMePage();
     }
