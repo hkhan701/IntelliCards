@@ -7,7 +7,7 @@ import comp3350.intellicards.Application.UserSession;
 import comp3350.intellicards.Objects.User;
 import comp3350.intellicards.Persistence.UserPersistence;
 
-public class UserPersistenceStub implements UserPersistence {
+abstract public class UserPersistenceStub implements UserPersistence {
     private List<User> users;
     private boolean mockInitialized;
 
@@ -47,10 +47,5 @@ public class UserPersistenceStub implements UserPersistence {
     @Override
     public void addUser(User user) {
         users.add(user);
-    }
-
-    @Override
-    public void deleteUser(String username) {
-        users.removeIf(u -> u.getUsername().equals(username));
     }
 }

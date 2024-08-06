@@ -39,7 +39,6 @@ public class UserPersistenceStub implements UserPersistence {
         users.add(user);
     }
 
-    @Override
     public void deleteUser(String username) {
         users.removeIf(u -> u.getUsername().equals(username));
     }
