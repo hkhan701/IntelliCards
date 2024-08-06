@@ -1,18 +1,12 @@
 package comp3350.intellicards.Persistence.stubs;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import comp3350.intellicards.Objects.Flashcard;
 import comp3350.intellicards.Objects.FlashcardSet;
 import comp3350.intellicards.Persistence.FlashcardSetPersistence;
-import comp3350.intellicards.Persistence.hsqldb.PersistenceException;
 
 public class FlashcardSetPersistenceStub implements FlashcardSetPersistence {
 
@@ -54,15 +48,6 @@ public class FlashcardSetPersistenceStub implements FlashcardSetPersistence {
         }
 
         return searchedFlashcardSets;
-    }
-
-    public boolean addFlashcardToFlashcardSet(String setUUID, Flashcard flashcard) {
-        FlashcardSet set = flashcardSets.get(setUUID);
-        if (set != null) {
-            set.addFlashcard(flashcard);
-            return true;
-        }
-        return false;
     }
 
     @Override
