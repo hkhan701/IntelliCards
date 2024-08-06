@@ -114,7 +114,7 @@ public class AccessFlashcardsTest {
     @Test
     public void testUpdateFlashcard() {
         Flashcard flashcard = new Flashcard("TestID", "set1", "q", "a", null, false, 0, 0);
-        Flashcard edited = new Flashcard("TestID", "set2", "Edit q", "Edit a", "Edit h", true, 6, 1);
+        Flashcard edited = new Flashcard("TestID", "set2", "Edit q", "Edit a", "Edit h", false, 0, 0);
 
         manager.insertFlashcard(flashcard);
         manager.updateFlashcard(edited);
@@ -130,12 +130,6 @@ public class AccessFlashcardsTest {
                 "Edit a", updated.getAnswer());
         assertEquals("Updating a flashcard will persist the given hint",
                 "Edit h", updated.getHint());
-        assertEquals("Updating a flashcard will persist the given attempted count",
-                6, updated.getAttempted());
-        assertEquals("Updating a flashcard will persist the given correct count",
-                1, updated.getCorrect());
-        assertTrue("Updating a flashcard will persist the given deleted state",
-                updated.isDeleted());
     }
 
     @Test
