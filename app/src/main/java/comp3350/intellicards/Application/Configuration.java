@@ -6,7 +6,6 @@ public class Configuration {
      * Recognized Values
      * - hsqldb
      * - testHsqldb
-     * - stub
      * If value is not recognized, datasource will default to hsqldb
      */
     private static final String datasource = "hsqldb";

@@ -13,7 +13,7 @@
 ### Application Layer
 
 - Configuration: Object which configures the type of the database being used.
-- Services: Object which instantiates all databases (either HSQLDB or stub).
+- Services: Object which instantiates all databases (HSQLDB).
 - UserSession: Object which instantiates the user session type (either a specific account or guest).
 
 ### Presentation Layer
