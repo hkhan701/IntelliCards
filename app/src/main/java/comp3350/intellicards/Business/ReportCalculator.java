@@ -23,7 +23,7 @@ public class ReportCalculator {
     public static String getUserInformation(List<FlashcardSet> flashcardSetList)
     {
         int totalSets = flashcardSetList.size();
-        int[] counts = getAllTimeFlashcardCounts(flashcardSetList);
+        int[] counts = ReportCalculator.getAllTimeFlashcardCounts(flashcardSetList);
 
         return          "Total Flashcard Sets: "
                 + totalSets + "\nFlashcard count: "
@@ -31,7 +31,7 @@ public class ReportCalculator {
                 + counts[1]
                 + "\nDeleted Flashcard count: "
                 + counts[2] + "\n\n\n"
-                + getAllTimeAccuracy(flashcardSetList);
+                + ReportCalculator.getAllTimeAccuracy(flashcardSetList);
     }
 
     //where index 0 is the all time count
@@ -44,8 +44,8 @@ public class ReportCalculator {
         for(int i = 0; i < totalSets; i++)
         {
             counts[0] += flashcardSetList.get(i).size();
-            counts[1] += flashcardSetList.get(i).getActiveFlashcards().size();
-            counts[2] += flashcardSetList.get(i).getDeletedFlashcards().size();
+            counts[1] += flashcardSetList.get(i).getActiveCount();
+            counts[2] += flashcardSetList.get(i).getDeletedCount();
         }
         return counts;
     }
@@ -62,27 +62,18 @@ public class ReportCalculator {
             allTimeAttempted += reportCalculator.getTotalAttempted();
         }
         return reportSetAccuracy(allTimeCorrect, allTimeAttempted);
-
     }
-
 
     private static String reportSetAccuracy(int correct, int attempted){
         return "ALL TIME TOTAL ACCURACY\nCorrect: " + correct + " / " + attempted
                 + "\nThat is " + Math.round(correct * 100 / (double) attempted) + "% correct: ";
     }
 
-    public String reportSetAccuracy() {
-        return reportSetAccuracy(totalCorrect, totalAttempted);
-    }
+    public String reportSetAccuracy() { return reportSetAccuracy(totalCorrect, totalAttempted);}
 
-    public int getTotalAttempted() {
-        return totalAttempted;
-    }
+    public int getTotalAttempted() { return totalAttempted;}
 
-    public int getTotalCorrect() {
-        return totalCorrect;
-    }
-
+    public int getTotalCorrect() { return totalCorrect; }
 
     private void collectStats() {
         for (int i = 0; i < flashcardSet.size(); i++) {

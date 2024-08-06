@@ -13,7 +13,7 @@
 ### Application Layer
 
 - Configuration: Object which configures the type of the database being used.
-- Services: Object which instantiates all databases (either HSQLDB or stub).
+- Services: Object which instantiates all databases (HSQLDB).
 - UserSession: Object which instantiates the user session type (either a specific account or guest).
 
 ### Presentation Layer
@@ -39,6 +39,7 @@
 - NotificationManager: Manages creation of notifications and display them on set day and time. 
 - ReportCalculator: Gathers the "all time" statistics of the total tests for a particular flashcard set.
 - TempTestResult: Temporarily stores the test results of one test session. 
+- UpdateFlashcardService: Updates edited flashcards
 - UserManager: Manages insertion of new accounts into persistence data, and retrieval of existing accounts.
 
 ### Persistence Layer

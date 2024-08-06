@@ -1,54 +1,51 @@
 package comp3350.intellicards.tests.business;
 
-import java.util.ArrayList;
-import java.util.List;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNull;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
-import static org.junit.Assert.*;
-
-import org.junit.Test;
 import org.junit.Before;
+import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 import comp3350.intellicards.Business.FlashcardSetManager;
 import comp3350.intellicards.Objects.Flashcard;
 import comp3350.intellicards.Objects.FlashcardSet;
-import comp3350.intellicards.tests.persistance.FlashcardSetPersistenceStub;
+import comp3350.intellicards.Persistence.FlashcardSetPersistence;
 
 public class FlashcardSetManagerTest {
 
-    private FlashcardSetPersistenceStub flashcardSetData;
+    private FlashcardSetPersistence flashcardSetData;
+    private FlashcardSet flashcardSet;
+    private Flashcard flashcard;
     private FlashcardSetManager flashcardSetManager;
 
     @Before
     public void setUp() {
-        flashcardSetData = new FlashcardSetPersistenceStub();
+        flashcardSet = mock(FlashcardSet.class);
+        flashcard = mock(Flashcard.class);
+        flashcardSetData = mock(FlashcardSetPersistence.class);
         flashcardSetManager = new FlashcardSetManager(flashcardSetData);
     }
 
     /*
-     * Test insertFlashcardSet()
-     * and getFlashcardSet()
+     * Test getFlashcardSet()
      */
     @Test
     public void testGetFlashcardSet() {
-        FlashcardSet flashcardSet = new FlashcardSet("Test User", "Test Set");
-        String flashcardUUID = flashcardSet.getUUID();
+        flashcardSetManager.getFlashcardSet("uuid");
 
-        flashcardSetManager.insertFlashcardSet(flashcardSet);
-
-        assertEquals("FlashcardSetManager can retrieve managed flashcardSet given its UUID",
-                flashcardSet, flashcardSetManager.getFlashcardSet(flashcardUUID));
-    }
-
-    @Test
-    public void testGetFlashcardSetNotManaged() {
-        assertNull("FlashcardSetManager cannot retrieve a non managed set",
-                flashcardSetManager.getFlashcardSet("TestUUID"));
-    }
-
-    @Test
-    public void testGetFlashcardSetNull() {
-        assertNull("FlashcardSetManager cannot retrieve a set if given a null",
-                flashcardSetManager.getFlashcardSet(null));
+        // FlashcardSetManager can call getFlashcardSet() for the persistence from its own method of the same name
+        verify(flashcardSetData).getFlashcardSet("uuid");
     }
 
     /*
@@ -56,20 +53,16 @@ public class FlashcardSetManagerTest {
      */
     @Test
     public void testGetActiveFlashcardSet() {
-        FlashcardSet flashcardSet = new FlashcardSet("testUser", "Test Set");
-        Flashcard flashcard1 = new Flashcard(flashcardSet.getUUID(), "Test Question 1", "Test Answer 1", "Test Hint 1");
-        Flashcard flashcard2 = new Flashcard(flashcardSet.getUUID(), "Test Question 2", "Test Answer 2", "Test Hint 2");
+        FlashcardSet activeSet = mock(FlashcardSet.class);
 
-        flashcardSetManager.insertFlashcardSet(flashcardSet);
-        flashcardSetManager.addFlashcardToFlashcardSet(flashcardSet.getUUID(), flashcard1);
-        flashcardSetManager.addFlashcardToFlashcardSet(flashcardSet.getUUID(), flashcard2);
+        when(activeSet.getIndex(0)).thenReturn(flashcard);
+        when(flashcardSet.getActiveFlashcards()).thenReturn(activeSet);
+        when(flashcardSetData.getFlashcardSet("active")).thenReturn(flashcardSet);
 
-        flashcard2.markDeleted();
-
-        FlashcardSet activeSet = flashcardSetManager.getActiveFlashcardSet(flashcardSet.getUUID());
+        FlashcardSet flashcardSetRetrieved = flashcardSetManager.getActiveFlashcardSet("active");
 
         assertEquals("FlashcardSetManager can retrieve active cards from managed set",
-                flashcard1, activeSet.getIndex(0));
+                flashcard, flashcardSetRetrieved.getIndex(0));
     }
 
     @Test
@@ -79,60 +72,115 @@ public class FlashcardSetManagerTest {
     }
 
     /*
+     * Test insertFlashcard()
+     */
+    @Test
+    public void testInsertFlashcard() {
+        flashcardSetManager.insertFlashcardSet(flashcardSet);
+
+        // FlashcardSetManager can call insertFlashcardSet() for the persistence from its own method of the same name
+        verify(flashcardSetData).insertFlashcardSet(flashcardSet);
+    }
+    /*
+     * Test getFlashcardSetsByKey(String)
+     */
+    @Test
+    public void testGetFlashcardSetsByKeyVerify() {
+        flashcardSetManager.getFlashcardSetsByKey("Key");
+
+        // FlashcardSetManager can call getFlashcardSetsByKey() for the persistence from its own method of the same name
+        verify(flashcardSetData).getFlashcardSetsByKey("Key");
+    }
+
+    /*
      * Test getAllDeletedFlashcards()
      */
     @Test
     public void testGetAllDeletedFlashcards() {
-        FlashcardSet flashcardSet = new FlashcardSet("testUser", "Test Set");
-        Flashcard flashcard1 = new Flashcard(flashcardSet.getUUID(), "Test Question 1", "Test Answer 1", "Test Hint 1");
-        Flashcard flashcard2 = new Flashcard(flashcardSet.getUUID(), "Test Question 2", "Test Answer 2", "Test Hint 2");
+        FlashcardSet deletedSet = mock(FlashcardSet.class);
+        List<FlashcardSet> allFlashcards = mock(ArrayList.class);
+        Iterator<FlashcardSet> flashcardSetIterator = mock(Iterator.class);
 
-        flashcardSetManager.insertFlashcardSet(flashcardSet);
-        flashcardSetManager.addFlashcardToFlashcardSet(flashcardSet.getUUID(), flashcard1);
-        flashcardSetManager.addFlashcardToFlashcardSet(flashcardSet.getUUID(), flashcard2);
+        when(flashcardSetData.getAllFlashcardSets()).thenReturn(allFlashcards);
+        when(flashcardSetData.getFlashcardSet("TestSet")).thenReturn(flashcardSet);
 
-        flashcard2.markDeleted();
+        when(allFlashcards.iterator()).thenReturn(flashcardSetIterator);
+        when(flashcardSetIterator.hasNext()).thenReturn(true, false);
+        when(flashcardSetIterator.next()).thenReturn(flashcardSet);
 
-        List<Flashcard> deletedSet = flashcardSetManager.getAllDeletedFlashcards("testUser");
+        when(flashcardSet.getUsername()).thenReturn("TestUser");
+        when(flashcardSet.getUUID()).thenReturn("TestSet");
+        when(flashcardSet.getDeletedFlashcards()).thenReturn(deletedSet);
+        when(deletedSet.size()).thenReturn(1);
+        when(deletedSet.getIndex(anyInt())).thenReturn(flashcard);
+
+        List<Flashcard> retrievedSet = flashcardSetManager.getAllDeletedFlashcards("TestUser");
 
         assertEquals("FlashcardSetManager can retrieve all deleted cards for single user",
-                flashcard2, deletedSet.get(0));
+                flashcard, retrievedSet.get(0));
     }
 
     @Test
     public void testGetAllDeletedFlashcardsNoDeleted() {
-        FlashcardSet flashcardSet = new FlashcardSet("testUser", "Test Set");
-        Flashcard flashcard1 = new Flashcard(flashcardSet.getUUID(), "Test Question 1", "Test Answer 1", "Test Hint 1");
-        Flashcard flashcard2 = new Flashcard(flashcardSet.getUUID(), "Test Question 2", "Test Answer 2", "Test Hint 2");
+        FlashcardSet deletedSet = mock(FlashcardSet.class);
+        List<FlashcardSet> allFlashcards = mock(ArrayList.class);
+        Iterator<FlashcardSet> flashcardSetIterator = mock(Iterator.class);
 
-        flashcardSetManager.insertFlashcardSet(flashcardSet);
-        flashcardSetManager.addFlashcardToFlashcardSet(flashcardSet.getUUID(), flashcard1);
-        flashcardSetManager.addFlashcardToFlashcardSet(flashcardSet.getUUID(), flashcard2);
+        when(flashcardSetData.getAllFlashcardSets()).thenReturn(allFlashcards);
+        when(flashcardSetData.getFlashcardSet("TestSet")).thenReturn(flashcardSet);
 
-        List<Flashcard> deletedSet = flashcardSetManager.getAllDeletedFlashcards("testUser");
+        when(allFlashcards.iterator()).thenReturn(flashcardSetIterator);
+        when(flashcardSetIterator.hasNext()).thenReturn(true, false);
+        when(flashcardSetIterator.next()).thenReturn(flashcardSet);
+
+        when(flashcardSet.getUsername()).thenReturn("TestUser");
+        when(flashcardSet.getUUID()).thenReturn("TestSet");
+        when(flashcardSet.getDeletedFlashcards()).thenReturn(deletedSet);
+        when(deletedSet.size()).thenReturn(0);
+        when(deletedSet.getIndex(anyInt())).thenReturn(flashcard);
+
+        List<Flashcard> retrievedSet = flashcardSetManager.getAllDeletedFlashcards("TestUser");
 
         assertEquals("FlashcardSetManager cannot retrieve all deleted cards for a single user because there are none",
-                0, deletedSet.size());
+                0, retrievedSet.size());
     }
 
     @Test
     public void testAllDeletedFlashcardsOtherUser() {
-        FlashcardSet flashcardSetNeed = new FlashcardSet("testUser1", "Test Set");
-        FlashcardSet flashcardSetOther = new FlashcardSet("testUser2", "Test Set");
-        Flashcard flashcard1 = new Flashcard(flashcardSetNeed.getUUID(), "Test Question 1", "Test Answer 1", "Test Hint 1");
-        Flashcard flashcard2 = new Flashcard(flashcardSetOther.getUUID(), "Test Question 2", "Test Answer 2", "Test Hint 2");
+        FlashcardSet userSet = mock(FlashcardSet.class);
+        Flashcard userFlashcard = mock(Flashcard.class);
+        FlashcardSet userSetDeleted = mock(FlashcardSet.class);
+        FlashcardSet flashcardSetDeleted = mock(FlashcardSet.class);
+        List<FlashcardSet> allFlashcards = mock(ArrayList.class);
+        Iterator<FlashcardSet> flashcardSetIterator = mock(Iterator.class);
 
-        flashcardSetManager.insertFlashcardSet(flashcardSetNeed);
-        flashcardSetManager.insertFlashcardSet(flashcardSetOther);
-        flashcardSetManager.addFlashcardToFlashcardSet(flashcardSetNeed.getUUID(), flashcard1);
-        flashcardSetManager.addFlashcardToFlashcardSet(flashcardSetOther.getUUID(), flashcard2);
+        when(flashcardSetData.getAllFlashcardSets()).thenReturn(allFlashcards);
+        when(flashcardSetData.getFlashcardSet("TestSet")).thenReturn(userSet);
+        when(flashcardSetData.getFlashcardSet("NotTestSet")).thenReturn(flashcardSet);
 
-        flashcard1.markDeleted();
-        flashcard2.markDeleted();
+        when(allFlashcards.iterator()).thenReturn(flashcardSetIterator);
+        when(flashcardSetIterator.hasNext()).thenReturn(true, true, false);
+        when(flashcardSetIterator.next()).thenReturn(flashcardSet, userSet);
 
-        List<Flashcard> deletedSet = flashcardSetManager.getAllDeletedFlashcards("testUser1");
+        when(userSet.getUsername()).thenReturn("TestUser");
+        when(userSet.getUUID()).thenReturn("TestSet");
+        when(userSet.getDeletedFlashcards()).thenReturn(userSetDeleted);
+        when(userSetDeleted.size()).thenReturn(1);
+        when(userSetDeleted.getIndex(anyInt())).thenReturn(userFlashcard);
+
+        when(flashcardSet.getUsername()).thenReturn("NotTestUser");
+        when(flashcardSet.getUUID()).thenReturn("NotTestSet");
+        when(flashcardSet.getDeletedFlashcards()).thenReturn(flashcardSetDeleted);
+        when(flashcardSetDeleted.size()).thenReturn(1);
+        when(flashcardSetDeleted.getIndex(anyInt())).thenReturn(flashcard);
+
+        List<Flashcard> retrievedFlashcards = flashcardSetManager.getAllDeletedFlashcards("TestUser");
+
         assertEquals("FlashcardSetManager cannot retrieve the deleted cards of a different user",
-                flashcard1, deletedSet.get(0));
+                1, retrievedFlashcards.size());
+
+        assertEquals("FlashcardSetManager cannot retrieve the deleted cards of a different user",
+                userFlashcard, retrievedFlashcards.get(0));
     }
 
     @Test
@@ -145,28 +193,25 @@ public class FlashcardSetManagerTest {
      * Test addFlashcardToFlashcardSet()
      */
     @Test
-    public void testAddFlashcardToExistingFlashcardSet() {
-        FlashcardSet flashcardSet = new FlashcardSet("testUser","Test Set");
-        String flashcardSetUUID = flashcardSet.getUUID();
+    public void testAddFlashcardToFlashcardSet() {
+        when(flashcardSetData.getFlashcardSet("TestSet")).thenReturn(flashcardSet);
 
-        Flashcard flashcard = new Flashcard(flashcardSetUUID, "Test Question", "Test Answer", "Test Hint");
+        FlashcardSet retrievedFlashcardSet = flashcardSetManager.addFlashcardToFlashcardSet("TestSet", flashcard);
 
-        flashcardSetManager.insertFlashcardSet(flashcardSet);
-
-        assertTrue("FlashcardSetManager verifies that the flashcard was added to the set with a return value",
-                flashcardSetManager.addFlashcardToFlashcardSet(flashcardSetUUID, flashcard));
-
-        assertEquals("You can add a flashcard to a flashcard set from the flashcardSetManager",
-                1, flashcardSetManager.getFlashcardSet(flashcardSetUUID).getActiveFlashcards().size());
+        // FlashcardSetManager adds flashcard to flashcard set instance if it is managed
+        verify(flashcardSet).addFlashcard(flashcard);
+        assertEquals("FlashcardSetManager returns flashcardSet with added flashcard",
+                flashcardSet, retrievedFlashcardSet);
     }
 
     @Test
-    public void testAddFlashcardToNonExistingFlashcardSet() {
-        FlashcardSet flashcardSet = new FlashcardSet("testUser", "Test Set");
-        Flashcard flashcard = new Flashcard(flashcardSet.getUUID(), "Test Question 1", "Test Answer 2", null);
+    public void testAddFlashcardToNonManagedFlashcardSet() {
+        FlashcardSet retrievedFlashcardSet = flashcardSetManager.addFlashcardToFlashcardSet("TestSet", flashcard);
 
-        assertFalse("FlashcardSetManager cannot retrieve all deleted cards for single user if they have no managed sets",
-                flashcardSetManager.addFlashcardToFlashcardSet(flashcardSet.getUUID(), flashcard));
+        // FlashcardSetManager does not add flashcard to flashcard set instance if the set is not managed
+        verify(flashcardSet, times(0)).addFlashcard(flashcard);
+        assertNull("FlashcardSetManager does not return a flashcard set since there was nothing modified",
+                retrievedFlashcardSet);
     }
 
     /*
@@ -174,22 +219,10 @@ public class FlashcardSetManagerTest {
      */
     @Test
     public void testGetAllFlashcardSets() {
-        FlashcardSet flashcardSet1 = new FlashcardSet("testUser1", "testSet1");
-        FlashcardSet flashcardSet2 = new FlashcardSet("testUser2", "testSet2");
-        FlashcardSet flashcardSet3 = new FlashcardSet("testUser3", "testSet3");
+        flashcardSetManager.getAllFlashcardSets();
 
-        flashcardSetManager.insertFlashcardSet(flashcardSet1);
-        flashcardSetManager.insertFlashcardSet(flashcardSet2);
-        flashcardSetManager.insertFlashcardSet(flashcardSet3);
-
-        List<FlashcardSet> flashcardSets = flashcardSetManager.getAllFlashcardSets();
-
-        assertNotEquals("FlashcardSetManager can retrieve all sets managed",
-                -1, flashcardSets.indexOf(flashcardSet1));
-        assertNotEquals("FlashcardSetManager can retrieve all sets managed",
-                -1, flashcardSets.indexOf(flashcardSet2));
-        assertNotEquals("FlashcardSetManager can retrieve all sets managed",
-                -1, flashcardSets.indexOf(flashcardSet3));
+        // FlashcardSetManager can call getAllFlashcardSets() for the persistence from its own method of the same name
+        verify(flashcardSetData).getAllFlashcardSets();
     }
 
     /*
@@ -197,74 +230,28 @@ public class FlashcardSetManagerTest {
      */
     @Test
     public void testShuffleFlashcards() {
-        FlashcardSet flashcardSet = new FlashcardSet("TestUser", "TestSetName");
+        when(flashcardSetData.getFlashcardSet("TestSet")).thenReturn(flashcardSet);
 
-        Flashcard flashcard1 = new Flashcard(flashcardSet.getUUID(), "Less Generic Question", "Less Generic Answer", null);
-        Flashcard flashcard2 = new Flashcard(flashcardSet.getUUID(), "Even Less Generic Question", "Even Less Generic Answer", "Need Hint");
-        Flashcard flashcard3 = new Flashcard(flashcardSet.getUUID(), "Question", "Answer", null);
-        Flashcard flashcard4 = new Flashcard(flashcardSet.getUUID(), "Generic Question", "Generic Answer", null);
+        when(flashcardSet.getActiveFlashcards()).thenReturn(flashcardSet);
+        when(flashcardSet.getUUID()).thenReturn("TestSet");
 
-        flashcardSet.addFlashcard(flashcard1);
-        flashcardSet.addFlashcard(flashcard2);
-        flashcardSet.addFlashcard(flashcard3);
-        flashcardSet.addFlashcard(flashcard4);
+        flashcardSetManager.shuffleFlashcardSet(flashcardSet);
 
-        FlashcardSet randomizedCardSet = new FlashcardSet("TestUUIDRandom", "TestUsernameRandom", "TestNameRandom");
-        randomizedCardSet.addFlashcard(flashcard1);
-        randomizedCardSet.addFlashcard(flashcard2);
-        randomizedCardSet.addFlashcard(flashcard3);
-        randomizedCardSet.addFlashcard(flashcard4);
-
-        flashcardSetManager.insertFlashcardSet(randomizedCardSet);
-        flashcardSetManager.shuffleFlashcardSet(randomizedCardSet);
-
-        boolean shuffled = false;
-        for (int i = 0; i < flashcardSet.size() && !shuffled; i++) {
-            if (flashcardSet.getIndex(i) != randomizedCardSet.getIndex(i)) {
-                shuffled = true;
-            }
-        }
-
-        assertTrue("FlashcardSetManager can change the order of flashcards in a set:\n" +
-                        "\tPlease note that this test may fail due to the random nature of the method." +
-                        "\tIf it does fail, re-run it a few times before determining that this method is not working as intended",
-                shuffled);
+        // FlashcardSetManager can call the method to randomize a set
+        verify(flashcardSet).randomizeSet();
     }
 
     @Test
     public void testShuffleNonManagedFlashcardSet() {
-        FlashcardSet flashcardSet = new FlashcardSet("TestUser", "TestSetName");
+        when(flashcardSetData.getFlashcardSet("TestSet")).thenReturn(null);
 
-        Flashcard flashcard1 = new Flashcard(flashcardSet.getUUID(), "Less Generic Question", "Less Generic Answer", null);
-        Flashcard flashcard2 = new Flashcard(flashcardSet.getUUID(), "Even Less Generic Question", "Even Less Generic Answer", "Need Hint");
-        Flashcard flashcard3 = new Flashcard(flashcardSet.getUUID(), "Question", "Answer", null);
-        Flashcard flashcard4 = new Flashcard(flashcardSet.getUUID(), "Generic Question", "Generic Answer", null);
+        when(flashcardSet.getActiveFlashcards()).thenReturn(flashcardSet);
+        when(flashcardSet.getUUID()).thenReturn("TestSet");
 
-        flashcardSet.addFlashcard(flashcard1);
-        flashcardSet.addFlashcard(flashcard2);
-        flashcardSet.addFlashcard(flashcard3);
-        flashcardSet.addFlashcard(flashcard4);
+        flashcardSetManager.shuffleFlashcardSet(flashcardSet);
 
-        FlashcardSet randomizedCardSet = new FlashcardSet("TestUUIDRandom", "TestUsernameRandom", "TestNameRandom");
-        randomizedCardSet.addFlashcard(flashcard1);
-        randomizedCardSet.addFlashcard(flashcard2);
-        randomizedCardSet.addFlashcard(flashcard3);
-        randomizedCardSet.addFlashcard(flashcard4);
-
-        flashcardSetManager.shuffleFlashcardSet(randomizedCardSet);
-
-        assertNull("FlashcardSetManager will not add a set if it is shuffled",
-                flashcardSetManager.getFlashcardSet(randomizedCardSet.getUUID()));
-
-        boolean shuffled = false;
-        for (int i = 0; i < flashcardSet.size() && !shuffled; i++) {
-            if (flashcardSet.getIndex(i) != randomizedCardSet.getIndex(i)) {
-                shuffled = true;
-            }
-        }
-
-        assertFalse("FlashcardSetManager cannot shuffle the flashcards of a non managed set",
-                shuffled);
+        // FlashcardSetManager cannot call the method to randomize a set if it is not managed
+        verify(flashcardSet, times(0)).randomizeSet();
     }
 
     /*
@@ -272,32 +259,167 @@ public class FlashcardSetManagerTest {
      */
     @Test
     public void testGetFlashcardSetsByUsername() {
-        FlashcardSet flashcardSet = new FlashcardSet("TestUser", "TestSetName");
-        flashcardSetManager.insertFlashcardSet(flashcardSet);
+        List<FlashcardSet> allFlashcards = mock(ArrayList.class);
+        Iterator<FlashcardSet> flashcardSetIterator = mock(Iterator.class);
 
-        assertEquals("FlashcardSetManager can retrieve sets based on username",
-                flashcardSet, flashcardSetManager.getFlashcardSetsByUsername("TestUser").get(0));
+        when(allFlashcards.iterator()).thenReturn(flashcardSetIterator);
+        when(flashcardSetIterator.hasNext()).thenReturn(true, false);
+        when(flashcardSetIterator.next()).thenReturn(flashcardSet);
+
+        when(flashcardSet.getUsername()).thenReturn("TestUser");
+        when(flashcardSetData.getAllFlashcardSets()).thenReturn(allFlashcards);
+
+        List<FlashcardSet> retrievedFlashcardSets = flashcardSetManager.getFlashcardSetsByUsername("TestUser");
+
+        assertNotEquals("FlashcardSetManager can retrieve sets based on username",
+                -1, retrievedFlashcardSets.indexOf(flashcardSet));
     }
 
     @Test
     public void testGetFlashcardSetByUserMixed() {
-        FlashcardSet flashcardSet1 = new FlashcardSet("TestUser1", "TestSetName");
-        FlashcardSet flashcardSet2 = new FlashcardSet("TestUser2", "TestSetName");
+        FlashcardSet userSet = mock(FlashcardSet.class);
+        List<FlashcardSet> allFlashcards = mock(ArrayList.class);
+        Iterator<FlashcardSet> flashcardSetIterator = mock(Iterator.class);
 
-        flashcardSetManager.insertFlashcardSet(flashcardSet1);
-        flashcardSetManager.insertFlashcardSet(flashcardSet2);
+        when(allFlashcards.iterator()).thenReturn(flashcardSetIterator);
+        when(flashcardSetIterator.hasNext()).thenReturn(true, true, true, false);
+        when(flashcardSetIterator.next()).thenReturn(flashcardSet, userSet, flashcardSet);
+
+        when(flashcardSetData.getAllFlashcardSets()).thenReturn(allFlashcards);
+        when(flashcardSet.getUsername()).thenReturn("NotTestUser");
+        when(userSet.getUsername()).thenReturn("TestUser");
+
+        List<FlashcardSet> retrievedFlashcardSets = flashcardSetManager.getFlashcardSetsByUsername("TestUser");
 
         assertEquals("FlashcardSetManager will not retrieve other people's sets when calling getFlashcardSetsByUsername()",
-                1, flashcardSetManager.getFlashcardSetsByUsername("TestUser1").size());
-
-        assertEquals("FlashcardSetManager will not retrieve other people's sets when calling getFlashcardSetsByUsername()",
-                flashcardSet1, flashcardSetManager.getFlashcardSetsByUsername("TestUser1").get(0));
+                -1, retrievedFlashcardSets.indexOf(flashcardSet));
     }
 
     @Test
     public void testGetFlashcardSetByUserNonManaged() {
         assertEquals("FlashcardSetManager will not retrieve non-managed sets from a user",
                 new ArrayList<>(), flashcardSetManager.getFlashcardSetsByUsername("TestUser"));
+    }
+
+    /*
+     * Test getFlashcardSetsByKey(String, String)
+     */
+    @Test
+    public void testGetFlashcardSetsByKey() {
+        List<FlashcardSet> allFlashcards = mock(ArrayList.class);
+        Iterator<FlashcardSet> flashcardSetIterator = mock(Iterator.class);
+
+        when(allFlashcards.iterator()).thenReturn(flashcardSetIterator);
+        when(flashcardSetIterator.hasNext()).thenReturn(true, false);
+        when(flashcardSetIterator.next()).thenReturn(flashcardSet);
+
+        when(flashcardSet.getUsername()).thenReturn("TestUser");
+
+        when(flashcardSetData.getFlashcardSetsByKey("TestKey")).thenReturn(allFlashcards);
+
+        List<FlashcardSet> retrievedList = flashcardSetManager.getFlashcardSetsByKey("TestUser", "TestKey");
+
+        assertNotEquals("FlashcardManager can retrieve FlashcardSet with matching key and user can be retrieved",
+                -1, retrievedList.indexOf(flashcardSet));
+    }
+
+    @Test
+    public void testGetFlashcardSetsByKeyNoMatch() {
+        List<FlashcardSet> allFlashcards = mock(ArrayList.class);
+        Iterator<FlashcardSet> flashcardSetIterator = mock(Iterator.class);
+
+        when(allFlashcards.iterator()).thenReturn(flashcardSetIterator);
+        when(flashcardSetIterator.hasNext()).thenReturn(false);
+
+        when(flashcardSetData.getFlashcardSetsByKey(any())).thenReturn(allFlashcards);
+
+        List<FlashcardSet> retrievedList = flashcardSetManager.getFlashcardSetsByKey("TestUser", "TestKey");
+
+        assertEquals("FlashcardManager cannot retrieve FlashcardSet with non matching key",
+                0, retrievedList.size());
+    }
+
+    @Test
+    public void testGetFlashcardSetsByKeyMatchDifferentUser() {
+        FlashcardSet userMatch = mock(FlashcardSet.class);
+        List<FlashcardSet> allFlashcards = mock(ArrayList.class);
+        Iterator<FlashcardSet> flashcardSetIterator = mock(Iterator.class);
+
+        when(allFlashcards.iterator()).thenReturn(flashcardSetIterator);
+        when(flashcardSetIterator.hasNext()).thenReturn(true, true, true, true, false);
+        when(flashcardSetIterator.next()).thenReturn(userMatch, flashcardSet, flashcardSet, userMatch);
+
+        when(userMatch.getUsername()).thenReturn("TestUser");
+        when(flashcardSet.getUsername()).thenReturn("NotTestUser");
+
+        when(flashcardSetData.getFlashcardSetsByKey("TestKey")).thenReturn(allFlashcards);
+
+        List<FlashcardSet> retrievedList = flashcardSetManager.getFlashcardSetsByKey("TestUser", "TestKey");
+
+        assertEquals("FlashcardManager cannot retrieve FlashcardSet with matching key, but non matching user",
+                -1, retrievedList.indexOf(flashcardSet));
+    }
+
+    /*
+     * Test getSearchedFlashcards
+     */
+    @Test
+    public void testGetSearchedFlashcards() {
+        List<Flashcard> flashcardList = mock(ArrayList.class);
+        Iterator<Flashcard> flashcardIterator = mock(Iterator.class);
+
+        when(flashcardList.iterator()).thenReturn(flashcardIterator);
+        when(flashcardIterator.hasNext()).thenReturn(true, false);
+        when(flashcardIterator.next()).thenReturn(flashcard);
+
+        when(flashcardSetData.getFlashcardSet("setUUID")).thenReturn(flashcardSet);
+        when(flashcardSet.getUsername()).thenReturn("TestUser");
+        when(flashcardSet.getFlashcardSetName()).thenReturn("TestName");
+        when(flashcard.getSetUUID()).thenReturn("setUUID");
+
+        FlashcardSet retrievedSet = flashcardSetManager.getSearchedFlashcards("setUUID", flashcardList);
+
+        assertEquals("FlashcardSetManager can check which flashcards from a list are a part of the set",
+                        1, retrievedSet.size());
+
+        assertEquals("FlashcardSetManager can check which flashcards from a list are a part of the set",
+                flashcard, retrievedSet.getIndex(0));
+    }
+
+    @Test
+    public void testGetSearchedFlashcardsMixedSets() {
+        List<Flashcard> flashcardList = mock(ArrayList.class);
+        Iterator<Flashcard> flashcardIterator = mock(Iterator.class);
+        Flashcard setMatch = mock(Flashcard.class);
+
+        when(flashcardList.iterator()).thenReturn(flashcardIterator);
+        when(flashcardIterator.hasNext()).thenReturn(true, true, true, true, false);
+        when(flashcardIterator.next()).thenReturn(flashcard, flashcard, setMatch, flashcard);
+
+        when(flashcardSetData.getFlashcardSet("setUUID")).thenReturn(flashcardSet);
+        when(flashcardSet.getUsername()).thenReturn("TestUser");
+        when(flashcardSet.getFlashcardSetName()).thenReturn("TestName");
+
+        when(flashcard.getSetUUID()).thenReturn("notSetUUID");
+        when(setMatch.getSetUUID()).thenReturn("setUUID");
+
+        FlashcardSet retrievedSet = flashcardSetManager.getSearchedFlashcards("setUUID", flashcardList);
+
+        assertEquals("FlashcardSetManager can pick from a list of flashcards which ones are a part of the given set",
+                1, retrievedSet.size());
+
+        assertEquals("FlashcardSetManager can pick from a list of flashcards which ones are a part of the given set",
+                setMatch, retrievedSet.getIndex(0));
+    }
+
+    @Test
+    public void testGetSearchedFlashcardsSetNotManaged() {
+        List<Flashcard> flashcardList = mock(ArrayList.class);
+
+        FlashcardSet retrievedSet = flashcardSetManager.getSearchedFlashcards("setUUID", flashcardList);
+
+        assertNull("can check which flashcards from a list are a part of the set if the set is not managed",
+                retrievedSet);
     }
 
 }

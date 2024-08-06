@@ -65,18 +65,6 @@ public class UserPersistenceHSQLDB implements UserPersistence {
     }
 
     @Override
-    public void deleteUser(String username) {
-        try (final Connection c = connection()) {
-            final PreparedStatement st = c.prepareStatement("DELETE FROM USERS WHERE username = ?");
-            st.setString(1, username);
-
-            st.executeUpdate();
-        } catch (final SQLException e) {
-            throw new PersistenceException(e);
-        }
-    }
-
-    @Override
     public void incrementLoginCount(User user)
     {
         try (final Connection c = connection()) {

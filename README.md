@@ -11,7 +11,6 @@ Graders can change between data sources by changing the variable "datasource" in
 The following variable values are recognized:
 - "hsqldb"
 - "testHsqldb"
-- "stub"
 
 If an unrecognized variable value is declared, the app will default to the HSQLDB
 

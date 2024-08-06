@@ -32,14 +32,6 @@ public class UserManager {
         return null;
     }
 
-    public boolean deleteUser(String username) {
-        if (userPersistence.getUserByUsername(username) != null && !username.equals("guest")) {
-            userPersistence.deleteUser(username);
-            return true;
-        }
-        return false;
-    }
-
     public void incrementLoginCount(String username)
     {
         User user = userPersistence.getUserByUsername(username);
