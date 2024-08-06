@@ -22,7 +22,7 @@ public class FlashcardManagerTest {
     public void setUp() {
         flashcardSetData = new FlashcardSetPersistenceStub();
         flashcardData = new FlashcardPersistenceStub(flashcardSetData);
-        flashcardManager = new FlashcardManager(flashcardData, flashcardSetData);
+        flashcardManager = new FlashcardManager(flashcardData);
     }
 
     /*
@@ -91,87 +91,6 @@ public class FlashcardManagerTest {
 
         assertNotNull("FlashcardManager will add unmanaged flashcard via updateFlashcard",
                 flashcardManager.getFlashcard(flashcard.getUUID()));
-    }
-
-    /*
-     * Test updateFlashcard(Flashcard, FlashcardSet, String, String, String)
-     * and moveFlashcardToNewSet()
-     * and updateFlashcardDetails()
-     */
-    @Test
-    public void testUpdateFlashcardNewSet() {
-        FlashcardSet testCardSet = new FlashcardSet("testUser", "Test Card Set");
-        FlashcardSet testCardSetMove = new FlashcardSet("testUser", "Test Card Set Update");
-        Flashcard flashcard = new Flashcard(testCardSet.getUUID(), "Test Question", "Test Answer", null);
-
-        flashcardSetData.insertFlashcardSet(testCardSet);
-        flashcardSetData.insertFlashcardSet(testCardSetMove);
-        flashcardManager.insertFlashcard(flashcard);
-        flashcardSetData.addFlashcardToFlashcardSet(testCardSet.getUUID(), flashcard);
-
-        flashcardManager.updateFlashcard(flashcard, testCardSetMove, "Test Question", "Test Answer", null);
-        testCardSetMove = flashcardSetData.getFlashcardSet(testCardSetMove.getUUID());
-        flashcard = flashcardManager.getFlashcard(flashcard.getUUID());
-
-        assertNotNull("FlashcardManager can move a flashcard between sets",
-                testCardSetMove.getActiveFlashcards().getIndex(0));
-
-        assertTrue("FlashcardManager deletes old card when it is moved to new set",
-                flashcard.isDeleted());
-    }
-
-    @Test
-    public void testUpdateFlashcardNewSetNotManaged() {
-        FlashcardSet testCardSet = new FlashcardSet("testUser", "Test Card Set");
-        FlashcardSet testCardSetMove = new FlashcardSet("testUser", "Test Card Set Update");
-        Flashcard flashcard = new Flashcard(testCardSet.getUUID(), "Test Question", "Test Answer", null);
-
-        flashcardSetData.insertFlashcardSet(testCardSet);
-        flashcardManager.insertFlashcard(flashcard);
-        flashcardSetData.addFlashcardToFlashcardSet(testCardSet.getUUID(), flashcard);
-
-        flashcardManager.updateFlashcard(flashcard, testCardSetMove, "Test Question", "Test Answer", null);
-
-        flashcard = flashcardManager.getFlashcard(flashcard.getUUID());
-
-        assertEquals("FlashcardManager cannot move a flashcard to a new set that is unmanaged",
-                0, testCardSetMove.getActiveFlashcards().size());
-
-        assertFalse("FlashcardManager does not delete old card when it is not moved to new set",
-                flashcard.isDeleted());
-    }
-
-    @Test
-    public void testUpdateFlashcardDetails() {
-        FlashcardSet testCardSet = new FlashcardSet("testUser", "Test Card Set");
-        Flashcard flashcard = new Flashcard(testCardSet.getUUID(), "Test Question", "Test Answer", null);
-
-        flashcardManager.insertFlashcard(flashcard);
-        flashcardManager.updateFlashcard(flashcard, null, "Test Question Update", "Test Answer Update", "Test Hint Update");
-
-        assertEquals("FlashcardManager will update the original instance of flashcard's question if given",
-                "Test Question Update", flashcard.getQuestion());
-        assertEquals("FlashcardManager will update the original instance of flashcard's answer if given",
-                "Test Answer Update", flashcard.getAnswer());
-        assertEquals("FlashcardManager will update the original instance of flashcard's hint if given",
-                "Test Hint Update", flashcard.getHint());
-    }
-
-    @Test
-    public void testUpdateFlashcardDetailsNotManaged() {
-        Flashcard flashcard = new Flashcard("TestSetUUID", "Test Question", "Test Answer", null);
-
-        flashcardManager.updateFlashcard(flashcard, null, "Test Question Update", "Test Answer Update", "Test Hint Update");
-
-        assertNotNull("FlashcardManager will add unmanaged flashcard via updateFlashcard",
-                flashcardManager.getFlashcard(flashcard.getUUID()));
-
-        assertEquals("FlashcardManager will update the original instance of flashcard's question if given",
-                "Test Question Update", flashcard.getQuestion());
-        assertEquals("FlashcardManager will update the original instance of flashcard's answer if given",
-                "Test Answer Update", flashcard.getAnswer());
-        assertEquals("FlashcardManager will update the original instance of flashcard's hint if given",
-                "Test Hint Update", flashcard.getHint());
     }
 
     /*

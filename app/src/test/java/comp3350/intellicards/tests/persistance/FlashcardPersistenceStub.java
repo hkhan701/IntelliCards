@@ -1,7 +1,5 @@
 package comp3350.intellicards.tests.persistance;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -63,6 +61,9 @@ public class FlashcardPersistenceStub implements FlashcardPersistence {
     public Flashcard getFlashcard(String uuid) {
         return flashcards.get(uuid);
     }
+
+    @Override
+    public List<Flashcard> getFlashcardsByKey(String key) { return null; }
 
     @Override
     public void insertFlashcard(Flashcard currentFlashcard) {
