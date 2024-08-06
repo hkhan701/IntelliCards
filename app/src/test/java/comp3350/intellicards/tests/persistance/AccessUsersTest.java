@@ -8,6 +8,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assume.assumeNotNull;
 import static org.junit.Assume.assumeTrue;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -27,7 +28,7 @@ public class AccessUsersTest {
 
     @Before
     public void setUp() throws IOException {
-        tempDB = TestUtils.copyTestDB(false);
+        tempDB = TestUtils.copyTestDB();
 
         persistence = new UserPersistenceHSQLDB(Configuration.getDBPathName());
         manager = new UserManager(persistence);
@@ -115,5 +116,10 @@ public class AccessUsersTest {
     public void getUserLoginCountNotExist() {
         assertEquals("User Manager will return a placeholder integer if user is not persisted",
                 -1, manager.getUserLoginCount("testUser"));
+    }
+
+    @After
+    public void tearDown() {
+        tempDB.delete();
     }
 }

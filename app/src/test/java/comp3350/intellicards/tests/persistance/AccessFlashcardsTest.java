@@ -30,7 +30,7 @@ public class AccessFlashcardsTest {
 
     @Before
     public void setUp() throws IOException {
-        tempDB = TestUtils.copyTestDB(false);
+        tempDB = TestUtils.copyTestDB();
 
         persistence = new FlashcardPersistenceHSQLDB(Configuration.getDBPathName());
         manager = new FlashcardManager(persistence);

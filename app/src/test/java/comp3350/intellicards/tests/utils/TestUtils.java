@@ -10,15 +10,12 @@ import comp3350.intellicards.Application.Configuration;
 
 public class TestUtils {
     private static final File DB_SRC = new File("src/main/assets/db/Intellicards.script");
-    private static final File EMPTY_DB_SRC = new File("src/main/assets/db/IntellicardsTest.script");;
 
-    public static File copyTestDB(boolean useNullDB) throws IOException {
+    public static File copyTestDB() throws IOException {
         final File target = File.createTempFile("temp-db", ".script");
-        if (useNullDB) {
-            copy(EMPTY_DB_SRC.toPath(), target.toPath(), REPLACE_EXISTING);
-        } else {
-            copy(DB_SRC.toPath(), target.toPath(), REPLACE_EXISTING);
-        }
+
+        copy(DB_SRC.toPath(), target.toPath(), REPLACE_EXISTING);
+
         Configuration.setDBPathName(target.getAbsolutePath().replace(".script", ""));
         return target;
     }

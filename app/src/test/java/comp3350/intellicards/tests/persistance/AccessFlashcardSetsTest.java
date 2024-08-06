@@ -27,7 +27,7 @@ public class AccessFlashcardSetsTest {
 
     @Before
     public void setUp() throws IOException {
-        tempDB = TestUtils.copyTestDB(false);
+        tempDB = TestUtils.copyTestDB();
 
         persistence = new FlashcardSetPersistenceHSQLDB(Configuration.getDBPathName());
         manager = new FlashcardSetManager(persistence);
