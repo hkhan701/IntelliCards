@@ -89,7 +89,6 @@ public class UpdateFlashcardServiceTest {
         // UpdateFlashcardService will not attempt to move flashcard to different set if given flashcard set is null
         verify(updateFlashcardServiceSpy, times(0)).moveFlashcardToNewSet(flashcardMock, flashcardSetMock, "Question", "Answer", null);    }
 
-
     /*
      * Test moveFlashcardToNewSet()
      */

@@ -152,7 +152,7 @@ public class FlashcardSetTest {
                 flashcard1, deletedSet.getIndex(0));
 
         assertEquals("FlashcardSet cannot count any deleted cards in its active count",
-                1, deletedSet.size());
+                1, deletedSet.getDeletedCount());
     }
 
     /*
