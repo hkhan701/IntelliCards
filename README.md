@@ -14,6 +14,11 @@ The following variable values are recognized:
 
 If an unrecognized variable value is declared, the app will default to the HSQLDB
 
+#### Test Database and System Testing
+
+- Graders should not change the data in the "testHsqldb" as it is used for system testing
+- System tests must use the test database, if the value of datasource in Configuration.java is not "testHsqldb", the tests will not run and an exception will be thrown prompting the user to change the variable
+
 ### Login Page
 
 Graders can login with the following pre-inserted usernames and passwords unless they are using the Test HSQLDB. They contain fake data.
@@ -32,7 +37,7 @@ Graders can login with the following pre-inserted usernames and passwords unless
 
 ### Notifications
 
-Upon clicking the notification button, graders should allow permissions for notifications, and then toggle on the alarm permissions as well for the notifications to work as intended. 
+Upon clicking the notification button, graders should allow permissions for notifications, and then toggle on the alarm permissions as well for the notifications to work as intended.
 
 ## Links to other documentation
 

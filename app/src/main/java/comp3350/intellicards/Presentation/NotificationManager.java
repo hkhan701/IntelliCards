@@ -25,8 +25,6 @@ import java.util.Calendar;
 import comp3350.intellicards.Application.UserSession;
 import comp3350.intellicards.Business.FlashcardSetManager;
 import comp3350.intellicards.Objects.FlashcardSet;
-import comp3350.intellicards.Presentation.AuthActivity;
-import comp3350.intellicards.Presentation.FlashcardSetActivity;
 import comp3350.intellicards.Presentation.Utils.NotificationReceiver;
 import comp3350.intellicards.R;
 
