@@ -2,7 +2,7 @@
 
 ### Sketch
 
-![Alt text](images/Architecture_Diagram-1.png)
+![Alt text](images/Architecture_Diagram.png)
 
 ### Domain Specific Object Layer
 
@@ -18,6 +18,7 @@
 
 ### Presentation Layer
 
+- AboutMeActivity: A page displaying a summary of the flashcards and flashcard sets owned by the user, and their accuracy report based on completed tests. 
 - AuthActivity: Login page for users to create an account, enter existing credentials, or continue as a guest.
 - CardRecoverAdapter: A display for individual cards to be recovered.
 - CardViewAdapter: A display for individual cards to be edited and deleted.
@@ -27,6 +28,7 @@
 - FlashcardTestActivity: Testing page to review all flashcards in a set. The user must mark a card as answered correctly or incorrectly to continue, but testing can be stopped at any time by selecting "finish".
 - FlashcardUtils: Manages the flaschard utility.
 - MainActivity: Home page for viewing all sets and accessing the profile page.
+- NotificationReceiver: Uses the NotificationManager to show a notification. 
 - ProfileActivity: Profile page which allows users to recover deleted cards and to log out.
 - RecoverFlashcardActivity: Display page for all deleted cards.
 
@@ -34,8 +36,10 @@
 
 - FlashcardManager: Manages insertion of new cards into persistence data, and retrieval of stored cards to display.
 - FlashcardSetManager: Manages insertion of new sets into persistence, insertion of individual cards into sets, and retrieval of sets to display.
+- NotificationManager: Manages creation of notifications and display them on set day and time. 
 - ReportCalculator: Gathers the "all time" statistics of the total tests for a particular flashcard set.
 - TempTestResult: Temporarily stores the test results of one test session. 
+- UpdateFlashcardService: Updates edited flashcards
 - UserManager: Manages insertion of new accounts into persistence data, and retrieval of existing accounts.
 
 ### Persistence Layer

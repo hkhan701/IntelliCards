@@ -9,6 +9,17 @@
     tools:context="comp3350.intellicards.Presentation.RecoverFlashcardsActivity"
     android:background="@drawable/background">
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Deleted Flashcards"
+        android:textSize="45sp"
+        android:gravity="center"
+        android:layout_marginTop="32dp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"/>
+
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/backButton"
         android:layout_width="64dp"
