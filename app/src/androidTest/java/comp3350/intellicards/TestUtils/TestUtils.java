@@ -25,6 +25,11 @@ public class TestUtils {
         onView(withId(R.id.logoutButton)).perform(click());
     }
 
+    public static void logoutUserFromAboutMePage() {
+        onView(withId(R.id.backButton)).perform(click());
+        onView(withId(R.id.logoutButton)).perform(click());
+    }
+
     public static void checkDatabase() {
         if (Configuration.getDatasource() == null || !Configuration.getDatasource().equals("testHsqldb")) {
             throw new WrongDatabaseException("Please go to the Configuration class and change the value of the variable 'datasource' to \"testHsqldb\"");
