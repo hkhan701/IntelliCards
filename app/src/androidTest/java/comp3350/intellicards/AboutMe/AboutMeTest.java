@@ -2,9 +2,6 @@ package comp3350.intellicards.AboutMe;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
-import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
-import static androidx.test.espresso.action.ViewActions.typeText;
-import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
@@ -21,7 +18,10 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import comp3350.intellicards.Business.FlashcardSetManager;
+import comp3350.intellicards.Business.ReportCalculator;
 import comp3350.intellicards.Business.UserManager;
+import comp3350.intellicards.Objects.FlashcardSet;
 import comp3350.intellicards.Presentation.AuthActivity;
 import comp3350.intellicards.R;
 import comp3350.intellicards.TestUtils.TestUtils;
@@ -124,9 +124,11 @@ public class AboutMeTest {
         USERNAME = "user74";
         PASSWORD = "pass74";
 
-        //get current counts from [somewhere]
-        int attempted = 0;
-        int correct = 0;
+        FlashcardSetManager manager = new FlashcardSetManager();
+        FlashcardSet set = manager.getFlashcardSet("set10");
+        ReportCalculator calculator = new ReportCalculator(set);
+        int attempted = calculator.getTotalAttempted();
+        int correct = calculator.getTotalCorrect();
 
         TestUtils.loginUserFromAuthPage(USERNAME, PASSWORD);
 
